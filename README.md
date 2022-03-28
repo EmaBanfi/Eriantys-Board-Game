@@ -1,6 +1,6 @@
 PROGETTO INGEGNERIA DEL SOFTWARE 2022
 -
-######Group AM49
+Group AM49
 
 |Name|Surname|Email|
 |--------|-----|----|
