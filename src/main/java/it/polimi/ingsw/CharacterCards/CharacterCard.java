@@ -1,6 +1,6 @@
 package it.polimi.ingsw.CharacterCards;
 
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.RequiredInfo;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,7 @@ public abstract class CharacterCard {
     private boolean increasedPrice;
     //private GameBoard gameBoard;
     //private Player currentPlayer;
-    private ArrayList<Requiredinfo> info;
-
+    private ArrayList<RequiredInfo> info;
 
     public int getCardId() {
         return cardId;
@@ -21,7 +20,7 @@ public abstract class CharacterCard {
         return price;
     }
 
-    public ArrayList<Requiredinfo> getInfo() {
+    public ArrayList<RequiredInfo> getInfo() {
         return info;
     }
 

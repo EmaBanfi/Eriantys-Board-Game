@@ -35,7 +35,7 @@ public class Bag {
                 i++;
                 studentsNumber--;
                 students.put(randKey, studentsNumber);
-                if (students.isEmpty()) throw new LastStudentDrawnException();
+                if (students.values().stream().allMatch(x -> x == 0)) throw new LastStudentDrawnException();
             }
         }
             return drawnStudents;

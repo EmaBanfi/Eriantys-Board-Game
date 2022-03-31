@@ -4,6 +4,7 @@ import it.polimi.ingsw.Exceptions.EndGameException;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -76,7 +77,7 @@ public class GameBoard {
             clouds.get(cloud).addStudents(bag.draw(clouds.get(cloud).getMaxStudents()));
         }
 
-    public ArrayList<StudentColor> takeStudents(int cloud){
+    public Collection<StudentColor> takeStudents(int cloud){
         return clouds.get(cloud).getStudents();
     }
 
