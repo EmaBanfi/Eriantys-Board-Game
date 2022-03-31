@@ -4,22 +4,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Hall {
-    protected final Collection<StudentColor> students;
+    private final ArrayList<StudentColor> students;
 
     public Hall() {
         this.students = new ArrayList<>();
     }
 
-    public Collection<StudentColor> getStudents() {
-        return students;
+    public ArrayList<StudentColor> getStudents() {
+        return this.students;
     }
 
-    public void addStudentsColor(ArrayList<StudentColor> students) {
+    public void addStudents(ArrayList<StudentColor> students) {
         this.students.addAll(students);
     }
 
-    public void removeStudentsColor(StudentColor color) {
-        this.students.remove(color);
+    public void removeStudents(ArrayList<StudentColor> students) {
+        this.students.removeAll(students);
+    }
+
+    // return the num of students deleted by the effect of the character card n°12 (used in the DiningHall)
+    public int removeStudent(StudentColor color) {
+        int numOfStudents = countStudentColor(color);
+        int count = 0;
+        while (numOfStudents > 0 & count < 3) {
+            students.remove(color);
+            count++;
+            numOfStudents--;
+        }
+
+        return count;
     }
 
     // return the num of students for a specified color

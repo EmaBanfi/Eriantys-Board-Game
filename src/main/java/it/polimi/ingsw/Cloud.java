@@ -15,8 +15,8 @@ public class Cloud extends Hall{
     }
 
     public void refillStudents(ArrayList<StudentColor> studentsToAdd){
-        this.getStudents().clear();
-        this.getStudents().addAll(studentsToAdd);
+        removeStudents(getStudents());
+        addStudents(studentsToAdd);
     }
 }
 
