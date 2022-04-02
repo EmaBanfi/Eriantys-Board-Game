@@ -7,11 +7,12 @@ import java.util.ArrayList;
 public class PlayerBoard {
     private final DiningHall diningHall;
     private final Hall hall;
-    private int coins = 0;
+    private int coins;
 
     public PlayerBoard() {
         this.diningHall = new DiningHall();
         this.hall = new Hall();
+        this.coins = 0;
     }
 
     public void addStudentsToHall(ArrayList<StudentColor> students) {
@@ -22,9 +23,9 @@ public class PlayerBoard {
         this.diningHall.addStudents(students);
 
         // by adding students we have to check if there are coins to take for each table
-        for (StudentColor color : students)
-            if (checkCoins(color) > 0)
-                coins++;
+        StudentColor[] colors = StudentColor.values();
+        for (StudentColor color : colors)
+            this.coins = this.coins + checkCoins(color);
     }
 
     // remove students from the dining hall, useful for the effect of the character card 12
@@ -47,19 +48,31 @@ public class PlayerBoard {
 
     public void switchStudentsToD(ArrayList<StudentColor> students) {
         diningHall.addStudents(students);
-        for (StudentColor color : students)
-            hall.removeStudents(students);
+        hall.removeStudents(students);
     }
 
     public void useCoins(int price) throws NotEnoughMoneyException {
-        if ((coins - price) < 0)
+        if ((this.coins - price) < 0)
             throw new NotEnoughMoneyException();
         else
-            coins = - price;
+            this.coins = this.coins - price;
     }
 
     // return the coins that we have to take from the table for that color
     public int checkCoins(StudentColor color) {
         return diningHall.checkCoin(color); // pass the color we want to check for
+    }
+
+    // getDiningHall, getHall and getCoins are methods useful for the class PlayerBoardTest
+    public DiningHall getDiningHall() {
+        return diningHall;
+    }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public int getCoins() {
+        return coins;
     }
 }

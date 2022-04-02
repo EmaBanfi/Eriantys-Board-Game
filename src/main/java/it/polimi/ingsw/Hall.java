@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Hall {
     private final ArrayList<StudentColor> students;
@@ -19,7 +18,8 @@ public class Hall {
     }
 
     public void removeStudents(ArrayList<StudentColor> students) {
-        this.students.removeAll(students);
+        for (StudentColor color : students)
+            this.students.remove(color);
     }
 
     // return the num of students deleted by the effect of the character card n°12 (used in the DiningHall)
