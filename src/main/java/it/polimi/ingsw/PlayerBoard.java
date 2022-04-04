@@ -15,10 +15,6 @@ public class PlayerBoard {
         this.coins = 0;
     }
 
-    public void addStudentsToHall(ArrayList<StudentColor> students) {
-        this.hall.addStudents(students);
-    }
-
     public void addStudentsToDiningHall(ArrayList<StudentColor> students) {
         this.diningHall.addStudents(students);
 
@@ -26,6 +22,9 @@ public class PlayerBoard {
         StudentColor[] colors = StudentColor.values();
         for (StudentColor color : colors)
             this.coins = this.coins + checkCoins(color);
+    }
+    public void addStudentsToHall(ArrayList<StudentColor> students){
+        hall.addStudents(students);
     }
 
     // remove students from the dining hall, useful for the effect of the character card 12
@@ -35,7 +34,7 @@ public class PlayerBoard {
 
     // take a student from the Hall and move it in the DiningHall
     public void moveStudents(ArrayList<StudentColor> students) {
-        this.diningHall.addStudents(students);
+        addStudentsToDiningHall(students);
         this.hall.removeStudents(students);
     }
 
@@ -47,7 +46,7 @@ public class PlayerBoard {
     }
 
     public void switchStudentsToD(ArrayList<StudentColor> students) {
-        diningHall.addStudents(students);
+        addStudentsToDiningHall(students);
         hall.removeStudents(students);
     }
 

@@ -14,10 +14,6 @@ public class Cloud extends Hall{
         return maxStudents;
     }
 
-    public void refillStudents(ArrayList<StudentColor> studentsToAdd){
-        removeStudents(getStudents());
-        addStudents(studentsToAdd);
-    }
 }
 
 

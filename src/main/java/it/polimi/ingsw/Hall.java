@@ -17,6 +17,8 @@ public class Hall {
         this.students.addAll(students);
     }
 
+    public void addStudent(StudentColor student){students.add(student);}
+
     public void removeStudents(ArrayList<StudentColor> students) {
         for (StudentColor color : students)
             this.students.remove(color);

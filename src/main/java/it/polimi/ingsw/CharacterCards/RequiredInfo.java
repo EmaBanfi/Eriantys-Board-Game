@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.CharacterCards;
 
 public enum RequiredInfo {
     STUDENTCOLOR("StudentColor"),

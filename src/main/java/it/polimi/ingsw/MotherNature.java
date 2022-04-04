@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MotherNature {
     private ArrayList<Island> islands;
     private int currentIsland;
@@ -10,7 +11,7 @@ public class MotherNature {
     public MotherNature(ArrayList<Island> gameBoardIslands){
         islands = gameBoardIslands;
         Random startIsland = new Random();
-        currentIsland = startIsland.nextInt(12);
+        currentIsland = startIsland.nextInt(12)  ;
     }
 
     public int getCurrentIsland(){

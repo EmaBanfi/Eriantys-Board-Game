@@ -1,17 +1,19 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Game {
-    private HashMap <StudentColor,Player> teachers;
+
     private int numOfPlayers;
     private ArrayList<Player> players;
     private boolean gameStarted;
     private Phase phase;
     private int mode;
     private boolean isEndGame;
+
 
     public Game() {
         isEndGame=false;
@@ -47,14 +49,9 @@ public class Game {
         return mode;
     }
 
-    public Player getTeacher(StudentColor color) {
-        return teachers.get(color);
-    }
-
-    public void setTeachers(HashMap<StudentColor, Player> teachers) {
-        this.teachers = teachers;
-    }
-
+    /**
+     * This method is used to switch between planning and action phase
+     */
     public void nextPhase(){
      if(phase.equals(Phase.PLANNING))
          phase=Phase.ACTION;

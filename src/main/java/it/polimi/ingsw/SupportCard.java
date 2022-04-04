@@ -3,12 +3,18 @@ package it.polimi.ingsw;
 public class SupportCard {
     private int turnOrder;
     private int movement;
-    private int id;
+    private int cardId;
 
+    /**
+     * Constructor
+     * @param turnOrder: determines the playing order in the next action phase
+     * @param movement: determines the movements of motherNature
+     * @param id: indicates the cardId
+     */
     public SupportCard(int turnOrder, int movement, int id) {
         this.turnOrder = turnOrder;
         this.movement = movement;
-        this.id = id;
+        this.cardId = id;
     }
 
     public int getTurnOrder() {
@@ -20,6 +26,6 @@ public class SupportCard {
     }
 
     public int getId() {
-        return id;
+        return cardId;
     }
 }

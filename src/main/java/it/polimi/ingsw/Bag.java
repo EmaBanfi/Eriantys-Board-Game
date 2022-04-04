@@ -13,7 +13,6 @@ public class Bag {
    public HashMap<StudentColor, Integer> get(){
         return students;
     }
-
     public Bag(){
         students = new HashMap<>();
         students.put(StudentColor.PURPLE, 26);
@@ -23,6 +22,12 @@ public class Bag {
         students.put(StudentColor.RED, 26);
     }
 
+    /**
+     * This method is used to draw a certain number of students from the bag
+     * @param studentsToDraw: number of students to be drawn
+     * @return An Arraylist of random students which size is equal to studentTobeDrawn
+     * @throws LastStudentDrawnException if there are no more students of a certain color inside the bag
+     */
     public ArrayList<StudentColor> draw(int studentsToDraw) throws LastStudentDrawnException {
         ArrayList<StudentColor> drawnStudents = new ArrayList<>();
         int i = 0;
@@ -35,17 +40,17 @@ public class Bag {
                 i++;
                 studentsNumber--;
                 students.put(randKey, studentsNumber);
-                if (students.values().stream().allMatch(x -> x == 0)) throw new LastStudentDrawnException();
+                if (studentsNumber==0) throw new LastStudentDrawnException();
             }
         }
             return drawnStudents;
     }
 
     public void addStudents(ArrayList<StudentColor> studentsToAdd){
-        for(int i=0; i<studentsToAdd.size(); i++){
-            int studentsNumber = students.get(studentsToAdd.get(i));
+        for (StudentColor studentColor : studentsToAdd) {
+            int studentsNumber = students.get(studentColor);
             studentsNumber++;
-            students.put(studentsToAdd.get(i), studentsNumber);
+            students.put(studentColor, studentsNumber);
 
         }
     }
