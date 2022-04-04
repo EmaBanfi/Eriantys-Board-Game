@@ -9,16 +9,17 @@ import java.util.Random;
 public class Bag {
     private HashMap<StudentColor, Integer> students;
 
-   public HashMap<StudentColor, Integer> get(){
+    private final int maxStudents = 26;
+    public HashMap<StudentColor, Integer> get(){
         return students;
     }
     public Bag(){
         students = new HashMap<>();
-        students.put(StudentColor.PURPLE, 26);
-        students.put(StudentColor.YELLOW, 26);
-        students.put(StudentColor.BLUE, 26);
-        students.put(StudentColor.GREEN, 26);
-        students.put(StudentColor.RED, 26);
+        students.put(StudentColor.PURPLE, maxStudents);
+        students.put(StudentColor.YELLOW, maxStudents);
+        students.put(StudentColor.BLUE, maxStudents);
+        students.put(StudentColor.GREEN, maxStudents);
+        students.put(StudentColor.RED, maxStudents);
     }
 
     /**
@@ -39,8 +40,12 @@ public class Bag {
                 i++;
                 studentsNumber--;
                 students.put(randKey, studentsNumber);
-                if (studentsNumber==0) throw new LastStudentDrawnException();
             }
+            boolean empty = true;
+            for(StudentColor color : students.keySet())
+                if(students.get(color)!=0)
+                    empty = false;
+            if(empty) throw new LastStudentDrawnException();
         }
             return drawnStudents;
     }
