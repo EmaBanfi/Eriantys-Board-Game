@@ -128,6 +128,7 @@ class GameBoardTest {
         }
         assertEquals(11, board.getIslands().size() );
         assertEquals(blackTower, board.getIsland(6).getTower());
+        board.resetIgnoredColor();
     }
 
     /**
@@ -160,6 +161,7 @@ class GameBoardTest {
         }
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
+        board.getIsland(6).setIgnoreTower(false);
     }
 
     /**
@@ -187,6 +189,7 @@ class GameBoardTest {
         }
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
+        player2.setAdditionalInfluencePoints(false);
     }
 
     /**
@@ -222,7 +225,7 @@ class GameBoardTest {
         }catch (EndGameException e) {
             e.printStackTrace();
         }
-        assertTrue(board.getIsland(0).getStudents().equals(students));
+        assertEquals(board.getIsland(0).getStudents(), students);
         assertEquals(2,board.getIslands().get(0).getNumOfTowers());
         students=null;
     }
