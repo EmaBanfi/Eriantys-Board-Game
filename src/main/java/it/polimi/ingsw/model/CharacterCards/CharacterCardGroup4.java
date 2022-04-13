@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StudentColor;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup4 extends CharacterCard {
     private StudentColor chosenColor;
-    private ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
+    private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
 
     /**
      * implementation of the effect of the CharacterCard 9, the CharacterCard 11 and the CharacterCard 12; at the end increase the price of the CharacterCard
@@ -48,5 +49,4 @@ public class CharacterCardGroup4 extends CharacterCard {
 
         increasePrice();
     }
-
 }

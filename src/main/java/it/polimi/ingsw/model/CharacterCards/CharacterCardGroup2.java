@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 
-public class CharacterCardGroup2 extends CharacterCard{
+import it.polimi.ingsw.model.GameBoard;
 
-    public CharacterCardGroup2(){
-        super();
-    }
+public class CharacterCardGroup2 extends CharacterCard{
 
 
     @Override

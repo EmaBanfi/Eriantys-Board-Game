@@ -40,17 +40,21 @@ public class Tower {
             throw new EndGameException("There are No more available "+ towerColor+" towers");
     }
 
+    /*
     public String getTowerColor() {
         return towerColor;
     }
+     */
 
     public int getInfluencePoints() {
         return influencePoints;
     }
 
+    /*
     public int getAvailableTowers() {
         return availableTowers;
     }
+     */
 
     /**
      * This method is used to increase the influence points of the tower

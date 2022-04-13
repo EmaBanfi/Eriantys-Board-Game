@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.NotEnoughMoneyException;
-
 import java.util.ArrayList;
 
 public class PlayerBoard {
@@ -82,13 +80,9 @@ public class PlayerBoard {
     /**
      * spend coins, useful if the player need to buy a CharacterCard
      * @param price: price of the CharacterCard
-     * @throws NotEnoughMoneyException called if there's not enough coins
      */
-    public void useCoins(int price) throws NotEnoughMoneyException {
-        if ((this.coins - price) < 0)
-            throw new NotEnoughMoneyException();
-        else
-            this.coins = this.coins - price;
+    public void useCoins(int price) {
+        this.coins = this.coins - price;
     }
 
     /**

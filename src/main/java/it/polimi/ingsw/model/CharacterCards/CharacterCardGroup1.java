@@ -1,18 +1,20 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.StudentColor;
 
 import java.util.ArrayList;
 
 public class CharacterCardGroup1 extends CharacterCard {
-    private ArrayList<StudentColor> studentsOnCard;
+    private final ArrayList<StudentColor> studentsOnCard;
 
     /**
      * create a new CharacterCard n°1 and put on it 4 students; at the end increase the price of the CharacterCard
      * @throws LastStudentDrawnException : called if the last student is taken from the bag
      */
     public CharacterCardGroup1() throws LastStudentDrawnException {
+        this.studentsOnCard = new ArrayList<>();
         this.studentsOnCard.addAll(gameBoard.getBag().draw(4));
     }
 

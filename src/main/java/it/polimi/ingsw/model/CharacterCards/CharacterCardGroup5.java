@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.CharacterCards;
 
+import it.polimi.ingsw.model.GameBoard;
+
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;
 

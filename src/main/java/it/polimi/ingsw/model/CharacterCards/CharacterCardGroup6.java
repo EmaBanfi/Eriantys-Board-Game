@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.StudentColor;
 
 import java.util.ArrayList;

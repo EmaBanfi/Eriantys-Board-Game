@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 import it.polimi.ingsw.model.Exceptions.EndGameException;
+import it.polimi.ingsw.model.GameBoard;
 
 public class CharacterCardGroup3 extends CharacterCard{
 

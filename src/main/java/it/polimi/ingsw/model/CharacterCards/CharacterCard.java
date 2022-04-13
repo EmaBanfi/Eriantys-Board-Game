@@ -14,6 +14,8 @@ public class CharacterCard {
     Player currentPlayer;
     private ArrayList<RequiredInfo> info;
 
+    public CharacterCard() {}
+
     protected int getCardId() {
         return cardId;
     }
@@ -26,14 +28,16 @@ public class CharacterCard {
         return info;
     }
 
-    public CharacterCard(){}
     public void increasePrice(){
-        if(increasedPrice==false){
+        if(!increasedPrice){
             increasedPrice=true;
             price++;
         }
-
     }
-    public void activate(){}
 
+    public void setGameBoard(GameBoard board) {
+        this.gameBoard = board;
+    }
+
+    public void activate(){}
 }
