@@ -71,7 +71,7 @@ class GameBoardTest {
         board.getTeachers().put(StudentColor.GREEN, player1);
         board.getTeachers().put(StudentColor.YELLOW, player2);
         board.getTeachers().put(StudentColor.PURPLE,player4);
-        board.getIsland(7).ignoreTower();
+        board.getIsland(7).setIgnoreTower(true);
         board.getIsland(7).setTower(whiteTower);
         board.getIsland(8).setTower(blackTower);
         try {
@@ -140,14 +140,13 @@ class GameBoardTest {
     @Test
     void testAssignInfluencePointsCase2() {
         board.setCurrentPlayer(player1);
-        board.getIsland(6).ignoreTower();
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
         player1.setTower(whiteTower);
         player2.setTower(blackTower);
         board.getIsland(6).setTower(whiteTower);
         board.getIsland(7).setTower(blackTower);
-        board.getIsland(6).ignoreTower();
+        board.getIsland(6).setIgnoreTower(true);
         board.setTeacher(StudentColor.GREEN,player1);
         board.setTeacher(StudentColor.YELLOW,player2);
         board.getIsland(6).removeStudents(board.getIsland(6).getStudents());

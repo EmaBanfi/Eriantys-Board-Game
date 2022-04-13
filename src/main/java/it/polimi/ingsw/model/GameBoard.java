@@ -180,7 +180,7 @@ public class GameBoard {
         ignoreColor = color;
     }
 
-    public void resetIgnoredColors(){
+    public void resetIgnoredColor(){
         ignoreColor = null;
     }
 

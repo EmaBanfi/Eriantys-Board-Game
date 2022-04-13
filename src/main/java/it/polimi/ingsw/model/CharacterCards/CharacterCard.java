@@ -35,6 +35,5 @@ public class CharacterCard {
 
     }
     public void activate(){}
-    public void activate(Hall studentPlace){ }
 
 }

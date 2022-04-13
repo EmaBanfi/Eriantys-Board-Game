@@ -23,7 +23,7 @@ public class CharacterCardGroup5 extends CharacterCard {
 
         // effect of characterCard n°6
         else if (cardId == 6)
-            gameBoard.getIsland(island).ignoreTower();
+            gameBoard.getIsland(island).setIgnoreTower(true);
 
         increasePrice();
     }

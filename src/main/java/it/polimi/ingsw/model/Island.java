@@ -47,8 +47,8 @@ public class Island extends Hall {
         blockCard = false;
     }
 
-    public void ignoreTower() {
-        ignoreTower = true;
+    public void setIgnoreTower(boolean value) {
+        ignoreTower = value;
     }
 
     public int getNumOfTowers() {
