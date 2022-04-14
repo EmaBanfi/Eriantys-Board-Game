@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.NotEnoughMoneyException;
-import it.polimi.ingsw.model.PlayerBoard;
-import it.polimi.ingsw.model.StudentColor;
+import it.polimi.ingsw.model.CharacterCards.CharacterCardGroup1;
+import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,14 +11,23 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerBoardTest {
+    PlayerBoard playerBoard;
+
+    @BeforeEach
+    void setUp() {
+        playerBoard = new PlayerBoard();
+    }
+
+    @AfterEach
+    void tearDown() {
+        playerBoard = null;
+    }
 
     /**
      * test of addStudentsToHall(), addStudentsToDiningHall(), moveStudents() and switchStudents() methods
      */
     @Test
     void manipulateStudentsInTheHallAndInTheDiningHall() {
-        PlayerBoard playerBoard = new PlayerBoard();
-
         ArrayList<StudentColor> arrayListHall = new ArrayList<>();
         // fill the array of StudetColor that I'll put in the Hall
         int blueStudents = 2;
@@ -95,18 +105,15 @@ class PlayerBoardTest {
 
     /**
      * test of getCoins() and coinsUsage() methods
-     * @throws NotEnoughMoneyException: called if there's not enough coins
      */
     @Test
-    void coinsUsage() throws NotEnoughMoneyException {
-        PlayerBoard playerBoard = new PlayerBoard();
-
+    void coinsUsage() {
         assertEquals(0, playerBoard.getCoins());
 
         assertEquals(0, playerBoard.getCoins());
 
         ArrayList<StudentColor> arrayList = new ArrayList<>();
-        // fill the array of StudetColor that I'll put in the Hall
+        // fill the array of StudentColor that I'll put in the Hall
         int blueStudents = 2;
         for (int i=0; i<blueStudents; i++)
             arrayList.add(StudentColor.BLUE);
