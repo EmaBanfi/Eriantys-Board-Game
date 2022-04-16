@@ -36,14 +36,14 @@ class PlayerBoardTest {
         int purpleStudents = 3;
         for (int i=0; i<purpleStudents; i++)
             arrayListHall.add(StudentColor.PURPLE);
-        int yellowStudents = 0;
-        int redStudents = 0;
+        int yellowStudents;
+        int redStudents;
         int greenStudents = 4;
         for (int i=0; i<greenStudents; i++)
             arrayListHall.add(StudentColor.GREEN);
         playerBoard.addStudentsToHall(arrayListHall);
 
-        assertEquals(playerBoard.getHall().getStudents(), arrayListHall);
+        assertEquals(arrayListHall, playerBoard.getHall().getStudents());
 
         ArrayList<StudentColor> arrayListDiningHall = new ArrayList<>();
         // fill the array of StudetColor that I'll put in the DiningHall
@@ -81,14 +81,12 @@ class PlayerBoardTest {
         assertEquals(3, playerBoard.getDiningHall().countStudentColor(StudentColor.PURPLE));
 
         arrayListHall.clear();
-        purpleStudents = 1;
         for (int i=0; i<purpleStudents; i++)
             arrayListHall.add(StudentColor.PURPLE);
         greenStudents = 1;
         for (int i=0; i<greenStudents; i++)
             arrayListHall.add(StudentColor.GREEN);
         arrayListDiningHall.clear();
-        blueStudents = 2;
         for (int i=0; i<blueStudents; i++)
             arrayListDiningHall.add(StudentColor.BLUE);
 

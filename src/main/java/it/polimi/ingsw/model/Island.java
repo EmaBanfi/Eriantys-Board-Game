@@ -1,7 +1,19 @@
 package it.polimi.ingsw.model;
 
-public class Island extends Hall {
+import java.util.ArrayList;
+
+public class Island implements ManageStudents {
     private Tower tower;
+    private final ArrayList<StudentColor> students;
+
+    public Island() {
+        students = new ArrayList<>();
+        numOfTowers=1;
+        blockCard=false;
+        tower=null;
+        ignoreTower=false;
+    }
+
     /**
      * This attribute is used to implement the effect of the characterCard n°5.
      * If it's value is set to true then the majority must not be calculated on this island when it is reached by motherNature
@@ -19,24 +31,12 @@ public class Island extends Hall {
     private boolean ignoreTower;
     private int numOfTowers;
 
-    public Island() {
-        super();
-        numOfTowers=1;
-        blockCard=false;
-        tower=null;
-        ignoreTower=false;
-    }
-
     public Tower getTower(){
         return tower;
     }
 
     public void setTower(Tower newTower){
         tower = newTower;
-    }
-
-    public boolean getBlockedCard() {
-        return blockCard;
     }
 
     public void addBlockCard() {
@@ -57,5 +57,24 @@ public class Island extends Hall {
 
     public void addTower(int towers){
         numOfTowers++;
+    }
+
+    public void addStudents(ArrayList<StudentColor> students) {
+        this.students.addAll(students);
+    }
+
+    public void addStudent(StudentColor student){students.add(student);}
+
+    public void removeStudents(ArrayList<StudentColor> students) {
+        for (StudentColor color : students)
+            this.students.remove(color);
+    }
+
+    public int countStudentColor(StudentColor color) {
+        return (int) students.stream().filter(x -> x.equals(color)).count();
+    }
+
+    public ArrayList<StudentColor> getStudents() {
+        return this.students;
     }
 }

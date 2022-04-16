@@ -23,9 +23,8 @@ public class CharacterCardGroup4 extends CharacterCard {
 
         // effect of characterCard n°11
         else if (cardId == 11) {
-            // put 4 students on the CharacterCard
-            int numOfStudents = 4 - studentsOnCard.size();
-            this.studentsOnCard.addAll(gameBoard.getBag().draw(numOfStudents));
+            if (studentsOnCard.size() != 4)
+                putStudentsOnCard();
 
             ArrayList<StudentColor> studentToAdd = new ArrayList<>();
             studentToAdd.add(color);
@@ -40,7 +39,7 @@ public class CharacterCardGroup4 extends CharacterCard {
             for (Player player : gameBoard.getPlayers())
                 withdrawnStudents = withdrawnStudents + player.getBoard().getDiningHall().removeStudent(color);
 
-            ArrayList<StudentColor> students = null;
+            ArrayList<StudentColor> students = new ArrayList<>();
             for (int i=0; i<withdrawnStudents; i++)
                 students.add(color);
 
@@ -48,5 +47,18 @@ public class CharacterCardGroup4 extends CharacterCard {
         }
 
         increasePrice();
+    }
+
+    public ArrayList<StudentColor> getStudentsOnCard() {
+        return studentsOnCard;
+    }
+
+    /**
+     * used to put 4 students on the CharacterCard n°11
+     * @throws LastStudentDrawnException called if the last student is taken from the bag
+     */
+    public void putStudentsOnCard() throws LastStudentDrawnException {
+        int numOfStudents = 4 - studentsOnCard.size();
+        this.studentsOnCard.addAll(gameBoard.getBag().draw(numOfStudents));
     }
 }

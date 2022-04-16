@@ -9,7 +9,8 @@ public class CharacterCardGroup5 extends CharacterCard {
      * create the CharacterCard 5 or 6 and put on it 4 students
      */
     public CharacterCardGroup5() {
-        this.availableBlockCards = 4;
+        if (cardId == 5)
+            this.availableBlockCards = 4;
     }
 
     /**
@@ -31,10 +32,13 @@ public class CharacterCardGroup5 extends CharacterCard {
     }
 
     /**
-     * used to add an block card on the specified CharacterCard
+     * used to add an block card on the CharacterCard n°5
      */
     public void addAvailableBlockCards() {
         this.availableBlockCards++;
     }
 
+    public int getAvailableBlockCards() {
+        return availableBlockCards;
+    }
 }

@@ -1,20 +1,36 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Table;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
+    Table table;
+    int numOfStudents = 0;
+    int coins = 0;
+
+    @BeforeEach
+    void setUp() {
+        table = new Table();
+    }
+
+    @AfterEach
+    void tearDown() {
+        table = null;
+        numOfStudents = 0;
+        coins = 0;
+    }
 
     /**
-     * multiple tests of the method getCoins()
+     * first test of the method getCoins()
      */
     @Test
-    void getCoins() {
-        Table table = new Table();
-        int numOfStudents = 7;
-        int coins = table.getCoins(numOfStudents);
+    void getCoins1() {
+        numOfStudents = 7;
+        coins = table.getCoins(numOfStudents);
         assertEquals(2, coins);
 
         numOfStudents = 10;
@@ -24,9 +40,13 @@ class TableTest {
         numOfStudents = 10;
         coins = table.getCoins(numOfStudents);
         assertEquals(0, coins);
+    }
 
-        // new test
-        table = new Table();
+    /**
+     * second test of the method getCoins()
+     */
+    @Test
+    void getCoins2() {
         numOfStudents = 10;
         coins = table.getCoins(numOfStudents);
         assertEquals(3, coins);
@@ -34,9 +54,13 @@ class TableTest {
         numOfStudents = 3;
         coins = table.getCoins(numOfStudents);
         assertEquals(0, coins);
+    }
 
-        // new test
-        table = new Table();
+    /**
+     * third test of the method getCoins()
+     */
+    @Test
+    void getCoins3() {
         numOfStudents = 3;
         coins = table.getCoins(numOfStudents);
         assertEquals(1, coins);

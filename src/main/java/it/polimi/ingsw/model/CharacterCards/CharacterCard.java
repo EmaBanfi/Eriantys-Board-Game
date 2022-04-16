@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.CharacterCards;
 
 import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Hall;
 import it.polimi.ingsw.model.Player;
 
 import java.util.ArrayList;
@@ -18,6 +17,10 @@ public class CharacterCard {
 
     protected int getCardId() {
         return cardId;
+    }
+
+    protected void setCardId(int id) {
+        cardId = id;
     }
 
     public int getPrice() {
@@ -37,6 +40,14 @@ public class CharacterCard {
 
     public void setGameBoard(GameBoard board) {
         this.gameBoard = board;
+    }
+
+    public GameBoard getGameBoard() {
+        return this.gameBoard;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public void activate(){}

@@ -7,22 +7,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameBoard {
-    private MotherNature motherNature;
+    private final MotherNature motherNature;
     private ArrayList<Cloud> clouds;
-    private ArrayList<Island> islands;
+    private final ArrayList<Island> islands;
     /**
      * This attribute is used to implement the effect of the CharacterCard n°9
      * The ignored color will not be considered in the assigment of influence points
      */
     private StudentColor ignoreColor;
     private Player currentPlayer;
-    private Bag bag;
-    private ArrayList<Tower> towers;
+    private final Bag bag;
+    private final ArrayList<Tower> towers;
     /**
      * This attribute is used to memorise which player is the teacher of each color
      */
     private HashMap <StudentColor,Player> teachers;
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
 
 
@@ -135,7 +135,7 @@ public class GameBoard {
      * @throws EndGameException because it calls tower.decreaseAvailableTowers(). This exception is passed on to the calling method
      */
     public void majority(int island) throws EndGameException{
-        if(!islands.get(island).getBlockedCard()) {
+        if(!islands.get(island).isBlockCard()) {
             int next, previous;
             if(island+1>=islands.size())
                 next=0;
@@ -182,6 +182,10 @@ public class GameBoard {
 
     public void resetIgnoredColor(){
         ignoreColor = null;
+    }
+
+    public StudentColor getIgnoredColor() {
+        return ignoreColor;
     }
 
     /**
@@ -255,4 +259,12 @@ public class GameBoard {
         this.currentPlayer = currentPlayer;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setPlayers(Player player1, Player player2) {
+        this.players.add(player1);
+        this.players.add(player2);
+    }
 }

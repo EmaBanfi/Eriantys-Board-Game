@@ -1,15 +1,37 @@
 package it.polimi.ingsw.model;
 
-public class Cloud extends Hall{
+import java.util.ArrayList;
+
+public class Cloud implements ManageStudents {
     private final int maxStudents;
+    private final ArrayList<StudentColor> students;
 
     public Cloud(int maxStudents){
-        super();
+        students = new ArrayList<>();
         this.maxStudents = maxStudents;
     }
 
     public int getMaxStudents(){
         return maxStudents;
+    }
+
+    public void addStudents(ArrayList<StudentColor> students) {
+        this.students.addAll(students);
+    }
+
+    public void addStudent(StudentColor student){students.add(student);}
+
+    public void removeStudents(ArrayList<StudentColor> students) {
+        for (StudentColor color : students)
+            this.students.remove(color);
+    }
+
+    public int countStudentColor(StudentColor color) {
+        return (int) students.stream().filter(x -> x.equals(color)).count();
+    }
+
+    public ArrayList<StudentColor> getStudents() {
+        return this.students;
     }
 
 }
