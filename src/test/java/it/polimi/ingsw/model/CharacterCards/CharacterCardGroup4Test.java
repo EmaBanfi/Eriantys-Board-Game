@@ -99,7 +99,9 @@ class CharacterCardGroup4Test {
         Player player2;
         player2 = new Player("Marco");
         fillDiningHall(player2);
-        cardGroup4.getGameBoard().setPlayers(player1, player2);
+        cardGroup4.getGameBoard().getPlayers().add(player1);
+        cardGroup4.getGameBoard().getPlayers().add(player2);
+
 
         ArrayList<StudentColor> colors = cardGroup4.getGameBoard().getBag().draw(1);
         color = colors.get(0);

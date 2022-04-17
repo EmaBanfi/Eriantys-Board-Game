@@ -262,9 +262,4 @@ public class GameBoard {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-
-    public void setPlayers(Player player1, Player player2) {
-        this.players.add(player1);
-        this.players.add(player2);
-    }
 }
