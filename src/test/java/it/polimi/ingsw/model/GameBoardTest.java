@@ -59,6 +59,7 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase0(){
+        //System.out.println("Case 0");
         board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
@@ -83,6 +84,7 @@ class GameBoardTest {
         board.getIsland(7).addStudent(StudentColor.YELLOW);
         board.getIsland(7).addStudent(StudentColor.GREEN);
         board.getIsland(7).addStudent(StudentColor.PURPLE);
+        board.getIsland(7).addStudent(StudentColor.PURPLE);
         boolean error=false;
         try {
             board.assignInfluencePoints(7);
@@ -104,6 +106,7 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase1() {
+        //System.out.println("case 1");
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
         board.setCurrentPlayer(player1);
@@ -113,9 +116,9 @@ class GameBoardTest {
         board.getIsland(7).setTower(blackTower);
         board.addIgnoredColor(StudentColor.GREEN);
         board.setTeacher(StudentColor.GREEN,player1);
-        board.setTeacher(StudentColor.YELLOW,player2);
         board.setTeacher(StudentColor.RED,player1);
-        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
+        board.setTeacher(StudentColor.YELLOW,player2);
+        board.getIsland(6).getStudents().clear();
         for(int i=0; i<3; i++) {
             board.getIsland(6).addStudent(StudentColor.GREEN);
             board.getIsland(6).addStudent(StudentColor.YELLOW);
@@ -140,6 +143,7 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase2() {
+        //System.out.println("case 2");
         board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
@@ -150,7 +154,7 @@ class GameBoardTest {
         board.getIsland(6).setIgnoreTower(true);
         board.setTeacher(StudentColor.GREEN,player1);
         board.setTeacher(StudentColor.YELLOW,player2);
-        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
+        board.getIsland(6).getStudents().clear();
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
@@ -169,6 +173,7 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase3() {
+        //System.out.println("case 3");
         board.setCurrentPlayer(player2);
         player2.setAdditionalInfluencePoints(true);
         board.getPlayers().add(player1);
@@ -179,7 +184,7 @@ class GameBoardTest {
         board.getIsland(7).setTower(blackTower);
         board.setTeacher(StudentColor.GREEN,player1);
         board.setTeacher(StudentColor.YELLOW,player2);
-        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
+        board.getIsland(6).getStudents().clear();
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
         try {

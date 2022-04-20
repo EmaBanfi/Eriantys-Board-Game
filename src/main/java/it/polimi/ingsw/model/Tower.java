@@ -40,11 +40,11 @@ public class Tower {
             throw new EndGameException("There are No more available "+ towerColor+" towers");
     }
 
-    /*
+
     public String getTowerColor() {
         return towerColor;
     }
-     */
+
 
     public int getInfluencePoints() {
         return influencePoints;

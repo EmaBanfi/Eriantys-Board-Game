@@ -125,7 +125,7 @@ public class GameBoard {
             player.getTower().addInfluencePoints(player.getInfluencePoints());
         }
         //for(Tower tower: towers)
-         //   System.out.println(tower.getTowerColor()+" tower has "+ tower.getInfluencePoints()+ " influence points");
+           // System.out.println(tower.getTowerColor()+" tower has "+ tower.getInfluencePoints()+ " influence points");
         majority(island);
     }
 
