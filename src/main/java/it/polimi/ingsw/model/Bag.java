@@ -24,7 +24,7 @@ public class Bag {
 
     /**
      * This method is used to draw a certain number of students from the bag
-     * @param studentsToDraw: number of students to be drawn
+     * @param studentsToDraw number of students to be drawn
      * @return An Arraylist of random students which size is equal to studentTobeDrawn
      * @throws LastStudentDrawnException if there are no more students of a certain color inside the bag
      */
@@ -50,6 +50,10 @@ public class Bag {
             return drawnStudents;
     }
 
+    /**
+     * put the students in the bag
+     * @param studentsToAdd the students that have to be added to the bag
+     */
     public void addStudents(ArrayList<StudentColor> studentsToAdd){
         for (StudentColor studentColor : studentsToAdd) {
             int studentsNumber = students.get(studentColor);

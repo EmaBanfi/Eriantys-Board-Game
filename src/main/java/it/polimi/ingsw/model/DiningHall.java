@@ -19,7 +19,7 @@ public class DiningHall implements ManageStudents {
 
     /**
      * check if there if any coins to take
-     * @param color: color of the students to be checked
+     * @param color color of the students to be checked
      * @return the number of coins taken
      */
     public int checkCoin(StudentColor color) {
@@ -28,7 +28,7 @@ public class DiningHall implements ManageStudents {
 
     /**
      * remove three students from the DiningHall, useful for the effect of the character card n°12
-     * @param color: the color of the three students (or less) that must be removed
+     * @param color the color of the three students (or less) that must be removed
      * @return the num of students deleted
      */
     public int removeStudent(StudentColor color) {

@@ -7,9 +7,9 @@ public class SupportCard {
 
     /**
      * Constructor
-     * @param turnOrder: determines the playing order in the next action phase
-     * @param movement: determines the movements of motherNature
-     * @param id: indicates the cardId
+     * @param turnOrder determines the playing order in the next action phase
+     * @param movement determines the movements of motherNature
+     * @param id indicates the cardId
      */
     public SupportCard(int turnOrder, int movement, int id) {
         this.turnOrder = turnOrder;

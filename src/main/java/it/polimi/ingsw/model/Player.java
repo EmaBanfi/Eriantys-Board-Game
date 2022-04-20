@@ -23,7 +23,7 @@ public class Player {
 
     /**
      * Constructor
-     * @param nickName : it must be unique.
+     * @param nickName it must be unique.
      */
     public Player(String nickName) {
         this.nickName = nickName;
@@ -82,7 +82,7 @@ public class Player {
 
     /**
      * This method is used to memorise the supportCard chosen by the player in the planning phase and remove it from the deck
-     * @param cardId: supportCard chosen by the player in the planning phase
+     * @param cardId supportCard chosen by the player in the planning phase
      */
     public void setUsedSupportCard(int cardId){
         for(SupportCard card: deck){

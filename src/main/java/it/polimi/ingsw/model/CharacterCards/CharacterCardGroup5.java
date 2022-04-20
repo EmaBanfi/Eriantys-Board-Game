@@ -15,7 +15,7 @@ public class CharacterCardGroup5 extends CharacterCard {
 
     /**
      * implementation of the effect of the CharacterCard 5 and the CharacterCard 6; at the end increase the price of the CharacterCard
-     * @param island: indicate an island and it is used in different ways, depend on the effect of each CharacterCard
+     * @param island indicate an island and it is used in different ways, depend on the effect of each CharacterCard
      */
     public void activate(int island) {
         // effect of characterCard n°5

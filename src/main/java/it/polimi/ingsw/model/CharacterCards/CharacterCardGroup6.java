@@ -11,8 +11,8 @@ public class CharacterCardGroup6 extends CharacterCard {
 
     /**
      * implementation of the effect of the CharacterCard 7 and the CharacterCard 10; at the end increase the price of the CharacterCard
-     * @param studentsToExchange1: for CharacterCard 7 represent the students taken from the CharacterCard; for CharacterCard 10 represent the students taken from the DiningHall
-     * @param studentsToExchange2: for CharacterCard 7 represent the students taken from the Hall; for CharacterCard 10 represent the students taken from the Hall
+     * @param studentsToExchange1 for CharacterCard 7 represent the students taken from the CharacterCard; for CharacterCard 10 represent the students taken from the DiningHall
+     * @param studentsToExchange2 for CharacterCard 7 represent the students taken from the Hall; for CharacterCard 10 represent the students taken from the Hall
      */
     public void activate(ArrayList<StudentColor> studentsToExchange1, ArrayList<StudentColor> studentsToExchange2) throws LastStudentDrawnException {
         // effect of characterCard n°7

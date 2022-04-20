@@ -54,7 +54,7 @@ public class GameBoard {
 
     /**
      * This method is used to initialise the Arraylist clouds
-     * @param numberOfPlayers: is used to determine the number of students on each cloud
+     * @param numberOfPlayers is used to determine the number of students on each cloud
      */
     public void initClouds(int numberOfPlayers){
         clouds = new ArrayList<>();
@@ -90,7 +90,7 @@ public class GameBoard {
 
     /**
      * This method is used to assign influence points to players and towers
-     * @param island: index of the island which will be considered to calculate influence points
+     * @param island index of the island which will be considered to calculate influence points
      * @throws EndGameException because it calls majority. this exception is handled by the gameController
      */
     public void assignInfluencePoints(int island) throws EndGameException{
@@ -131,7 +131,7 @@ public class GameBoard {
 
     /**
      * This method is used to determine the tower of a certain island or group of islands
-     * @param island: index of the island whose tower must be determined
+     * @param island index of the island whose tower must be determined
      * @throws EndGameException because it calls tower.decreaseAvailableTowers(). This exception is passed on to the calling method
      */
     public void majority(int island) throws EndGameException{
@@ -165,8 +165,8 @@ public class GameBoard {
 
     /**
      * This method is used to merge island when they are controlled by the same island
-     * @param first: index of the island that will accept the students from the secondo island
-     * @param second: index of the island that will be merged in the first one and will be eliminated
+     * @param first index of the island that will accept the students from the secondo island
+     * @param second index of the island that will be merged in the first one and will be eliminated
      * @throws EndGameException if the number of the remaining island reaches 3
      */
     public void mergeIslands(int first, int second) throws EndGameException{
@@ -190,7 +190,7 @@ public class GameBoard {
 
     /**
      * This method is used to take the students from a certain cloud
-     * @param cloud: index of the cloud from which students must be taken
+     * @param cloud index of the cloud from which students must be taken
      * @throws LastStudentDrawnException because it calls bag.draw(). this exception will be handled by GameController
      */
     public ArrayList<StudentColor> getStudentsFromCloud(int cloud) throws LastStudentDrawnException{

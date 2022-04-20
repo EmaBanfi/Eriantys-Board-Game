@@ -6,6 +6,10 @@ public class Cloud implements ManageStudents {
     private final int maxStudents;
     private final ArrayList<StudentColor> students;
 
+    /**
+     * instance a new cloud with its students ArrayList
+     * @param maxStudents the maximum number of students that could stay on that Cloud
+     */
     public Cloud(int maxStudents){
         students = new ArrayList<>();
         this.maxStudents = maxStudents;

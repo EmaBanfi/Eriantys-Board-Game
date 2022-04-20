@@ -16,7 +16,7 @@ public class Table {
 
     /**
      * check if by adding the students to their table, there's some coins to take; if it takes money change that seat on FALSE
-     * @param numOfStudents: must be the total of the students that we have of that color
+     * @param numOfStudents must be the total of the students that we have of that color
      * @return the coins which must be taken
      */
     public int getCoins(int numOfStudents) {

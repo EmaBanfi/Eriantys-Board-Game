@@ -22,7 +22,7 @@ public class Tower {
     /**
      * This method is used to increase the number of available towers
      * after an island or a group of islands has been conquered by another towerColor
-     * @param towers: it is equal to the number of islands the have changed their tower color
+     * @param towers it is equal to the number of islands the have changed their tower color
      */
     public void increaseAvailableTowers(int towers){
         availableTowers=availableTowers+towers;
@@ -58,7 +58,7 @@ public class Tower {
 
     /**
      * This method is used to increase the influence points of the tower
-     * @param points: is the number of influence points added. It is equal to the influence points of a Player that owns this towerColor
+     * @param points is the number of influence points added. It is equal to the influence points of a Player that owns this towerColor
      */
     public void addInfluencePoints(int points){
         influencePoints=influencePoints+points;

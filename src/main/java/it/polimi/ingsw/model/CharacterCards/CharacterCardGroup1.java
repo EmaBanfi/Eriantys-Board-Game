@@ -27,8 +27,8 @@ public class CharacterCardGroup1 extends CharacterCard {
 
     /**
      * implement the effect of the characterCard n°1
-     * @param color: student that must be taken
-     * @param island: island where the student must be put
+     * @param color student that must be taken
+     * @param island island where the student must be put
      * @throws LastStudentDrawnException called if the last student is taken from the bag
      */
     public void activate(StudentColor color, int island) throws LastStudentDrawnException {

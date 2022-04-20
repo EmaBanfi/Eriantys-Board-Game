@@ -26,7 +26,7 @@ public class PlayerBoard {
 
     /**
      * remove students from the Hall
-     * @param students: students that must be deleted
+     * @param students students that must be deleted
      */
     public void removeStudentsFromHall(ArrayList<StudentColor> students) {
         this.hall.removeStudents(students);
@@ -34,7 +34,7 @@ public class PlayerBoard {
 
     /**
      * add students to the DiningHall and check if there's any coins to take
-     * @param students: students that must be added
+     * @param students students that must be added
      */
     public void addStudentsToDiningHall(ArrayList<StudentColor> students) {
         this.diningHall.addStudents(students);
@@ -55,7 +55,7 @@ public class PlayerBoard {
 
     /**
      * take a student from the Hall and move it in the DiningHall
-     * @param students: students to move
+     * @param students students to move
      */
     public void moveStudents(ArrayList<StudentColor> students) {
         addStudentsToDiningHall(students);
@@ -64,8 +64,8 @@ public class PlayerBoard {
 
     /**
      * swaps two students between the Hall and the DiningHall, useful for character card 10
-     * @param studentsToAddInH: students that must be added to the Hall
-     * @param studentsToAddInD: students that must be added to the DiningHall
+     * @param studentsToAddInH students that must be added to the Hall
+     * @param studentsToAddInD students that must be added to the DiningHall
      */
     public void switchStudents(ArrayList<StudentColor> studentsToAddInH, ArrayList<StudentColor> studentsToAddInD) {
         // add students to Hall and remove them from DiningHall
@@ -79,7 +79,7 @@ public class PlayerBoard {
 
     /**
      * spend coins, useful if the player need to buy a CharacterCard
-     * @param price: price of the CharacterCard
+     * @param price price of the CharacterCard
      */
     public void useCoins(int price) {
         this.coins = this.coins - price;
@@ -87,7 +87,7 @@ public class PlayerBoard {
 
     /**
      * check if there's any coin to take from a specified table
-     * @param color: the color of the table to be checked
+     * @param color the color of the table to be checked
      * @return coins that we have to take from the table
      */
     public int checkCoins(StudentColor color) {
