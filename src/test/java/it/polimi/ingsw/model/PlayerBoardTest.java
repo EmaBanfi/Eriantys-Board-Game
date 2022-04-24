@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.CharacterCards.CharacterCardGroup1;
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.server.model.PlayerBoard;
+import it.polimi.ingsw.network.server.model.StudentColor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

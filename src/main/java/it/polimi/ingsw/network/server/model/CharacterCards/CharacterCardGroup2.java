@@ -1,7 +1,5 @@
-package it.polimi.ingsw.model.CharacterCards;
+package it.polimi.ingsw.network.server.model.CharacterCards;
 
-
-import it.polimi.ingsw.model.GameBoard;
 
 public class CharacterCardGroup2 extends CharacterCard{
 

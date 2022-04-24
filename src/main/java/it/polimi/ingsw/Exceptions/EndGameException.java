@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.Exceptions;
+package it.polimi.ingsw.Exceptions;
 
 public class EndGameException extends Exception{
 

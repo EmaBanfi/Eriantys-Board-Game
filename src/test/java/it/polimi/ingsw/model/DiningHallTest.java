@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.DiningHall;
-import it.polimi.ingsw.model.StudentColor;
+import it.polimi.ingsw.network.server.model.DiningHall;
+import it.polimi.ingsw.network.server.model.StudentColor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

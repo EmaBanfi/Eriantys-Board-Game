@@ -1,6 +1,6 @@
 
-package it.polimi.ingsw.model;
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+package it.polimi.ingsw.network.server.model;
+import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

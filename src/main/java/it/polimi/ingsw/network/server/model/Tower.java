@@ -1,6 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
-import it.polimi.ingsw.model.Exceptions.EndGameException;
+import it.polimi.ingsw.Exceptions.EndGameException;
 
 public class Tower {
     private final String towerColor;

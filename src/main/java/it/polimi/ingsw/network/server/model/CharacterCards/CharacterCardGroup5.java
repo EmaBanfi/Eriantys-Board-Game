@@ -1,6 +1,4 @@
-package it.polimi.ingsw.model.CharacterCards;
-
-import it.polimi.ingsw.model.GameBoard;
+package it.polimi.ingsw.network.server.model.CharacterCards;
 
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;

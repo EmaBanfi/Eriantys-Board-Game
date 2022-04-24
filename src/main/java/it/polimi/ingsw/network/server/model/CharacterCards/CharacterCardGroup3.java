@@ -1,7 +1,6 @@
-package it.polimi.ingsw.model.CharacterCards;
+package it.polimi.ingsw.network.server.model.CharacterCards;
 
-import it.polimi.ingsw.model.Exceptions.EndGameException;
-import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.Exceptions.EndGameException;
 
 public class CharacterCardGroup3 extends CharacterCard{
 

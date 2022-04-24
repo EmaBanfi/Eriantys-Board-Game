@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.CharacterCards;
 
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StudentColor;
+import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCardGroup4;
+import it.polimi.ingsw.network.server.model.GameBoard;
+import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.StudentColor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ class CharacterCardGroup4Test {
      * it fills the DiningHall of player with 17 students
      */
     void fillDiningHall(Player player) throws LastStudentDrawnException {
-        player.getBoard().getDiningHall().addStudents(cardGroup4.gameBoard.getBag().draw(17));
+        player.getBoard().getDiningHall().addStudents(cardGroup4.getGameBoard().getBag().draw(17));
     }
 
     /**

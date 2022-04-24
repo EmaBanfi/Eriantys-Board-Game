@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.CharacterCards;
 
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StudentColor;
+import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCardGroup6;
+import it.polimi.ingsw.network.server.model.GameBoard;
+import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.StudentColor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CharacterCardGroup6Test {
     CharacterCardGroup6 cardGroup6;
@@ -301,16 +302,16 @@ class CharacterCardGroup6Test {
     }
 
     /**
-     * it fills the Hall of the Player with 5 students
+     * it fills the Hall with the Player with 5 students
      */
     void fillHall(Player player) throws LastStudentDrawnException {
         player.getBoard().getHall().addStudents(cardGroup6.getGameBoard().getBag().draw(5));
     }
 
     /**
-     * it fills the DiningHall of the Player with 5 students
+     * it fills the DiningHall with the Player with 5 students
      */
     void fillDiningHall(Player player) throws LastStudentDrawnException {
-        player.getBoard().getDiningHall().addStudents(cardGroup6.gameBoard.getBag().draw(5));
+        player.getBoard().getDiningHall().addStudents(cardGroup6.getGameBoard().getBag().draw(5));
     }
 }

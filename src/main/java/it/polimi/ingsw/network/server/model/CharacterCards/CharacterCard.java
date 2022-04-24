@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model.CharacterCards;
+package it.polimi.ingsw.network.server.model.CharacterCards;
 
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.network.server.model.GameBoard;
+import it.polimi.ingsw.network.server.model.Player;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class CharacterCard {
         return cardId;
     }
 
-    protected void setCardId(int id) {
+    public void setCardId(int id) {
         cardId = id;
     }
 

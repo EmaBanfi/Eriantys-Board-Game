@@ -1,9 +1,8 @@
-package it.polimi.ingsw.model.CharacterCards;
+package it.polimi.ingsw.network.server.model.CharacterCards;
 
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StudentColor;
+import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
-import it.polimi.ingsw.model.Exceptions.EndGameException;
-import it.polimi.ingsw.model.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.Exceptions.EndGameException;
+import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class GameBoard {
                 }
             }
         }
-        if (currentIsland.isIgnoreTower() == false) {
+        if (!currentIsland.isIgnoreTower()) {
             for(Tower tower: towers){
                 if(tower.equals(currentIsland.getTower())){
                     tower.addInfluencePoints(currentIsland.getNumOfTowers());
@@ -173,6 +173,7 @@ public class GameBoard {
         islands.get(first).addStudents(islands.get(second).getStudents());
         islands.get(first).addTower(islands.get(second).getNumOfTowers());
         islands.remove(second);
+        motherNature.removeIsland(2);
         if(islands.size()==3)throw new EndGameException("Only three islands remaining");
     }
 
@@ -191,15 +192,21 @@ public class GameBoard {
     /**
      * This method is used to take the students from a certain cloud
      * @param cloud index of the cloud from which students must be taken
+     */
+    public ArrayList<StudentColor> getStudentsFromCloud(int cloud){
+        ArrayList<StudentColor> students = new ArrayList<>(clouds.get(cloud).getStudents());
+        clouds.get(cloud).getStudents().clear();
+        return students;
+    }
+
+    /**
+     * this method refills the specified cloud
+     * @param cloud indicates the cloud to be refilled
      * @throws LastStudentDrawnException because it calls bag.draw(). this exception will be handled by GameController
      */
-    public ArrayList<StudentColor> getStudentsFromCloud(int cloud) throws LastStudentDrawnException{
-        ArrayList<StudentColor> students= new ArrayList<>();
-        students.addAll(clouds.get(cloud).getStudents());
-        clouds.get(cloud).removeStudents(students);
-        clouds.get(cloud).addStudents(bag.draw(clouds.get(cloud).getMaxStudents()));
-        return students;
-        }
+    public void refillCloud(Cloud cloud)throws LastStudentDrawnException{
+        cloud.addStudents(bag.draw(cloud.getMaxStudents()));
+    }
 
     public ArrayList<StudentColor> takeStudents(int cloud){
         return clouds.get(cloud).getStudents();

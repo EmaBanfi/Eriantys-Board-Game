@@ -1,11 +1,11 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 
 public class MotherNature {
-    private ArrayList<Island> islands;
+    private  ArrayList<Island> islands;
     private int currentIsland;
 
     public MotherNature(ArrayList<Island> gameBoardIslands){
@@ -23,5 +23,8 @@ public class MotherNature {
         currentIsland = (currentIsland + movements) % islands.size();
     }
 
+    public void removeIsland(int island){
+        islands.remove(island);
+    }
 
 }

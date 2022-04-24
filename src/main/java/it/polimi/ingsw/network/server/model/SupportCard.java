@@ -1,9 +1,9 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
 public class SupportCard {
-    private int turnOrder;
-    private int movement;
-    private int cardId;
+    private final int turnOrder;
+    private final int movement;
+    private final int cardId;
 
     /**
      * Constructor

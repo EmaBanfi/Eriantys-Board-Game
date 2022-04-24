@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.EndGameException;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StudentColor;
-import it.polimi.ingsw.model.Tower;
+import it.polimi.ingsw.Exceptions.EndGameException;
+import it.polimi.ingsw.network.server.model.GameBoard;
+import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.StudentColor;
+import it.polimi.ingsw.network.server.model.Tower;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -203,9 +203,7 @@ class GameBoardTest {
      */
     @Test
     void testMajority() {
-        for(int i=0; i<8; i++){
-            board.getIslands().remove(0);
-        }
+        board.getIslands().subList(0, 8).clear();
         board.getIsland(2).setTower(whiteTower);
         board.getIsland(0).setTower(whiteTower);
         board.getIsland(3).setTower(blackTower);
@@ -232,7 +230,6 @@ class GameBoardTest {
         }
         assertEquals(board.getIsland(0).getStudents(), students);
         assertEquals(2,board.getIslands().get(0).getNumOfTowers());
-        students=null;
     }
 
     @Test

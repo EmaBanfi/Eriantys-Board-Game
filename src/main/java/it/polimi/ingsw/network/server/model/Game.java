@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
 import java.util.ArrayList;
 
@@ -8,13 +8,14 @@ public class Game {
     private ArrayList<Player> players;
     private boolean gameStarted;
     private Phase phase;
-    private int mode;
+    private String mode;
     private boolean isEndGame;
 
 
     public Game() {
         isEndGame=false;
         phase=Phase.PLANNING;
+        gameStarted=false;
     }
 
 
@@ -42,7 +43,7 @@ public class Game {
         return phase;
     }
 
-    public int getMode() {
+    public String getMode() {
         return mode;
     }
 
