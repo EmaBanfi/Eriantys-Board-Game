@@ -1,3 +1,4 @@
-it.polimi.ingsw.model
-it.polimi.ingsw.model.CharacterCards
-it.polimi.ingsw.model.Exceptions
+it.polimi.ingsw.Exceptions
+it.polimi.ingsw.network.server.controller
+it.polimi.ingsw.network.server.model
+it.polimi.ingsw.network.server.model.CharacterCards

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.polimi.ingsw.model"},{"l":"it.polimi.ingsw.model.CharacterCards"},{"l":"it.polimi.ingsw.model.Exceptions"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.polimi.ingsw.Exceptions"},{"l":"it.polimi.ingsw.network.server.controller"},{"l":"it.polimi.ingsw.network.server.model"},{"l":"it.polimi.ingsw.network.server.model.CharacterCards"}];updateSearchResults();

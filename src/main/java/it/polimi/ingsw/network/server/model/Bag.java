@@ -29,23 +29,32 @@ public class Bag {
      * @throws LastStudentDrawnException if there are no more students of a certain color inside the bag
      */
     public ArrayList<StudentColor> draw(int studentsToDraw) throws LastStudentDrawnException {
+        StudentColor randKey;
         ArrayList<StudentColor> drawnStudents = new ArrayList<>();
+        ArrayList<StudentColor> drawableStudents= new ArrayList<>();
+        for(StudentColor color : students.keySet()){
+            if(students.get(color)>0){
+                drawableStudents.add(color);
+            }
+        }
         int i = 0;
         while (i < studentsToDraw) {
-            int randIndex = new Random().nextInt(5);
-            StudentColor randKey = StudentColor.values()[randIndex];
-            int studentsNumber = students.get(randKey);
-            if (studentsNumber != 0) {
-                drawnStudents.add(randKey);
-                i++;
-                studentsNumber--;
-                students.put(randKey, studentsNumber);
+            if(drawableStudents.size()>1) {
+                int randIndex = new Random().nextInt(drawableStudents.size() - 1);
+                randKey = drawableStudents.get(randIndex);
             }
-            boolean empty = true;
-            for(StudentColor color : students.keySet())
-                if(students.get(color)!=0)
-                    empty = false;
-            if(empty) throw new LastStudentDrawnException();
+            else
+                randKey=drawableStudents.get(0);
+            drawnStudents.add(randKey);
+            int studentsNumber = students.get(randKey);
+            studentsNumber--;
+            students.put(randKey, studentsNumber);
+            if(studentsNumber==0){
+                drawableStudents.remove(randKey);
+                if(drawableStudents.size()==0)
+                    throw new LastStudentDrawnException();
+            }
+            i++;
         }
             return drawnStudents;
     }

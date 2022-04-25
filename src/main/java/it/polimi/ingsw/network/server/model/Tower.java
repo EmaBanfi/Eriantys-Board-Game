@@ -31,13 +31,13 @@ public class Tower {
     /**
      * This method is used to decrease the number of available towers
      * after an island or a group of island has been conquered by this towerColor
-     * @param towers it is equal to the number of islands the have changed their tower color
+     * @param towers it is equal to the number of islands that have changed their tower color
      * @throws EndGameException when the number of available towers reaches 0
      */
     public void decreaseAvailableTowers  (int towers) throws EndGameException{
         availableTowers=availableTowers-towers;
         if(availableTowers<=0)
-            throw new EndGameException("There are No more available "+ towerColor+" towers");
+            throw new EndGameException("There are no more available "+ towerColor+" towers");
     }
 
 

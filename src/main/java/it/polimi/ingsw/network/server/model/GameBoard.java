@@ -17,15 +17,12 @@ public class GameBoard {
     private StudentColor ignoreColor;
     private Player currentPlayer;
     private final Bag bag;
-    private final ArrayList<Tower> towers;
+    private ArrayList<Tower> towers;
     /**
      * This attribute is used to memorise which player is the teacher of each color
      */
     private HashMap <StudentColor,Player> teachers;
     private final ArrayList<Player> players;
-
-
-
 
     public GameBoard(int numberOfPlayers) {
         bag = new Bag();
@@ -36,8 +33,8 @@ public class GameBoard {
         initTeachers();
         motherNature = new MotherNature(islands);
         initIslands();
+        initTowers(numberOfPlayers);
         initClouds(numberOfPlayers);
-        towers=new ArrayList<>();
         ignoreColor = null;
     }
 
@@ -51,6 +48,14 @@ public class GameBoard {
         }
     }
 
+    private void initTowers(int numOfTowers){
+        towers=new ArrayList<>();
+        if(numOfTowers==3){
+            towers.add(new Tower("Gray"));
+        }
+        towers.add(new Tower("White"));
+        towers.add(new Tower("Black"));
+    }
 
     /**
      * This method is used to initialise the Arraylist clouds
@@ -66,10 +71,6 @@ public class GameBoard {
         for (int i = 0; i < numberOfPlayers; i++) {
             clouds.add(new Cloud(maxStudents));
         }
-    }
-
-    public void addTower(Tower tower){
-        towers.add(tower);
     }
 
     /**
@@ -116,7 +117,7 @@ public class GameBoard {
             for(Tower tower: towers){
                 if(tower.equals(currentIsland.getTower())){
                     tower.addInfluencePoints(currentIsland.getNumOfTowers());
-                   // System.out.println(tower.getTowerColor() + " gains "+ currentIsland.getNumOfTowers()+ " influence points because he owns the current tower");
+                    //System.out.println(tower.getTowerColor() + " gains "+ currentIsland.getNumOfTowers()+ " influence points because he owns the current tower");
                 }
             }
         }
@@ -125,7 +126,7 @@ public class GameBoard {
             player.getTower().addInfluencePoints(player.getInfluencePoints());
         }
         //for(Tower tower: towers)
-           // System.out.println(tower.getTowerColor()+" tower has "+ tower.getInfluencePoints()+ " influence points");
+            //System.out.println(tower.getTowerColor()+" tower has "+ tower.getInfluencePoints()+ " influence points");
         majority(island);
     }
 
@@ -153,7 +154,7 @@ public class GameBoard {
                 }
             }
             islands.get(island).setTower(newTower);
-            //System.out.println("island n° "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
+            //System.out.println("island n "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
             if(islands.get(next).getTower()==islands.get(island).getTower())
                 mergeIslands(island,next);
             if(islands.get(island).getTower()==islands.get(previous).getTower())
@@ -173,7 +174,6 @@ public class GameBoard {
         islands.get(first).addStudents(islands.get(second).getStudents());
         islands.get(first).addTower(islands.get(second).getNumOfTowers());
         islands.remove(second);
-        motherNature.removeIsland(2);
         if(islands.size()==3)throw new EndGameException("Only three islands remaining");
     }
 
@@ -204,7 +204,7 @@ public class GameBoard {
      * @param cloud indicates the cloud to be refilled
      * @throws LastStudentDrawnException because it calls bag.draw(). this exception will be handled by GameController
      */
-    public void refillCloud(Cloud cloud)throws LastStudentDrawnException{
+    public void refillCloud(Cloud cloud) throws LastStudentDrawnException{
         cloud.addStudents(bag.draw(cloud.getMaxStudents()));
     }
 
@@ -218,7 +218,7 @@ public class GameBoard {
 
     public void addStudentsToIsland(HashMap <Integer, ArrayList<StudentColor>> studentsToAdd){
         for (Integer index: studentsToAdd.keySet()) {
-            islands.get(index).addStudents(studentsToAdd.get(studentsToAdd.get(index)));
+            islands.get(index).addStudents(studentsToAdd.get(index));
         }
     }
 
@@ -245,7 +245,6 @@ public class GameBoard {
         return motherNature;
     }
 
-
     public HashMap<StudentColor, Player> getTeachers() {
         return teachers;
     }
@@ -268,5 +267,14 @@ public class GameBoard {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Tower getTower(String towerColor){
+        Tower tower=null;
+        for(Tower t: towers){
+            if(t.getTowerColor().equals(towerColor))
+                tower=t;
+        }
+        return tower;
     }
 }

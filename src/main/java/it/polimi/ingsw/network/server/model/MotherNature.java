@@ -27,4 +27,7 @@ public class MotherNature {
         islands.remove(island);
     }
 
+    public ArrayList<Island> getIslands(){
+        return islands;
+    }
 }

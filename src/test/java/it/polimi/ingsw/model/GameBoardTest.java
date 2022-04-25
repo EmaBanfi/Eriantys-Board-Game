@@ -20,8 +20,10 @@ class GameBoardTest {
     Player player2;
     Player player3;
     Player player4;
-    Tower whiteTower;
+
     Tower blackTower;
+
+    Tower whiteTower;
     @BeforeEach
     void setUp() {
         board =new GameBoard(4);
@@ -29,10 +31,8 @@ class GameBoardTest {
         player2=new Player("player2");
         player3=new Player("player3");
         player4=new Player("player4");
-        whiteTower= new Tower("white");
-        blackTower= new Tower("black");
-        board.getTowers().add(whiteTower);
-        board.getTowers().add(blackTower);
+        whiteTower=board.getTower("White");
+        blackTower=board.getTower("Black");
     }
 
 
@@ -51,7 +51,7 @@ class GameBoardTest {
     /**
      * Testing if tower.influencePoints is calculated properly in 4 players mode
      * if it works properly the tower influence points should be equal to the sum of its owners' influence points
-     * blackTower should have more points so Island n°7 tower color should became black
+     * blackTower should have more points so Island n°7 tower color should become black,
      * and it should be merged with island n°8
      * * Testing if EndGameException is properly thrown
      * if island n°7 tower color becomes black the last blackTower should be withdrawn
@@ -59,7 +59,8 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase0(){
-        //System.out.println("Case 0");
+        System.out.println("Case 0");
+        System.out.println(board.getIslands().size());
         board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
@@ -73,8 +74,8 @@ class GameBoardTest {
         board.getTeachers().put(StudentColor.YELLOW, player2);
         board.getTeachers().put(StudentColor.PURPLE,player4);
         board.getIsland(7).setIgnoreTower(true);
-        board.getIsland(7).setTower(whiteTower);
-        board.getIsland(8).setTower(blackTower);
+        board.setTower(whiteTower,7);
+        board.setTower(blackTower,8);
         try {
             blackTower.decreaseAvailableTowers(7);
         } catch (EndGameException e) {
@@ -89,11 +90,12 @@ class GameBoardTest {
         try {
             board.assignInfluencePoints(7);
         } catch (EndGameException e) {
-            e.printStackTrace();
             error=true;
         }
+        System.out.println(board.getIsland(7).getTower());
         assertEquals(whiteTower.getInfluencePoints(),player1.getInfluencePoints()+player3.getInfluencePoints());
         assertEquals(blackTower.getInfluencePoints(),player2.getInfluencePoints()+ player4.getInfluencePoints());
+        System.out.println(board.getIsland(7).getTower());
         assertEquals(blackTower,board.getIsland(7).getTower());
         assertEquals(11,board.getIslands().size());
         assertTrue(error);
@@ -124,6 +126,7 @@ class GameBoardTest {
             board.getIsland(6).addStudent(StudentColor.YELLOW);
         }
         board.getIsland(6).addStudent(StudentColor.RED);
+        System.out.println(board.getIslands().size());
         try {
             board.assignInfluencePoints(6);
         } catch (EndGameException e) {
@@ -144,6 +147,7 @@ class GameBoardTest {
     @Test
     void testAssignInfluencePointsCase2() {
         //System.out.println("case 2");
+        boolean endGameExceptionThrown=false;
         board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
@@ -161,7 +165,7 @@ class GameBoardTest {
         try {
             board.assignInfluencePoints(6);
         } catch (EndGameException e) {
-            e.printStackTrace();
+            endGameExceptionThrown=true;
         }
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
@@ -173,6 +177,7 @@ class GameBoardTest {
      */
     @Test
     void testAssignInfluencePointsCase3() {
+        boolean endGameExceptionThrown=false;
         //System.out.println("case 3");
         board.setCurrentPlayer(player2);
         player2.setAdditionalInfluencePoints(true);
@@ -190,7 +195,7 @@ class GameBoardTest {
         try {
             board.assignInfluencePoints(6);
         } catch (EndGameException e) {
-            e.printStackTrace();
+            endGameExceptionThrown=true;
         }
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
@@ -203,6 +208,7 @@ class GameBoardTest {
      */
     @Test
     void testMajority() {
+        boolean endGameExceptionThrown=false;
         board.getIslands().subList(0, 8).clear();
         board.getIsland(2).setTower(whiteTower);
         board.getIsland(0).setTower(whiteTower);
@@ -213,20 +219,22 @@ class GameBoardTest {
         try {
             board.majority(3);
         } catch (EndGameException e) {
-            e.printStackTrace();
+            endGameExceptionThrown=true;
         }
         assertEquals(3,board.getIslands().size());
+        assertTrue(endGameExceptionThrown);
     }
 
     @Test
     void mergeIslands() {
+        boolean endGameExceptionThrown=false;
         ArrayList<StudentColor> students= new ArrayList<>();
         students.addAll(board.getIsland(0).getStudents());
         students.addAll(board.getIsland(1).getStudents());
         try {
             board.mergeIslands(0, 1);
-        }catch (EndGameException e) {
-            e.printStackTrace();
+        } catch (EndGameException e) {
+            endGameExceptionThrown=true;
         }
         assertEquals(board.getIsland(0).getStudents(), students);
         assertEquals(2,board.getIslands().get(0).getNumOfTowers());

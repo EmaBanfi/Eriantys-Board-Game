@@ -1,15 +1,18 @@
 package it.polimi.ingsw.network.server.model;
 
 
+import it.polimi.ingsw.Exceptions.LastSupportCardUsedException;
+
 import java.util.ArrayList;
 
 public class Player {
     private PlayerBoard board;
     private ArrayList<SupportCard> deck;
+
+    private boolean characterCardUsed;
     private Tower tower;
     private int influencePoints;
     private SupportCard usedSupportCard;
-    private String deckColor;
     /** This attribute is used to implement the effect of the CharacterCard n° 2
      * If it's value is true then the player will became the teacher of a certain color
      * even if he has the some number of students of that color in his diningHal as another player
@@ -31,6 +34,7 @@ public class Player {
         board=new PlayerBoard();
         bonusToPromotion=false;
         additionalInfluencePoints=false;
+        characterCardUsed=false;
     }
 
     /**
@@ -44,6 +48,13 @@ public class Player {
         }
     }
 
+    public  void setCharacterCardUsed(boolean b){
+        characterCardUsed=b;
+    }
+
+    public boolean getCharacterCardUsed(){
+        return characterCardUsed;
+    }
     public int getInfluencePoints() {
         return influencePoints;
     }
@@ -83,14 +94,16 @@ public class Player {
     /**
      * This method is used to memorise the supportCard chosen by the player in the planning phase and remove it from the deck
      * @param cardId supportCard chosen by the player in the planning phase
+     * @throws LastSupportCardUsedException when the last support card is used
      */
-    public void setUsedSupportCard(int cardId){
+    public void setUsedSupportCard(int cardId) throws LastSupportCardUsedException{
         for(SupportCard card: deck){
             if(card.getId()==cardId){
                 deck.remove(card);
                 usedSupportCard=card;
             }
         }
+        if(deck.size()==0) throw new LastSupportCardUsedException();
     }
 
     public boolean isBonusToPromotion() {
