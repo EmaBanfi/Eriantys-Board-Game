@@ -7,6 +7,7 @@ public class Game {
 
     private int numOfPlayers;
     private ArrayList<Player> players;
+    private Player currentPlayer;
     private boolean gameStarted;
     private Phase phase;
     private String mode;
@@ -49,7 +50,8 @@ public class Game {
     public ArrayList<String> getAvailableDecks(){return availableDecks;}
 
     public ArrayList<String> getAvailableTowers(){
-        return (ArrayList<String>) availableTowers.keySet();
+        ArrayList<String> towers = new ArrayList<>(availableTowers.keySet());
+        return towers;
     }
 
     public  void assignDeck(String deck){
@@ -68,13 +70,15 @@ public class Game {
     }
     public void setNumOfPlayers(int num){numOfPlayers=num;}
 
-
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
     public boolean isGameStarted() {
         return gameStarted;
     }
 
-    public void setGameStarted(boolean gameStarted) {
-        this.gameStarted = gameStarted;
+    public void setGameStarted() {
+        gameStarted = true;
     }
 
     public boolean lastSupportCardUsed() {
@@ -103,5 +107,32 @@ public class Game {
         return mode;
     }
 
+    public void setMode(String m){
+        mode=m;
+    }
+
+    public void nextPlayer(){
+        if(lastPlayerOfRound())
+            currentPlayer=players.get(0);
+        else {
+            int index=players.indexOf(currentPlayer);
+            currentPlayer = players.get(index + 1);
+        }
+    }
+
+    public boolean lastPlayerOfRound(){
+        return players.indexOf(currentPlayer)==players.size()-1;
+    }
+
+    public boolean firstPlayerOfRound(){
+        return players.indexOf(currentPlayer)==0;
+    }
+    public void setCurrentPlayer(Player player){
+        currentPlayer=player;
+    }
+
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
 }
 
