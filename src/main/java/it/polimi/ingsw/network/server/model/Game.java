@@ -103,14 +103,5 @@ public class Game {
         return mode;
     }
 
-    /**
-     * This method is used to switch between planning and action phase
-     */
-    public void nextPhase(){
-     if(phase.equals(Phase.PLANNING))
-         phase=Phase.ACTION;
-     else
-         phase=Phase.PLANNING;
-    }
 }
 
