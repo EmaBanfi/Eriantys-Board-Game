@@ -60,7 +60,7 @@ public class ClientHandler extends Thread{
                 message.processMessage(this);
 
                 //mettere a posto riceve messaggi (non primo)
-                ps.printf(server.getGame().answer());
+                //ps.printf(server.getGame().answer());
                 /*try {
                     str1 = kb.readLine();
                 } catch (IOException e) {
@@ -96,14 +96,12 @@ public class ClientHandler extends Thread{
     }
 
     public void addToGame(String nick) {
-        if (server.isAlreadyPresent(nick)) {
+        if (!server.addToGame(nick,this)) {
             Message message = new Message("Nickname already taken. Choose another one ");
             Gson gson = new Gson();
             String text = gson.toJson(message, Message.class);
             sendMessage(text);
         } else {
-            server.addToGame(nick, this);
-
             Gson gson = new Gson();
             Notify notify;
             if (server.isAlreadyPresent(nick)) {

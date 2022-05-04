@@ -2,17 +2,17 @@ package it.polimi.ingsw.communicationProtocolTest;
 
 public class Notify {
 
-    private String message;
+    private String notifyMessage;
 
     public Notify() {
     }
 
     public Notify(String message) {
-        this.message = message;
+        this.notifyMessage = message;
     }
 
     public void processMessage() {
-        System.out.println(message);
+        System.out.println(notifyMessage);
     }
 
 }

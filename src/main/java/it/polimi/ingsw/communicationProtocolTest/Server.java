@@ -102,20 +102,12 @@ public class Server{
              if (lobby.size() > (clientHandlers.size() + 1)) {
                  Notify message = new Notify("Waiting for player to choose nickname...");
                  Gson gson = new Gson();
-                 String text = gson.toJson(message, Message.class);
+                 String text = gson.toJson(message, Notify.class);
                  handler.sendMessage(text);
              }
 
              if (handlerId >= 2 && (lobby.size() == clientHandlers.size() + 1))  {
-                 String nicks = "";
-                 for (String nick: clientHandlers.keySet()){
-                     if (nicks.length() == 0) {
-                         nicks = nick;
-                     }
-                     else
-                        nicks = nicks + ", " + nick;
-                 }
-                 Message message = new Message("Please select nickname. The following nicknames have already taken " + nicks);
+                 Message message = new Message("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
                  Gson gson = new Gson();
                  String text = gson.toJson(message, Message.class);
                  handler.sendMessage(text);
@@ -131,14 +123,8 @@ public class Server{
 
         clientHandlers.put(nick,clientHandler);
         if(lobby.size() >= (clientHandlers.size() + 1)) {
-            String nicks = "";
-            for (String nickname : clientHandlers.keySet()) {
-                if (nicks.length() == 0) {
-                    nicks = nickname;
-                } else
-                    nicks = nicks + ", " + nickname;
-            }
-            Message message = new Message("Please select nickname. The following nicknames have already taken " + nicks);
+
+            Message message = new Message("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
             Gson gson = new Gson();
             String text = gson.toJson(message, Message.class);
             lobby.get(clientHandler.getHandlerId() + 1).sendMessage(text);
@@ -157,6 +143,17 @@ public class Server{
 
     public void sendMessage(String nick, String message){
         clientHandlers.get(nick).sendMessage(message);
+    }
+
+    private String alreadyConnectedPlayers(){
+        String nicks = "";
+        for (String nickname : clientHandlers.keySet()) {
+            if (nicks.length() == 0) {
+                nicks = nickname;
+            } else
+                nicks = nicks + ", " + nickname;
+        }
+        return nicks;
     }
 
 }

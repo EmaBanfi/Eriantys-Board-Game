@@ -52,7 +52,10 @@ public abstract class Client {
             if ((str = kb.readLine()).equals("exit"))
                 closeConnection();
             else {
-                dos.writeBytes(str + "\n");
+                Gson gson= new Gson();
+                ClientFirstMessage message=new ClientFirstMessage(str);
+                String text= gson.toJson(message,ClientFirstMessage.class);
+                dos.writeBytes(text + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
