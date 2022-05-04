@@ -1,18 +1,20 @@
 package it.polimi.ingsw.communicationProtocolTest;
 
-public class Message {
+public class Message extends ServerMessage {
 
-    private String message;
 
     public Message() {
+        super();
     }
 
     public Message(String message) {
-        this.message = message;
+        super(message);
+        setType("message");
     }
 
+    @Override
     public void processMessage(Client client) {
-        System.out.println(message);
+        System.out.println(getMessage());
 
         client.send();
     }

@@ -1,18 +1,22 @@
 package it.polimi.ingsw.communicationProtocolTest;
 
-public class Notify {
+public class Notify extends ServerMessage{
 
-    private String notifyMessage;
+
 
     public Notify() {
+        super();
     }
 
     public Notify(String message) {
-        this.notifyMessage = message;
+        super(message);
+        setType("notify");
     }
 
-    public void processMessage() {
-        System.out.println(notifyMessage);
+    @Override
+    public void processMessage(Client client) {
+        System.out.println(getMessage());
     }
+
 
 }

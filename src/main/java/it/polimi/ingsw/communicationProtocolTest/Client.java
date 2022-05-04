@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+
 public abstract class Client {
 
     Socket s;
@@ -16,10 +17,12 @@ public abstract class Client {
     BufferedReader kb;
     String str, str1;
     boolean serverUp;
+    smGson smgson;
 
     public Client(){
         connection();
 
+        smgson= new smGson();
         try {
             dos = new DataOutputStream(s.getOutputStream());
         } catch (IOException e) {
@@ -73,8 +76,7 @@ public abstract class Client {
             if (str1.equals("exit"))
                 serverUp = false;
             else {
-                Gson gson = new Gson();
-                Message message = gson.fromJson(str1, Message.class);
+                ServerMessage message = smgson.deserialize(str1);
                 message.processMessage(this);
             }
 

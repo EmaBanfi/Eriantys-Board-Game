@@ -96,7 +96,6 @@ public class Server{
                  Gson gson = new Gson();
                  String text = gson.toJson(message, Message.class);
                  handler.sendMessage(text);
-                 System.out.println(text);
              }
 
              if (lobby.size() > (clientHandlers.size() + 1)) {

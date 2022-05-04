@@ -1,18 +1,21 @@
 package it.polimi.ingsw.communicationProtocolTest;
 
-public class LoginFailedMessage {
+public class LoginFailedMessage extends ServerMessage{
 
-    String message;
+
 
     public LoginFailedMessage() {
+        super();
     }
 
     public LoginFailedMessage(String message) {
-        this.message = message;
+        super(message);
+        setType("login failed");
     }
 
+    @Override
     public void processMessage(Client client) {
-        System.out.println(message);
+        System.out.println(getMessage());
 
         client.closeConnection();
     }
