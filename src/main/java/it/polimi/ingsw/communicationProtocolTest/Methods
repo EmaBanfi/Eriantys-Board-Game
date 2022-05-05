@@ -1,0 +1,130 @@
+CONTROLLER
+->to set mode and numOfPlayers. Called by message
+setGameStatus()
+
+->to set a player deck. Called by message
+setDeck(Player nick, String deck)
+
+->to set a player tower. Called by message
+setTower(Player nick, String tower)
+
+->to set chosen SupportCard. Called by message
+setChosenSupportCard( int card)
+
+->to determine round order. Called by method
+calculateRoundOrder()
+
+->to activate CharacterCard
+activateCharacterCard(CharacterCard)
+
+->to move students from the hall to the dining hall. Called by message
+moveStudentsHToD(Arraylist<StudentColor> students)
+
+->to move students from the hall to (single or multiple) island(s). Called by message
+moveStudentsHToI(Integer island, ArrayList<StudentColor> students)
+
+->to remove students from the hall (the ones removed by the movements). Called by method
+removeStudents(StudentColor color)
+
+->to set the cloud where the client want to take the students. Called by message
+setChosenCloud(int cloud)
+
+->to assign a teacher. Called by method
+assignTeacher()
+
+->to set new mother nature position. Called by message
+setMotherNatureMovements(int movements)
+
+->to set that the current round is the last one. Called by method
+  setLastRound()
+
+->to notify that the game is over. Called by method
+endGame()
+
+->to determine winners and losers. Called by method
+winners()
+
+
+VIEW
+->communicate to the client to insert the nickname. Called by message
+askNickname()
+
+->ask to the client if he want to choose a character card. Called by method
+askActivateCharacterCard()
+
+->communicate to the client to choose a character card. Called by method
+askCharacterCard()
+
+->choose the numOfPlayers and mode. (only to the first player connected). Called by message
+askSetGameStatus()
+
+->ask to set a color for the tower (the controller will notify if is correctly setted). Called by method
+askTower()
+
+->ask to choose a deck (the controller will do a check). Called by method
+askDeck()
+
+
+->ask to choose a support card (or nothing). Called by method
+askSupportCard()
+
+->ask to the client which students wants to move from H to D. Called by method
+askMoveStudentsHToD()
+
+->ask to the client which students wants to move from H to I (single or multiple). Called by method
+askMoveStudentsHToI()
+
+->ask to the client from which C wants to take the students. Called by method
+askCloud()
+
+->ask where he wants to put mother nature (the controller will do a check). Called by method
+askMotherNatureMovements()
+
+->show a message (string) on the client screen. Called by message
+showString(String message )
+
+->show the character card used by a player and his name. Called by message
+showCharacterCard(Player nick, int id)
+
+->show the support card used by a player and his name. Called by message
+showSupportCard(Player nick, int id)
+
+->show on the client screen which support card is using during that turn. Called by method
+updateUsedSupportCard()
+
+->show the available support card to the client. Called by method
+updateAvailableSupportCards()
+
+->show on screen the price of a specific character card. Called by message
+updateCharacterCardPrice(int id)
+
+->show the new position of mother nature (when other players changes it). Called by message
+updateMotherPosition(int island)
+
+->show the new color of the island for a tower. Called by message
+updateTowerColor(String tower)
+
+->show the island blocked. Called by message
+updateBlock(int island, boolean blocked)
+
+->merge two islands. Called by message
+mergeIslands(int toBeMerged, int mergeTo)
+
+->show the added students on a specific island. Called by message
+addStudentsOnIsland(int island, ArrayList<StudentColor>)
+
+->show the added students in the dining hall of the specified player. Called by message
+addStudentToPlayerD(String nick, Arraylist<StudentColor>)
+
+->show the winners and the losers. Called by message
+showGameResults(ArrayList<String> winners, ArrayList<String> losers)
+
+->remove the students from the dining hall of a specified player. Called by message
+removeStudentsFromPlayerD(String nick,ArrayList<StudentColor>)
+
+->update the hall of a specified player. Called by message
+updatePlayerHall(String nick, ArrayList<StudentColor>)
+
+->update the amount of coins that the player has. Called by message
+updatePlayerCoins(String nick, int coin)
+
