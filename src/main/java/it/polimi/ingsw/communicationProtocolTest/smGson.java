@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 public class smGson {
     Gson gson;
     public smGson(){
-        gson=new GsonBuilder().registerTypeAdapter(ServerMessage.class,new MessageDeserializer()).create();
+        gson=new GsonBuilder().registerTypeAdapter(ServerMessage.class,new ServerMessageDeserializer()).create();
     }
 
     public ServerMessage deserialize(String Json){
