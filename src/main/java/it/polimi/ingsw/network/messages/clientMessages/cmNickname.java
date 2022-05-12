@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.messages.clientMessages;
 
 import it.polimi.ingsw.network.server.ClientHandler;
-import it.polimi.ingsw.network.server.Server;
 
 public class cmNickname extends ClientMessage {
 

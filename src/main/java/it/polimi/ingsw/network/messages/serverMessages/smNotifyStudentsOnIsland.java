@@ -1,16 +1,22 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-
 import it.polimi.ingsw.network.server.model.StudentColor;
-
 import java.util.ArrayList;
 
-public class smNotifyStudentsOnIsland extends ServerMessage{
-    int island;
-     ArrayList<StudentColor> students;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyStudentsOnIsland extends ServerMessage {
 
-    public smNotifyStudentsOnIsland(int island, ArrayList<StudentColor> students) {
+    private int island;
+    ArrayList<StudentColor> students;
+
+    public smNotifyStudentsOnIsland() {
+    }
+
+    public smNotifyStudentsOnIsland(String message, int island, ArrayList<StudentColor> students) {
+        super(message);
         this.island = island;
         this.students = students;
+        setType("notify students on island");
     }
+
 }

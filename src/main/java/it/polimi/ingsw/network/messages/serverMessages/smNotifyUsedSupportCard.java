@@ -1,11 +1,19 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class smNotifyUsedSupportCard extends ServerMessage{
-    String playerNick;
-    int cardId;
 
-    public smNotifyUsedSupportCard(String playerNick, int cardId) {
-        this.playerNick = playerNick;
-        this.cardId = cardId;
+    private String playerNick;
+    private int supportCardId;
+
+    public smNotifyUsedSupportCard() {
     }
+
+    public smNotifyUsedSupportCard(String message, String playerNick, int supportCardId) {
+        super(message);
+        this.playerNick = playerNick;
+        this.supportCardId = supportCardId;
+        setType("notify used support card");
+    }
+
 }

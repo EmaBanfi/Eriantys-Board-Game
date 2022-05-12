@@ -1,9 +1,17 @@
 package it.polimi.ingsw.network.messages.clientMessages;
 
-public class cmSupportCard extends ClientMessage{
-    int id;
+@SuppressWarnings("FieldCanBeLocal")
+public class cmSupportCard extends ClientMessage {
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private int id;
+
+    public cmSupportCard() {
+    }
 
     public cmSupportCard(int id) {
         this.id = id;
+        setType("support card");
     }
+
 }

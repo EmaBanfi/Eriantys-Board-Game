@@ -1,9 +1,17 @@
 package it.polimi.ingsw.network.messages.clientMessages;
 
-public class cmTower extends ClientMessage{
-    String tower;
+@SuppressWarnings("FieldCanBeLocal")
+public class cmTower extends ClientMessage {
+
+    @SuppressWarnings("FieldCanBeLocal")
+    private String tower;
+
+    public cmTower() {
+    }
 
     public cmTower(String tower) {
         this.tower = tower;
+        setType("tower");
     }
+
 }

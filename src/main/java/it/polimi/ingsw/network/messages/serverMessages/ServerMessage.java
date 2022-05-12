@@ -8,7 +8,6 @@ public class ServerMessage extends Message {
     private String message;
 
     public ServerMessage() {
-        super();
     }
 
     public ServerMessage(String message) {

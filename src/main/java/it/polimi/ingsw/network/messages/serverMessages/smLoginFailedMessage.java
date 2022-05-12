@@ -5,7 +5,6 @@ import it.polimi.ingsw.network.client.Client;
 public class smLoginFailedMessage extends ServerMessage{
 
     public smLoginFailedMessage() {
-        super();
     }
 
     public smLoginFailedMessage(String message) {

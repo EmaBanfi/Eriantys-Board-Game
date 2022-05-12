@@ -1,11 +1,19 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyTowerColor extends ServerMessage{
-    int island;
-    String color;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyTowerColor extends ServerMessage {
 
-    public smNotifyTowerColor(int island, String color) {
-        this.island = island;
-        this.color = color;
+    private String color;
+    private int island;
+
+    public smNotifyTowerColor() {
     }
+
+    public smNotifyTowerColor(String message, int island, String color) {
+        super(message);
+        this.color = color;
+        this.island = island;
+        setType("notify tower color");
+    }
+
 }

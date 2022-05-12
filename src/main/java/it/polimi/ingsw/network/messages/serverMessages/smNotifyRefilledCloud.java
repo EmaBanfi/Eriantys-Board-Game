@@ -1,17 +1,17 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-import it.polimi.ingsw.network.server.model.StudentColor;
-
-import java.util.ArrayList;
-
+@SuppressWarnings("FieldCanBeLocal")
 public class smNotifyRefilledCloud extends ServerMessage{
 
+    private String cloud;
+
     public smNotifyRefilledCloud() {
-        super();
     }
 
-    public smNotifyRefilledCloud(String cloud) {
-        super(cloud);
+    public smNotifyRefilledCloud(String message, String cloud) {
+        super(message);
+        this.cloud = cloud;
+        setType("notify refilled cloud");
     }
 
 }

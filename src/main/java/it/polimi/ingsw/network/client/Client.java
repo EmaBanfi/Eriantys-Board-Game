@@ -1,29 +1,25 @@
 package it.polimi.ingsw.network.client;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.messages.clientMessages.ClientMessage;
 import it.polimi.ingsw.network.messages.clientMessages.cmNickname;
 import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
 import it.polimi.ingsw.network.messages.serverMessages.ServerMessage;
 import it.polimi.ingsw.network.messages.serverMessages.SmGson;
-import it.polimi.ingsw.network.messages.serverMessages.smClientFirstMessage;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-
 public class Client {
 
-    Socket s;
-    DataOutputStream dos;
-    BufferedReader br;
-    BufferedReader kb;
-    String str, str1;
-    boolean serverUp;
-    SmGson smgson;
+    private Socket s;
+    private DataOutputStream dos;
+    private BufferedReader br;
+    private BufferedReader kb;
+    private String str, str1;
+    private boolean serverUp;
+    private SmGson smgson;
 
     public Client() {
         connection();
@@ -124,4 +120,3 @@ public class Client {
     }
     
 }
-

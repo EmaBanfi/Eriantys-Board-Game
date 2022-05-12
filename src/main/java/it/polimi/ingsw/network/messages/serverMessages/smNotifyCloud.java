@@ -1,9 +1,17 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyCloud extends ServerMessage{
-    int cloud;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyCloud extends ServerMessage {
 
-    public smNotifyCloud(int cloud) {
-        this.cloud = cloud;
+    private int cloud;
+
+    public smNotifyCloud() {
     }
+
+    public smNotifyCloud(String message, int cloud) {
+        super(message);
+        this.cloud = cloud;
+        setType("notify cloud");
+    }
+
 }

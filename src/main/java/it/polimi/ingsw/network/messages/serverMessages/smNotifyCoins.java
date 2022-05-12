@@ -1,11 +1,19 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class smNotifyCoins extends ServerMessage{
-    String player;
+
+    private String playerNick;
     int coins;
 
-    public smNotifyCoins(String player, int coins) {
-        this.player = player;
-        this.coins = coins;
+    public smNotifyCoins() {
     }
+
+    public smNotifyCoins(String message, String playerNick, int coins) {
+        super(message);
+        this.playerNick = playerNick;
+        this.coins = coins;
+        setType("notify coins");
+    }
+
 }

@@ -5,7 +5,6 @@ import it.polimi.ingsw.network.client.Client;
 public class smNotify extends ServerMessage{
 
     public smNotify() {
-        super();
     }
 
     public smNotify(String message) {
@@ -17,6 +16,5 @@ public class smNotify extends ServerMessage{
     public void processMessage(Client client) {
         System.out.println(getMessage());
     }
-
 
 }

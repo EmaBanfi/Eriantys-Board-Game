@@ -1,9 +1,16 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyMotherPosition extends ServerMessage{
-    int island;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyMotherPosition extends ServerMessage {
 
-    public smNotifyMotherPosition(int island) {
+    private int island;
+
+    public smNotifyMotherPosition() {
+    }
+
+    public smNotifyMotherPosition(String message, int island) {
+        super(message);
         this.island = island;
+        setType("notify mother position");
     }
 }

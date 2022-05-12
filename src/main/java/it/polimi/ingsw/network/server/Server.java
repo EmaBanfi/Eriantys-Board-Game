@@ -12,12 +12,11 @@ import java.util.Scanner;
 
 public class Server {
 
-    ServerSocket serverSocket;
-    //private Game game;
+    private ServerSocket serverSocket;
     private final HashMap<Integer,ClientHandler> lobby;
     private final HashMap<String,ClientHandler> clientHandlers;
     private int  id=1;
-    boolean listeningSocket = true;
+    private boolean listeningSocket = true;
     private boolean  acceptingConnection = true;
 
     public Server(int port){
@@ -31,7 +30,6 @@ public class Server {
 
         lobby = new HashMap<>();
         clientHandlers = new HashMap<>();
-        //game = new Game(this);
 
         waitForPlayers();
     }

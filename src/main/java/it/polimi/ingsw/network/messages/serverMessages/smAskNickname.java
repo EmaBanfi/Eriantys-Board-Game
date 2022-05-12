@@ -5,7 +5,6 @@ import it.polimi.ingsw.network.client.Client;
 public class smAskNickname extends ServerMessage {
 
     public smAskNickname() {
-        super();
     }
 
     public smAskNickname(String message) {

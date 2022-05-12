@@ -14,7 +14,7 @@ import java.net.Socket;
 public class ClientHandler extends Thread{
 
     private final Socket socket;
-    PrintStream ps = null;
+    private PrintStream ps = null;
     private final Server server;
     private final int handlerId;
     private final CmGson cmGson;

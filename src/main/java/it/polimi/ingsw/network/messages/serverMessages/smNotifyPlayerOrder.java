@@ -1,9 +1,19 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyPlayerOrder extends ServerMessage{
-    String nickname;
+import java.util.ArrayList;
 
-    public smNotifyPlayerOrder(String nickname) {
-        this.nickname = nickname;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyPlayerOrder extends ServerMessage{
+
+    private ArrayList<String> playerOrder;
+
+    public smNotifyPlayerOrder() {
     }
+
+    public smNotifyPlayerOrder(String message, ArrayList<String> playerOrder) {
+        super(message);
+        this.playerOrder = playerOrder;
+        setType("notify player order");
+    }
+
 }

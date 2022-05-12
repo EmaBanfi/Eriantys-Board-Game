@@ -1,11 +1,17 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyEndGame extends ServerMessage{
-    String endCause;
-    boolean immediate;
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyEndGame extends ServerMessage {
 
-    public smNotifyEndGame(String endCause, boolean immediate) {
-        this.endCause = endCause;
-        this.immediate = immediate;
+    private String endCause;
+
+    public smNotifyEndGame() {
     }
+
+    public smNotifyEndGame(String message, String endCause) {
+        super(message);
+        this.endCause = endCause;
+        setType("notify end game");
+    }
+
 }

@@ -1,13 +1,17 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
-public class smNotifyUsedDeck extends ServerMessage{
+@SuppressWarnings("FieldCanBeLocal")
+public class smNotifyUsedDeck extends ServerMessage {
+
+    private String deck;
 
     public smNotifyUsedDeck() {
-        super();
     }
 
-    public smNotifyUsedDeck(String deck) {
-        super(deck);
+    public smNotifyUsedDeck(String message, String deck) {
+        super(message);
+        this.deck = deck;
         setType("notify used deck");
     }
+
 }

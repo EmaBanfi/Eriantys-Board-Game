@@ -18,4 +18,5 @@ public class smAskGameStatus extends ServerMessage {
 
         client.askGameStatus();
     }
+
 }
