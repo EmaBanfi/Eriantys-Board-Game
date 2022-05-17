@@ -14,16 +14,17 @@
 
 ### Implemented functionality
 
-| Functionality    |  Status  |
-|:-----------------|:--------:|
-| Basic rules      |    🟢    |
-| Complete rules   |    🟢    |
-| Socket           |    🔴    |
-| GUI              |    🔴    |
-| CLI              |    🔴    |
-| Multiple games   |    🔴    |
-| Persistence      |    🔴    |
-| Advanced Gods    |    🔴    |
-| Undo             |    🔴    |
+| Functionality                    | Status |
+|:---------------------------------|:------:|
+| Basic rules                      |   🟢   |
+| Complete rules                   |   🟢   |
+| Socket                           |   🟢   |
+| GUI                              |   🟡   |
+| CLI                              |   🟡   |
+| All character cards              |   🟡   |
+| Multiplayer: for up to 4 players |   🟢   |
+| Multiple games                   |   🔴   |
+| Persistence                      |   🔴   |
+| Resilience to disconnections     |   🔴   |
 
 🔴 Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Implementing &nbsp;&nbsp;&nbsp;&nbsp;🟢 Implemented
