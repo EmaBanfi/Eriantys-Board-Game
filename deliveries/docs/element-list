@@ -1,4 +1,8 @@
 it.polimi.ingsw.Exceptions
-it.polimi.ingsw.network.server.controller
+it.polimi.ingsw.network.client
+it.polimi.ingsw.network.messages
+it.polimi.ingsw.network.messages.clientMessages
+it.polimi.ingsw.network.messages.serverMessages
+it.polimi.ingsw.network.server
 it.polimi.ingsw.network.server.model
 it.polimi.ingsw.network.server.model.CharacterCards

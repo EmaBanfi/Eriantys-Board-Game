@@ -53,18 +53,11 @@ public class Client {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            if (str1.equals("exit"))
-                serverUp = false;
-            else {
+            if(str1!=null) {
                 ServerMessage message = smgson.deserialize(str1);
                 message.processMessage(this);
             }
-
         }
-
-        closeConnection();
-
     }
 
     public void closeConnection() {

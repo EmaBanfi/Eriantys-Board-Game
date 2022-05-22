@@ -37,7 +37,7 @@ public class Tower {
     public void decreaseAvailableTowers  (int towers) throws EndGameException{
         availableTowers=availableTowers-towers;
         if(availableTowers<=0)
-            throw new EndGameException("There are no more available "+ towerColor+" towers");
+            throw new EndGameException("there are no more available " + towerColor + " towers");
     }
 
 
@@ -50,11 +50,11 @@ public class Tower {
         return influencePoints;
     }
 
-    /*
+
     public int getAvailableTowers() {
         return availableTowers;
     }
-     */
+
 
     /**
      * This method is used to increase the influence points of the tower

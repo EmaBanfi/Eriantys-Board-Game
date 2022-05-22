@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player {
     private PlayerBoard board;
     private ArrayList<SupportCard> deck;
-
+    private ArrayList<StudentColor> roles;
     private boolean characterCardUsed;
     private Tower tower;
     private int influencePoints;
@@ -29,6 +29,7 @@ public class Player {
      * @param nickName it must be unique.
      */
     public Player(String nickName) {
+        roles=new ArrayList<>();
         this.nickName = nickName;
         initSupportDeck();
         board=new PlayerBoard();
@@ -83,6 +84,10 @@ public class Player {
         return deck;
     }
 
+    public ArrayList<StudentColor> getRoles(){
+        return  roles;
+    }
+
     /**
      * This method is used to get the supportCard chosen by the player in the planning phase
      * @return the card chosen by the player in the planning phase
@@ -106,7 +111,15 @@ public class Player {
         if(deck.size()==0) throw new LastSupportCardUsedException();
     }
 
-    public boolean isBonusToPromotion() {
+    public int remainingSupportCards(){
+        return deck.size();
+    }
+
+    public SupportCard getUsedSupportCard(){
+        return usedSupportCard;
+    }
+
+    public boolean hasBonusToPromotion() {
         return bonusToPromotion;
     }
 
@@ -128,5 +141,28 @@ public class Player {
 
     public void setAdditionalInfluencePoints(boolean additionalInfluencePoints) {
         this.additionalInfluencePoints = additionalInfluencePoints;
+    }
+
+    public void clearUsedSupportCard(){
+        usedSupportCard=null;
+    }
+
+    public SupportCard getCardById(int id){
+        SupportCard foundCard=null;
+        for (SupportCard card : deck){
+            if(card.getId()==id){
+                foundCard=card;
+            }
+        }
+        return foundCard;
+    }
+
+    public void addRole (StudentColor color){
+        if(!roles.contains(color))
+            roles.add(color);
+    }
+
+    public void removeRole(StudentColor color){
+        roles.remove(color);
     }
 }

@@ -5,17 +5,17 @@ public class smNotifyUsedCharacterCard extends ServerMessage {
 
     private String playerNick;
     private int cardId;
-    private int price;
+    private boolean increasedPrice;
 
     public smNotifyUsedCharacterCard() {
         super();
     }
 
-    public smNotifyUsedCharacterCard(String message, String playerNick, int cardId, int price) {
+    public smNotifyUsedCharacterCard(String message, String playerNick, int cardId, boolean increasedPrice) {
         super(message);
         this.playerNick = playerNick;
         this.cardId = cardId;
-        this.price = price;
+        this.increasedPrice = increasedPrice;
         setType("notify used character card");
     }
 

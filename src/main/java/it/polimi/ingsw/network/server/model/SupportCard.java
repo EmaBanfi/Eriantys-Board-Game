@@ -4,6 +4,7 @@ public class SupportCard {
     private final int turnOrder;
     private final int movement;
     private final int cardId;
+    private double additionalTurnOrder ;
 
     /**
      * Constructor
@@ -15,16 +16,20 @@ public class SupportCard {
         this.turnOrder = turnOrder;
         this.movement = movement;
         this.cardId = id;
+        additionalTurnOrder=0;
     }
 
-    public int getTurnOrder() {
-        return turnOrder;
+    public double getTurnOrder() {
+        return turnOrder+additionalTurnOrder;
     }
 
     public int getMovement() {
         return movement;
     }
 
+    public void setAdditionalTurnOrder(){
+        additionalTurnOrder=0.5;
+    }
     public int getId() {
         return cardId;
     }

@@ -1,19 +1,14 @@
 package it.polimi.ingsw.network.server.model.CharacterCards;
 
-import it.polimi.ingsw.network.server.model.GameBoard;
-import it.polimi.ingsw.network.server.model.Player;
-
-import java.util.ArrayList;
-
 public class CharacterCard {
     protected int cardId;
     private int price;
-    private boolean increasedPrice=false;
-    protected GameBoard gameBoard;
-    Player currentPlayer;
-    private ArrayList<RequiredInfo> info;
+    private transient boolean increasedPrice=false;
 
-    public CharacterCard() {}
+    public CharacterCard(int cardID, int price) {
+        this.cardId = cardID;
+        this.price = price;
+    }
 
     protected int getCardId() {
         return cardId;
@@ -27,28 +22,15 @@ public class CharacterCard {
         return price;
     }
 
-    public ArrayList<RequiredInfo> getInfo() {
-        return info;
-    }
-
-    public void increasePrice(){
+    public boolean increasePrice(){
         if(!increasedPrice){
             increasedPrice=true;
             price++;
+            return true;
         }
+        else
+            return false;
     }
 
-    public void setGameBoard(GameBoard board) {
-        this.gameBoard = board;
-    }
-
-    public GameBoard getGameBoard() {
-        return this.gameBoard;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public void activate(){}
+    //public void activate(){}
 }

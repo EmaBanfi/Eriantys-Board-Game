@@ -55,11 +55,12 @@ public class ClientHandler extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if(str!=null) {
+                //System.out.println("Client" + handlerId + ": " + str);
 
-            //System.out.println("Client" + handlerId + ": " + str);
-
-            ClientMessage message = cmGson.deserialize(str);
-            message.processMessage(this);
+                ClientMessage message = cmGson.deserialize(str);
+                message.processMessage(this);
+            }
 
             //mettere a posto riceve messaggi (non primo)
             //ps.printf(server.getGame().answer());
@@ -119,6 +120,7 @@ public class ClientHandler extends Thread{
     }
 
     public void sendMessage(String message){
+        System.out.println(message);
         ps.println(message);
     }
 

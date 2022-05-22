@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Server {
 
     private ServerSocket serverSocket;
+    private Controller controller;
     private final HashMap<Integer,ClientHandler> lobby;
     private final HashMap<String,ClientHandler> clientHandlers;
     private int  id=1;
@@ -30,6 +31,7 @@ public class Server {
 
         lobby = new HashMap<>();
         clientHandlers = new HashMap<>();
+        controller = new Controller(this);
 
         waitForPlayers();
     }
@@ -136,6 +138,19 @@ public class Server {
 
     public void sendMessage(String nick, String message){
         clientHandlers.get(nick).sendMessage(message);
+    }
+
+    public void sendAll(String message){
+        for(ClientHandler handler: clientHandlers.values()){
+            handler.sendMessage(message);
+        }
+    }
+
+    public void sendAllExceptPlayer(String nick, String message){
+        for(String nickName: clientHandlers.keySet()){
+            if(!nickName.equals(nick))
+                clientHandlers.get(nickName).sendMessage(message);
+        }
     }
 
     private String alreadyConnectedPlayers(){

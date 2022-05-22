@@ -38,10 +38,21 @@ public class PlayerBoard {
      */
     public void addStudentsToDiningHall(ArrayList<StudentColor> students) {
         this.diningHall.addStudents(students);
+    }
 
-        // by adding students we have to check if there are coins to take for each table
-        for (StudentColor color : StudentColor.values())
-            this.coins = this.coins + checkCoins(color);
+    public void removeStudentsFromD(ArrayList<StudentColor> students){
+        diningHall.removeStudents(students);
+    }
+
+    public boolean assignCoins(){
+        boolean increasedCoins = false;
+        for (StudentColor color : StudentColor.values()){
+            if(checkCoins(color)!=0){
+                this.coins = this.coins + checkCoins(color);
+                increasedCoins = true;
+            }
+        }
+        return increasedCoins;
     }
 
     /**
@@ -104,5 +115,9 @@ public class PlayerBoard {
 
     public int getCoins() {
         return coins;
+    }
+
+    public int countStudentColorInDH(StudentColor color){
+        return (int) diningHall.getStudents().stream().filter(x -> x.equals(color)).count();
     }
 }

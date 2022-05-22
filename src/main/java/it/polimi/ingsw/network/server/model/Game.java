@@ -13,7 +13,8 @@ public class Game {
     private String mode;
     private boolean lastSupportCardUsed;
     private boolean lastStudentDrawn;
-    private ArrayList<String> availableDecks;
+    //
+    // private ArrayList<String> availableDecks;
 
     private HashMap<String,Integer> availableTowers;
 
@@ -22,19 +23,19 @@ public class Game {
         lastStudentDrawn =false;
         phase=null;
         gameStarted=false;
-        initAvailableDecks();
-        initAvailableTowers();
+        //initAvailableDecks();
+        //initAvailableTowers();
     }
 
-    private void initAvailableDecks(){
+    /*private void initAvailableDecks(){
         availableDecks=new ArrayList<>();
         availableDecks.add("KingDeck");
-        availableDecks.add("MagedDeck");
+        availableDecks.add("MageDeck");
         availableDecks.add("WitchDeck");
         availableDecks.add("SageDeck");
-    }
+    }*/
 
-    private void initAvailableTowers(){
+    /*private void initAvailableTowers(){
         availableTowers= new HashMap<>();
         if(numOfPlayers==3){
             availableTowers.put("White",1);
@@ -45,18 +46,18 @@ public class Game {
             availableTowers.put("White",2);
             availableTowers.put("Black",2);
         }
-    }
+    }*/
 
-    public ArrayList<String> getAvailableDecks(){return availableDecks;}
+    //public ArrayList<String> getAvailableDecks(){return availableDecks;}
 
     public ArrayList<String> getAvailableTowers(){
         ArrayList<String> towers = new ArrayList<>(availableTowers.keySet());
         return towers;
     }
 
-    public  void assignDeck(String deck){
+    /*public  void assignDeck(String deck){
         availableDecks.remove(deck);
-    }
+    }*/
 
     public boolean gameIsReady(){
         return players.size()==numOfPlayers;
@@ -134,5 +135,18 @@ public class Game {
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
+
+    public boolean isExpertMode(){
+        return mode.equals("expert");
+    }
+
+    public Player getPlayerByTurnOrder(int i){
+        return players.get(i);
+    }
+
+    public boolean isCurrentPlayer(String player){
+        return currentPlayer.getNickName().equals(player);
+    }
+
 }
 

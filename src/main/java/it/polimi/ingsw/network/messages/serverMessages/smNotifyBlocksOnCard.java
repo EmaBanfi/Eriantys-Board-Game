@@ -3,16 +3,13 @@ package it.polimi.ingsw.network.messages.serverMessages;
 @SuppressWarnings("FieldCanBeLocal")
 public class smNotifyBlocksOnCard extends ServerMessage{
 
-    private int cardId;
-    private int blocks;
+    boolean decreasedBlocks;
 
     public smNotifyBlocksOnCard() {
     }
 
-    public smNotifyBlocksOnCard(String message, int cardId, int blocks) {
-        super(message);
-        this.cardId = cardId;
-        this.blocks = blocks;
+    public smNotifyBlocksOnCard( boolean decreasedBlocks) {
+        this.decreasedBlocks = decreasedBlocks;
         setType("notify blocks on card");
     }
 
