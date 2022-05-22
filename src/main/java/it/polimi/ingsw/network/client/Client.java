@@ -21,6 +21,7 @@ public class Client {
     private boolean serverUp;
     private SmGson smgson;
 
+
     public Client() {
         connection();
 
@@ -55,6 +56,7 @@ public class Client {
             }
             if(str1!=null) {
                 ServerMessage message = smgson.deserialize(str1);
+                System.out.println(message.getMessage());
                 message.processMessage(this);
             }
         }
@@ -69,6 +71,9 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void send(String string){
     }
 
     public void askNickname() {

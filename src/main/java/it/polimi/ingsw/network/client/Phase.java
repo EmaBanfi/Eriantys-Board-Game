@@ -1,0 +1,12 @@
+package it.polimi.ingsw.network.client;
+
+public enum Phase {
+    CHOOSE_GAME_STATUS,
+    CHOOSE_SUPPORT_CARD,
+    CHOOSE_MOTHER_MOVEMENTS,
+    CHOOSE_CLOUDS,
+    CHOOSE_TOWER,
+    CHOOSE_DECK,
+    CHOOSE_STUDENTS_TO_DINING_HALL,
+    CHOOSE_STUDENTS_TO_ISLAND;
+}
