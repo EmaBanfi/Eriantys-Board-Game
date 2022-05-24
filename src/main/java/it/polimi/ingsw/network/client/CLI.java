@@ -1,20 +1,16 @@
 package it.polimi.ingsw.network.client;
 
-//come viene tenuto conto dell'incremento di costo delle character card? servono delle sottoclassi che implementano i vari gruppi con i metodi che incrementano i loro prezzi all'occorrenza?
-
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.*;
-import it.polimi.ingsw.network.server.model.Island;
-import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class CLI implements Runnable {
+public class CLI extends View {
 
     MotherNatureView motherNature;
     ArrayList<CloudView> availableClouds;
@@ -25,7 +21,7 @@ public class CLI implements Runnable {
     ArrayList<String> availableDecks;
     ArrayList<String> availableTowers;
     ArrayList<Integer> supportCards;
-    ArrayList<characterCardView> availableCharacterCards;
+    ArrayList<CharacterCardView> availableCharacterCards;
     ArrayList<String> playerOrder;
     boolean usedCharacterCard;
     Client client;
@@ -68,10 +64,20 @@ public class CLI implements Runnable {
     public void run() {
     }
 
+    @Override
+    public PlayerView getPlayer() {
+        return null;
+    }
+
+    @Override
+    public PlayerView getPlayerByName(String nick) {
+        return null;
+    }
+
     /**
      * communicate to the client to insert the nickname. Called by message
      */
-    public void askNickName() throws IOException {
+    public void askNickName(){
         resumeFrom = Phase.CHOOSE_GAME_STATUS;
         System.out.println("Inserit Nickname: ");
         client.askNickname();
@@ -80,63 +86,70 @@ public class CLI implements Runnable {
     /**
      * ask to the client if he want to choose a character card. Called by method
      */
-    public void askActivateCharacterCard() throws IOException {
+    public void askActivateCharacterCard(){
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
         boolean result = false;
         System.out.println("Do you want to use a character card?");
-        if (br.readLine() == "yes") {
-            usedCharacterCard = true;
-            askCharacterCard();
-        } else {
-            resumeFrom();
+        try {
+            if (br.readLine() == "yes") {
+                usedCharacterCard = true;
+                askCharacterCard();
+            } else {
+                resumeFrom();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     /**
      * communicate to the client to choose a character card. Called by method
      */
-    public void askCharacterCard() throws IOException {
+    public void askCharacterCard(){
         usedCharacterCard = true;
         int userChoice;
-        characterCardView chosenCard = null;
+        CharacterCardView chosenCard = null;
         System.out.println("Choose Character Card: ");
-        for (characterCardView characterCard : availableCharacterCards) {
+        for (CharacterCardView characterCard : availableCharacterCards) {
             System.out.println("Card: " + characterCard.getCardId() + "\n" + "Cost: " + characterCard.getCost() + "\n");
         }
         boolean isPresent = false;
-        do {
-            userChoice = Integer.parseInt(br.readLine());
-            for (characterCardView characterCard : availableCharacterCards) {
-                if (userChoice == characterCard.getCardId())
-                    isPresent = true;
-            }
-            if (!isPresent)
-                System.out.println("Invalid id, please choose a new one: ");
-        } while (!isPresent);
+        try {
+            do {
+                userChoice = Integer.parseInt(br.readLine());
+                for (CharacterCardView characterCard : availableCharacterCards) {
+                    if (userChoice == characterCard.getCardId())
+                        isPresent = true;
+                }
+                if (!isPresent)
+                    System.out.println("Invalid id, please choose a new one: ");
+            } while (!isPresent);
+        }catch(IOException e)
+        {e.printStackTrace();}
         Gson gson = new Gson();
         if (chosenCard.getCardId() == 1 || chosenCard.getCardId() == 11) {
-            cmCCG1 message = new cmCCG1();
-            String text = gson.toJson(message, cmCCG1.class);
+            CCG1 message = new CCG1();
+            String text = gson.toJson(message, CCG1.class);
             client.send(text + "\n");
         } else if (chosenCard.getCardId() == 2 || chosenCard.getCardId() == 8) {
-            cmCCG2 message = new cmCCG2();
-            String text = gson.toJson(message, cmCCG2.class);
+            CCG2 message = new CCG2();
+            String text = gson.toJson(message, CCG2.class);
             client.send(text + "\n");
         } else if (chosenCard.getCardId() == 3 || chosenCard.getCardId() == 4) {
-            cmCCG3 message = new cmCCG3();
-            String text = gson.toJson(message, cmCCG3.class);
+            CCG3 message = new CCG3();
+            String text = gson.toJson(message, CCG3.class);
             client.send(text + "\n");
         } else if (chosenCard.getCardId() == 9 || chosenCard.getCardId() == 12) {
-            cmCCG4 message = new cmCCG4();
-            String text = gson.toJson(message, cmCCG4.class);
+            CCG4 message = new CCG4();
+            String text = gson.toJson(message, CCG4.class);
             client.send(text + "\n");
         } else if (chosenCard.getCardId() == 5 || chosenCard.getCardId() == 6) {
-            cmCCG5 message = new cmCCG5();
-            String text = gson.toJson(message, cmCCG5.class);
+            CCG5 message = new CCG5();
+            String text = gson.toJson(message, CCG5.class);
             client.send(text + "\n");
         } else {
-            cmCCG6 message = new cmCCG6();
-            String text = gson.toJson(message, cmCCG6.class);
+            CCG6 message = new CCG6();
+            String text = gson.toJson(message, CCG6.class);
             client.send(text + "\n");
         }
     }
@@ -166,40 +179,45 @@ public class CLI implements Runnable {
         }
         System.out.println("Number of players selected: " + numOfPlayers + "\n" + "Mode selected: " + mode);
         Gson gson = new Gson();
-        cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
-        String text = gson.toJson(message, cmSetGameStatus.class);
+        SetGameStatus message = new SetGameStatus(numOfPlayers, mode);
+        String text = gson.toJson(message, SetGameStatus.class);
         client.send(text + "\n");
     }
 
     /**
      * ask to set a color for the tower (the controller will notify if is correctly setted). Called by method
      */
-    public void askTower() throws IOException {
+    public void askTower(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         String colorChoice = null;
         if (numOfPlayers == 3) {
             System.out.println("Choose your tower color (White, Grey or Black): ");
-            do {
-                colorChoice = br.readLine();
-                if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"))
-                    System.out.println("Invalid Tower color, please select a valid one: ");
-            } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"));
+            try {
+                do {
+                    colorChoice = br.readLine();
+                    if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"))
+                        System.out.println("Invalid Tower color, please select a valid one: ");
+                } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"));
+            }catch(IOException e)
+            {e.printStackTrace();}
             System.out.println("Chosen Tower color: " + colorChoice);
             Gson gson = new Gson();
-            cmTower message = new cmTower();
-            String text = gson.toJson(message, cmTower.class);
+            Tower message = new Tower();
+            String text = gson.toJson(message, Tower.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         } else {
             System.out.println("Choose your tower color (White or Black): ");
-            do {
-                colorChoice = br.readLine();
-                if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"))
-                    System.out.println("Invalid Tower color, please select a valid one: ");
-            } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"));
+            try {
+                do {
+                    colorChoice = br.readLine();
+                    if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"))
+                        System.out.println("Invalid Tower color, please select a valid one: ");
+                } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"));
+            }catch(IOException e){e.printStackTrace();}
             System.out.println("Chosen tower color: " + colorChoice);
-            cmTower message = new cmTower();
-            String text = gson.toJson(message, cmSetGameStatus.class);
+            Tower message = new Tower();
+            String text = gson.toJson(message, SetGameStatus.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         }
@@ -208,26 +226,29 @@ public class CLI implements Runnable {
     /**
      * ask to choose a deck (the controller will do a check). Called by method
      */
-    public void askDeck() throws IOException {
+    public void askDeck(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         System.out.println("Choose a deck: ");
         for (String deck : availableDecks) {
             System.out.println(deck);
         }
-        String userChoice;
+        String userChoice = null;
         boolean deckAvailable = false;
-        do {
-            userChoice = br.readLine();
-            for (String deck : availableDecks) {
-                if (userChoice.toUpperCase().equals(deck))
-                    deckAvailable = true;
-            }
-            if (!deckAvailable)
-                System.out.println("Invalid deck, please choose a valid one: ");
-        } while (!deckAvailable);
+        try {
+            do {
+                userChoice = br.readLine();
+                for (String deck : availableDecks) {
+                    if (userChoice.toUpperCase().equals(deck))
+                        deckAvailable = true;
+                }
+                if (!deckAvailable)
+                    System.out.println("Invalid deck, please choose a valid one: ");
+            } while (!deckAvailable);
+        }catch(IOException e)
+        {e.printStackTrace();}
         System.out.println("Chosen deck: " + userChoice);
-        cmDeck message = new cmDeck();
-        String text = gson.toJson(message, cmDeck.class);
+        Deck message = new Deck();
+        String text = gson.toJson(message, Deck.class);
         client.send(text + "\n");
         availableDecks.remove(userChoice.toUpperCase());
     }
@@ -235,7 +256,7 @@ public class CLI implements Runnable {
     /**
      * ask to choose a support card (or nothing). Called by method
      */
-    public void askSupportCard() throws IOException {
+    public void askSupportCard(){
         usedCharacterCard = false;
         System.out.println("Choose a support card: ");
         for (Integer supportCard : supportCards) {
@@ -243,19 +264,21 @@ public class CLI implements Runnable {
         }
         boolean supportCardAvailable = false;
         int supportCardChoice = 0;
-        do {
-            supportCardChoice = Integer.parseInt(br.readLine());
-            for (Integer supportCard : supportCards
-            ) {
-                if (supportCardChoice == supportCard)
-                    supportCardAvailable = true;
-            }
-            if (!supportCardAvailable)
-                System.out.println("Invalid support card, please choose a valid one: ");
-        } while (!supportCardAvailable);
+        try {
+            do {
+                supportCardChoice = Integer.parseInt(br.readLine());
+                for (Integer supportCard : supportCards
+                ) {
+                    if (supportCardChoice == supportCard)
+                        supportCardAvailable = true;
+                }
+                if (!supportCardAvailable)
+                    System.out.println("Invalid support card, please choose a valid one: ");
+            } while (!supportCardAvailable);
+        }catch(IOException e){e.printStackTrace();}
         System.out.println("Chosen support card: " + supportCardChoice);
-        cmSupportCard message = new cmSupportCard();
-        String text = gson.toJson(message, cmSupportCard.class);
+        SupportCard message = new SupportCard();
+        String text = gson.toJson(message, SupportCard.class);
         client.send(text + "\n");
         supportCards.remove(supportCardChoice);
     }
@@ -263,16 +286,18 @@ public class CLI implements Runnable {
     /**
      * ask to the client which students wants to move from H to D. Called by method
      */
-    public void askMoveStudentsHToD() throws IOException {
+    public void askMoveStudentsHToD(){
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
         System.out.println("How many students do you want to move from Hall to Dining Hall? (from 0 up to " + availableStudentsMovements + ")");
-        int numStudents;
+        int numStudents = 0;
         boolean validMovements = false;
-        do {
-            numStudents = Integer.parseInt(br.readLine());
-            if (numStudents > 3 || numStudents < 0)
-                System.out.println("Not valid, please choose a value between 0 and 3: ");
-        } while (numStudents > 3 || numStudents < 0);
+        try {
+            do {
+                numStudents = Integer.parseInt(br.readLine());
+                if (numStudents > 3 || numStudents < 0)
+                    System.out.println("Not valid, please choose a value between 0 and 3: ");
+            } while (numStudents > 3 || numStudents < 0);
+        }catch(IOException e){e.printStackTrace();}
         if (numStudents > 0) {
             System.out.println("Choose the student that you want to move: ");
             ArrayList<StudentColor> studentsToMove = null;
@@ -280,10 +305,14 @@ public class CLI implements Runnable {
                 for (StudentColor student : player.getHall()) {
                     System.out.println(student + " ");
                 }
-                String chosenStudent;
+                String chosenStudent = null;
                 for (int i = 1; i <= numStudents; i++) {
                     do {
-                        chosenStudent = br.readLine().toUpperCase();
+                        try {
+                            chosenStudent = br.readLine().toUpperCase();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println("Choose student " + i);
                     } while (!validColor(chosenStudent));
                     studentsToMove.add(StudentColor.valueOf(chosenStudent));
@@ -291,8 +320,8 @@ public class CLI implements Runnable {
             } while (!player.getHall().containsAll(studentsToMove));
             player.removeFromHall(studentsToMove);
             player.addToDiningHall(studentsToMove);
-            cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(studentsToMove);
-            client.send(gson.toJson(message, cmStudentsMovementsHToD.class));
+            StudentsMovementsHToD message = new StudentsMovementsHToD(studentsToMove);
+            client.send(gson.toJson(message, StudentsMovementsHToD.class));
             availableStudentsMovements = -numStudents;
         }
     }
@@ -308,7 +337,7 @@ public class CLI implements Runnable {
     /**
      * ask to the client which students wants to move from H to I (single or multiple). Called by method
      */
-    public void askMoveStudentsHToI() throws IOException {
+    public void askMoveStudentsHToI(){
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
         if (availableStudentsMovements > 0) {
             System.out.println("Choose the island in which you want to move the student/s: ");
@@ -317,7 +346,11 @@ public class CLI implements Runnable {
                 System.out.println("Island: " + i + "  " + "Students on island " + i + ": " + availableIslands.get(i).getStudents() + ";");
             }
             do {
-                chosenIsland = Integer.parseInt(br.readLine());
+                try {
+                    chosenIsland = Integer.parseInt(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 if (chosenIsland < 0 || chosenIsland > availableIslands.size())
                     System.out.println("Invalid island, please choose a valid one: ");
             } while (chosenIsland < 0 || chosenIsland > availableIslands.size());
@@ -328,10 +361,14 @@ public class CLI implements Runnable {
                 for (StudentColor student : player.getHall()) {
                     System.out.println(student + " ");
                 }
-                String chosenStudent;
+                String chosenStudent = null;
                 for (int i = 1; i <= availableStudentsMovements; i++) {
                     do {
-                        chosenStudent = br.readLine().toUpperCase();
+                        try {
+                            chosenStudent = br.readLine().toUpperCase();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println("Choose student " + i);
                     } while (!validColor(chosenStudent));
                     studentsToMove.add(StudentColor.valueOf(chosenStudent));
@@ -340,8 +377,8 @@ public class CLI implements Runnable {
             System.out.println("Chosen students: " + studentsToMove);
             HashMap<Integer, ArrayList<StudentColor>> movementsHToI = null;
             movementsHToI.put(chosenIsland, studentsToMove);
-            cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHToI);
-            client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
+            StudentsMovementsHToI message = new StudentsMovementsHToI(movementsHToI);
+            client.send(gson.toJson(message, StudentsMovementsHToI.class));
             player.getHall().removeAll(studentsToMove);
         }
     }
@@ -349,7 +386,7 @@ public class CLI implements Runnable {
     /**
      * ask to the client from which C wants to take the students. Called by method
      */
-    public void askCloud() throws IOException {
+    public void askCloud(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         System.out.println("Choose a cloud island to take the students from: ");
         System.out.println("Choose the island in which you want to move the student/s: ");
@@ -359,20 +396,24 @@ public class CLI implements Runnable {
         }
         int chosenCloud = 0;
         do {
-            chosenCloud = Integer.parseInt(br.readLine());
+            try {
+                chosenCloud = Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (chosenCloud < 0 || chosenCloud > availableClouds.size())
                 System.out.println("Invalid cloud, please choose a valid one: ");
         } while (chosenCloud < 0 || chosenCloud > availableClouds.size());
         System.out.println("Chosen cloud:  " + chosenCloud);
-        cmCloud message = new cmCloud(chosenCloud);
-        client.send(gson.toJson(message, cmCloud.class));
+        Cloud message = new Cloud(chosenCloud);
+        client.send(gson.toJson(message, Cloud.class));
         player.addToHall(availableClouds.get(chosenCloud).getStudents());
     }
 
     /**
      * ask where he wants to put mother nature (the controller will do a check). Called by method
      */
-    public void askMotherNatureMovements() throws IOException {
+    public void askMotherNatureMovements(){
         System.out.println("Choose on which island you want to move Mother Nature: ");
         System.out.println("Current Mother Nature position: " + motherNature.getCurrentIsland());
         for (int i = 0; i < availableIslands.size(); i++) {
@@ -380,13 +421,17 @@ public class CLI implements Runnable {
         }
         int chosenIsland = 0;
         do {
-            chosenIsland = Integer.parseInt(br.readLine());
+            try {
+                chosenIsland = Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (chosenIsland < 0 || chosenIsland > availableIslands.size())
                 System.out.println("Invalid island, please choose a valid one: ");
         } while (chosenIsland < 0 || chosenIsland > availableIslands.size());
         System.out.println("Chosen island: " + chosenIsland);
-        cmMoveMother message = new cmMoveMother(chosenIsland);
-        client.send(gson.toJson(message, cmMoveMother.class));
+        MoveMother message = new MoveMother(chosenIsland);
+        client.send(gson.toJson(message, MoveMother.class));
     }
 
     /**
@@ -414,27 +459,39 @@ public class CLI implements Runnable {
         System.out.println("Support Card: " + id);
     }
 
+    @Override
+    public void updateUsedSupportCard() {
+
+    }
+
     /**
      * show on the client screen which support card is using during that turn. Called by method
      */
-    public void updateUsedSupportCard() {
-        System.out.println("Used Support Card: " + supportCards);
+    public void updateUsedSupportCard(int id) {
+        getCurrentPLayer().setUsedSupportCard(id);
+    }
+
+    public PlayerView getCurrentPLayer(){
+        for(PlayerView player: players){
+            if(player.getNickname() == currentPlayer)
+                return player;
+
+        }
+        return null;
     }
 
     /**
      * show the available support card to the client. Called by method
      */
     public void updateAvailableSupportCards() {
-        System.out.println("Available Character Cards: " + availableCharacterCards);
+        
     }
 
     /**
      * show on screen the price of a specific character card. Called by message
-     *
      * @param id
      */
     public void updateCharacterCardPrice(int id) {
-        //idea: inizializzarle con json nel controller e tenere traccia del costro tramite controller
     }
 
     /**
@@ -443,6 +500,11 @@ public class CLI implements Runnable {
      */
     public void updateMotherPosition(int island) {
         System.out.println("New Mother Nature position: " + island);
+    }
+
+    @Override
+    public void updateTowerColor(String tower) {
+
     }
 
     /**
@@ -457,12 +519,23 @@ public class CLI implements Runnable {
     /**
      * show the island blocked. Called by message
      * @param island
-     * @param blocked
      */
-    public void updateBlock(int island, boolean blocked) {
-        if (blocked == true)
-            System.out.println("The island " + island + "is blocked");
+    public void blockIsland(int island) {
+
     }
+
+    public void unlockIsland(int island){}
+
+    @Override
+    public void ignoreTower(int island) {
+
+    }
+
+    /**
+     *
+     * @param island
+     */
+    public void unblockIsland(int island){}
 
     /**
      * merge two islands. Called by message
@@ -488,6 +561,11 @@ public class CLI implements Runnable {
      */
     public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
         System.out.println("Studenti aggiunti alla mensa di " + nick + ": " + students);
+    }
+
+    @Override
+    public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
+
     }
 
     /**
@@ -521,6 +599,11 @@ public class CLI implements Runnable {
     public void updatePlayerHall(String nick, ArrayList<StudentColor> students) {
     }
 
+    @Override
+    public void updatePlayerCoins(int coin) {
+
+    }
+
     /**
      * update the amount of coins that the player has. Called by message
      * @param nick
@@ -545,9 +628,8 @@ public class CLI implements Runnable {
 
     /**
      * keep track of the status of the turn
-     * @throws IOException
      */
-    public void resumeFrom() throws IOException {
+    public void resumeFrom(){
         switch (resumeFrom){
             case CHOOSE_GAME_STATUS:
                 askSetGameStatus();
@@ -569,12 +651,12 @@ public class CLI implements Runnable {
 
     }
 
+    public void addBlockOnCard(){}
+
     /**
      * updates the blockCard effect of the character card
-     * @param block
      */
-    public void updateBlockOnCard(int block) {
-
+    public void removeBlockOnCard() {
     }
 
     /**
@@ -584,20 +666,35 @@ public class CLI implements Runnable {
     public void updateEmptyCloud(int cloud) {
     }
 
+    @Override
+    public void updateIgnoredColor(StudentColor color) {
+
+    }
+
     /**
      * updates the ignored color given by the effect of the character card
      * @param color
      */
-    public void updateIgnoredColor(StudentColor color) {
+    public void ignoreColor(StudentColor color) {
+    }
+
+    public void notIgnoreColor(StudentColor color){}
+
+    @Override
+    public void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards) {
+
     }
 
     /**
      * updates the ignored Tower given by the effecto of the character card
      * @param island
-     * @param ignored
      */
-    public void updatetIgnoredTower(int island, boolean ignored) {
+    public void ignoredTower(int island) {
+
     }
+
+    public void notIgnoreTower(int island){}
+
 
     /**
      * updates the tower on an island
@@ -613,6 +710,11 @@ public class CLI implements Runnable {
      * @param students
      */
     public void updatesStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
+    }
+
+    @Override
+    public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
+
     }
 
     /**
@@ -647,4 +749,16 @@ public class CLI implements Runnable {
      * show the support card used by the current player
      */
     public void setSupportCard(){}
+
+    public void updateCharacterCard(ArrayList<CharacterCardView> availableCharacterCards){
+        this.availableCharacterCards = availableCharacterCards;
+    }
+
+    public void setNumOfPlayers(int numOfPlayers){
+        this.numOfPlayers = numOfPlayers;
+    }
+
+    public void setMode(String mode){
+        this.mode = mode;
+    }
 }
