@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.client;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.messages.clientMessages.cmNickname;
-import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
+import it.polimi.ingsw.network.messages.clientMessages.Nickname;
+import it.polimi.ingsw.network.messages.clientMessages.SetGameStatus;
 import it.polimi.ingsw.network.messages.serverMessages.ServerMessage;
-import it.polimi.ingsw.network.messages.serverMessages.SmGson;
+import it.polimi.ingsw.network.messages.serverMessages.ServerGson;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,15 +17,21 @@ public class Client {
     private DataOutputStream dos;
     private BufferedReader br;
     private BufferedReader kb;
-    private String str, str1;
+    private String str;
     private boolean serverUp;
-    private SmGson smgson;
+    private ServerGson smgson;
+    private View view;
 
 
-    public Client() {
+    public Client(String viewType) {
+        if (viewType.equals("1"))
+            view = new CLI(this);
+        /*else
+            view = new GUI(this);*/
+
         connection();
 
-        smgson = new SmGson();
+        smgson = new ServerGson();
         try {
             dos = new DataOutputStream(s.getOutputStream());
             br = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -39,6 +45,24 @@ public class Client {
         receive();
     }
 
+    public static void main(String[] args) throws Exception {
+        System.out.println("Do you want to play with CLI or GUI?");
+        System.out.println("CLI: 1");
+        System.out.println("GUI: 2");
+
+        BufferedReader br;
+        br = new BufferedReader(new InputStreamReader(System.in));
+
+        String viewType;
+        do {
+            viewType = br.readLine();
+            if (!(viewType.equals("1")) & !(viewType.equals("2")))
+                System.out.println("Please digit 1 or 2");
+        } while (!(viewType.equals("1")) & !(viewType.equals("2")));
+
+        Client c = new Client(viewType);
+    }
+
     public void connection() {
         try {
             s = new Socket("localhost", 888);
@@ -50,13 +74,12 @@ public class Client {
     public void receive() {
         while (serverUp) {
             try {
-                str1 = br.readLine();
+                str = br.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(str1!=null) {
-                ServerMessage message = smgson.deserialize(str1);
-                System.out.println(message.getMessage());
+            if(str != null) {
+                ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }
         }
@@ -80,8 +103,8 @@ public class Client {
         try {
             str = kb.readLine();
             Gson gson = new Gson();
-            cmNickname message = new cmNickname(str);
-            String text = gson.toJson(message, cmNickname.class);
+            Nickname message = new Nickname(str);
+            String text = gson.toJson(message, Nickname.class);
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,8 +127,8 @@ public class Client {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
-        String text = gson.toJson(message, cmSetGameStatus.class);
+        SetGameStatus message = new SetGameStatus(numOfPlayers, mode);
+        String text = gson.toJson(message, SetGameStatus.class);
         try {
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
@@ -113,8 +136,7 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        Client c = new Client();
+    public View getView() {
+        return view;
     }
-    
 }
