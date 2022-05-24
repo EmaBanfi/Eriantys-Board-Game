@@ -84,32 +84,32 @@ public class Server {
             ClientHandler handler = new ClientHandler(clientSocket,this, handlerId);
 
             if (handlerId > 4) {
-                smLoginFailedMessage message = new smLoginFailedMessage("Lobby is already full");
+                LoginFailedMessage message = new LoginFailedMessage("Lobby is already full");
                 Gson gson = new Gson();
-                String text = gson.toJson(message, smLoginFailedMessage.class);
+                String text = gson.toJson(message, LoginFailedMessage.class);
                 handler.sendMessage(text);
             }
 
             lobby.put(handlerId, handler);
 
             if (handlerId == 1) {
-                smAskNickname message = new smAskNickname("Please select nickname");
+                AskNickname message = new AskNickname("Please select nickname");
                 Gson gson = new Gson();
-                String text = gson.toJson(message, smAskNickname.class);
+                String text = gson.toJson(message, AskNickname.class);
                 handler.sendMessage(text);
             }
 
             if (lobby.size() > (clientHandlers.size() + 1)) {
-                smNotify message = new smNotify("Waiting for player to choose nickname...");
+                Notify message = new Notify("Waiting for player to choose nickname...");
                 Gson gson = new Gson();
-                String text = gson.toJson(message, smNotify.class);
+                String text = gson.toJson(message, Notify.class);
                 handler.sendMessage(text);
             }
 
             if (handlerId >= 2 && (lobby.size() == clientHandlers.size() + 1))  {
-                smAskNickname message = new smAskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
+                AskNickname message = new AskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
                 Gson gson = new Gson();
-                String text = gson.toJson(message, smAskNickname.class);
+                String text = gson.toJson(message, AskNickname.class);
                 handler.sendMessage(text);
             }
 
@@ -122,10 +122,11 @@ public class Server {
             return false;
 
         clientHandlers.put(nick,clientHandler);
+        controller.addPlayerToGame(nick);
         if (lobby.size() >= (clientHandlers.size() + 1)) {
-            smAskNickname message = new smAskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
+            AskNickname message = new AskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
             Gson gson = new Gson();
-            String text = gson.toJson(message, smAskNickname.class);
+            String text = gson.toJson(message, AskNickname.class);
             lobby.get(clientHandler.getHandlerId() + 1).sendMessage(text);
         }
 
@@ -164,4 +165,7 @@ public class Server {
         return nicks;
     }
 
+    public Controller getController() {
+        return controller;
+    }
 }

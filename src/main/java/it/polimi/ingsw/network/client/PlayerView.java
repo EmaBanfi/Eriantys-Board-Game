@@ -17,6 +17,10 @@ public class PlayerView {
         coins = 0;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public ArrayList<StudentColor> getHall() {
         return hall;
     }

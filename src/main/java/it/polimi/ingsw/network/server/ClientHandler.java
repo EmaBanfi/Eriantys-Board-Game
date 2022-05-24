@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.ClientMessage;
-import it.polimi.ingsw.network.messages.clientMessages.CmGson;
+import it.polimi.ingsw.network.messages.clientMessages.ClientGson;
 import it.polimi.ingsw.network.messages.serverMessages.*;
 
 import java.io.BufferedReader;
@@ -17,7 +17,7 @@ public class ClientHandler extends Thread{
     private PrintStream ps = null;
     private final Server server;
     private final int handlerId;
-    private final CmGson cmGson;
+    private final ClientGson clientGson;
 
     public ClientHandler(Socket socket, Server server, int id) {
         super("ClientHandler");
@@ -32,7 +32,7 @@ public class ClientHandler extends Thread{
             e.printStackTrace();
         }
 
-        cmGson = new CmGson();
+        clientGson = new ClientGson();
     }
 
     public synchronized void run() {
@@ -58,18 +58,9 @@ public class ClientHandler extends Thread{
             if(str!=null) {
                 //System.out.println("Client" + handlerId + ": " + str);
 
-                ClientMessage message = cmGson.deserialize(str);
+                ClientMessage message = clientGson.deserialize(str);
                 message.processMessage(this);
             }
-
-            //mettere a posto riceve messaggi (non primo)
-            //ps.printf(server.getGame().answer());
-            /*try {
-                str1 = kb.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ps.println(str1);*/
         }
 
         ps.close();
@@ -96,25 +87,25 @@ public class ClientHandler extends Thread{
 
     public void addToGame(String nick) {
         if (!server.addToGame(nick,this)) {
-            smAskNickname message = new smAskNickname("Nickname already taken. Choose another one ");
+            AskNickname message = new AskNickname("Nickname already taken. Choose another one ");
             Gson gson = new Gson();
-            String text = gson.toJson(message, smAskNickname.class);
+            String text = gson.toJson(message, AskNickname.class);
             sendMessage(text);
         } else {
             Gson gson = new Gson();
-            smNotify notify;
+            Notify notify;
             if (server.isAlreadyPresent(nick)) {
-                notify = new smNotify("You have been connected");
+                notify = new Notify("You have been connected");
             } else {
-                notify = new smNotify("Not connected");
+                notify = new Notify("Not connected");
             }
-            String text = gson.toJson(notify, smNotify.class);
+            String text = gson.toJson(notify, Notify.class);
             sendMessage(text);
         }
         if (handlerId == 1) {
-            smAskGameStatus message = new smAskGameStatus("Please choose num of players and mode");
+            AskGameStatus message = new AskGameStatus("Please choose num of players and mode");
             Gson gson = new Gson();
-            String text = gson.toJson(message, smAskGameStatus.class);
+            String text = gson.toJson(message, AskGameStatus.class);
             sendMessage(text);
         }
     }
@@ -128,4 +119,7 @@ public class ClientHandler extends Thread{
         return handlerId;
     }
 
+    public Server getServer() {
+        return server;
+    }
 }
