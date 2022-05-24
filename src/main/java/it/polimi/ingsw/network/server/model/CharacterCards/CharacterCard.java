@@ -10,7 +10,7 @@ public class CharacterCard {
         this.price = price;
     }
 
-    protected int getCardId() {
+    public int getCardId() {
         return cardId;
     }
 
@@ -31,6 +31,4 @@ public class CharacterCard {
         else
             return false;
     }
-
-    //public void activate(){}
 }

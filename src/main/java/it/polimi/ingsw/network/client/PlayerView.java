@@ -11,10 +11,18 @@ public class PlayerView {
     private String nickname;
     private int usedSupportCard;
     private int coins;
+    private int availableSupportCard;
 
     public PlayerView(String nickname) {
         this.nickname = nickname;
+        availableSupportCard = 10;
         coins = 0;
+    }
+
+    public int getAvailableSupportCard(){return availableSupportCard;}
+
+    public void decreaseSupportCards(){
+        availableSupportCard--;
     }
 
     public String getNickname() {

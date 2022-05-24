@@ -14,7 +14,7 @@ public abstract class View implements Runnable {
 
     public abstract PlayerView getPlayer();
 
-    public abstract PlayerView getPlayerByName(String nick);
+    public abstract PlayerView getPlayerByNick(String nick);
 
     private void initAvailableDecks(){}
 
@@ -96,7 +96,7 @@ public abstract class View implements Runnable {
     /**
      * show on the client screen which support card is using during that turn. Called by method
      */
-    public abstract void updateUsedSupportCard();
+    public abstract void updateUsedSupportCard(int id);
 
     /**
      * show the available support card to the client. Called by method

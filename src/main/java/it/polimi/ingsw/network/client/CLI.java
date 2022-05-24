@@ -2,13 +2,12 @@ package it.polimi.ingsw.network.client;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.*;
-import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
 import it.polimi.ingsw.network.server.model.StudentColor;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
 
 public class CLI extends View {
 
@@ -21,7 +20,7 @@ public class CLI extends View {
     ArrayList<String> availableDecks;
     ArrayList<String> availableTowers;
     ArrayList<Integer> supportCards;
-    ArrayList<CharacterCardView> availableCharacterCards;
+    ArrayList<CharacterCard> availableCharacterCards;
     ArrayList<String> playerOrder;
     boolean usedCharacterCard;
     Client client;
@@ -33,8 +32,7 @@ public class CLI extends View {
     Gson gson;
     int availableStudentsMovements = 3;
 
-    public CLI(Client client, String playerNickname, String mode) {
-        this.mode = mode;
+    public CLI(Client client) {
         this.client = client;
         gson = new Gson();
         initAvailableDecks();
@@ -66,12 +64,7 @@ public class CLI extends View {
 
     @Override
     public PlayerView getPlayer() {
-        return null;
-    }
-
-    @Override
-    public PlayerView getPlayerByName(String nick) {
-        return null;
+        return player;
     }
 
     /**
@@ -108,16 +101,16 @@ public class CLI extends View {
     public void askCharacterCard(){
         usedCharacterCard = true;
         int userChoice;
-        CharacterCardView chosenCard = null;
+        CharacterCard chosenCard = null;
         System.out.println("Choose Character Card: ");
-        for (CharacterCardView characterCard : availableCharacterCards) {
-            System.out.println("Card: " + characterCard.getCardId() + "\n" + "Cost: " + characterCard.getCost() + "\n");
+        for (CharacterCard characterCard : availableCharacterCards) {
+            System.out.println("Card: " + characterCard.getCardId() + "\n" + "Cost: " + characterCard.getPrice() + "\n");
         }
         boolean isPresent = false;
         try {
             do {
                 userChoice = Integer.parseInt(br.readLine());
-                for (CharacterCardView characterCard : availableCharacterCards) {
+                for (CharacterCard characterCard : availableCharacterCards) {
                     if (userChoice == characterCard.getCardId())
                         isPresent = true;
                 }
@@ -436,7 +429,6 @@ public class CLI extends View {
 
     /**
      * show a message (string) on the client screen. Called by message
-     *
      * @param message
      */
     public void showString(String message) {
@@ -459,47 +451,43 @@ public class CLI extends View {
         System.out.println("Support Card: " + id);
     }
 
-    @Override
-    public void updateUsedSupportCard() {
-
-    }
-
     /**
      * show on the client screen which support card is using during that turn. Called by method
      */
+    @Override
     public void updateUsedSupportCard(int id) {
-        getCurrentPLayer().setUsedSupportCard(id);
+        getPlayerByNick(currentPlayer).setUsedSupportCard(id);
     }
 
-    public PlayerView getCurrentPLayer(){
+    public PlayerView getPlayerByNick(String nick){
         for(PlayerView player: players){
-            if(player.getNickname() == currentPlayer)
+            if(player.getNickname() == nick)
                 return player;
-
         }
         return null;
     }
 
     /**
-     * show the available support card to the client. Called by method
+     * decrease the available SupportCard of a player. Called by method
      */
     public void updateAvailableSupportCards() {
-        
+        getPlayerByNick(currentPlayer).decreaseSupportCards();
     }
 
     /**
-     * show on screen the price of a specific character card. Called by message
+     * updates the price of a specific character card. Called by message
      * @param id
      */
     public void updateCharacterCardPrice(int id) {
+        availableCharacterCards.get(id).increasePrice();
     }
 
     /**
-     * show the new position of mother nature (when other players changes it). Called by message
+     * updates the new position of mother nature (when other players changes it). Called by message
      * @param island
      */
     public void updateMotherPosition(int island) {
-        System.out.println("New Mother Nature position: " + island);
+        
     }
 
     @Override
@@ -532,7 +520,6 @@ public class CLI extends View {
     }
 
     /**
-     *
      * @param island
      */
     public void unblockIsland(int island){}
@@ -681,7 +668,7 @@ public class CLI extends View {
     public void notIgnoreColor(StudentColor color){}
 
     @Override
-    public void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards) {
+    public void updateCharacterCards(ArrayList<it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard> availableCharacterCards) {
 
     }
 
@@ -750,7 +737,7 @@ public class CLI extends View {
      */
     public void setSupportCard(){}
 
-    public void updateCharacterCard(ArrayList<CharacterCardView> availableCharacterCards){
+    public void updateCharacterCard(ArrayList<CharacterCard> availableCharacterCards){
         this.availableCharacterCards = availableCharacterCards;
     }
 
