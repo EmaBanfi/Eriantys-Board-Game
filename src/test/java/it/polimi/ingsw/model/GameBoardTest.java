@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Exceptions.EndGameException;
+import it.polimi.ingsw.network.server.DummyServer;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.model.GameBoard;
 import it.polimi.ingsw.network.server.model.Player;
@@ -27,7 +28,7 @@ class GameBoardTest {
 
     @BeforeEach
     void setUp() {
-        server = new Server(888);
+        server = new DummyServer();
         board =new GameBoard(4);
         player1=new Player("player1");
         player2=new Player("player2");
@@ -76,10 +77,6 @@ class GameBoardTest {
         player1.addRole(StudentColor.GREEN);
         player2.addRole(StudentColor.YELLOW);
         player4.addRole(StudentColor.PURPLE);
-        /*board.getTeachers().put(StudentColor.GREEN, player1);
-        board.getTeachers().put(StudentColor.YELLOW, player2);
-        board.getTeachers().put(StudentColor.PURPLE,player4);
-         */
         board.getIsland(7).setIgnoreTower(true);
         board.setTower(whiteTower,7);
         board.setTower(blackTower,8);
@@ -127,10 +124,6 @@ class GameBoardTest {
         player1.addRole(StudentColor.GREEN);
         player1.addRole(StudentColor.RED);
         player2.addRole(StudentColor.YELLOW);
-        /*board.setTeacher(StudentColor.GREEN,player1);
-        board.setTeacher(StudentColor.RED,player1);
-        board.setTeacher(StudentColor.YELLOW,player2);
-         */
         board.getIsland(6).getStudents().clear();
         for(int i=0; i<3; i++) {
             board.getIsland(6).addStudent(StudentColor.GREEN);
@@ -169,9 +162,6 @@ class GameBoardTest {
         board.getIsland(6).setIgnoreTower(true);
         player1.addRole(StudentColor.GREEN);
         player2.addRole(StudentColor.YELLOW);
-        /*board.setTeacher(StudentColor.GREEN,player1);
-        board.setTeacher(StudentColor.YELLOW,player2);
-         */
         board.getIsland(6).getStudents().clear();
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
@@ -203,9 +193,6 @@ class GameBoardTest {
         board.getIsland(7).setTower(blackTower);
         player1.addRole(StudentColor.GREEN);
         player2.addRole(StudentColor.YELLOW);
-        /*board.setTeacher(StudentColor.GREEN,player1);
-        board.setTeacher(StudentColor.YELLOW,player2);
-         */
         board.getIsland(6).getStudents().clear();
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
