@@ -125,6 +125,8 @@ class PlayerBoardTest {
             arrayList.add(StudentColor.GREEN);
         playerBoard.addStudentsToDiningHall(arrayList);
 
+        playerBoard.assignCoins();
+
         assertEquals(4, playerBoard.getCoins());
 
         playerBoard.useCoins(1);

@@ -44,14 +44,18 @@ public class PlayerBoard {
         diningHall.removeStudents(students);
     }
 
-    public boolean assignCoins(){
+    public boolean assignCoins() {
         boolean increasedCoins = false;
+        int check = 0;
+
         for (StudentColor color : StudentColor.values()){
-            if(checkCoins(color)!=0){
-                this.coins = this.coins + checkCoins(color);
+            check = checkCoins(color);
+            if (check != 0) {
+                this.coins = this.coins + check;
                 increasedCoins = true;
             }
         }
+
         return increasedCoins;
     }
 
