@@ -23,8 +23,7 @@ public class Game {
         lastStudentDrawn =false;
         phase=null;
         gameStarted=false;
-        //initAvailableDecks();
-        //initAvailableTowers();
+
     }
 
     /*private void initAvailableDecks(){
@@ -48,27 +47,15 @@ public class Game {
         }
     }*/
 
-    //public ArrayList<String> getAvailableDecks(){return availableDecks;}
-
     public ArrayList<String> getAvailableTowers(){
-        ArrayList<String> towers = new ArrayList<>(availableTowers.keySet());
-        return towers;
+        return new ArrayList<>(availableTowers.keySet());
     }
-
-    /*public  void assignDeck(String deck){
-        availableDecks.remove(deck);
-    }*/
 
     public boolean gameIsReady(){
         return players.size()==numOfPlayers;
     }
 
-    public void assignTower(String tower){
-        if(availableTowers.get(tower)==2)
-            availableTowers.put(tower,1);
-        else if(availableTowers.get(tower)==1)
-            availableTowers.remove(tower);
-    }
+
     public void setNumOfPlayers(int num){numOfPlayers=num;}
 
     public ArrayList<Player> getPlayers(){
@@ -90,8 +77,8 @@ public class Game {
         lastSupportCardUsed = true;
     }
 
-    public void setLastStudentDrawn(){
-        lastStudentDrawn =true;
+    public void setLastStudentDrawn( boolean last){
+        lastStudentDrawn = last;
     }
     public boolean lastStudentDrawn(){
         return lastStudentDrawn;

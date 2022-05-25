@@ -36,6 +36,11 @@ public class Server {
         waitForPlayers();
     }
 
+    public Server(){
+        lobby = new HashMap<>();
+        clientHandlers = new HashMap<>();
+    }
+
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         boolean validInput = true;

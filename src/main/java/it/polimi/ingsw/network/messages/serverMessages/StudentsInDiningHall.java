@@ -31,7 +31,8 @@ public class StudentsInDiningHall extends ServerMessage {
 
         if (added)
             client.getView().getPlayer().addToDiningHall(students);
-        else
-            client.getView().getPlayerByName(playerNick).removeFromDiningHall(students);
+        else {
+            client.getView().getPlayerByNick(playerNick).removeFromDiningHall(students);
+        }
     }
 }

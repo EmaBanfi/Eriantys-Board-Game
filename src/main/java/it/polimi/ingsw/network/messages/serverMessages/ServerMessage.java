@@ -14,6 +14,10 @@ public class ServerMessage extends Message {
         this.message = message;
     }
 
+    public  String getMessage(){
+        return message;
+    }
+
     /**
      * call the method showString() of the view
      * @param client client to which the message is sent
