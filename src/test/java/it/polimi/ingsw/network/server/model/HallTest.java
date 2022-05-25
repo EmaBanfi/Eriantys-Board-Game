@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.network.server.model;
 
 import it.polimi.ingsw.network.server.model.Hall;
 import it.polimi.ingsw.network.server.model.StudentColor;

@@ -9,51 +9,25 @@ public class Game {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private boolean gameStarted;
-    private Phase phase;
     private String mode;
     private boolean lastSupportCardUsed;
     private boolean lastStudentDrawn;
-    //
-    // private ArrayList<String> availableDecks;
 
     private HashMap<String,Integer> availableTowers;
 
     public Game() {
         lastSupportCardUsed =false;
         lastStudentDrawn =false;
-        phase=null;
         gameStarted=false;
-
+        players = new ArrayList<>();
     }
 
-    /*private void initAvailableDecks(){
-        availableDecks=new ArrayList<>();
-        availableDecks.add("KingDeck");
-        availableDecks.add("MageDeck");
-        availableDecks.add("WitchDeck");
-        availableDecks.add("SageDeck");
-    }*/
 
-    /*private void initAvailableTowers(){
-        availableTowers= new HashMap<>();
-        if(numOfPlayers==3){
-            availableTowers.put("White",1);
-            availableTowers.put("Black",1);
-            availableTowers.put("Gray",1);
-        }
-        else {
-            availableTowers.put("White",2);
-            availableTowers.put("Black",2);
-        }
-    }*/
-
-    public ArrayList<String> getAvailableTowers(){
-        return new ArrayList<>(availableTowers.keySet());
-    }
-
-    public boolean gameIsReady(){
+    /*public boolean gameIsReady(){
         return players.size()==numOfPlayers;
     }
+
+     */
 
 
     public void setNumOfPlayers(int num){numOfPlayers=num;}
@@ -61,13 +35,15 @@ public class Game {
     public ArrayList<Player> getPlayers(){
         return players;
     }
-    public boolean isGameStarted() {
+
+    /*public boolean isGameStarted() {
         return gameStarted;
     }
+     */
 
-    public void setGameStarted() {
+    /*public void setGameStarted() {
         gameStarted = true;
-    }
+    }*/
 
     public boolean lastSupportCardUsed() {
         return lastSupportCardUsed;
@@ -80,16 +56,15 @@ public class Game {
     public void setLastStudentDrawn( boolean last){
         lastStudentDrawn = last;
     }
+
     public boolean lastStudentDrawn(){
         return lastStudentDrawn;
     }
+
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
 
-    public Phase getPhase() {
-        return phase;
-    }
 
     public String getMode() {
         return mode;
@@ -115,6 +90,7 @@ public class Game {
     public boolean firstPlayerOfRound(){
         return players.indexOf(currentPlayer)==0;
     }
+
     public void setCurrentPlayer(Player player){
         currentPlayer=player;
     }
@@ -125,10 +101,6 @@ public class Game {
 
     public boolean isExpertMode(){
         return mode.equals("expert");
-    }
-
-    public Player getPlayerByTurnOrder(int i){
-        return players.get(i);
     }
 
     public boolean isCurrentPlayer(String player){

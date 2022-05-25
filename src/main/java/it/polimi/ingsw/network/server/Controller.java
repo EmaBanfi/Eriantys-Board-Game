@@ -442,7 +442,8 @@ public class Controller {
      * changes mother nature position and calls method to calculate majority on the island reached by mother nature
      * called by client message MoveMother
      * notify all player except current player of the new mother nature's position
-     * if
+     * if only three island remain after merge or all towers of a certain color are placed
+     * players will be notified that the game is ended and winners will be calculated
      * @param movements number of movements
      */
     public void moveMotherNature(int movements){
@@ -468,6 +469,12 @@ public class Controller {
         server.sendAll(gson.toJson(gson.toJson(message2, CurrentPlayer.class)));
     }
 
+    /**
+     * sets the cloud chosen by the current player
+     * and notify all players except current
+     * called by client message Cloud
+     * @param cloud cloud chosen
+     */
     public void setChosenCloud(int cloud){
         ServerMessage message;
         String text;
@@ -499,12 +506,17 @@ public class Controller {
                 server.sendAll(gson.toJson(message3, Notify.class));
             }
             else{
-                refillClouds();
+                newRound();
             }
         }
     }
 
-    private void notifyRoundEnd(){
+    /**
+     * if this is the last round this method will notify all players and
+     * it will call gameResults.
+     * Otherwise it will call refill Clouds to start a new round
+     */
+    private void newRound(){
         if(game.lastStudentDrawn()||game.lastSupportCardUsed()){
             Notify message = new Notify("Game has ended. Please wait for game results");
             String json= gson.toJson(message, Notify.class);
@@ -520,6 +532,9 @@ public class Controller {
 
     }
 
+    /**
+     * this method will calculate winners and losers
+     */
     private void gameResults(){
         ArrayList<String> winners=new ArrayList<>();
         ArrayList<String> losers=new ArrayList<>();
@@ -547,6 +562,12 @@ public class Controller {
         server.sendAll(json);
     }
 
+    /**
+     * return the tower with the the most teachers connected. if the num of players is 4
+     * the num of teachers connected to a tower is the sum
+     * of the number of teachers connected to players that shares that tower
+     * @return the tower with more teachers
+     */
     private Tower towerWithMoreTeachers(){
         HashMap<Integer,Tower> teachersPerTower=new HashMap<>();
         for(Tower tower : board.getTowers()) {
@@ -565,6 +586,11 @@ public class Controller {
         return teachersPerTower.get(max);
     }
 
+    /**
+     * refills the character card specified and notify all players
+     * @param card id of the card to refill
+     * @param studentsToRefill number of students to refill
+     */
     public void refillCard(int card, int studentsToRefill){
         String text;
         if(!game.lastStudentDrawn()){
@@ -603,6 +629,10 @@ public class Controller {
 
     }
 
+    /**
+     * sets bonusToPromotion as true for the current player for this turn
+     * called by me client message CC2 if card id is 2
+     */
     public void setBonusToPromotion(){
         game.getCurrentPlayer().setBonusToPromotion(true);
         ResumeTurn message = new ResumeTurn();
@@ -611,6 +641,10 @@ public class Controller {
                 gson.toJson(message, ResumeTurn.class));
     }
 
+    /**
+     * sets additionalInfluencePoints as true for the current player for this turn
+     * called by me client message CC2 if card id is 8
+     */
     public void setAdditionalInfluencePoints(){
         game.getCurrentPlayer().setAdditionalInfluencePoints(true);
         ResumeTurn message = new ResumeTurn();
@@ -619,6 +653,11 @@ public class Controller {
                 gson.toJson(message, ResumeTurn.class));
     }
 
+    /**
+     * place a block on the specified island
+     * called by client message CCG5
+     * @param island index of the island
+     */
     public void setBlockOnIsland(int island){
         ServerMessage message;
         board.getIsland(island).addBlockCard();
@@ -640,6 +679,11 @@ public class Controller {
                 gson.toJson(message, ResumeTurn.class));
     }
 
+    /**
+     * remove 3 students of the specified color from all players' dining hall and put them back in the bag
+     * if lastStudentDrawn is set to true it will be set to false
+     * @param color color of the students to remove
+     */
     public void removeStudents(StudentColor color){
         ArrayList<StudentColor> students=new ArrayList<>();
         for(Player player : game.getPlayers()){
@@ -672,6 +716,10 @@ public class Controller {
                 gson.toJson(message2, ResumeTurn.class));
     }
 
+    /**
+     * sets the specified color as ignoredColor for this turn
+     * @param color color tio set as ignored
+     */
     public void ignoreColor(StudentColor color){
         board.addIgnoredColor(color);
         String text = "For this turn " + color.toString().toLowerCase() + " students will not be counted in the assigment of influence points";
@@ -683,6 +731,10 @@ public class Controller {
                 gson.toJson(message2, ResumeTurn.class));
     }
 
+    /**
+     * to move mother nature as effect of character card 4
+     * @param movements mother nature's movements
+     */
     public void additionalMotherMovements(int movements){
         board.moveMotherNature(movements);
         int currentIsland = board.getMotherNature().getCurrentIsland() + 1;
@@ -695,6 +747,10 @@ public class Controller {
                 gson.toJson(message2, ResumeTurn.class));
     }
 
+    /**
+     * calculate majority as effect of character card 3
+     * @param island
+     */
     public  void additionalMajority(int island){
         try {
             board.MajorityOnIsland(island, server);
@@ -709,6 +765,12 @@ public class Controller {
                 gson.toJson(message2, ResumeTurn.class));
     }
 
+    /**
+     * moves specified students form current player's dining hall to hall
+     * and notify all players except current
+     * This method is used to implement effect of character card 10
+     * @param students students to move
+     */
     public void moveStudentsDToH(ArrayList<StudentColor> students){
         Player player = game.getCurrentPlayer();
         player.getBoard().addStudentsToHall(students);
@@ -733,6 +795,12 @@ public class Controller {
 
     }
 
+    /**
+     * notify players except current of the character card used by the current players.
+     * It also notify if the price is increased
+     * @param text
+     * @param card id of the used card
+     */
     public void notifyUsedCharacterCard(String text, int card){
         String t = game.getCurrentPlayer().getNickName() + text;
         boolean increasedPrice=characterCardBoard.getCharacterCard(card).increasePrice();
@@ -748,6 +816,9 @@ public class Controller {
                 gson.toJson(message, UsedCharacterCard.class));
     }
 
+    /**
+     * this method is used to notify the current player so that they resumes their turn
+     */
     public void resumeTurn(){
         ServerMessage message = new ResumeTurn();
         server.sendMessage(
