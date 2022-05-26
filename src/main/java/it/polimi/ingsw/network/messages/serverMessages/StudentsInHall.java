@@ -28,8 +28,8 @@ public class StudentsInHall extends ServerMessage {
         super.processMessage(client);
 
         if (added)
-            client.getView().getPlayer().addToHall(students);
+            client.getView().addStudentsToHall(students);
         else
-            client.getView().getPlayer().removeFromHall(students);
+            client.getView().removeStudentsFromHall(students);
     }
 }

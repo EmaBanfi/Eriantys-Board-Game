@@ -28,6 +28,6 @@ public class StudentsOnCard extends ServerMessage{
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updatesStudentsOnCard(cardId, students);
+        client.getView().updateStudentsOnCard(cardId, students);
     }
 }

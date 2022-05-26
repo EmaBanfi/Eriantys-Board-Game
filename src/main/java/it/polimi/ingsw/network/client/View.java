@@ -6,298 +6,316 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class View implements Runnable {
-
-    @Override
-    public void run() {
-    }
-
-    public abstract PlayerView getPlayer();
-
-    public abstract PlayerView getPlayerByNick(String nick);
-
-    private void initAvailableDecks(){}
-
-    public abstract void initAvailableTowers();
+public interface View {
 
     /**
-     * communicate to the client to insert the nickname. Called by message
+     * get the player
+     * @return the player
      */
-    public abstract void askNickName();
+    PlayerView getPlayer();
 
     /**
-     * ask to the client if he want to choose a character card. Called by method
+     * get the player by nickname
+     * @return the player
      */
-    public abstract void askActivateCharacterCard();
+    PlayerView getPlayerByNick(String nick);
+
+
+    private void initAvailableDecks() {}
+
+    private void initAvailableTowers() {}
 
     /**
-     * communicate to the client to choose a character card. Called by method
+     * communicate to the client to insert the nickname. Called by message.
      */
-    public abstract void askCharacterCard();
+    void askNickName();
 
     /**
-     * choose the numOfPlayers and mode. (only to the first player connected). Called by message
+     * ask to the client if he want to choose a character card. Called by method.
      */
-    public abstract void askSetGameStatus();
+    void askActivateCharacterCard();
 
     /**
-     * ask to set a color for the tower (the controller will notify if is correctly setted). Called by method
+     * communicate to the client to choose a character card. Called by method.
      */
-    public abstract void askTower();
+    void askCharacterCard();
 
     /**
-     * ask to choose a deck (the controller will do a check). Called by method
+     * choose the numOfPlayers and mode (only to the first player connected). Called by message.
      */
-    public abstract void askDeck();
+    void askSetGameStatus();
 
     /**
-     * ask to choose a support card (or nothing). Called by method
+     * ask to set a color for the tower (the controller will notify if is correctly set). Called by method.
      */
-    public abstract void askSupportCard();
+    void askTower();
 
     /**
-     * ask to the client which students wants to move from H to D. Called by method
+     * ask to choose a deck (the controller will do a check). Called by method.
      */
-    public abstract void askMoveStudentsHToD();
+    void askDeck();
 
     /**
-     * ask to the client which students wants to move from H to I (single or multiple). Called by method
+     * ask to choose a support card (or nothing). Called by method.
      */
-    public abstract void askMoveStudentsHToI();
+    void askSupportCard();
 
     /**
-     * ask to the client from which C wants to take the students. Called by method
+     * ask to the client which students wants to move from hall to dining hall. Called by method.
      */
-    public abstract void askCloud();
+    void askMoveStudentsHToD();
 
     /**
-     * ask where he wants to put mother nature (the controller will do a check). Called by method
+     * ask to the client which students wants to move from hall to island (single or multiple). Called by method.
      */
-    public abstract void askMotherNatureMovements();
+    void askMoveStudentsHToI();
 
     /**
-     * show a message (string) on the client screen. Called by message
-     * @param message
+     * ask to the client from which cloud wants to take the students. Called by method.
      */
-    public abstract void showString(String message);
+    void askCloud();
 
     /**
-     * show the character card used by a player and his name. Called by message
-     * @param id
+     * ask where he wants to put mother nature (the controller will do a check). Called by method.
      */
-    public abstract void showCharacterCard(int id);
+    void askMotherNatureMovements();
+
+    /**
+     * show a message (string) on the client screen. Called by message.
+     * @param message the message to print.
+     */
+    void showString(String message);
+
+    /**
+     * show the character card used by a player and his name. Called by message.
+     * @param id id of the character card used.
+     */
+    void showCharacterCard(int id);
 
     /**
      * show the support card used by a player and his name. Called by message
-     * @param id
+     * @param id id of the support card used.
      */
-    public abstract void showSupportCard(int id);
+    void showSupportCard(int id);
 
     /**
-     * show on the client screen which support card is using during that turn. Called by method
+     * show on the client screen which support card is using during that turn. Called by method.
      */
-    public abstract void updateUsedSupportCard(int id);
+    void updateUsedSupportCard(int id);
 
     /**
-     * show the available support card to the client. Called by method
+     * decrease the numbers of the remaining support cards. Called by method.
      */
-    public abstract void updateAvailableSupportCards();
+    void updateAvailableSupportCards();
 
     /**
-     * show on screen the price of a specific character card. Called by message
-     * @param id
+     * show on screen the price of a specific character card. Called by message.
+     * @param id id of the character card to increase the price
      */
-    public abstract void updateCharacterCardPrice(int id);
+    void updateCharacterCardPrice(int id);
 
     /**
-     * show the new position of mother nature (when other players changes it). Called by message
-     * @param island
+     * show the new position of mother nature (when other players changes it). Called by message.
+     * @param island the island where mother nature is now positioned.
      */
-    public abstract void updateMotherPosition(int island);
+    void updateMotherPosition(int island);
 
     /**
-     * show the new color of the island for a tower. Called by message
-     * @param tower
+     * show the new color of the island for a tower. Called by message.
+     * @param tower the color of the tower.
      */
-    public abstract void updateTowerColor(String tower);
+    void updateTowerColor(String tower);
 
     /**
-     * merge two islands. Called by message
-     * @param mergeTo
-     * @param toBeMerged
+     * merge two islands. Called by message.
+     * @param toBeMerged the island that is merged.
+     * @param mergeTo the island that remain.
      */
-    public abstract void mergeIslands(int toBeMerged, int mergeTo);
+    void mergeIslands(int toBeMerged, int mergeTo);
 
     /**
-     * show the added students on a specific island. Called by message
-     * @param island
-     * @param students
+     * show the added students on a specific island. Called by message.
+     * @param island chosen island
+     * @param students students to add
      */
-    public abstract void addStudentsOnIsland(int island, ArrayList<StudentColor> students);
+    void addStudentsOnIsland(int island, ArrayList<StudentColor> students);
 
     /**
      * show the added students in the dining hall of the specified player. Called by message
-     * @param students
-     * @param nick
+     * @param students the students to add
+     * @param nick the nickname of the player
      */
-    public abstract void addStudentToPlayerD(String nick, ArrayList<StudentColor> students);
+    void addStudentToPlayerD(String nick, ArrayList<StudentColor> students);
 
     /**
-     * show the winners and the losers. Called by message
-     *
-     * @param winners
-     * @param losers
+     * remove the students from the dining hall of a specified player. Called by message.
+     * @param nick the nickname of the player
+     * @param students the students to remove
      */
-    public abstract void showGameResults(ArrayList<String> winners, ArrayList<String> losers);
+    void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students);
 
     /**
-     * remove the students from the dining hall of a specified player. Called by message
-     * @param nick
-     * @param students
+     * show the winners and the losers. Called by message.
+     * @param winners winners
+     * @param losers losers
      */
-    public abstract void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students);
+    void showGameResults(ArrayList<String> winners, ArrayList<String> losers);
 
     /**
-     * update the hall of a specified player. Called by message
-     * @param students
-     * @param nick
+     * set additional turn order for a used support card.
+     * @param id id of the support card.
      */
-    public abstract void updatePlayerHall(String nick, ArrayList<StudentColor> students);
+    void setAdditionalTurnOrder(int id);
 
     /**
-     * update the amount of coins that the player has. Called by message
-     * @param coin
+     * update the amount of coins that the player has. Called by message.
+     * @param coin the updated coins
      */
-    public abstract void updatePlayerCoins(int coin);
+    void updatePlayerCoins(int coin);
 
-    public abstract void updateGameStatus(int numOfPlayers, String mode);
+    /**
+     * updates to the other players (not the first one) the status of the game
+     * @param numOfPlayers the number of players for that match
+     * @param mode the mode of the match
+     */
+    void updateGameStatus(int numOfPlayers, String mode);
 
-    public abstract void updateCurrentPlayer(String currentPlayer);
+    /**
+     * update the current player
+     * @param currentPlayer nickname of the current player
+     */
+    void updateCurrentPlayer(String currentPlayer);
 
-    public abstract void updatePlayerOrder(ArrayList<String> playerOrder);
+    /**
+     * update the player order.
+     * @param playerOrder list of players puts respecting the turn order.
+     */
+    void updatePlayerOrder(ArrayList<String> playerOrder);
 
     /**
      *  keep track of the status of the turn
      */
-    public abstract void resumeFrom();
+    void resumeFrom();
 
     /**
      * updates the clouds already chosen
-     * @param cloud
+     * @param cloud the last cloud chosen
      */
-    public abstract void updateEmptyCloud(int cloud);
+    void updateEmptyCloud(int cloud);
 
     /**
      * updates the ignored color given by the effect of the character card
-     * @param color
+     * @param color the color to be ignored
      */
-    public abstract void updateIgnoredColor(StudentColor color);
+    void updateIgnoredColor(StudentColor color);
 
     /**
-     * updates the tower on an island
-     * @param island
-     * @param tower
+     * updates the tower on a specific island
+     * @param island the specific island
+     * @param tower the new tower color
      */
-    public abstract void updateTowerOnIsland(int island, String tower);
+    void updateTowerOnIsland(int island, String tower);
 
     /**
      * updates the student on the character card
-     * @param students
-     * @param cardId
+     * @param students students to add
+     * @param cardId id of the character card
      */
-    public abstract void updatesStudentsOnCard(int cardId, ArrayList<StudentColor> students);
+    void updateStudentsOnCard(int cardId, ArrayList<StudentColor> students);
 
     /**
-     * add students on cloud
-     * @param cloud
-     * @param students
+     * add students on cloud.
+     * @param cloud cloud to fill
+     * @param students students to add
      */
-    public abstract void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students);
+    void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students);
 
     /**
      * remove students from cloud
-     * @param students
+     * @param students students to remove
+     * @param cloud cloud chosen
      */
-    public abstract void removeStudentsFromCloud(ArrayList<StudentColor> students);
+    void removeStudentsFromCloud(int cloud, ArrayList<StudentColor> students);
 
     /**
      *  updates which player is a teacher
-     * @param roles
+     * @param roles hashmap of the
      */
-    public abstract void updateTeacher(HashMap<StudentColor, String> roles);
+    void updateTeacher(HashMap<StudentColor, String> roles);
 
     /**
-     *  show the deck chosen by the current player
+     *  show the deck chosen by the current player.
+     * @param deck deck chosen by the current player.
      */
-    public abstract void setPlayerDeck(String deck);
+    void setPlayerDeck(String deck);
 
     /**
-     * show the support card used by the current player
+     * show the support card used by the current player.
+     * @param id id of the support card.
      */
-    public abstract void setSupportCard();
+    void setSupportCard(int id);
 
     /**
      * remove a block card from the character card 5
      */
-    public abstract void removeBlockOnCard();
+    void removeBlockOnCard();
 
     /**
      * add a block card from the character card 5
      */
-    public abstract void addBlockOnCard();
+    void addBlockOnCard();
 
     /**
      * block an island
      * @param island island to block
      */
-    public abstract void blockIsland(int island);
+    void blockIsland(int island);
 
     /**
      * unblock an island
      * @param island island to unblock
      */
-    public abstract void unlockIsland(int island);
+    void unlockIsland(int island);
 
     /**
      * ignore the tower for the calculation of the influence
      * @param island island where the tower must be ignored
      */
-    public abstract void ignoreTower(int island);
+    void ignoreTower(int island);
 
     /**
      * consider the tower for the calculation of the influence
      * @param island island where the tower must be considered
      */
-    public abstract void notIgnoreTower(int island);
+    void notIgnoreTower(int island);
 
     /**
      * update the color ignored during the influence calculation
      * @param color the color to ignore
      */
-    public abstract void ignoreColor(StudentColor color);
+    void ignoreColor(StudentColor color);
 
     /**
      * update the color not ignored during the influence calculation
      * @param color the color not to ignore
      */
-    public abstract void notIgnoreColor(StudentColor color);
+    void notIgnoreColor(StudentColor color);
 
     /**
      * update the available character cards
      * @param availableCharacterCards list of the available character cards
      */
-    public abstract void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards);
+    void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards);
 
     /**
-     * set the variable numOfPlayers
-     * @param numOfPlayers value to put in numOfPlayers
+     * add students to the player hall
+     * @param students students to add
      */
-    public abstract void setNumOfPlayers(int numOfPlayers);
+    void addStudentsToHall(ArrayList<StudentColor> students);
 
     /**
-     * set the variable mode
-     * @param mode string that indicate the mode of the game
+     * remove students to the player hall
+     * @param students students to remove
      */
-    public void setMode(String mode) {
-    }
+    void removeStudentsFromHall(ArrayList<StudentColor> students);
 }

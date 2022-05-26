@@ -25,6 +25,8 @@ public class UsedSupportCard extends ServerMessage{
     public void processMessage(Client client) {
         super.processMessage(client);
 
+        if (additionalTurnOrder)
+            client.getView().setAdditionalTurnOrder(supportCardId);
         client.getView().showSupportCard(supportCardId);
     }
 }
