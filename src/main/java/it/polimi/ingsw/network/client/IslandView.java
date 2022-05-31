@@ -59,4 +59,8 @@ public class IslandView {
     public boolean isBlockCard() {
         return blockCard;
     }
+
+    public void addStudent(StudentColor student){
+        students.add(student);
+    }
 }

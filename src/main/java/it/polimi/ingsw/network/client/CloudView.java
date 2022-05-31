@@ -23,9 +23,8 @@ public class CloudView {
 
     public void addStudent(StudentColor student){students.add(student);}
 
-    public void removeStudents(ArrayList<StudentColor> students) {
-        for (StudentColor color : students)
-            this.students.remove(color);
+    public void removeStudents() {
+        students.clear();
     }
 
     public int countStudentColor(StudentColor color) {
@@ -35,4 +34,6 @@ public class CloudView {
     public ArrayList<StudentColor> getStudents() {
         return this.students;
     }
+
+
 }

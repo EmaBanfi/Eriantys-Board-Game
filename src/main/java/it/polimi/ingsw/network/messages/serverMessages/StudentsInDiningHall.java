@@ -30,9 +30,9 @@ public class StudentsInDiningHall extends ServerMessage {
         super.processMessage(client);
 
         if (added)
-            client.getView().getPlayer().addToDiningHall(students);
+            client.getView().addStudentToPlayerD(playerNick, students);
         else {
-            client.getView().getPlayerByNick(playerNick).removeFromDiningHall(students);
+            client.getView().removeStudentsFromPlayerD(playerNick, students);
         }
     }
 }

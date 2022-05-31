@@ -22,7 +22,7 @@ public class ClientMessageDeserializer implements JsonDeserializer<ClientMessage
                 case "tower":
                     return jsonDeserializationContext.deserialize(jsonObject, Tower.class);
                 case "support card":
-                    return jsonDeserializationContext.deserialize(jsonObject, SupportCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmSupportCard.class);
                 case "H to D":
                     return jsonDeserializationContext.deserialize(jsonObject, StudentsMovementsHToD.class);
                 case "H to I":

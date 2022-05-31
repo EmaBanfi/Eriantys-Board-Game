@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.server.model.CharacterCards;
 public class CharacterCard {
     protected int cardId;
     private int price;
-    private transient boolean increasedPrice=false;
+    private transient boolean increasedPrice = false;
 
     public CharacterCard(int cardID, int price) {
         this.cardId = cardID;
@@ -22,13 +22,15 @@ public class CharacterCard {
         return price;
     }
 
-    public boolean increasePrice(){
-        if(!increasedPrice){
-            increasedPrice=true;
+    public boolean increasePrice() {
+        if (!increasedPrice) {
+            increasedPrice = true;
             price++;
             return true;
-        }
-        else
+        } else
             return false;
+
     }
 }
+
+

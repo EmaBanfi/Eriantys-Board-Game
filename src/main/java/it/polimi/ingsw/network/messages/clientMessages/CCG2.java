@@ -12,5 +12,4 @@ public class CCG2 extends ClientMessage{
         this.cardId = cardId;
         setType("CCG2");
     }
-
 }

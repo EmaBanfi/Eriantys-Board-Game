@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.messages.serverMessages;
 
 import it.polimi.ingsw.network.client.Client;
-import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
+import it.polimi.ingsw.network.client.CharacterCard;
 
 import java.util.ArrayList;
 

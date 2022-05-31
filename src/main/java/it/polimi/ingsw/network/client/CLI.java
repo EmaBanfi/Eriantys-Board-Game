@@ -1,5 +1,8 @@
 package it.polimi.ingsw.network.client;
 
+//come sono gestite le torri? (per il metodo updateTowerColor)
+//cosa fa la getTowerByColor?
+
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.*;
 import it.polimi.ingsw.network.server.model.StudentColor;
@@ -7,10 +10,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
+import it.polimi.ingsw.network.server.model.SupportCard;
 
-public class CLI extends View {
+//aggiorna le activate
+//nella addStudentsOnCard chiamare putStudentsOnCard
 
+public class CLI implements View, Runnable {
+
+    HashMap<StudentColor, String> teachers;
     MotherNatureView motherNature;
     ArrayList<CloudView> availableClouds;
     ArrayList<IslandView> availableIslands;
@@ -19,8 +26,7 @@ public class CLI extends View {
     ArrayList<PlayerView> players;
     ArrayList<String> availableDecks;
     ArrayList<String> availableTowers;
-    ArrayList<Integer> supportCards;
-    ArrayList<CharacterCard> availableCharacterCards;
+    ArrayList<SupportCard> supportCards;
     ArrayList<String> playerOrder;
     boolean usedCharacterCard;
     Client client;
@@ -31,22 +37,25 @@ public class CLI extends View {
     BufferedReader br;
     Gson gson;
     int availableStudentsMovements = 3;
+    StudentColor ignoredColor;
+    CharacterCardDeck characterCardDeck;
 
     public CLI(Client client) {
         this.client = client;
         gson = new Gson();
         initAvailableDecks();
+        characterCardDeck = new CharacterCardDeck(this);
     }
 
     private void initAvailableDecks() {
         availableDecks = new ArrayList<>();
         availableDecks.add("KING");
         availableDecks.add("MAGE");
-        availableDecks.add("WTICH");
+        availableDecks.add("WITCH");
         availableDecks.add("SAGE");
     }
 
-    public void initAvailableTowers() {
+    private void initAvailableTowers() {
         availableTowers = new ArrayList<>();
         availableTowers.add("WHITE");
         availableTowers.add("BLACK");
@@ -70,19 +79,28 @@ public class CLI extends View {
     /**
      * communicate to the client to insert the nickname. Called by message
      */
+    @Override
     public void askNickName(){
         resumeFrom = Phase.CHOOSE_GAME_STATUS;
-        System.out.println("Inserit Nickname: ");
-        client.askNickname();
+
+        String str = null;
+        try {
+            str = br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Nickname message = new Nickname(str);
+        String text = gson.toJson(message, Nickname.class);
+        client.send(text);
     }
 
     /**
      * ask to the client if he want to choose a character card. Called by method
      */
+    @Override
     public void askActivateCharacterCard(){
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
         boolean result = false;
-        System.out.println("Do you want to use a character card?");
         try {
             if (br.readLine() == "yes") {
                 usedCharacterCard = true;
@@ -95,75 +113,57 @@ public class CLI extends View {
         }
     }
 
+    public CharacterCard getCharacterCard(int cardId){
+        CharacterCard card = null;
+        for(CharacterCard c: characterCardDeck.getAvailableCards()){
+            if(c.cardId==cardId)
+                card=c;
+        }
+        return card;
+    }
+
     /**
      * communicate to the client to choose a character card. Called by method
      */
+    @Override
     public void askCharacterCard(){
-        usedCharacterCard = true;
-        int userChoice;
-        CharacterCard chosenCard = null;
-        System.out.println("Choose Character Card: ");
-        for (CharacterCard characterCard : availableCharacterCards) {
-            System.out.println("Card: " + characterCard.getCardId() + "\n" + "Cost: " + characterCard.getPrice() + "\n");
+        String availableCards = "";
+        for(CharacterCard c: characterCardDeck.getAvailableCards()){
+            availableCards = availableCards + c.getCardId() + "\n";
         }
-        boolean isPresent = false;
-        try {
-            do {
-                userChoice = Integer.parseInt(br.readLine());
-                for (CharacterCard characterCard : availableCharacterCards) {
-                    if (userChoice == characterCard.getCardId())
-                        isPresent = true;
-                }
-                if (!isPresent)
-                    System.out.println("Invalid id, please choose a new one: ");
-            } while (!isPresent);
-        }catch(IOException e)
-        {e.printStackTrace();}
-        Gson gson = new Gson();
-        if (chosenCard.getCardId() == 1 || chosenCard.getCardId() == 11) {
-            CCG1 message = new CCG1();
-            String text = gson.toJson(message, CCG1.class);
-            client.send(text + "\n");
-        } else if (chosenCard.getCardId() == 2 || chosenCard.getCardId() == 8) {
-            CCG2 message = new CCG2();
-            String text = gson.toJson(message, CCG2.class);
-            client.send(text + "\n");
-        } else if (chosenCard.getCardId() == 3 || chosenCard.getCardId() == 4) {
-            CCG3 message = new CCG3();
-            String text = gson.toJson(message, CCG3.class);
-            client.send(text + "\n");
-        } else if (chosenCard.getCardId() == 9 || chosenCard.getCardId() == 12) {
-            CCG4 message = new CCG4();
-            String text = gson.toJson(message, CCG4.class);
-            client.send(text + "\n");
-        } else if (chosenCard.getCardId() == 5 || chosenCard.getCardId() == 6) {
-            CCG5 message = new CCG5();
-            String text = gson.toJson(message, CCG5.class);
-            client.send(text + "\n");
-        } else {
-            CCG6 message = new CCG6();
-            String text = gson.toJson(message, CCG6.class);
-            client.send(text + "\n");
-        }
+        System.out.println("Choose one of the followings character cards: ");
+        System.out.println(availableCards);
+        int choice = 0;
+        CharacterCard card = null;
+        do{
+            try {
+                choice = Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            card = characterCardDeck.getCardById(choice);
+        }while(card.equals(null));
+        card.activate();
     }
 
     /**
      * choose the numOfPlayers and mode. (only to the first player connected). Called by message
      */
+    @Override
     public void askSetGameStatus() {
         resumeFrom = Phase.CHOOSE_DECK;
-        System.out.println("Choose number of players: ");
+        System.out.println("Choose number of players (NELLA BETA PUOI SETTARLO A 1): ");
         int numOfPlayers = 0;
         String mode = null;
         try {
             do {
                 numOfPlayers = Integer.parseInt(br.readLine());
-                if (numOfPlayers < 2 || numOfPlayers > 4)
+                if (numOfPlayers < 1 || numOfPlayers > 4)
                     System.out.println("Invalid num of players, please choose a new value (from 2 to 4): ");
-            } while (numOfPlayers < 2 || numOfPlayers > 4);
+            } while (numOfPlayers < 1 || numOfPlayers > 4);
             System.out.println("Choose mode: ");
             do {
-                mode = br.readLine();
+                mode = br.readLine().toLowerCase();
                 if (!mode.equals("expert") && !mode.equals("normal"))
                     System.out.println("Invalid game mode, please choose a valid one (between normal and expert): ");
             } while (!mode.equals("expert") && !mode.equals("normal"));
@@ -178,13 +178,13 @@ public class CLI extends View {
     }
 
     /**
-     * ask to set a color for the tower (the controller will notify if is correctly setted). Called by method
+     * ask to set a color for the tower (the controller will notify if is correctly set). Called by method
      */
+    @Override
     public void askTower(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         String colorChoice = null;
         if (numOfPlayers == 3) {
-            System.out.println("Choose your tower color (White, Grey or Black): ");
             try {
                 do {
                     colorChoice = br.readLine();
@@ -195,12 +195,11 @@ public class CLI extends View {
             {e.printStackTrace();}
             System.out.println("Chosen Tower color: " + colorChoice);
             Gson gson = new Gson();
-            Tower message = new Tower();
+            Tower message = new Tower(colorChoice);
             String text = gson.toJson(message, Tower.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         } else {
-            System.out.println("Choose your tower color (White or Black): ");
             try {
                 do {
                     colorChoice = br.readLine();
@@ -209,7 +208,7 @@ public class CLI extends View {
                 } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"));
             }catch(IOException e){e.printStackTrace();}
             System.out.println("Chosen tower color: " + colorChoice);
-            Tower message = new Tower();
+            Tower message = new Tower(colorChoice);
             String text = gson.toJson(message, SetGameStatus.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
@@ -219,9 +218,9 @@ public class CLI extends View {
     /**
      * ask to choose a deck (the controller will do a check). Called by method
      */
+    @Override
     public void askDeck(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
-        System.out.println("Choose a deck: ");
         for (String deck : availableDecks) {
             System.out.println(deck);
         }
@@ -240,19 +239,19 @@ public class CLI extends View {
         }catch(IOException e)
         {e.printStackTrace();}
         System.out.println("Chosen deck: " + userChoice);
-        Deck message = new Deck();
+        Deck message = new Deck(userChoice);
         String text = gson.toJson(message, Deck.class);
         client.send(text + "\n");
         availableDecks.remove(userChoice.toUpperCase());
     }
 
     /**
-     * ask to choose a support card (or nothing). Called by method
+     * ask to choose a support card. Called by method
      */
+    @Override
     public void askSupportCard(){
         usedCharacterCard = false;
-        System.out.println("Choose a support card: ");
-        for (Integer supportCard : supportCards) {
+        for (SupportCard supportCard : supportCards) {
             System.out.println(supportCard);
         }
         boolean supportCardAvailable = false;
@@ -260,9 +259,8 @@ public class CLI extends View {
         try {
             do {
                 supportCardChoice = Integer.parseInt(br.readLine());
-                for (Integer supportCard : supportCards
-                ) {
-                    if (supportCardChoice == supportCard)
+                for (SupportCard supportCard : supportCards){
+                    if (supportCardChoice == supportCard.getId())
                         supportCardAvailable = true;
                 }
                 if (!supportCardAvailable)
@@ -270,18 +268,28 @@ public class CLI extends View {
             } while (!supportCardAvailable);
         }catch(IOException e){e.printStackTrace();}
         System.out.println("Chosen support card: " + supportCardChoice);
-        SupportCard message = new SupportCard();
-        String text = gson.toJson(message, SupportCard.class);
+        cmSupportCard message = new cmSupportCard(supportCardChoice);
+        String text = gson.toJson(message, cmSupportCard.class);
         client.send(text + "\n");
         supportCards.remove(supportCardChoice);
+    }
+
+    public SupportCard getSupportCardByID(int id){
+        SupportCard card = null;
+        for(SupportCard c : supportCards){
+            if(c.getId()== id){
+                card = c;
+            }
+        }
+        return card;
     }
 
     /**
      * ask to the client which students wants to move from H to D. Called by method
      */
+    @Override
     public void askMoveStudentsHToD(){
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
-        System.out.println("How many students do you want to move from Hall to Dining Hall? (from 0 up to " + availableStudentsMovements + ")");
         int numStudents = 0;
         boolean validMovements = false;
         try {
@@ -330,6 +338,7 @@ public class CLI extends View {
     /**
      * ask to the client which students wants to move from H to I (single or multiple). Called by method
      */
+    @Override
     public void askMoveStudentsHToI(){
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
         if (availableStudentsMovements > 0) {
@@ -379,10 +388,9 @@ public class CLI extends View {
     /**
      * ask to the client from which C wants to take the students. Called by method
      */
+    @Override
     public void askCloud(){
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
-        System.out.println("Choose a cloud island to take the students from: ");
-        System.out.println("Choose the island in which you want to move the student/s: ");
         int chosenIsland = 0;
         for (int i = 0; i < availableClouds.size(); i++) {
             System.out.println("Cloud: " + i + "  " + "Students on Cloud " + i + ": " + availableClouds.get(i).getStudents() + ";");
@@ -406,9 +414,8 @@ public class CLI extends View {
     /**
      * ask where he wants to put mother nature (the controller will do a check). Called by method
      */
+    @Override
     public void askMotherNatureMovements(){
-        System.out.println("Choose on which island you want to move Mother Nature: ");
-        System.out.println("Current Mother Nature position: " + motherNature.getCurrentIsland());
         for (int i = 0; i < availableIslands.size(); i++) {
             System.out.println("Island: " + i);
         }
@@ -431,6 +438,7 @@ public class CLI extends View {
      * show a message (string) on the client screen. Called by message
      * @param message
      */
+    @Override
     public void showString(String message) {
         System.out.println(message);
     }
@@ -439,16 +447,25 @@ public class CLI extends View {
      * show the character card used by a player and his name. Called by message
      * @param id
      */
+    @Override
     public void showCharacterCard(int id) {
-        System.out.println("Character card: " + id);
+        System.out.println("Character card: " + id + "\n" + "Character card price: " + characterCardDeck.getAvailableCards().get(id).getPrice());
+        System.out.println("\n");
+    }
+
+    public void setAdditionalTurnOrder(int id, double additionalTurnOrder){
+        getSupportCardByID(id).setAdditionalTurnOrder(additionalTurnOrder);
     }
 
     /**
      * show the support card used by a player and his name. Called by message
      * @param id
      */
+    @Override
     public void showSupportCard(int id) {
-        System.out.println("Support Card: " + id);
+        System.out.println("Support card: " + id + "\n" +
+                "Support card movements: " + getSupportCardByID(id).getMovement() + "\n" +
+                "Support card turn order: " + getSupportCardByID(id).getTurnOrder() + "\n");
     }
 
     /**
@@ -459,6 +476,7 @@ public class CLI extends View {
         getPlayerByNick(currentPlayer).setUsedSupportCard(id);
     }
 
+    @Override
     public PlayerView getPlayerByNick(String nick){
         for(PlayerView player: players){
             if(player.getNickname() == nick)
@@ -468,8 +486,9 @@ public class CLI extends View {
     }
 
     /**
-     * decrease the available SupportCard of a player. Called by method
+     * decrease the number of the remaining SupportCards of a player. Called by method
      */
+    @Override
     public void updateAvailableSupportCards() {
         getPlayerByNick(currentPlayer).decreaseSupportCards();
     }
@@ -478,81 +497,75 @@ public class CLI extends View {
      * updates the price of a specific character card. Called by message
      * @param id
      */
+    @Override
     public void updateCharacterCardPrice(int id) {
-        availableCharacterCards.get(id).increasePrice();
+        characterCardDeck.getAvailableCards().get(id).increasePrice();
     }
 
     /**
      * updates the new position of mother nature (when other players changes it). Called by message
      * @param island
      */
+    @Override
     public void updateMotherPosition(int island) {
-        
+        motherNature.setCurrentIsland(island);
+    }
+
+    /**
+     * update the Tower color chosen by the current player. Called by message
+     * @param tower
+     */
+    @Override
+    public void updateTowerColor(String tower) {
+        getPlayerByNick(currentPlayer).setTower(tower);
+    }
+
+    /**
+     * updates the status of the island. Called by message
+     * @param island
+     */
+    @Override
+    public void blockIsland(int island) {
+        availableIslands.get(island).setBlockCard(true);
     }
 
     @Override
-    public void updateTowerColor(String tower) {
-
+    public void unlockIsland(int island){
+        availableIslands.get(island).setBlockCard(false);
     }
-
-    /**
-     * show the new color of the island for a tower. Called by message
-     * @param nick
-     * @param tower
-     */
-    public void updateTowerColor(String tower, String nick) {
-        System.out.println(nick + "Chose the color " + tower + " for his tower");
-    }
-
-    /**
-     * show the island blocked. Called by message
-     * @param island
-     */
-    public void blockIsland(int island) {
-
-    }
-
-    public void unlockIsland(int island){}
 
     @Override
     public void ignoreTower(int island) {
-
+        availableIslands.get(island).setIgnoreTower(true);
     }
-
-    /**
-     * @param island
-     */
-    public void unblockIsland(int island){}
 
     /**
      * merge two islands. Called by message
      * @param toBeMerged
      * @param mergeTo
      */
+    @Override
     public void mergeIslands(int toBeMerged, int mergeTo) {
+
     }
 
     /**
-     * show the added students on a specific island. Called by message
+     * updates the added students on a specific island. Called by message
      * @param island
      * @param students
      */
+    @Override
     public void addStudentsOnIsland(int island, ArrayList<StudentColor> students) {
-        System.out.println("Studenti aggiunti all'isola " + island + ": " + students);
+        availableIslands.get(island).getStudents().addAll(students);
     }
 
     /**
-     * show the added students in the dining hall of the specified player. Called by message
-     * @param nick
+     * updates the added students in the dining hall of the specified player. Called by message
      * @param students
      */
-    public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
-        System.out.println("Studenti aggiunti alla mensa di " + nick + ": " + students);
-    }
-
     @Override
-    public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
-
+    public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
+        getPlayerByNick(nick).getDiningHall().addAll(students);
     }
 
     /**
@@ -560,43 +573,46 @@ public class CLI extends View {
      * @param winners
      * @param losers
      */
-    public void showGameResults(ArrayList<String> winners, ArrayList<String> losers, int numOfPlayers) {
+    @Override
+    public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
         if (numOfPlayers == 2)
-            System.out.println("Vincitore: " + winners + "\n" + "Perdente: " + losers);
+            System.out.println("Winner: " + winners + "\n" + "Loser: " + losers);
         else if (numOfPlayers == 3)
-            System.out.println("Vincitore: " + winners + "\n" + "Perdenti: " + losers);
+            System.out.println("Winner: " + winners + "\n" + "Losers: " + losers);
         else if (numOfPlayers == 4)
-            System.out.println("Vincitori: " + winners + "\n" + "Perdenti: " + losers);
+            System.out.println("Winners: " + winners + "\n" + "Losers: " + losers);
     }
 
     /**
      * remove the students from the dining hall of a specified player. Called by message
-     * @param nick
      * @param students
      */
+    @Override
     public void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students) {
-
+        getPlayerByNick(nick).removeFromDiningHall(students);
     }
 
     /**
      * update the hall of a specified player. Called by message
-     * @param nick
      * @param students
      */
-    public void updatePlayerHall(String nick, ArrayList<StudentColor> students) {
+    @Override
+    public void addStudentsToHall(ArrayList<StudentColor> students) {
+        getPlayerByNick(currentPlayer).addToHall(students);
     }
 
     @Override
-    public void updatePlayerCoins(int coin) {
-
+    public void removeStudentsFromHall(ArrayList<StudentColor> students){
+        getPlayerByNick(currentPlayer).removeFromHall(students);
     }
 
     /**
      * update the amount of coins that the player has. Called by message
-     * @param nick
      * @param coin
      */
-    public void updatePlayerCoins(String nick, int coin) {
+    @Override
+    public void updatePlayerCoins(int coin) {
+        getPlayerByNick(currentPlayer).setCoins(coin);
     }
 
     public void updateGameStatus(int numOfPlayers, String mode) {
@@ -607,6 +623,10 @@ public class CLI extends View {
 
     public void updateCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public String getCurrentPlayer(){
+        return currentPlayer;
     }
 
     public void updatePlayerOrder(ArrayList<String> playerOrder) {
@@ -638,57 +658,65 @@ public class CLI extends View {
 
     }
 
-    public void addBlockOnCard(){}
+    /**
+     * add a block-sign for the character card 5
+     */
+    public void addBlockOnCard(){
+    }
 
     /**
      * updates the blockCard effect of the character card
      */
     public void removeBlockOnCard() {
+        for(CharacterCard characterCard: characterCardDeck.getAvailableCards())
+            if(characterCard.getCardId()==5)
+                characterCard.getCardId();
+
     }
 
     /**
-     * updates the clouds already chosen
+     * updates the clouds already chose, removing it from the available ones
      * @param cloud
      */
     public void updateEmptyCloud(int cloud) {
+        availableClouds.get(cloud).removeStudents();
     }
 
-    @Override
-    public void updateIgnoredColor(StudentColor color) {
 
-    }
 
     /**
      * updates the ignored color given by the effect of the character card
      * @param color
      */
     public void ignoreColor(StudentColor color) {
+        ignoredColor = color;
     }
 
-    public void notIgnoreColor(StudentColor color){}
-
-    @Override
-    public void updateCharacterCards(ArrayList<it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard> availableCharacterCards) {
-
+    public void notIgnoreColor(StudentColor color){
+        ignoredColor = null;
     }
 
     /**
-     * updates the ignored Tower given by the effecto of the character card
+     * updates the ignored Tower given by the effect of the character card
      * @param island
      */
     public void ignoredTower(int island) {
-
+        availableIslands.get(island).setIgnoreTower(true);
     }
 
-    public void notIgnoreTower(int island){}
+    public void notIgnoreTower(int island){availableIslands.get(island).setIgnoreTower(false);}
 
 
     /**
-     * updates the tower on an island
+     * updates the tower on an island (chiedi ad adriano come cazzo fare sta roba)
      * @param island
      * @param tower
      */
     public void updateTowerOnIsland(int island, String tower) {
+    }
+
+    public void getTowerByColor(String color){
+
     }
 
     /**
@@ -696,11 +724,7 @@ public class CLI extends View {
      * @param cardId
      * @param students
      */
-    public void updatesStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
-    }
-
-    @Override
-    public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
+    public void updateStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
 
     }
 
@@ -708,14 +732,18 @@ public class CLI extends View {
      * add students on cloud
      * @param students
      */
-    public void addStudentsOnCloud(ArrayList<StudentColor> students) {
+    @Override
+    public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
+        availableClouds.get(cloud).addStudents(students);
     }
 
     /**
      * remove students from cloud
      * @param students
      */
-    public void removeStudentsFromCloud(ArrayList<StudentColor> students) {
+    @Override
+    public void removeStudentsFromCloud(int cloud, ArrayList<StudentColor> students) {
+        availableClouds.get(cloud).removeStudents();
     }
 
     /**
@@ -723,6 +751,7 @@ public class CLI extends View {
      * @param roles
      */
     public void updateTeacher(HashMap<StudentColor, String> roles) {
+        teachers.putAll(roles);
     }
 
     /**
@@ -730,22 +759,36 @@ public class CLI extends View {
      * @param deck
      */
     public void setPlayerDeck(String deck) {
+        getPlayerByNick(currentPlayer).setDeck(deck);
     }
 
     /**
-     * show the support card used by the current player
+     * updates the support card used by the current player
      */
-    public void setSupportCard(){}
-
-    public void updateCharacterCard(ArrayList<CharacterCard> availableCharacterCards){
-        this.availableCharacterCards = availableCharacterCards;
+    @Override
+    public void setSupportCard(int id){
+        getPlayerByNick(currentPlayer).setUsedSupportCard(id);
     }
 
-    public void setNumOfPlayers(int numOfPlayers){
-        this.numOfPlayers = numOfPlayers;
+    /**
+     * update the available character cards
+     * @param availableCharacterCards list of the available character cards
+     */
+    @Override
+    public void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards){
+        characterCardDeck.setAvailableCards(availableCharacterCards);
     }
 
-    public void setMode(String mode){
-        this.mode = mode;
+    public Client getClient(){
+        return client;
+    }
+
+    public ArrayList<IslandView> getAvailableIslands(){
+        return availableIslands;
+    }
+
+
+    public CharacterCard getCardById(int id){
+        return characterCardDeck.getCardById(id);
     }
 }

@@ -2,14 +2,14 @@ package it.polimi.ingsw.network.messages.clientMessages;
 
 import it.polimi.ingsw.network.server.ClientHandler;
 
-public class SupportCard extends ClientMessage {
+public class cmSupportCard extends ClientMessage {
 
     private int id;
 
-    public SupportCard() {
+    public cmSupportCard() {
     }
 
-    public SupportCard(int id) {
+    public cmSupportCard(int id) {
         this.id = id;
         setType("support card");
     }

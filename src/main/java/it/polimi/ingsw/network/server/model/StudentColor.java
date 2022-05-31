@@ -5,5 +5,14 @@ public enum StudentColor {
     PURPLE,
     YELLOW,
     RED,
-    GREEN
+    GREEN;
+
+    public static StudentColor getStudentFromString(String student){
+        for(StudentColor color : StudentColor.values()){
+            if(color.toString() == student){
+                return color;
+            }
+        }
+        return null;
+    }
 }

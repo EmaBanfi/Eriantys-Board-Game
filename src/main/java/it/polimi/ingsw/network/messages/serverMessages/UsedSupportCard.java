@@ -6,6 +6,7 @@ public class UsedSupportCard extends ServerMessage{
 
     private int supportCardId;
     boolean additionalTurnOrder;
+    double number;
 
     public UsedSupportCard() {
     }
@@ -26,7 +27,7 @@ public class UsedSupportCard extends ServerMessage{
         super.processMessage(client);
 
         if (additionalTurnOrder)
-            client.getView().setAdditionalTurnOrder(supportCardId);
+            client.getView().setAdditionalTurnOrder(supportCardId, number);
         client.getView().showSupportCard(supportCardId);
     }
 }

@@ -12,11 +12,21 @@ public class PlayerView {
     private int usedSupportCard;
     private int coins;
     private int availableSupportCard;
+    private String tower;
+    private  String deck;
 
     public PlayerView(String nickname) {
         this.nickname = nickname;
         availableSupportCard = 10;
         coins = 0;
+    }
+
+    public String getTower() {
+        return tower;
+    }
+
+    public void setTower(String tower) {
+        this.tower = tower;
     }
 
     public int getAvailableSupportCard(){return availableSupportCard;}
@@ -67,5 +77,9 @@ public class PlayerView {
 
     public void removeFromHall(ArrayList<StudentColor> students){
         hall.removeAll(students);
+    }
+
+    public void setDeck(String deck){
+        this.deck = deck;
     }
 }
