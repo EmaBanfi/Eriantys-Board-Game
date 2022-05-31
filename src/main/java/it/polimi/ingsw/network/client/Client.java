@@ -26,7 +26,7 @@ public class Client {
 
 
     public Client(String viewType) {
-        if(viewType.equals(1))
+        if(viewType.equals("1"))
             view = new CLI(this);
         else
             view = new GUI(this);

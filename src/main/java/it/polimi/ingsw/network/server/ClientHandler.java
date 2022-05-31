@@ -46,7 +46,6 @@ public class ClientHandler extends Thread {
         BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
 
         String str = null;
-        String str1 = null;
 
         while (true) {
             try {
@@ -56,8 +55,7 @@ public class ClientHandler extends Thread {
                 e.printStackTrace();
             }
             if(str!=null) {
-                //System.out.println("Client" + handlerId + ": " + str);
-
+                System.out.println(str);
                 ClientMessage message = clientGson.deserialize(str);
                 message.processMessage(this);
             }

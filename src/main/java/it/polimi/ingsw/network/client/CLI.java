@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.messages.clientMessages.*;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import it.polimi.ingsw.network.server.model.SupportCard;
@@ -21,7 +22,7 @@ public class CLI implements View, Runnable {
     MotherNatureView motherNature;
     ArrayList<CloudView> availableClouds;
     ArrayList<IslandView> availableIslands;
-    Phase resumeFrom = Phase.CHOOSE_DECK;
+    Phase resumeFrom = null;
     PlayerView player;
     ArrayList<PlayerView> players;
     ArrayList<String> availableDecks;
@@ -41,9 +42,11 @@ public class CLI implements View, Runnable {
     StudentColor ignoredColor;
 
     public CLI(Client client) {
+        br = new BufferedReader(new InputStreamReader(System.in));
         this.client = client;
         gson = new Gson();
         initAvailableDecks();
+        initAvailableTowers();
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
     }
@@ -143,7 +146,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askSetGameStatus() {
-        resumeFrom = Phase.CHOOSE_DECK;
+        resumeFrom = Phase.CHOOSE_TOWER;
         System.out.println("Choose number of players (NELLA BETA PUOI SETTARLO A 1): ");
         int numOfPlayers = 0;
         String mode = null;
@@ -166,7 +169,7 @@ public class CLI implements View, Runnable {
         Gson gson = new Gson();
         SetGameStatus message = new SetGameStatus(numOfPlayers, mode);
         String text = gson.toJson(message, SetGameStatus.class);
-        client.send(text + "\n");
+        client.send(text);
     }
 
     /**
@@ -174,15 +177,16 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askTower(){
-        resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
+        resumeFrom = Phase.CHOOSE_DECK;
+        System.out.println("Choose tower color:");
         String colorChoice = null;
         if (numOfPlayers == 3) {
             try {
                 do {
                     colorChoice = br.readLine();
-                    if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"))
+                    if (!colorChoice.toUpperCase().equals("WHITE") & !colorChoice.toUpperCase().equals("GREY") & !colorChoice.toUpperCase().equals("BLACK"))
                         System.out.println("Invalid Tower color, please select a valid one: ");
-                } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("GREY") || !colorChoice.toUpperCase().equals("BLACK"));
+                } while (!colorChoice.toUpperCase().equals("WHITE") & !colorChoice.toUpperCase().equals("GREY") & !colorChoice.toUpperCase().equals("BLACK"));
             }catch(IOException e)
             {e.printStackTrace();}
             System.out.println("Chosen Tower color: " + colorChoice);
@@ -195,13 +199,13 @@ public class CLI implements View, Runnable {
             try {
                 do {
                     colorChoice = br.readLine();
-                    if (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"))
+                    if ((!colorChoice.toUpperCase().equals("WHITE")) & (!colorChoice.toUpperCase().equals("BLACK")))
                         System.out.println("Invalid Tower color, please select a valid one: ");
-                } while (!colorChoice.toUpperCase().equals("WHITE") || !colorChoice.toUpperCase().equals("BLACK"));
+                } while ((!colorChoice.toUpperCase().equals("WHITE")) & (!colorChoice.toUpperCase().equals("BLACK")));
             }catch(IOException e){e.printStackTrace();}
             System.out.println("Chosen tower color: " + colorChoice);
             Tower message = new Tower(colorChoice);
-            String text = gson.toJson(message, SetGameStatus.class);
+            String text = gson.toJson(message, Tower.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         }

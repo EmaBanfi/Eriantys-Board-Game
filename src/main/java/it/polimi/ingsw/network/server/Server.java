@@ -139,6 +139,7 @@ public class Server {
         clientHandlers.put(nick,clientHandler);
         controller.addPlayerToGame(nick);
         if(controller.gameIsFull()){
+            System.out.println("qui if game is full");
             if(controller.getGame().isExpertMode())
                 controller.notifyAvailableCC();
             //game start

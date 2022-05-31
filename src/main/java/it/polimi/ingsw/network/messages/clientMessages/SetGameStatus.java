@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.messages.clientMessages;
 
 import it.polimi.ingsw.network.server.ClientHandler;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class SetGameStatus extends ClientMessage {
 
     private int numOfPlayers;
@@ -24,5 +23,7 @@ public class SetGameStatus extends ClientMessage {
     @Override
     public void processMessage(ClientHandler handler) {
         handler.getServer().getController().setGameStatus(mode, numOfPlayers);
+
+        handler.getServer().getController().resumeTurn();
     }
 }
