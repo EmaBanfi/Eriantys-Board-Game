@@ -12,8 +12,7 @@ public class AvailableCharacterCards extends ServerMessage{
     public AvailableCharacterCards() {
     }
 
-    public AvailableCharacterCards(String message, ArrayList<CharacterCard> availableCharacterCards) {
-        super(message);
+    public AvailableCharacterCards( ArrayList<CharacterCard> availableCharacterCards) {
         this.availableCharacterCards = availableCharacterCards;
         setType("available cc");
     }
@@ -24,7 +23,6 @@ public class AvailableCharacterCards extends ServerMessage{
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
 
         client.getView().updateCharacterCards(availableCharacterCards);
     }

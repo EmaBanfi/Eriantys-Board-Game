@@ -10,9 +10,8 @@ public class Bag {
     private HashMap<StudentColor, Integer> students;
 
     private final int maxStudents = 26;
-    public HashMap<StudentColor, Integer> get(){
-        return students;
-    }
+
+
     public Bag(){
         students = new HashMap<>();
         students.put(StudentColor.PURPLE, maxStudents);
@@ -71,5 +70,36 @@ public class Bag {
 
         }
     }
+
+    /**
+     * this method is for test purposes
+     * @return the total number of students in the bag
+     */
+    public int totalNumOfStudents(){
+        int i=0;
+        for(StudentColor color : students.keySet()){
+            i =i+ students.get(color);
+        }
+        return i;
+    }
+
+    /**
+     * this method is used to know the number of "color" students in the bag
+     * @param color color of students
+     * @return num of "color" students in the bag
+     */
+    public Integer getStudentByColor(StudentColor color){
+        return students.get(color);
+    }
+
+    /**
+     * this method is used to set the number of "color" students
+     * @param color color of students
+     * @param num num of students
+     */
+    public void setStudentsPerColor(StudentColor color, int num){
+        students.put(color, num);
+    }
+
 
 }

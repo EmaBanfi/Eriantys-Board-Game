@@ -34,8 +34,8 @@ class GameBoardTest {
         player2=new Player("player2");
         player3=new Player("player3");
         player4=new Player("player4");
-        whiteTower=board.getTower("White");
-        blackTower=board.getTower("Black");
+        whiteTower=board.getTower("WHITE");
+        blackTower=board.getTower("BLACK");
     }
 
 
@@ -65,7 +65,6 @@ class GameBoardTest {
     void testAssignInfluencePointsCase0(){
         System.out.println("Case 0");
         System.out.println(board.getIslands().size());
-        board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
         board.getPlayers().add(player3);
@@ -92,7 +91,7 @@ class GameBoardTest {
         board.getIsland(7).addStudent(StudentColor.PURPLE);
         boolean error=false;
         try {
-            board.assignInfluencePoints(7, server,false);
+            board.assignInfluencePoints(7, server,false, player1);
         } catch (EndGameException e) {
             error=true;
         }
@@ -115,7 +114,6 @@ class GameBoardTest {
         //System.out.println("case 1");
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
-        board.setCurrentPlayer(player1);
         player1.setTower(whiteTower);
         player2.setTower(blackTower);
         board.getIsland(6).setTower(whiteTower);
@@ -124,7 +122,7 @@ class GameBoardTest {
         player1.addRole(StudentColor.GREEN);
         player1.addRole(StudentColor.RED);
         player2.addRole(StudentColor.YELLOW);
-        board.getIsland(6).getStudents().clear();
+        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
         for(int i=0; i<3; i++) {
             board.getIsland(6).addStudent(StudentColor.GREEN);
             board.getIsland(6).addStudent(StudentColor.YELLOW);
@@ -132,7 +130,7 @@ class GameBoardTest {
         board.getIsland(6).addStudent(StudentColor.RED);
         System.out.println(board.getIslands().size());
         try {
-            board.assignInfluencePoints(6, server, false);
+            board.assignInfluencePoints(6, server, false, player1);
         } catch (EndGameException e) {
             e.printStackTrace();
         }
@@ -152,7 +150,6 @@ class GameBoardTest {
     void testAssignInfluencePointsCase2() {
         //System.out.println("case 2");
         boolean endGameExceptionThrown=false;
-        board.setCurrentPlayer(player1);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
         player1.setTower(whiteTower);
@@ -162,12 +159,12 @@ class GameBoardTest {
         board.getIsland(6).setIgnoreTower(true);
         player1.addRole(StudentColor.GREEN);
         player2.addRole(StudentColor.YELLOW);
-        board.getIsland(6).getStudents().clear();
+        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
         try {
-            board.assignInfluencePoints(6, server, false);
+            board.assignInfluencePoints(6, server, false, player1);
         } catch (EndGameException e) {
             endGameExceptionThrown=true;
         }
@@ -183,7 +180,6 @@ class GameBoardTest {
     void testAssignInfluencePointsCase3() {
         boolean endGameExceptionThrown=false;
         //System.out.println("case 3");
-        board.setCurrentPlayer(player2);
         player2.setAdditionalInfluencePoints(true);
         board.getPlayers().add(player1);
         board.getPlayers().add(player2);
@@ -193,11 +189,11 @@ class GameBoardTest {
         board.getIsland(7).setTower(blackTower);
         player1.addRole(StudentColor.GREEN);
         player2.addRole(StudentColor.YELLOW);
-        board.getIsland(6).getStudents().clear();
+        board.getIsland(6).removeStudents(board.getIsland(6).getStudents());
         board.getIsland(6).addStudent(StudentColor.GREEN);
         board.getIsland(6).addStudent(StudentColor.YELLOW);
         try {
-            board.assignInfluencePoints(6, server, false);
+            board.assignInfluencePoints(6, server, false,player2);
         } catch (EndGameException e) {
             endGameExceptionThrown=true;
         }

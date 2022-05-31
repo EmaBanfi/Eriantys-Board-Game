@@ -39,19 +39,21 @@ public class DiningHall implements ManageStudents {
             count++;
             numOfStudents--;
         }
-
         return count;
     }
 
     public void addStudents(ArrayList<StudentColor> students) {
-        this.students.addAll(students);
+        for(StudentColor studentColor: students){
+            this.students.add(studentColor);
+        }
     }
 
     public void addStudent(StudentColor student){students.add(student);}
 
     public void removeStudents(ArrayList<StudentColor> students) {
         for (StudentColor color : students)
-            this.students.remove(color);
+            if(this.students.contains(color))
+                this.students.remove(color);
     }
 
     public int countStudentColor(StudentColor color) {
@@ -59,6 +61,10 @@ public class DiningHall implements ManageStudents {
     }
 
     public ArrayList<StudentColor> getStudents() {
-        return this.students;
+        ArrayList<StudentColor> studentColors = new ArrayList<>();
+        for (StudentColor color: students){
+            studentColors.add(color);
+        }
+        return studentColors;
     }
 }

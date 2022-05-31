@@ -10,11 +10,14 @@ public class CharacterCardBoard {
     public CharacterCardBoard(){
         availableCards= new ArrayList<>();
         deck = new ArrayList<>();
+        int price=1;
         for(int cardId = 1; cardId < 13; cardId ++){
-            for(int price = 1; price < 4; price ++)
-                deck.add(new CharacterCard(cardId, price));
+            deck.add(new CharacterCard(cardId, price));
+            if(price<3)
+                price++;
+            else
+                price=1;
         }
-        initializeAvailableCC();
     }
 
 
@@ -39,5 +42,9 @@ public class CharacterCardBoard {
                 card=c;
         }
         return card;
+    }
+
+    public ArrayList<CharacterCard> getAllCard(){
+        return deck;
     }
 }

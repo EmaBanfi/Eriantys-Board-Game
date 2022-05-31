@@ -8,7 +8,7 @@ public class Game {
     private int numOfPlayers;
     private ArrayList<Player> players;
     private Player currentPlayer;
-    private boolean gameStarted;
+    private boolean gameIsSet;
     private String mode;
     private boolean lastSupportCardUsed;
     private boolean lastStudentDrawn;
@@ -18,32 +18,39 @@ public class Game {
     public Game() {
         lastSupportCardUsed =false;
         lastStudentDrawn =false;
-        gameStarted=false;
+        gameIsSet=false;
         players = new ArrayList<>();
     }
 
-
-    /*public boolean gameIsReady(){
-        return players.size()==numOfPlayers;
+    /**
+     * @return true if numOfPlayer and mode are set
+     */
+    public boolean gameIsSet(){
+        return gameIsSet;
     }
 
+    /**
+     * set the current player as the player in position 0 of players
      */
+    public void setCurrentPlayer(){
+        currentPlayer= players.get(0);
+    }
 
 
-    public void setNumOfPlayers(int num){numOfPlayers=num;}
+    /**
+     * this method is used to set the number of students
+     * @param num num of students
+     */
+    public void setNumOfPlayers(int num){
+        numOfPlayers=num;
+        gameIsSet=true;
+    }
+
 
     public ArrayList<Player> getPlayers(){
         return players;
     }
 
-    /*public boolean isGameStarted() {
-        return gameStarted;
-    }
-     */
-
-    /*public void setGameStarted() {
-        gameStarted = true;
-    }*/
 
     public boolean lastSupportCardUsed() {
         return lastSupportCardUsed;
@@ -65,6 +72,12 @@ public class Game {
         return numOfPlayers;
     }
 
+    /**
+     * @return true if the number of players connected is equal to numOfPlayers
+     */
+    public boolean gameIsFull(){
+        return players.size()==numOfPlayers;
+    }
 
     public String getMode() {
         return mode;
@@ -74,6 +87,9 @@ public class Game {
         mode=m;
     }
 
+    /**
+     * this method is used to determine the next player
+     */
     public void nextPlayer(){
         if(lastPlayerOfRound())
             currentPlayer=players.get(0);

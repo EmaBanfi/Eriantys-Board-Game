@@ -9,7 +9,6 @@ public class Player {
     private PlayerBoard board;
     private ArrayList<SupportCard> deck;
     private ArrayList<StudentColor> roles;
-    private boolean characterCardUsed;
     private Tower tower;
     private int influencePoints;
     private SupportCard usedSupportCard;
@@ -35,7 +34,7 @@ public class Player {
         board=new PlayerBoard();
         bonusToPromotion=false;
         additionalInfluencePoints=false;
-        characterCardUsed=false;
+        usedSupportCard =null;
     }
 
     /**
@@ -49,13 +48,6 @@ public class Player {
         }
     }
 
-    public  void setCharacterCardUsed(boolean b){
-        characterCardUsed=b;
-    }
-
-    public boolean getCharacterCardUsed(){
-        return characterCardUsed;
-    }
     public int getInfluencePoints() {
         return influencePoints;
     }
@@ -88,13 +80,6 @@ public class Player {
         return  roles;
     }
 
-    /**
-     * This method is used to get the supportCard chosen by the player in the planning phase
-     * @return the card chosen by the player in the planning phase
-     */
-    public SupportCard getUsedCard() {
-        return usedSupportCard;
-    }
 
     /**
      * This method is used to memorise the supportCard chosen by the player in the planning phase and remove it from the deck
@@ -104,16 +89,18 @@ public class Player {
     public void setUsedSupportCard(int cardId) throws LastSupportCardUsedException{
         for(SupportCard card: deck){
             if(card.getId()==cardId){
-                deck.remove(card);
                 usedSupportCard=card;
+                break;
             }
         }
+        deck.remove(usedSupportCard);
         if(deck.size()==0) throw new LastSupportCardUsedException();
     }
 
-    public int remainingSupportCards(){
-        return deck.size();
+    public void setDeck(ArrayList<SupportCard> cards){
+        this.deck= cards;
     }
+
 
     public SupportCard getUsedSupportCard(){
         return usedSupportCard;

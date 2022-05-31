@@ -8,15 +8,24 @@ public class StudentsOnCard extends ServerMessage{
 
     private int cardId;
     private ArrayList<StudentColor> students;
+    private boolean added;
 
     public StudentsOnCard() {
     }
 
 
-    public StudentsOnCard(String message, int cardId, ArrayList<StudentColor> students) {
+    public StudentsOnCard(String message, int cardId, ArrayList<StudentColor> students, boolean added) {
         super(message);
         this.cardId = cardId;
         this.students = students;
+        this.added=added;
+        setType("students on card");
+    }
+
+    public StudentsOnCard( int cardId, ArrayList<StudentColor> students, boolean added) {
+        this.cardId = cardId;
+        this.students = students;
+        this.added=added;
         setType("students on card");
     }
 

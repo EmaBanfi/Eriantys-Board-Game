@@ -110,9 +110,19 @@ public class Server {
                 String text = gson.toJson(message, Notify.class);
                 handler.sendMessage(text);
             }
+            //while(!controller.gameIsSet)
+            if(handlerId >= 2 && (!controller.gameIsSet())){
+                Notify message = new Notify("Waiting for host player to set game status...");
+                Gson gson = new Gson();
+                String text = gson.toJson(message, Notify.class);
+                handler.sendMessage(text);
+            }
 
             if (handlerId >= 2 && (lobby.size() == clientHandlers.size() + 1))  {
-                AskNickname message = new AskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
+                AskNickname message = new AskNickname("Please select nickname. \n The following nicknames have already taken " + alreadyConnectedPlayers()+
+                        "\n Game mode: " + controller.getGame().getMode() +
+                        "\n Num of players: " + controller.getGame().getNumOfPlayers() +
+                        "\n Players connected: " +clientHandlers.keySet().size());
                 Gson gson = new Gson();
                 String text = gson.toJson(message, AskNickname.class);
                 handler.sendMessage(text);
@@ -123,13 +133,22 @@ public class Server {
     }
 
     public boolean addToGame(String nick, ClientHandler clientHandler) {
-        if (clientHandlers.containsKey(nick))
+        if (isAlreadyPresent(nick))
             return false;
 
         clientHandlers.put(nick,clientHandler);
         controller.addPlayerToGame(nick);
-        if (lobby.size() >= (clientHandlers.size() + 1)) {
-            AskNickname message = new AskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers());
+        if(controller.gameIsFull()){
+            if(controller.getGame().isExpertMode())
+                controller.notifyAvailableCC();
+            //game start
+            controller.resumeTurn();
+        }
+        else if (lobby.size() >= (clientHandlers.size() + 1)) {
+            AskNickname message = new AskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers() +
+                    "\n Game mode: " + controller.getGame().getMode() +
+                    "\n Num of players: " + controller.getGame().getNumOfPlayers() +
+                    "\n Players connected: " +clientHandlers.keySet().size());
             Gson gson = new Gson();
             String text = gson.toJson(message, AskNickname.class);
             lobby.get(clientHandler.getHandlerId() + 1).sendMessage(text);

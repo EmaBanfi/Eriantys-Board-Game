@@ -29,8 +29,8 @@ class BagTest {
      */
     @Test
     void draw2(){
-        for (StudentColor color : bag.get().keySet()){
-            bag.get().put(color, 1);
+        for (StudentColor color : StudentColor.values()){
+            bag.setStudentsPerColor(color, 1);
         }
         boolean error = false;
         try {
@@ -67,18 +67,12 @@ class BagTest {
             else
                 blueStudents++;
         }
-        for(StudentColor color : bag.get().keySet()){
-            if(color.equals(StudentColor.YELLOW))
-                assertEquals(26-yellowStudents, bag.get().get(color));
-            else if(color.equals(StudentColor.RED))
-                assertEquals(26-redStudents, bag.get().get(color));
-            else if(color.equals(StudentColor.PURPLE))
-                assertEquals(26-purpleStudents, bag.get().get(color));
-            else if(color.equals(StudentColor.GREEN))
-                assertEquals(26-greenStudents, bag.get().get(color));
-            else
-                assertEquals(26-blueStudents, bag.get().get(color));
-        }
+        assertEquals(26-yellowStudents, bag.getStudentByColor(StudentColor.YELLOW));
+        assertEquals(26-redStudents, bag.getStudentByColor(StudentColor.RED));
+        assertEquals(26-purpleStudents, bag.getStudentByColor(StudentColor.PURPLE));
+        assertEquals(26-greenStudents, bag.getStudentByColor(StudentColor.GREEN));
+        assertEquals(26-blueStudents, bag.getStudentByColor(StudentColor.BLUE));
+
     }
 
     @Test
@@ -89,8 +83,8 @@ class BagTest {
             studentsToAdd.addAll(bag.draw(45));
         }catch(LastStudentDrawnException e){e.printStackTrace();}
         bag.addStudents(studentsToAdd);
-        for (StudentColor s: bag.get().keySet()) {
-            assertEquals(26, bag.get().get(s));
+        for (StudentColor s: StudentColor.values()) {
+            assertEquals(26, bag.getStudentByColor(s));
         }
     }
 }

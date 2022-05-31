@@ -30,4 +30,8 @@ public class MotherNature {
     public ArrayList<Island> getIslands(){
         return islands;
     }
+
+    public void setCurrentIsland(int isl){
+        currentIsland = isl;
+    }
 }

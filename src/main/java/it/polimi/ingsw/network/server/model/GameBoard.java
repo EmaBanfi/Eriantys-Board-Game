@@ -18,13 +18,11 @@ public class GameBoard {
      * The ignored color will not be considered in the assigment of influence points
      */
     private StudentColor ignoreColor;
-    private Player currentPlayer;
     private final Bag bag;
     private ArrayList<Tower> towers;
     /**
      * This attribute is used to memorise which player is the teacher of each color
      */
-    //private HashMap <StudentColor,Player> teachers;
     private ArrayList<Player> players;
 
     public GameBoard(int numberOfPlayers) {
@@ -42,23 +40,14 @@ public class GameBoard {
         gson = new Gson();
     }
 
-    /**
-     * This method is used to initialise the Hashmap teachers
-     */
-    /*private void initTeachers(){
-        teachers=new HashMap<>();
-        for (StudentColor color: StudentColor.values()) {
-            teachers.put(color, null);
-        }
-    }*/
 
     private void initTowers(int numOfTowers){
         towers=new ArrayList<>();
         if(numOfTowers==3){
-            towers.add(new Tower("Gray"));
+            towers.add(new Tower("GRAY"));
         }
-        towers.add(new Tower("White"));
-        towers.add(new Tower("Black"));
+        towers.add(new Tower("WHITE"));
+        towers.add(new Tower("BLACK"));
     }
 
     /**
@@ -99,12 +88,12 @@ public class GameBoard {
         }
     }
 
-    public  void MajorityOnCurrentIsland(Server server) throws EndGameException {
-        assignInfluencePoints(motherNature.getCurrentIsland(),server, true);
+    public  void MajorityOnCurrentIsland(Server server, Player currentPlayer) throws EndGameException {
+        assignInfluencePoints(motherNature.getCurrentIsland(),server, false, currentPlayer);
     }
 
-    public void MajorityOnIsland(int movements, Server server) throws EndGameException {
-        assignInfluencePoints(motherNature.getCurrentIsland() + movements, server, false);
+    public void MajorityOnIsland(int movements, Server server,Player currentPlayer) throws EndGameException {
+        assignInfluencePoints(motherNature.getCurrentIsland() + movements, server, true, currentPlayer);
     }
 
     /**
@@ -112,10 +101,10 @@ public class GameBoard {
      * @param island index of the island which will be considered to calculate influence points
      * @throws EndGameException because it calls majority. this exception is handled by the gameController
      */
-    public void assignInfluencePoints(int island, Server server, boolean ignoreBlock) throws EndGameException{
+    public void assignInfluencePoints(int island, Server server, boolean ignoreBlock, Player currentPlayer) throws EndGameException{
         ServerMessage message;
         String text = "";
-        if(!islands.get(island).isBlockCard()&&(!ignoreBlock)) {
+        if((!islands.get(island).isBlockCard())||ignoreBlock) {
             Island currentIsland = islands.get(island);
             for (Player player : players) {
                 player.setInfluencePoints(0);
@@ -137,16 +126,17 @@ public class GameBoard {
                                 player.getNickName() +
                                 " gains " +
                                 num +
-                                " influence points because they are the " +
+                                " influence points because they is the " +
                                 teacher.toString() + " teacher. \n";
-                    } else {
-                        resetIgnoredColor();
+                    }else{
                         text = text +
-                                teacher.toString() +
+                                ignoreColor.toString().toLowerCase() +
                                 " students are set to be ignored so they don't provide influence points \n";
+                        resetIgnoredColor();
                     }
                 }
             }
+
             for (Player player : players) {
                 int num = player.getInfluencePoints();
                 player.getTower().addInfluencePoints(num);
@@ -164,7 +154,7 @@ public class GameBoard {
                         text = text +
                                 tower.getTowerColor() + " tower " +
                                 "gains " + num + " influence points " +
-                                " form the towers on islands \n";
+                                " form the towers on islands \n ";
                     }
                 }
             } else {
@@ -183,6 +173,7 @@ public class GameBoard {
             majority(island, server);
         }
         else{
+            getIsland(island).removeBlockCard();
             text = "majority was not calculated on this island because there is a block.\n"
                     + "The block will now be removed";
             message = new Notify(text);
@@ -211,17 +202,28 @@ public class GameBoard {
         else
             previous= island-1;
         Tower newTower=islands.get(island).getTower();
+        int currentTowerInfluencePoints;
+        if(newTower==null)
+            currentTowerInfluencePoints =0;
+        else
+            currentTowerInfluencePoints=newTower.getInfluencePoints();
         for(Tower tower: towers){
-            if(tower.getInfluencePoints()>newTower.getInfluencePoints()) {
-                newTower.increaseAvailableTowers(islands.get(island).getNumOfTowers());
+            if(tower.getInfluencePoints()>currentTowerInfluencePoints) {
+                if(newTower!=null)
+                    newTower.increaseAvailableTowers(islands.get(island).getNumOfTowers());
                 newTower = tower;
+                if (towerNotChanged)
+                    towerNotChanged= false;
             }
-            if (towerNotChanged)
-                towerNotChanged= false;
+
         }
         if(!towerNotChanged) {
-            text = "Island " + (island +1) + " tower changed from " +
-                islands.get(island).getTower().getTowerColor() + " to " + newTower.getTowerColor();
+            if(islands.get(island).getTower()!=null) {
+                text = "The tower of island" + (island + 1) + " changed from " +
+                        islands.get(island).getTower().getTowerColor().toLowerCase() + " to " + newTower.getTowerColor().toLowerCase() + " tower";
+            }
+            else
+                text = "The tower of island " + (island + 1) + " is the " + newTower.getTowerColor().toLowerCase() + " tower";
             message = new TowerColor(
                     text,
                     island,
@@ -295,10 +297,8 @@ public class GameBoard {
      * This method is used to take the students from a certain cloud
      * @param cloud index of the cloud from which students must be taken
      */
-    public ArrayList<StudentColor> getStudentsFromCloud(int cloud){
-        ArrayList<StudentColor> students = new ArrayList<>(clouds.get(cloud).getStudents());
-        clouds.get(cloud).getStudents().clear();
-        return students;
+    public ArrayList<StudentColor> takeStudentsFromCloud(int cloud){
+        return clouds.get(cloud).takeStudents();
     }
 
     /**
@@ -310,9 +310,6 @@ public class GameBoard {
         cloud.addStudents(bag.draw(cloud.getMaxStudents()));
     }
 
-    public ArrayList<StudentColor> takeStudents(int cloud){
-        return clouds.get(cloud).getStudents();
-    }
 
     public void moveMotherNature(int movements){
         motherNature.move(movements);
@@ -348,14 +345,6 @@ public class GameBoard {
 
     public ArrayList<Cloud> getClouds(){
         return clouds;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     public Tower getTower(String towerColor){

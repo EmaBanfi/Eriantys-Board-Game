@@ -80,25 +80,6 @@ class PlayerBoardTest {
         assertEquals(9, playerBoard.getDiningHall().countStudentColor(StudentColor.BLUE));
         assertEquals(3, playerBoard.getDiningHall().countStudentColor(StudentColor.PURPLE));
 
-        arrayListHall.clear();
-        for (int i=0; i<purpleStudents; i++)
-            arrayListHall.add(StudentColor.PURPLE);
-        greenStudents = 1;
-        for (int i=0; i<greenStudents; i++)
-            arrayListHall.add(StudentColor.GREEN);
-        arrayListDiningHall.clear();
-        for (int i=0; i<blueStudents; i++)
-            arrayListDiningHall.add(StudentColor.BLUE);
-
-        playerBoard.switchStudents(arrayListDiningHall, arrayListHall);
-
-        assertEquals(2, playerBoard.getHall().countStudentColor(StudentColor.BLUE));
-        assertEquals(1, playerBoard.getHall().countStudentColor(StudentColor.PURPLE));
-        assertEquals(3, playerBoard.getHall().countStudentColor(StudentColor.GREEN));
-
-        assertEquals(7, playerBoard.getDiningHall().countStudentColor(StudentColor.BLUE));
-        assertEquals(4, playerBoard.getDiningHall().countStudentColor(StudentColor.PURPLE));
-        assertEquals(4, playerBoard.getDiningHall().countStudentColor(StudentColor.GREEN));
     }
 
     /**

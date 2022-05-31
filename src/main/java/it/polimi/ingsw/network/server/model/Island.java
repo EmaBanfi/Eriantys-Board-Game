@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Island implements ManageStudents {
     private Tower tower;
     private final ArrayList<StudentColor> students;
+    private boolean blockCard;
 
     public Island() {
         students = new ArrayList<>();
@@ -18,7 +19,7 @@ public class Island implements ManageStudents {
      * This attribute is used to implement the effect of the characterCard n°5.
      * If it's value is set to true then the majority must not be calculated on this island when it is reached by motherNature
      */
-    private boolean blockCard;
+
 
     public boolean isBlockCard() {
         return blockCard;
@@ -60,7 +61,9 @@ public class Island implements ManageStudents {
     }
 
     public void addStudents(ArrayList<StudentColor> students) {
-        this.students.addAll(students);
+        for(StudentColor studentColor: students){
+            this.students.add(studentColor);
+        }
     }
 
     public void addStudent(StudentColor student){students.add(student);}
@@ -75,6 +78,10 @@ public class Island implements ManageStudents {
     }
 
     public ArrayList<StudentColor> getStudents() {
-        return this.students;
+        ArrayList<StudentColor> studentColors = new ArrayList<>();
+        for (StudentColor color: students){
+            studentColors.add(color);
+        }
+        return studentColors;
     }
 }

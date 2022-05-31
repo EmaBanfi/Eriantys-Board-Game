@@ -27,8 +27,8 @@ public class SupportCard {
         return movement;
     }
 
-    public void setAdditionalTurnOrder(){
-        additionalTurnOrder=0.5;
+    public void setAdditionalTurnOrder(double delay){
+        additionalTurnOrder=delay;
     }
     public int getId() {
         return cardId;

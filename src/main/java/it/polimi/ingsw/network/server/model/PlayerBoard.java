@@ -78,21 +78,6 @@ public class PlayerBoard {
     }
 
     /**
-     * swaps two students between the Hall and the DiningHall, useful for character card 10
-     * @param studentsToAddInH students that must be added to the Hall
-     * @param studentsToAddInD students that must be added to the DiningHall
-     */
-    public void switchStudents(ArrayList<StudentColor> studentsToAddInH, ArrayList<StudentColor> studentsToAddInD) {
-        // add students to Hall and remove them from DiningHall
-        addStudentsToHall(studentsToAddInH);
-        diningHall.removeStudents(studentsToAddInH);
-
-        // add students to DiningHall and remove them from Hall
-        addStudentsToDiningHall(studentsToAddInD);
-        removeStudentsFromHall(studentsToAddInD);
-    }
-
-    /**
      * spend coins, useful if the player need to buy a CharacterCard
      * @param price price of the CharacterCard
      */

@@ -69,4 +69,16 @@ class GameTest {
         game.setCurrentPlayer(player1);
         assertTrue(game.isCurrentPlayer(player1.getNickName()));
     }
+
+    @Test
+    void gameIsFull(){
+         game.setNumOfPlayers(3);
+         assertTrue(game.gameIsFull());
+    }
+
+    @Test
+    void gameIsSet(){
+        game.setNumOfPlayers(3);
+        assertTrue(game.gameIsSet());
+    }
 }

@@ -19,6 +19,12 @@ public class StudentsInHall extends ServerMessage {
         setType("students in hall");
     }
 
+    public StudentsInHall( ArrayList<StudentColor> students, boolean added) {
+        this.students = students;
+        this.added = added;
+        setType("students in hall");
+    }
+
     /**
      * print the message and call the method of the view that add or remove students from the hall
      * @param client client to which the message is sent
