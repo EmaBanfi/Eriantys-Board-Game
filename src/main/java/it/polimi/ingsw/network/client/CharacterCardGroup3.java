@@ -12,8 +12,9 @@ public class CharacterCardGroup3 extends CharacterCard{
     private RequiredInfo requiredInfo;
     private BufferedReader br;
 
-    public CharacterCardGroup3(int id, int price, View view) {
-        super(id, price, view);
+    public CharacterCardGroup3(int id, View view) {
+        super(id, view);
+        setPrice(1);
         setText("You can move up to 2 more islands in this turn");
     }
 

@@ -289,12 +289,6 @@ public interface View {
     void notIgnoreColor(StudentColor color);
 
     /**
-     * update the available character cards
-     * @param availableCharacterCards list of the available character cards
-     */
-    void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards);
-
-    /**
      * add students to the player hall
      * @param students students to add
      */
@@ -343,4 +337,10 @@ public interface View {
      * @return list of available islands
      */
     ArrayList<IslandView> getAvailableIslands();
+
+    /**
+     * used to create available cards
+     * @param card card to add
+     */
+    void addAvailableCard(int card);
 }

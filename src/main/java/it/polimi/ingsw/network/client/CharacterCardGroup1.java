@@ -17,8 +17,9 @@ public class CharacterCardGroup1 extends CharacterCard {
     /**
      * create a new CharacterCard n°1 and put on it 4 students; at the end increase the price of the CharacterCard
      */
-    public CharacterCardGroup1(int id, int price, View view) {
-        super(id, price, view);
+    public CharacterCardGroup1(int id, View view) {
+        super(id, view);
+        setPrice(1);
         this.studentsOnCard = new ArrayList<>();
         islands = getView().getAvailableIslands();
         setText("At the start of the game, take 4 students and place them on top of this card;\n You can take one student from this card and place it on an island at your choice. Then, draw one student and place it on top of this card.");

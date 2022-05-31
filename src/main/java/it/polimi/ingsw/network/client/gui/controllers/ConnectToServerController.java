@@ -1,7 +1,6 @@
 
 package it.polimi.ingsw.network.client.gui.controllers;
 
-import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.gui.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ConnectToServerController implements Controller {
+public class ConnectToServerController {
 
     private Stage stage;
     private Scene scene;
@@ -31,10 +30,9 @@ public class ConnectToServerController implements Controller {
 
     @FXML
     public void onPlayButtonClick() {
-        gui.createClient();
+        //gui.createClient();
     }
 
-    @Override
     public void setGui(GUI gui) {
         this.gui = gui;
     }

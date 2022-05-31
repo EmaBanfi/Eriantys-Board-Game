@@ -13,9 +13,8 @@ public class CharacterCard {
     private View view;
     private transient boolean increasedPrice = false;
 
-    public CharacterCard(int cardId, int price, View view) {
+    public CharacterCard(int cardId, View view) {
         this.cardId = cardId;
-        this.price = price;
         this.view = view;
     }
 
@@ -37,6 +36,10 @@ public class CharacterCard {
 
     public int getPrice() {
         return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void activate(){}

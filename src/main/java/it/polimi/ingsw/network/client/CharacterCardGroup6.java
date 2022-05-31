@@ -14,13 +14,17 @@ public class CharacterCardGroup6 extends CharacterCard {
     private BufferedReader br;
     private String currentPlayer = getView().getCurrentPlayer();
 
-    public CharacterCardGroup6(int id, int price, View view) {
-        super(id, price, view);
-        if(cardId == 7)
+    public CharacterCardGroup6(int id, View view) {
+        super(id, view);
+        if(cardId == 7) {
             setText("At the start of the game, draw 6 students and place them on top of this card;\n" +
                     "You can take up to 3 students from this card and change them with the same amount of students in your Hall");
-        else
+            setPrice(1);
+        }
+        else {
             setText("You can swap 2 students from your Hall to your Dining Hall");
+            setPrice(1);
+        }
     }
 
     /**

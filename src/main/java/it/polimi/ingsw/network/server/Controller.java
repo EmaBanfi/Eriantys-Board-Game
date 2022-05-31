@@ -7,6 +7,7 @@ import it.polimi.ingsw.Exceptions.LastSupportCardUsedException;
 import it.polimi.ingsw.network.messages.serverMessages.*;
 import it.polimi.ingsw.network.server.model.*;
 
+import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
 import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCardBoard;
 
 import java.util.ArrayList;
@@ -80,7 +81,10 @@ public class Controller {
      * this method is used to notify all player of the available character cards for this game
      */
     public void notifyAvailableCC(){
-        AvailableCharacterCards message = new AvailableCharacterCards(characterCardBoard.getAvailableCards());
+        ArrayList<Integer> availableCards = new ArrayList<>();
+        for (CharacterCard card : characterCardBoard.getAvailableCards())
+            availableCards.add(card.getCardId());
+        AvailableCharacterCards message = new AvailableCharacterCards(availableCards);
         server.sendAll(gson.toJson(message,AvailableCharacterCards.class));
     }
 

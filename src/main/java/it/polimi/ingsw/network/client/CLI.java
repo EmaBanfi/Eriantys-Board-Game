@@ -26,8 +26,9 @@ public class CLI implements View, Runnable {
     ArrayList<PlayerView> players;
     ArrayList<String> availableDecks;
     ArrayList<String> availableTowers;
-    ArrayList<SupportCard> supportCards;
     ArrayList<String> playerOrder;
+    ArrayList<CharacterCard> availableCC;
+    CharacterCardCreator ccc;
     boolean usedCharacterCard;
     Client client;
     String currentPlayer;
@@ -38,13 +39,13 @@ public class CLI implements View, Runnable {
     Gson gson;
     int availableStudentsMovements = 3;
     StudentColor ignoredColor;
-    CharacterCardDeck characterCardDeck;
 
     public CLI(Client client) {
         this.client = client;
         gson = new Gson();
         initAvailableDecks();
-        characterCardDeck = new CharacterCardDeck(this);
+        availableCC = new ArrayList<>();
+        ccc = new CharacterCardCreator();
     }
 
     private void initAvailableDecks() {
@@ -113,22 +114,13 @@ public class CLI implements View, Runnable {
         }
     }
 
-    public CharacterCard getCharacterCard(int cardId){
-        CharacterCard card = null;
-        for(CharacterCard c: characterCardDeck.getAvailableCards()){
-            if(c.cardId==cardId)
-                card=c;
-        }
-        return card;
-    }
-
     /**
      * communicate to the client to choose a character card. Called by method
      */
     @Override
     public void askCharacterCard(){
         String availableCards = "";
-        for(CharacterCard c: characterCardDeck.getAvailableCards()){
+        for(CharacterCard c: availableCC){
             availableCards = availableCards + c.getCardId() + "\n";
         }
         System.out.println("Choose one of the followings character cards: ");
@@ -141,7 +133,7 @@ public class CLI implements View, Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            card = characterCardDeck.getCardById(choice);
+            card = getCardById(choice);
         }while(card.equals(null));
         card.activate();
     }
@@ -251,7 +243,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askSupportCard(){
         usedCharacterCard = false;
-        for (SupportCard supportCard : supportCards) {
+        for (SupportCard supportCard : player.getSupportCards()) {
             System.out.println(supportCard);
         }
         boolean supportCardAvailable = false;
@@ -259,7 +251,7 @@ public class CLI implements View, Runnable {
         try {
             do {
                 supportCardChoice = Integer.parseInt(br.readLine());
-                for (SupportCard supportCard : supportCards){
+                for (SupportCard supportCard : player.getSupportCards()){
                     if (supportCardChoice == supportCard.getId())
                         supportCardAvailable = true;
                 }
@@ -271,12 +263,12 @@ public class CLI implements View, Runnable {
         cmSupportCard message = new cmSupportCard(supportCardChoice);
         String text = gson.toJson(message, cmSupportCard.class);
         client.send(text + "\n");
-        supportCards.remove(supportCardChoice);
+        player.getSupportCards().remove(supportCardChoice);
     }
 
     public SupportCard getSupportCardByID(int id){
         SupportCard card = null;
-        for(SupportCard c : supportCards){
+        for(SupportCard c : player.getSupportCards()){
             if(c.getId()== id){
                 card = c;
             }
@@ -449,7 +441,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void showCharacterCard(int id) {
-        System.out.println("Character card: " + id + "\n" + "Character card price: " + characterCardDeck.getAvailableCards().get(id).getPrice());
+        System.out.println("Character card: " + id + "\n" + "Character card price: " + getCardById(id).getPrice());
         System.out.println("\n");
     }
 
@@ -499,7 +491,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void updateCharacterCardPrice(int id) {
-        characterCardDeck.getAvailableCards().get(id).increasePrice();
+        getCardById(id).increasePrice();
     }
 
     /**
@@ -683,10 +675,6 @@ public class CLI implements View, Runnable {
      * updates the blockCard effect of the character card
      */
     public void removeBlockOnCard() {
-        for(CharacterCard characterCard: characterCardDeck.getAvailableCards())
-            if(characterCard.getCardId()==5)
-                characterCard.getCardId();
-
     }
 
     /**
@@ -785,15 +773,6 @@ public class CLI implements View, Runnable {
         getPlayerByNick(currentPlayer).setUsedSupportCard(id);
     }
 
-    /**
-     * update the available character cards
-     * @param availableCharacterCards list of the available character cards
-     */
-    @Override
-    public void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards){
-        characterCardDeck.setAvailableCards(availableCharacterCards);
-    }
-
     public Client getClient(){
         return client;
     }
@@ -802,8 +781,17 @@ public class CLI implements View, Runnable {
         return availableIslands;
     }
 
+    @Override
+    public void addAvailableCard(int card) {
+        availableCC.add(ccc.createCard(card, this));
+    }
+
 
     public CharacterCard getCardById(int id){
-        return characterCardDeck.getCardById(id);
+        for (CharacterCard card : availableCC)
+            if (card.cardId == id)
+                return card;
+
+        return null;
     }
 }

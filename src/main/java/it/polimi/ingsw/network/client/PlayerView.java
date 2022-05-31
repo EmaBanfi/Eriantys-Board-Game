@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.server.model.StudentColor;
+import it.polimi.ingsw.network.server.model.SupportCard;
 
 import java.util.ArrayList;
 
@@ -14,11 +15,21 @@ public class PlayerView {
     private int availableSupportCard;
     private String tower;
     private  String deck;
+    private ArrayList<SupportCard> supportCards;
 
     public PlayerView(String nickname) {
         this.nickname = nickname;
         availableSupportCard = 10;
         coins = 0;
+        initSupportDeck();
+    }
+
+    private void initSupportDeck(){
+        supportCards = new ArrayList<>();
+
+        for(int i=1; i<11; i++){
+            supportCards.add(new SupportCard(i,i/2+i%2,i));
+        }
     }
 
     public String getTower() {
@@ -81,6 +92,10 @@ public class PlayerView {
 
     public void setDeck(String deck){
         this.deck = deck;
+    }
+
+    public ArrayList<SupportCard> getSupportCards() {
+        return supportCards;
     }
 
     public void decreaseCoins() {

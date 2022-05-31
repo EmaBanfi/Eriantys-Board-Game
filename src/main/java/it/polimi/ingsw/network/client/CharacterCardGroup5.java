@@ -16,18 +16,23 @@ public class CharacterCardGroup5 extends CharacterCard {
     /**
      * create the CharacterCard 3, 5 or 6 and put on it 4 students
      */
-    public CharacterCardGroup5(int id, int price, View view) {
-        super(id, price, view);
+    public CharacterCardGroup5(int id, View view) {
+        super(id, view);
         if(cardId == 3){
-            setText("You can choose an island and apply the majority count as if Mother Nature landed on that island. Mother Nature will continue her normal movements after this effect");
+            setText("You can choose an island and apply the majority count as if Mother Nature landed on that island." +
+                    "Mother Nature will continue her normal movements after this effect");
+            setPrice(3);
         }
         else if (cardId == 5) {
             this.availableBlockCards = 4;
             setText("At the start of the game, put 4 Block Card on top of this card; \n" +
-                    "You can place a Block Card on an island: on the first time Mother Nature lands on that island, put back the Block Card on top of this card and skip the majority count for that island");
+                    "You can place a Block Card on an island: on the first time Mother Nature lands on that island," +
+                    "put back the Block Card on top of this card and skip the majority count for that island");
+            setPrice(2);
         }
         else{
             setText("The Towers won't affect the majority count on an island during this turn");
+            setPrice(3);
         }
     }
 

@@ -14,15 +14,21 @@ public class CharacterCardGroup4 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
     private BufferedReader br;
 
-    public CharacterCardGroup4(int id, int price, View view) {
-        super(id, price, view);
-        if(id == 9)
+    public CharacterCardGroup4(int id, View view) {
+        super(id, view);
+        if(id == 9) {
             setText("Choose a student color: the students of that color wont affect the majority count during this turn");
-        else if(id == 11)
+            setPrice(3);
+        }
+        else if(id == 11) {
             setText("At the start of the game, draw 4 students and place them on top of this card; \n" +
                     "You can choose one student from this card and place it in your Hall, then draw a new student and place it on top of this card");
-        else
+            setPrice(2);
+        }
+        else {
             setText("Choose a student color: every player has to put back in the bag 3 students of the same color. Whoever has less than 3 students of the specified color, will put all the remaining students of that color ");
+            setPrice(3);
+        }
     }
 
     /**

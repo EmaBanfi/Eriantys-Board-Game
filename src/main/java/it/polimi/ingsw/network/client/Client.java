@@ -25,27 +25,11 @@ public class Client {
     private View view;
 
 
-    public Client() {
-        view = new CLI(this);
-
-        connection();
-
-        smgson = new ServerGson();
-        try {
-            dos = new DataOutputStream(s.getOutputStream());
-            br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        kb = new BufferedReader(new InputStreamReader(System.in));
-        serverUp = true;
-
-        receive();
-    }
-
-    public Client(GUI gui) {
-        view = gui;
+    public Client(String viewType) {
+        if(viewType.equals(1))
+            view = new CLI(this);
+        else
+            view = new GUI(this);
 
         connection();
 
@@ -78,13 +62,7 @@ public class Client {
                 System.out.println("Please digit 1 or 2");
         } while (!(viewType.equals("1")) & !(viewType.equals("2")));
 
-        if (viewType.equals("1")) {
-            Client client = new Client();
-        }
-        else {
-            String[] strings = new String[0];
-            GUI.main(strings);
-        }
+        Client client = new Client(viewType);
     }
 
     public void connection() {

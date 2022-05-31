@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class AvailableCharacterCards extends ServerMessage{
 
-    private ArrayList<CharacterCard> availableCharacterCards;
+    private ArrayList<Integer> availableCharacterCards;
 
     public AvailableCharacterCards() {
     }
 
-    public AvailableCharacterCards( ArrayList<CharacterCard> availableCharacterCards) {
+    public AvailableCharacterCards( ArrayList<Integer> availableCharacterCards) {
         this.availableCharacterCards = availableCharacterCards;
         setType("available cc");
     }
@@ -24,6 +24,7 @@ public class AvailableCharacterCards extends ServerMessage{
     @Override
     public void processMessage(Client client) {
 
-        client.getView().updateCharacterCards(availableCharacterCards);
+        for (Integer card : availableCharacterCards)
+            client.getView().addAvailableCard(card);
     }
 }
