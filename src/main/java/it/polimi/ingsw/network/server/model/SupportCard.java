@@ -33,4 +33,8 @@ public class SupportCard {
     public int getId() {
         return cardId;
     }
+
+    public double getAdditionalTurnOrder(){
+        return additionalTurnOrder;
+    }
 }

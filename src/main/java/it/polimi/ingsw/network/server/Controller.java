@@ -247,7 +247,6 @@ public class Controller {
     public void setUsedSupportCard(int cardId){
         String nick =game.getCurrentPlayer().getNickName();
         ServerMessage message;
-        boolean additional = false;
         boolean valid=true;
         String text;
         ArrayList <Integer> usedSupportCards = getUsedSupportCards();
@@ -261,14 +260,13 @@ public class Controller {
             }
             if(valid) {
                 int additionalTurnOrder=0;
-                for(int i=0; i<usedSupportCards.size(); i++){
-                    if(usedSupportCards.get(i)==cardId)
+                for (Integer usedSupportCard : usedSupportCards) {
+                    if (usedSupportCard == cardId)
                         additionalTurnOrder++;
                 }
                 game.getCurrentPlayer().getCardById(cardId).setAdditionalTurnOrder(additionalTurnOrder*0.1);
                 text="All "+nick +" available support cards have been used by other players in this round./n"+"" + nick+
                         " will use the chosen support card but you will play after the player that have already chosen the same one";
-                additional = true;
             }
             else {
                 text="Your chosen support card has already been used by another player in this round and you have support cards that you can use in this round:\n";
@@ -287,7 +285,7 @@ public class Controller {
         message=new UsedSupportCard(
                 text,
                 cardId,
-                additional);
+                game.getCurrentPlayer().getCardById(cardId).getAdditionalTurnOrder());
         server.sendAll(gson.toJson(message, UsedSupportCard.class));
         try {
             game.getCurrentPlayer().setUsedSupportCard(cardId);
