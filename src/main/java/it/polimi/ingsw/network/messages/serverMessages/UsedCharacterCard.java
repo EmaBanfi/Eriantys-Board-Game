@@ -27,7 +27,10 @@ public class UsedCharacterCard extends ServerMessage {
         super.processMessage(client);
 
         client.getView().showCharacterCard(cardId);
-        if(increasedPrice)
+
+        client.getView().getPlayerByNick(client.getView().getCurrentPlayer()).decreaseCoins();
+
+        if (increasedPrice)
             client.getView().updateCharacterCardPrice(cardId);
     }
 }

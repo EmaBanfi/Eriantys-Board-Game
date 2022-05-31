@@ -28,7 +28,7 @@ public class CharacterCardGroup3 extends CharacterCard{
                 e.printStackTrace();
             }
         }while(movementChoice != 1 || movementChoice != 2);
-        CCG3 message = new CCG3(4, movementChoice);
+        CCG3 message = new CCG3(movementChoice);
         getView().getClient().send(new Gson().toJson(message, CCG3.class));
     }
 }

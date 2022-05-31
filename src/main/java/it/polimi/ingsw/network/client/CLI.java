@@ -606,6 +606,16 @@ public class CLI implements View, Runnable {
         getPlayerByNick(currentPlayer).removeFromHall(students);
     }
 
+    @Override
+    public void addStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
+
+    }
+
+    @Override
+    public void removeStudentsFromCard(int cardId, ArrayList<StudentColor> students) {
+
+    }
+
     /**
      * update the amount of coins that the player has. Called by message
      * @param coin
@@ -627,6 +637,11 @@ public class CLI implements View, Runnable {
 
     public String getCurrentPlayer(){
         return currentPlayer;
+    }
+
+    @Override
+    public ArrayList<IslandView> getAvailableIsland() {
+        return null;
     }
 
     public void updatePlayerOrder(ArrayList<String> playerOrder) {

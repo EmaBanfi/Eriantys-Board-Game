@@ -5,16 +5,15 @@ import it.polimi.ingsw.network.client.Client;
 public class UsedSupportCard extends ServerMessage{
 
     private int supportCardId;
-    boolean additionalTurnOrder;
-    double number;
+    private double additionalTurnOrder;
 
     public UsedSupportCard() {
     }
 
-    public UsedSupportCard(String message, int supportCardId, boolean additionalTurnOrder) {
+    public UsedSupportCard(String message, int supportCardId, double additionalTurnOrder) {
         super(message);
-        this.additionalTurnOrder = additionalTurnOrder;
         this.supportCardId = supportCardId;
+        this.additionalTurnOrder = additionalTurnOrder;
         setType("used support card");
     }
 
@@ -26,8 +25,9 @@ public class UsedSupportCard extends ServerMessage{
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        if (additionalTurnOrder)
-            client.getView().setAdditionalTurnOrder(supportCardId, number);
+        if (additionalTurnOrder != 0)
+            client.getView().setAdditionalTurnOrder(supportCardId, additionalTurnOrder);
+
         client.getView().showSupportCard(supportCardId);
     }
 }

@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread {
 
     private final Socket socket;
     private PrintStream ps = null;
@@ -111,7 +111,6 @@ public class ClientHandler extends Thread{
     }
 
     public void sendMessage(String message){
-        System.out.println(message);
         ps.println(message);
     }
 

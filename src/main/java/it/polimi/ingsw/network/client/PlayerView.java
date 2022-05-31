@@ -82,4 +82,7 @@ public class PlayerView {
     public void setDeck(String deck){
         this.deck = deck;
     }
+
+    public void decreaseCoins() {
+    }
 }

@@ -18,14 +18,14 @@ public class StudentsOnCard extends ServerMessage{
         super(message);
         this.cardId = cardId;
         this.students = students;
-        this.added=added;
+        this.added = added;
         setType("students on card");
     }
 
     public StudentsOnCard( int cardId, ArrayList<StudentColor> students, boolean added) {
         this.cardId = cardId;
         this.students = students;
-        this.added=added;
+        this.added = added;
         setType("students on card");
     }
 
@@ -37,6 +37,9 @@ public class StudentsOnCard extends ServerMessage{
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updateStudentsOnCard(cardId, students);
+        if (added)
+            client.getView().addStudentsOnCard(cardId, students);
+        else
+            client.getView().removeStudentsFromCard(cardId, students);
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.messages.clientMessages;
 
 import it.polimi.ingsw.network.server.ClientHandler;
+import it.polimi.ingsw.network.server.Controller;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 public class CCG1 extends ClientMessage{
@@ -18,11 +19,16 @@ public class CCG1 extends ClientMessage{
     }
 
     /**
-     *
-     * @param handler
+     * call the methods needed to apply the effect of the character card 1
+     * @param handler handler to which the message is sent
      */
     @Override
     public void processMessage(ClientHandler handler) {
+        Controller controller = handler.getServer().getController();
+        controller.notifyUsedCharacterCard(1);
 
+        controller.addStudentToIsland(island, color);
+
+        controller.refillCard(1, 1);
     }
 }

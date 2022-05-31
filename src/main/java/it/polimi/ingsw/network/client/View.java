@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.network.server.model.CharacterCards.CharacterCard;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -26,17 +25,17 @@ public interface View {
     private void initAvailableTowers() {}
 
     /**
-     * communicate to the client to insert the nickname. Called by message.
+     * communicate to the player to insert the nickname. Called by message.
      */
     void askNickName();
 
     /**
-     * ask to the client if he want to choose a character card. Called by method.
+     * ask to the player if he want to choose a character card. Called by method.
      */
     void askActivateCharacterCard();
 
     /**
-     * communicate to the client to choose a character card. Called by method.
+     * communicate to the player to choose a character card. Called by method.
      */
     void askCharacterCard();
 
@@ -61,17 +60,17 @@ public interface View {
     void askSupportCard();
 
     /**
-     * ask to the client which students wants to move from hall to dining hall. Called by method.
+     * ask to the player which students wants to move from hall to dining hall. Called by method.
      */
     void askMoveStudentsHToD();
 
     /**
-     * ask to the client which students wants to move from hall to island (single or multiple). Called by method.
+     * ask to the player which students wants to move from hall to island (single or multiple). Called by method.
      */
     void askMoveStudentsHToI();
 
     /**
-     * ask to the client from which cloud wants to take the students. Called by method.
+     * ask to the player from which cloud wants to take the students. Called by method.
      */
     void askCloud();
 
@@ -81,7 +80,7 @@ public interface View {
     void askMotherNatureMovements();
 
     /**
-     * show a message (string) on the client screen. Called by message.
+     * show a message (string) on the view screen. Called by message.
      * @param message the message to print.
      */
     void showString(String message);
@@ -99,7 +98,7 @@ public interface View {
     void showSupportCard(int id);
 
     /**
-     * show on the client screen which support card is using during that turn. Called by method.
+     * show on the view screen which support card is using during that turn. Called by method.
      */
     void updateUsedSupportCard(int id);
 
@@ -163,9 +162,10 @@ public interface View {
 
     /**
      * set additional turn order for a used support card.
-     * @param id id of the support card.
+     * @param id id of the support card
+     * @param additionalTurnOrder additionalTurnOrder of the support card.
      */
-    void setAdditionalTurnOrder(int id);
+    void setAdditionalTurnOrder(int id, double additionalTurnOrder);
 
     /**
      * update the amount of coins that the player has. Called by message.
@@ -204,24 +204,11 @@ public interface View {
     void updateEmptyCloud(int cloud);
 
     /**
-     * updates the ignored color given by the effect of the character card
-     * @param color the color to be ignored
-     */
-    void updateIgnoredColor(StudentColor color);
-
-    /**
      * updates the tower on a specific island
      * @param island the specific island
      * @param tower the new tower color
      */
     void updateTowerOnIsland(int island, String tower);
-
-    /**
-     * updates the student on the character card
-     * @param students students to add
-     * @param cardId id of the character card
-     */
-    void updateStudentsOnCard(int cardId, ArrayList<StudentColor> students);
 
     /**
      * add students on cloud.
@@ -318,4 +305,42 @@ public interface View {
      * @param students students to remove
      */
     void removeStudentsFromHall(ArrayList<StudentColor> students);
+
+    /**
+     * add the students on the character card
+     * @param students students to add
+     * @param cardId id of the character card
+     */
+    void addStudentsOnCard(int cardId, ArrayList<StudentColor> students);
+
+    /**
+     * remove the students from the character card
+     * @param students students to remove
+     * @param cardId id of the character card
+     */
+    void removeStudentsFromCard(int cardId, ArrayList<StudentColor> students);
+
+    /**
+     * to get the current player nickname
+     * @return current player nickname
+     */
+    String getCurrentPlayer();
+
+    /**
+     * to get the available IslandView
+     * @return ArrayList of IslandView
+     */
+    ArrayList<IslandView> getAvailableIsland();
+
+    /**
+     * to get a Client object
+     * @return Client object
+     */
+    Client getClient();
+
+    /**
+     * get the available islands
+     * @return list of available islands
+     */
+    ArrayList<IslandView> getAvailableIslands();
 }

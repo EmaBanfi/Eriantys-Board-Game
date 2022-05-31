@@ -1,10 +1,12 @@
 package it.polimi.ingsw.network.client;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.messages.clientMessages.Nickname;
+
+import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.messages.clientMessages.SetGameStatus;
 import it.polimi.ingsw.network.messages.serverMessages.ServerMessage;
 import it.polimi.ingsw.network.messages.serverMessages.ServerGson;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,11 +25,27 @@ public class Client {
     private View view;
 
 
-    public Client(String viewType) {
-        if (viewType.equals("1"))
-            view = new CLI(this);
-        /*else
-            view = new GUI(this);*/
+    public Client() {
+        view = new CLI(this);
+
+        connection();
+
+        smgson = new ServerGson();
+        try {
+            dos = new DataOutputStream(s.getOutputStream());
+            br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        kb = new BufferedReader(new InputStreamReader(System.in));
+        serverUp = true;
+
+        receive();
+    }
+
+    public Client(GUI gui) {
+        view = gui;
 
         connection();
 
@@ -60,7 +78,13 @@ public class Client {
                 System.out.println("Please digit 1 or 2");
         } while (!(viewType.equals("1")) & !(viewType.equals("2")));
 
-        Client c = new Client(viewType);
+        if (viewType.equals("1")) {
+            Client client = new Client();
+        }
+        else {
+            String[] strings = new String[0];
+            GUI.main(strings);
+        }
     }
 
     public void connection() {
@@ -96,18 +120,11 @@ public class Client {
         }
     }
 
-    public void send(String string){
-    }
-
-    public void askNickname() {
+    public void send(String text) {
         try {
-            str = kb.readLine();
-            Gson gson = new Gson();
-            Nickname message = new Nickname(str);
-            String text = gson.toJson(message, Nickname.class);
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

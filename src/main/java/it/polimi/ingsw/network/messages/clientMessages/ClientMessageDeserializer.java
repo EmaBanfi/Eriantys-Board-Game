@@ -43,6 +43,8 @@ public class ClientMessageDeserializer implements JsonDeserializer<ClientMessage
                     return jsonDeserializationContext.deserialize(jsonObject, CCG6.class);
                 case "cloud":
                     return jsonDeserializationContext.deserialize(jsonObject, Cloud.class);
+                case "refill request":
+                    return jsonDeserializationContext.deserialize(jsonObject, RefillRequest.class);
             }
 
         return null;

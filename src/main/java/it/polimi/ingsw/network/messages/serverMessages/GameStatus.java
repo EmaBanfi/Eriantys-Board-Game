@@ -24,7 +24,6 @@ public class GameStatus extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().setNumOfPlayers(numOfPlayers);
-        client.getView().setMode(mode);
+        client.getView().updateGameStatus(numOfPlayers, mode);
     }
 }

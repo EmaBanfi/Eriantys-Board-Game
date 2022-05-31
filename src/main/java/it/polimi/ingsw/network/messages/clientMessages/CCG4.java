@@ -1,9 +1,10 @@
 package it.polimi.ingsw.network.messages.clientMessages;
 
+import it.polimi.ingsw.network.server.ClientHandler;
+import it.polimi.ingsw.network.server.Controller;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
-@SuppressWarnings("FieldCanBeLocal")
-public class CCG4 extends ClientMessage{
+public class CCG4 extends ClientMessage {
 
     private int cardId;
     private StudentColor color;
@@ -17,4 +18,24 @@ public class CCG4 extends ClientMessage{
         setType("CCG4");
     }
 
+    /**
+     * call the methods needed to apply the effect of the character card 9, 11 or 12
+     * @param handler handler to which the message is sent
+     */
+    @Override
+    public void processMessage(ClientHandler handler) {
+        Controller controller = handler.getServer().getController();
+        controller.notifyUsedCharacterCard(cardId);
+
+        if (cardId == 9)
+            controller.ignoreColor(color);
+
+        else if (cardId == 11) {
+            controller.addStudentToD(color);
+            controller.refillCard(cardId, 1);
+        }
+
+        else
+            controller.removeStudents(color);
+    }
 }

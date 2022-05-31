@@ -20,7 +20,7 @@ public class BlockOnCard extends ServerMessage{
      */
     @Override
     public void processMessage(Client client) {
-        if(decreasedBlocks)
+        if (decreasedBlocks)
             client.getView().removeBlockOnCard();
         else
             client.getView().addBlockOnCard();
