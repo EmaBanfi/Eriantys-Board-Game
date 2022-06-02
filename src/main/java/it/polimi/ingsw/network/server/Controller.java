@@ -192,7 +192,7 @@ public class Controller {
                     num-1,
                     cloud.getStudents()
             );
-            server.sendAll(gson.toJson(message, smChosenCloud.class));
+            server.sendAll(gson.toJson(message, smStudentsOnCloud.class));
         }
     }
 
