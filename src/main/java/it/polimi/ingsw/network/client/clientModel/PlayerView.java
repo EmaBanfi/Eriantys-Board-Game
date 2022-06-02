@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 import it.polimi.ingsw.network.server.model.StudentColor;
 import it.polimi.ingsw.network.server.model.SupportCard;

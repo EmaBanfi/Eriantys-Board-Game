@@ -1,6 +1,7 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.messages.clientMessages.CCG3;
 
 import java.io.BufferedReader;
@@ -10,13 +11,14 @@ import java.io.InputStreamReader;
 public class CharacterCardGroup3 extends CharacterCard{
 
     private int chosenIsland;
-    private RequiredInfo requiredInfo;
+
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CharacterCardGroup3(int id, View view) {
         super(id, view);
         setPrice(1);
         setText("You can move up to 2 more islands in this turn");
+
     }
 
     public void activate(){

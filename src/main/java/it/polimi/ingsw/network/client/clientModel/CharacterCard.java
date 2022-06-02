@@ -1,5 +1,6 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.model.GameBoard;
 import it.polimi.ingsw.network.server.model.Player;
@@ -7,7 +8,7 @@ import it.polimi.ingsw.network.server.model.Player;
 import java.util.ArrayList;
 
 public class CharacterCard {
-    protected int cardId;
+    private int cardId;
     private int price;
     private String text;
     private View view;
@@ -30,7 +31,7 @@ public class CharacterCard {
         return text;
     }
 
-    protected int getCardId() {
+    public int getCardId() {
         return cardId;
     }
 

@@ -4,7 +4,9 @@ package it.polimi.ingsw.network.client;
 //cosa fa la getTowerByColor?
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.clientModel.*;
 import it.polimi.ingsw.network.messages.clientMessages.*;
+import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class CLI implements View, Runnable {
     HashMap<StudentColor, String> teachers;
     MotherNatureView motherNature;
     ArrayList<CloudView> availableClouds;
-    ArrayList<IslandView> availableIslands;
+    ArrayList<Island> availableIslands;
     Phase resumeFrom = null;
     PlayerView player;
     ArrayList<PlayerView> players;
@@ -35,7 +37,6 @@ public class CLI implements View, Runnable {
     String currentPlayer;
     String mode;
     int numOfPlayers;
-    HashMap<String, String> teams;
     BufferedReader br;
     Gson gson;
     int availableStudentsMovements = 3;
@@ -343,15 +344,7 @@ public class CLI implements View, Runnable {
             for (int i = 0; i < availableIslands.size(); i++) {
                 System.out.println("Island: " + i + "  " + "Students on island " + i + ": " + availableIslands.get(i).getStudents() + ";");
             }
-            do {
-                try {
-                    chosenIsland = Integer.parseInt(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (chosenIsland < 0 || chosenIsland > availableIslands.size())
-                    System.out.println("Invalid island, please choose a valid one: ");
-            } while (chosenIsland < 0 || chosenIsland > availableIslands.size());
+            chosenIsland = getChosenIsland();
 
             System.out.println("Choose the student/s that you want to move (you can move " + availableStudentsMovements + " students): ");
             ArrayList<StudentColor> studentsToMove = null;
@@ -416,6 +409,14 @@ public class CLI implements View, Runnable {
             System.out.println("Island: " + i);
         }
         int chosenIsland = 0;
+        chosenIsland = getChosenIsland();
+        System.out.println("Chosen island: " + chosenIsland);
+        MoveMother message = new MoveMother(chosenIsland);
+        client.send(gson.toJson(message, MoveMother.class));
+    }
+
+    private int getChosenIsland() {
+        int chosenIsland=0;
         do {
             try {
                 chosenIsland = Integer.parseInt(br.readLine());
@@ -425,9 +426,7 @@ public class CLI implements View, Runnable {
             if (chosenIsland < 0 || chosenIsland > availableIslands.size())
                 System.out.println("Invalid island, please choose a valid one: ");
         } while (chosenIsland < 0 || chosenIsland > availableIslands.size());
-        System.out.println("Chosen island: " + chosenIsland);
-        MoveMother message = new MoveMother(chosenIsland);
-        client.send(gson.toJson(message, MoveMother.class));
+        return chosenIsland;
     }
 
     /**
@@ -522,12 +521,12 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void blockIsland(int island) {
-        availableIslands.get(island).setBlockCard(true);
+        availableIslands.get(island).addBlockCard();
     }
 
     @Override
     public void unlockIsland(int island){
-        availableIslands.get(island).setBlockCard(false);
+        availableIslands.get(island).removeBlockCard();
     }
 
     @Override
@@ -636,7 +635,7 @@ public class CLI implements View, Runnable {
     }
 
     @Override
-    public ArrayList<IslandView> getAvailableIsland() {
+    public ArrayList<Island> getAvailableIsland() {
         return null;
     }
 
@@ -781,7 +780,7 @@ public class CLI implements View, Runnable {
         return client;
     }
 
-    public ArrayList<IslandView> getAvailableIslands(){
+    public ArrayList<Island> getAvailableIslands(){
         return availableIslands;
     }
 
@@ -793,7 +792,7 @@ public class CLI implements View, Runnable {
 
     public CharacterCard getCardById(int id){
         for (CharacterCard card : availableCC)
-            if (card.cardId == id)
+            if (card.getCardId() == id)
                 return card;
 
         return null;

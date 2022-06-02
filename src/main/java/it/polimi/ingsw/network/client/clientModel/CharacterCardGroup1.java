@@ -1,8 +1,10 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.messages.clientMessages.CCG1;
+import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public class CharacterCardGroup1 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard;
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private ArrayList<IslandView> islands;
+    private ArrayList<Island> islands;
 
     /**
      * create a new CharacterCard n°1 and put on it 4 students; at the end increase the price of the CharacterCard

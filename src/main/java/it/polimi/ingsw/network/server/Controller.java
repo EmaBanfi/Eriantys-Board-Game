@@ -531,7 +531,7 @@ public class Controller {
         int currentIsland = board.getMotherNature().getCurrentIsland() + 1;
         String text  = "Mother Nature is now visiting island " + currentIsland;
         MotherPosition message = new MotherPosition(text, currentIsland -1 );
-        server.sendAllExceptPlayer( nick, gson.toJson(message, MotherPosition.class));
+        server.sendAll( gson.toJson(message, MotherPosition.class));
         try {
             board.MajorityOnCurrentIsland(server, game.getCurrentPlayer());
         } catch (EndGameException e) {

@@ -14,4 +14,5 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.network.messages.serverMessages to com.google.gson;
     opens it.polimi.ingsw.network.server to com.google.gson;
     exports it.polimi.ingsw.network.client.gui.controllers;
+    opens it.polimi.ingsw.network.client.clientModel to com.google.gson;
 }

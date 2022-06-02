@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.network.client.clientModel.PlayerView;
+import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -321,10 +323,11 @@ public interface View {
     String getCurrentPlayer();
 
     /**
-     * to get the available IslandView
-     * @return ArrayList of IslandView
+     * to get the available Island
+     *
+     * @return ArrayList of Island
      */
-    ArrayList<IslandView> getAvailableIsland();
+    ArrayList<Island> getAvailableIsland();
 
     /**
      * to get a Client object
@@ -334,9 +337,10 @@ public interface View {
 
     /**
      * get the available islands
+     *
      * @return list of available islands
      */
-    ArrayList<IslandView> getAvailableIslands();
+    ArrayList<Island> getAvailableIslands();
 
     /**
      * used to create available cards

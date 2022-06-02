@@ -26,11 +26,7 @@ public class CloudView {
     public void removeStudents() {
         students.clear();
     }
-
-    public int countStudentColor(StudentColor color) {
-        return (int) students.stream().filter(x -> x.equals(color)).count();
-    }
-
+    
     public ArrayList<StudentColor> getStudents() {
         return this.students;
     }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 public enum Phase {
     CHOOSE_GAME_STATUS,
@@ -8,5 +8,5 @@ public enum Phase {
     CHOOSE_TOWER,
     CHOOSE_DECK,
     CHOOSE_STUDENTS_TO_DINING_HALL,
-    CHOOSE_STUDENTS_TO_ISLAND;
+    CHOOSE_STUDENTS_TO_ISLAND
 }

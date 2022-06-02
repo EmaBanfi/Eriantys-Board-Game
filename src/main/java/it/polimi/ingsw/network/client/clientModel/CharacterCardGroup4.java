@@ -1,7 +1,7 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.messages.clientMessages.CCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -36,7 +36,7 @@ public class CharacterCardGroup4 extends CharacterCard {
      * implementation of the effect of the CharacterCard 9, the CharacterCard 11 and the CharacterCard 12; at the end increase the price of the CharacterCard
      */
     public void activate(){
-        if(cardId == 9){
+        if(getCardId() == 9){
             String colorChoice = null;
             StudentColor color = null;
             do{
@@ -51,7 +51,7 @@ public class CharacterCardGroup4 extends CharacterCard {
             CCG4 message = new CCG4(9, color);
             getView().getClient().send(new Gson().toJson(message, CCG4.class));
         }
-        else if(cardId == 11){
+        else if(getCardId() == 11){
             System.out.println("Students on card: ");
             for(StudentColor student : studentsOnCard){
                 System.out.println(student);

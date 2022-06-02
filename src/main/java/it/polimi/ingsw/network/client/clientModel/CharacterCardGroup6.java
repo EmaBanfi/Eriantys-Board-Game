@@ -1,7 +1,8 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.messages.clientMessages.CCG6;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -17,7 +18,7 @@ public class CharacterCardGroup6 extends CharacterCard {
 
     public CharacterCardGroup6(int id, View view) {
         super(id, view);
-        if(cardId == 7) {
+        if(getCardId() == 7) {
             setText("At the start of the game, draw 6 students and place them on top of this card;\n" +
                     "You can take up to 3 students from this card and change them with the same amount of students in your Hall");
             setPrice(1);
@@ -32,7 +33,7 @@ public class CharacterCardGroup6 extends CharacterCard {
      * implementation of the effect of the CharacterCard 7 and the CharacterCard 10; at the end increase the price of the CharacterCard
     */
     public void activate(){
-        if(cardId == 7){
+        if(getCardId() == 7){
             int numberChoice = 0;
             do{
                 System.out.println("Select the number of students that you want to change: ");

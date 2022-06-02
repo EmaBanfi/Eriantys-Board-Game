@@ -209,9 +209,17 @@ public class GameBoard {
             currentTowerInfluencePoints=newTower.getInfluencePoints();
         for(Tower tower: towers){
             if(tower.getInfluencePoints()>currentTowerInfluencePoints) {
-                if(newTower!=null)
+                if(newTower!=null) {
                     newTower.increaseAvailableTowers(islands.get(island).getNumOfTowers());
+                    text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
+                    message = new Notify(text);
+                    server.sendAll(gson.toJson(message, Notify.class));
+                }
                 newTower = tower;
+                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
+                message = new Notify(text);
+                server.sendAll(gson.toJson(message, Notify.class));
                 if (towerNotChanged)
                     towerNotChanged= false;
             }
@@ -242,6 +250,7 @@ public class GameBoard {
                 server.sendAll(gson.toJson(message, Merge.class));
                 mergeIslands(island, next);
                 newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                islands.get(island).getNumOfTowers();
             }
             if (islands.get(island).getTower() == islands.get(previous).getTower()) {
                 text = "island " + (next + 1) + " has been merged in to island " + (island +1);
@@ -253,6 +262,7 @@ public class GameBoard {
                 server.sendAll(gson.toJson(message, Merge.class));
                 mergeIslands(island, previous);
                 newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                islands.get(island).getNumOfTowers();
             }
             else{
                 text = "There will be no merging because adjacent islands have tower of different colors than" +
