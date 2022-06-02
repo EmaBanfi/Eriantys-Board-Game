@@ -60,14 +60,10 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
                     return jsonDeserializationContext.deserialize(jsonObject, smBlockOnIsland.class);
                 case "blocks on card":
                     return jsonDeserializationContext.deserialize(jsonObject, smBlockOnCard.class);
-                case "ignore tower":
-                    return jsonDeserializationContext.deserialize(jsonObject, smIgnoreTower.class);
                 case "available cc":
                     return jsonDeserializationContext.deserialize(jsonObject, smAvailableCharacterCards.class);
                 case "current player":
                     return jsonDeserializationContext.deserialize(jsonObject, smCurrentPlayer.class);
-                case "ignore color":
-                    return jsonDeserializationContext.deserialize(jsonObject, smIgnoreColor.class);
                 case "not valid support card":
                     return jsonDeserializationContext.deserialize(jsonObject, smNotValidSupportCard.class);
                 case "resume turn":

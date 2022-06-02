@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client.clientModel;
 
+import it.polimi.ingsw.network.server.model.DiningHall;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import it.polimi.ingsw.network.server.model.SupportCard;
 
@@ -22,6 +23,8 @@ public class PlayerView {
         availableSupportCard = 10;
         coins = 0;
         initSupportDeck();
+        hall = new ArrayList<>();
+        diningHall = new ArrayList<>();
     }
 
     private void initSupportDeck(){
@@ -51,11 +54,15 @@ public class PlayerView {
     }
 
     public ArrayList<StudentColor> getHall() {
-        return hall;
+        ArrayList<StudentColor> studentColor = new ArrayList<>();
+        studentColor.addAll(hall);
+        return studentColor;
     }
 
     public ArrayList<StudentColor> getDiningHall() {
-        return diningHall;
+        ArrayList<StudentColor> studentColor = new ArrayList<>();
+        studentColor.addAll(diningHall);
+        return studentColor;
     }
 
     public int getUsedSupportCard() {

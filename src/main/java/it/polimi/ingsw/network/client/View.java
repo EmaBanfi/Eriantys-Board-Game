@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.network.client.clientModel.IslandView;
 import it.polimi.ingsw.network.client.clientModel.PlayerView;
-import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -267,30 +267,6 @@ public interface View {
     void unlockIsland(int island);
 
     /**
-     * ignore the tower for the calculation of the influence
-     * @param island island where the tower must be ignored
-     */
-    void ignoreTower(int island);
-
-    /**
-     * consider the tower for the calculation of the influence
-     * @param island island where the tower must be considered
-     */
-    void notIgnoreTower(int island);
-
-    /**
-     * update the color ignored during the influence calculation
-     * @param color the color to ignore
-     */
-    void ignoreColor(StudentColor color);
-
-    /**
-     * update the color not ignored during the influence calculation
-     * @param color the color not to ignore
-     */
-    void notIgnoreColor(StudentColor color);
-
-    /**
      * add students to the player hall
      * @param students students to add
      */
@@ -327,7 +303,7 @@ public interface View {
      *
      * @return ArrayList of Island
      */
-    ArrayList<Island> getAvailableIsland();
+    ArrayList<IslandView> getAvailableIslands();
 
     /**
      * to get a Client object
@@ -336,17 +312,12 @@ public interface View {
     Client getClient();
 
     /**
-     * get the available islands
-     *
-     * @return list of available islands
-     */
-    ArrayList<Island> getAvailableIslands();
-
-    /**
      * used to create available cards
      * @param card card to add
      */
     void addAvailableCard(int card);
+
+    int getChosenIsland();
 
     /**
      * after the view received the game results, the player will communicate the disconnection from the server

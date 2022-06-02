@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui;
 
 import it.polimi.ingsw.network.client.*;
+import it.polimi.ingsw.network.client.clientModel.IslandView;
 import it.polimi.ingsw.network.client.clientModel.PlayerView;
 import it.polimi.ingsw.network.client.gui.controllers.NicknameController;
 import it.polimi.ingsw.network.server.model.Island;
@@ -256,26 +257,6 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void ignoreTower(int island) {
-
-    }
-
-    @Override
-    public void notIgnoreTower(int island) {
-
-    }
-
-    @Override
-    public void ignoreColor(StudentColor color) {
-
-    }
-
-    @Override
-    public void notIgnoreColor(StudentColor color) {
-
-    }
-
-    @Override
     public void addStudentsToHall(ArrayList<StudentColor> students) {
 
     }
@@ -301,7 +282,7 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public ArrayList<Island> getAvailableIsland() {
+    public ArrayList<IslandView> getAvailableIslands() {
         return null;
     }
 
@@ -311,13 +292,13 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public ArrayList<Island> getAvailableIslands() {
-        return null;
+    public void addAvailableCard(int card) {
+
     }
 
     @Override
-    public void addAvailableCard(int card) {
-
+    public int getChosenIsland() {
+        return 0;
     }
 
     @Override

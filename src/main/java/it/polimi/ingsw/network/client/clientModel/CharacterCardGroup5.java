@@ -2,9 +2,8 @@ package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.View;
+import it.polimi.ingsw.network.messages.clientMessages.ClientMessage;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG5;
-import it.polimi.ingsw.network.server.model.Island;
-import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;
-    private ArrayList<Island> islands;
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     /**
@@ -37,69 +35,25 @@ public class CharacterCardGroup5 extends CharacterCard {
             setText("The Towers won't affect the majority count on an island during this turn");
             setPrice(3);
         }
-        islands = view.getAvailableIslands();
     }
 
     /**
      * implementation of the effect of the CharacterCard 5 and the CharacterCard 6; at the end increase the price of the CharacterCard
      */
     public void activate() {
+        System.out.println(getText());
+        int islandChoice = getView().getChosenIsland();
+        ClientMessage message ;
         if(getCardId() == 3){
-            System.out.println("Choose an island: ");
-            int islandChoice = -1;
-            do{
-                if(islandChoice < 0 || islandChoice > islands.size()){
-                    System.out.println("Enter value between 1 and 12 included");
-                }
-                try {
-                    islandChoice = Integer.parseInt(br.readLine()) -1;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }while(islandChoice < 0 || islandChoice > islands.size());
-            cmCCG5 message = new cmCCG5(3, islandChoice);
+            message = new cmCCG5(3, islandChoice);
             getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else if(getCardId() == 5){
-            for(int i = 0; i < islands.size(); i++){
-                String text = "Students on island " + (i+1) ;
-                for(StudentColor student : islands.get(i).getStudents()){
-                    if(i > 0) {
-                        text =text + ", ";
-                    }
-                    text = text + student.toString();
-                }
-                System.out.println(text);
-            }
-            System.out.println("Choose an island: ");
-            int islandChoice = -1;
-            do{
-                if(islandChoice < 0 || islandChoice > islands.size()){
-                    System.out.println("Enter value between 1 and 12 included");
-                }
-                try {
-                    islandChoice = Integer.parseInt(br.readLine()) -1;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }while(islandChoice < 0 || islandChoice > islands.size());
-            cmCCG5 message = new cmCCG5(5, islandChoice);
+            message = new cmCCG5(5, getView().getChosenIsland());
             getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else{
-            System.out.println("Choose an island: ");
-            int islandChoice = -1;
-            do{
-                if(islandChoice < 0 || islandChoice > islands.size()){
-                    System.out.println("Enter value between 1 and 12 included");
-                }
-                try {
-                    islandChoice = Integer.parseInt(br.readLine()) -1;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }while(islandChoice < 0 || islandChoice > islands.size());
-            cmCCG5 message = new cmCCG5(6, islandChoice);
+            message = new cmCCG5(6, islandChoice);
             getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
     }
