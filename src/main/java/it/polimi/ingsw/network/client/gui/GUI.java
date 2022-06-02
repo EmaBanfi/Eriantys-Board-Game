@@ -1,16 +1,15 @@
 package it.polimi.ingsw.network.client.gui;
 
 import it.polimi.ingsw.network.client.*;
-import it.polimi.ingsw.network.client.gui.controllers.AskNicknameController;
-import it.polimi.ingsw.network.client.gui.controllers.Controller;
+import it.polimi.ingsw.network.client.clientModel.PlayerView;
+import it.polimi.ingsw.network.client.gui.controllers.NicknameController;
+import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,11 +17,6 @@ public class GUI extends Application implements View {
 
     private Parent root;
     private static Stage guiStage;
-    Controller gui;
-
-    public GUI() {
-        gui.setGui(this);
-    }
 
     public static void main(String[] args) {
         launch();
@@ -32,23 +26,19 @@ public class GUI extends Application implements View {
     public void start(Stage stage) {
         setStage(stage);
 
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/ConnectToServer.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stage.setTitle("Eriantys");
+        stage.show();
+
+        String message = "Insert nickname:";
+
+        NicknameController nicknameController = new NicknameController(guiStage);
+        nicknameController.initScene(message);
     }
 
-    public void createClient() {
-        Client client = new Client(this);
-    }
     private void setStage(Stage stage) {
         guiStage = stage;
     }
+
 
     @Override
     public PlayerView getPlayer() {
@@ -62,9 +52,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askNickName() {
-        AskNicknameController controller = new AskNicknameController();
 
-        controller.initScene(guiStage);
     }
 
     @Override
@@ -288,11 +276,6 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void updateCharacterCards(ArrayList<CharacterCard> availableCharacterCards) {
-
-    }
-
-    @Override
     public void addStudentsToHall(ArrayList<StudentColor> students) {
 
     }
@@ -304,7 +287,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void addStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
-        
+
     }
 
     @Override
@@ -318,7 +301,7 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public ArrayList<IslandView> getAvailableIsland() {
+    public ArrayList<Island> getAvailableIsland() {
         return null;
     }
 
@@ -328,7 +311,12 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public ArrayList<IslandView> getAvailableIslands() {
+    public ArrayList<Island> getAvailableIslands() {
         return null;
+    }
+
+    @Override
+    public void addAvailableCard(int card) {
+
     }
 }

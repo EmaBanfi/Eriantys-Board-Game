@@ -143,7 +143,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">assign teacher roles to different players
  depending on the number of students on each player's hall
- notify all players</div>
+ smNotify all players</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gameIsFull()" class="member-name-link">gameIsFull</a>()</code></div>
@@ -170,7 +170,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">changes mother nature position and calls method to calculate majority on the island reached by mother nature
  called by client message MoveMother
- notify all player except current player of the new mother nature's position
+ smNotify all player except current player of the new mother nature's position
  if only three island remain after merge or all towers of a certain color are placed
  players will be notified that the game is ended and winners will be calculated</div>
 </div>
@@ -178,7 +178,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#moveStudentsDToH(java.util.ArrayList)" class="member-name-link">moveStudentsDToH</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="model/StudentColor.html" title="enum class in it.polimi.ingsw.network.server.model">StudentColor</a>&gt;&nbsp;students)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">moves specified students form current player's dining hall to hall
- and notify all players except current
+ and smNotify all players except current
  This method is used to implement effect of character card 10</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
@@ -188,7 +188,7 @@ loadScripts(document, 'script');</script>
  called by client message StudentsMovementsHToD
  Notify to other players the students added to current player's dining hall
  Notify to other players the students removed from current player's hall
- if mode is "expert" notify all student of the coins earned by the current player</div>
+ if mode is "expert" smNotify all student of the coins earned by the current player</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#moveStudentsHtoI(java.lang.Integer,java.util.ArrayList)" class="member-name-link">moveStudentsHtoI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;island,
@@ -199,24 +199,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#newRound()" class="member-name-link">newRound</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">if this is the last round this method will notify all players and
+<div class="block">if this is the last round this method will smNotify all players and
  it will call gameResults.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyAvailableCC()" class="member-name-link">notifyAvailableCC</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">this method is used to notify all player of the available character cards for this game</div>
+<div class="block">this method is used to smNotify all player of the available character cards for this game</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyUsedCharacterCard(int)" class="member-name-link">notifyUsedCharacterCard</a><wbr>(int&nbsp;card)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">notify players except current of the character card used by the current players.</div>
+<div class="block">smNotify players except current of the character card used by the current players.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refillCard(int,int)" class="member-name-link">refillCard</a><wbr>(int&nbsp;card,
  int&nbsp;studentsToRefill)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">refills the character card specified and notify all players</div>
+<div class="block">refills the character card specified and smNotify all players</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeStudents(it.polimi.ingsw.network.server.model.StudentColor)" class="member-name-link">removeStudents</a><wbr>(<a href="model/StudentColor.html" title="enum class in it.polimi.ingsw.network.server.model">StudentColor</a>&nbsp;color)</code></div>
@@ -227,7 +227,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resumeTurn()" class="member-name-link">resumeTurn</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">this method is used to notify the current player so that they resumes their turn</div>
+<div class="block">this method is used to smNotify the current player so that they resumes their turn</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAdditionalInfluencePoints()" class="member-name-link">setAdditionalInfluencePoints</a>()</code></div>
@@ -251,13 +251,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setChosenCloud(int)" class="member-name-link">setChosenCloud</a><wbr>(int&nbsp;cloud)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">sets the cloud chosen by the current player
- and notify all players except current
+ and smNotify all players except current
  called by client message Cloud</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDeck(java.lang.String)" class="member-name-link">setDeck</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;deck)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">set the deck of the current player and notify other players
+<div class="block">set the deck of the current player and smNotify other players
  called by client message</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
@@ -272,12 +272,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTower(java.lang.String)" class="member-name-link">setTower</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tower)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">sets the tower of the specified color for the current player and notify other players</div>
+<div class="block">sets the tower of the specified color for the current player and smNotify other players</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUsedSupportCard(int)" class="member-name-link">setUsedSupportCard</a><wbr>(int&nbsp;cardId)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Checks if the specified support card is valid and notify all players.</div>
+<div class="block">Checks if the specified support card is valid and smNotify all players.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#switchCC7(java.util.ArrayList,java.util.ArrayList)" class="member-name-link">switchCC7</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="model/StudentColor.html" title="enum class in it.polimi.ingsw.network.server.model">StudentColor</a>&gt;&nbsp;studentToH,
@@ -297,7 +297,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#smNotify()" title="class or interface in java.lang" class="external-link">smNotify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -384,7 +384,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="notifyAvailableCC()">
 <h3>notifyAvailableCC</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyAvailableCC</span>()</div>
-<div class="block">this method is used to notify all player of the available character cards for this game</div>
+<div class="block">this method is used to smNotify all player of the available character cards for this game</div>
 </section>
 </li>
 <li>
@@ -410,7 +410,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setTower(java.lang.String)">
 <h3>setTower</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTower</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tower)</span></div>
-<div class="block">sets the tower of the specified color for the current player and notify other players</div>
+<div class="block">sets the tower of the specified color for the current player and smNotify other players</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>tower</code> - color of the tower to set</dd>
@@ -421,7 +421,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setDeck(java.lang.String)">
 <h3>setDeck</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDeck</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;deck)</span></div>
-<div class="block">set the deck of the current player and notify other players
+<div class="block">set the deck of the current player and smNotify other players
  called by client message</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -433,7 +433,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setUsedSupportCard(int)">
 <h3>setUsedSupportCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setUsedSupportCard</span><wbr><span class="parameters">(int&nbsp;cardId)</span></div>
-<div class="block">Checks if the specified support card is valid and notify all players.
+<div class="block">Checks if the specified support card is valid and smNotify all players.
  called by client message SupportCard
  if it is not valid only current player will be notified
  if the last support card has been used all players will be notified that this will be the last round</div>
@@ -467,7 +467,7 @@ loadScripts(document, 'script');</script>
  called by client message StudentsMovementsHToD
  Notify to other players the students added to current player's dining hall
  Notify to other players the students removed from current player's hall
- if mode is "expert" notify all student of the coins earned by the current player</div>
+ if mode is "expert" smNotify all student of the coins earned by the current player</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>students</code> - students to move</dd>
@@ -480,7 +480,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">assignTeachers</span>()</div>
 <div class="block">assign teacher roles to different players
  depending on the number of students on each player's hall
- notify all players</div>
+ smNotify all players</div>
 </section>
 </li>
 <li>
@@ -489,7 +489,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">moveMotherNature</span><wbr><span class="parameters">(int&nbsp;movements)</span></div>
 <div class="block">changes mother nature position and calls method to calculate majority on the island reached by mother nature
  called by client message MoveMother
- notify all player except current player of the new mother nature's position
+ smNotify all player except current player of the new mother nature's position
  if only three island remain after merge or all towers of a certain color are placed
  players will be notified that the game is ended and winners will be calculated</div>
 <dl class="notes">
@@ -503,7 +503,7 @@ loadScripts(document, 'script');</script>
 <h3>setChosenCloud</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setChosenCloud</span><wbr><span class="parameters">(int&nbsp;cloud)</span></div>
 <div class="block">sets the cloud chosen by the current player
- and notify all players except current
+ and smNotify all players except current
  called by client message Cloud</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -515,7 +515,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="newRound()">
 <h3>newRound</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">newRound</span>()</div>
-<div class="block">if this is the last round this method will notify all players and
+<div class="block">if this is the last round this method will smNotify all players and
  it will call gameResults.
  Otherwise it will call refill Clouds to start a new round</div>
 </section>
@@ -538,7 +538,7 @@ loadScripts(document, 'script');</script>
 <h3>refillCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refillCard</span><wbr><span class="parameters">(int&nbsp;card,
  int&nbsp;studentsToRefill)</span></div>
-<div class="block">refills the character card specified and notify all players</div>
+<div class="block">refills the character card specified and smNotify all players</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>card</code> - id of the card to refill</dd>
@@ -624,7 +624,7 @@ loadScripts(document, 'script');</script>
 <h3>moveStudentsDToH</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">moveStudentsDToH</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="model/StudentColor.html" title="enum class in it.polimi.ingsw.network.server.model">StudentColor</a>&gt;&nbsp;students)</span></div>
 <div class="block">moves specified students form current player's dining hall to hall
- and notify all players except current
+ and smNotify all players except current
  This method is used to implement effect of character card 10</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -636,8 +636,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="notifyUsedCharacterCard(int)">
 <h3>notifyUsedCharacterCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyUsedCharacterCard</span><wbr><span class="parameters">(int&nbsp;card)</span></div>
-<div class="block">notify players except current of the character card used by the current players.
- It also notify if the price is increased</div>
+<div class="block">smNotify players except current of the character card used by the current players.
+ It also smNotify if the price is increased</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>card</code> - id of the used card</dd>
@@ -648,7 +648,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="resumeTurn()">
 <h3>resumeTurn</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resumeTurn</span>()</div>
-<div class="block">this method is used to notify the current player so that they resumes their turn</div>
+<div class="block">this method is used to smNotify the current player so that they resumes their turn</div>
 </section>
 </li>
 <li>

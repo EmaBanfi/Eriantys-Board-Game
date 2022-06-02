@@ -94,8 +94,8 @@ public class CLI implements View, Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Nickname message = new Nickname(str);
-        String text = gson.toJson(message, Nickname.class);
+        cmNickname message = new cmNickname(str);
+        String text = gson.toJson(message, cmNickname.class);
         client.send(text);
     }
 
@@ -168,8 +168,8 @@ public class CLI implements View, Runnable {
         }
         System.out.println("Number of players selected: " + numOfPlayers + "\n" + "Mode selected: " + mode);
         Gson gson = new Gson();
-        SetGameStatus message = new SetGameStatus(numOfPlayers, mode);
-        String text = gson.toJson(message, SetGameStatus.class);
+        cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
+        String text = gson.toJson(message, cmSetGameStatus.class);
         client.send(text);
     }
 
@@ -192,8 +192,8 @@ public class CLI implements View, Runnable {
             {e.printStackTrace();}
             System.out.println("Chosen Tower color: " + colorChoice);
             Gson gson = new Gson();
-            Tower message = new Tower(colorChoice);
-            String text = gson.toJson(message, Tower.class);
+            cmTower message = new cmTower(colorChoice);
+            String text = gson.toJson(message, cmTower.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         } else {
@@ -205,8 +205,8 @@ public class CLI implements View, Runnable {
                 } while ((!colorChoice.toUpperCase().equals("WHITE")) & (!colorChoice.toUpperCase().equals("BLACK")));
             }catch(IOException e){e.printStackTrace();}
             System.out.println("Chosen tower color: " + colorChoice);
-            Tower message = new Tower(colorChoice);
-            String text = gson.toJson(message, Tower.class);
+            cmTower message = new cmTower(colorChoice);
+            String text = gson.toJson(message, cmTower.class);
             client.send(text + "\n");
             availableTowers.remove(colorChoice.toUpperCase());
         }
@@ -236,8 +236,8 @@ public class CLI implements View, Runnable {
         }catch(IOException e)
         {e.printStackTrace();}
         System.out.println("Chosen deck: " + userChoice);
-        Deck message = new Deck(userChoice);
-        String text = gson.toJson(message, Deck.class);
+        cmDeck message = new cmDeck(userChoice);
+        String text = gson.toJson(message, cmDeck.class);
         client.send(text + "\n");
         availableDecks.remove(userChoice.toUpperCase());
     }
@@ -318,8 +318,8 @@ public class CLI implements View, Runnable {
             } while (!player.getHall().containsAll(studentsToMove));
             player.removeFromHall(studentsToMove);
             player.addToDiningHall(studentsToMove);
-            StudentsMovementsHToD message = new StudentsMovementsHToD(studentsToMove);
-            client.send(gson.toJson(message, StudentsMovementsHToD.class));
+            cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(studentsToMove);
+            client.send(gson.toJson(message, cmStudentsMovementsHToD.class));
             availableStudentsMovements = -numStudents;
         }
     }
@@ -368,8 +368,8 @@ public class CLI implements View, Runnable {
             System.out.println("Chosen students: " + studentsToMove);
             HashMap<Integer, ArrayList<StudentColor>> movementsHToI = null;
             movementsHToI.put(chosenIsland, studentsToMove);
-            StudentsMovementsHToI message = new StudentsMovementsHToI(movementsHToI);
-            client.send(gson.toJson(message, StudentsMovementsHToI.class));
+            cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHToI);
+            client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
             player.getHall().removeAll(studentsToMove);
         }
     }
@@ -395,8 +395,8 @@ public class CLI implements View, Runnable {
                 System.out.println("Invalid cloud, please choose a valid one: ");
         } while (chosenCloud < 0 || chosenCloud > availableClouds.size());
         System.out.println("Chosen cloud:  " + chosenCloud);
-        Cloud message = new Cloud(chosenCloud);
-        client.send(gson.toJson(message, Cloud.class));
+        cmCloud message = new cmCloud(chosenCloud);
+        client.send(gson.toJson(message, cmCloud.class));
         player.addToHall(availableClouds.get(chosenCloud).getStudents());
     }
 
@@ -411,8 +411,8 @@ public class CLI implements View, Runnable {
         int chosenIsland = 0;
         chosenIsland = getChosenIsland();
         System.out.println("Chosen island: " + chosenIsland);
-        MoveMother message = new MoveMother(chosenIsland);
-        client.send(gson.toJson(message, MoveMother.class));
+        cmMoveMother message = new cmMoveMother(chosenIsland);
+        client.send(gson.toJson(message, cmMoveMother.class));
     }
 
     private int getChosenIsland() {

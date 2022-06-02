@@ -84,8 +84,8 @@ public class Controller {
         ArrayList<Integer> availableCards = new ArrayList<>();
         for (CharacterCard card : characterCardBoard.getAvailableCards())
             availableCards.add(card.getCardId());
-        AvailableCharacterCards message = new AvailableCharacterCards(availableCards);
-        server.sendAll(gson.toJson(message,AvailableCharacterCards.class));
+        smAvailableCharacterCards message = new smAvailableCharacterCards(availableCards);
+        server.sendAll(gson.toJson(message, smAvailableCharacterCards.class));
     }
 
     /**
@@ -125,12 +125,12 @@ public class Controller {
                         text = text + "\nThey will be in team with " + player.getNickName();
             }
         }
-        ChosenTower message= new ChosenTower(
+        smChosenTower message= new smChosenTower(
                 text,
                 tower);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message, ChosenTower.class));
+                gson.toJson(message, smChosenTower.class));
         game.nextPlayer();
         nick = game.getCurrentPlayer().getNickName();
         if(game.firstPlayerOfRound()){
@@ -139,11 +139,11 @@ public class Controller {
         else{
             text = nick + " will chose their tower";
         }
-        CurrentPlayer message2 = new CurrentPlayer(
+        smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
                 nick
         );
-        server.sendAll(gson.toJson(message2, CurrentPlayer.class));
+        server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }
 
     /**
@@ -154,13 +154,13 @@ public class Controller {
     public void setDeck(String deck){
         String nick = game.getCurrentPlayer().getNickName();
         String text = nick + " chosen the " + deck + " deck";
-        UsedDeck message = new UsedDeck(
+        smUsedDeck message = new smUsedDeck(
                 text,
                 deck
         );
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message,UsedDeck.class));
+                gson.toJson(message, smUsedDeck.class));
         game.nextPlayer();
         nick = game.getCurrentPlayer().getNickName();
         if(game.firstPlayerOfRound()){
@@ -170,11 +170,11 @@ public class Controller {
         else {
             text = nick + " will chose their deck";
         }
-        CurrentPlayer message2 = new CurrentPlayer(
+        smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
                 nick
         );
-        server.sendAll(gson.toJson(message2, CurrentPlayer.class));
+        server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }
 
     /**
@@ -182,17 +182,17 @@ public class Controller {
      */
     private void notifyStudentsOnCloud(){
         String text;
-        StudentsOnCloud message;
+        smStudentsOnCloud message;
         int num;
         for(Cloud cloud : board.getClouds()){
             num = board.getCloudNumber(cloud) +1;
             text = "Cloud " + num + " have been refilled";
-            message = new StudentsOnCloud(
+            message = new smStudentsOnCloud(
                     text,
                     num-1,
                     cloud.getStudents()
             );
-            server.sendAll(gson.toJson(message, ChosenCloud.class));
+            server.sendAll(gson.toJson(message, smChosenCloud.class));
         }
     }
 
@@ -211,8 +211,8 @@ public class Controller {
                     board.refillCloud(cloud);
                 } catch (LastStudentDrawnException e) {
                     game.setLastStudentDrawn(true);
-                    Notify message = new Notify("This will be the last round because the last student has been drawn while refilling clouds");
-                    server.sendAll(gson.toJson(message, Notify.class));
+                    smNotify message = new smNotify("This will be the last round because the last student has been drawn while refilling clouds");
+                    server.sendAll(gson.toJson(message, smNotify.class));
                 }
                 int num = board.getCloudNumber(cloud);
                 studentsRefilled = cloud.getStudents().size();
@@ -220,25 +220,25 @@ public class Controller {
                     text = "cloud number " + num + " has been refilled";
                 else
                     text = "Only " + studentsRefilled + " students have been placed on cloud " + num + "because there are no more available students to be drawn";
-                StudentsOnCloud message = new StudentsOnCloud(
+                smStudentsOnCloud message = new smStudentsOnCloud(
                         text,
                         num - 1,
                         cloud.getStudents());
-                server.sendAll(gson.toJson(message, StudentsOnCloud.class));
+                server.sendAll(gson.toJson(message, smStudentsOnCloud.class));
             }
             else{
                 text = "cloud " + board.getCloudNumber(cloud) + " has not been refilled because there are no more available students to be drawn";
-                Notify message = new Notify(text);
-                server.sendAll(gson.toJson(message, Notify.class));
+                smNotify message = new smNotify(text);
+                server.sendAll(gson.toJson(message, smNotify.class));
             }
         }
         game.nextPlayer();
         String nick = game.getCurrentPlayer().getNickName();
-        CurrentPlayer message = new CurrentPlayer(
+        smCurrentPlayer message = new smCurrentPlayer(
                 nick + " will chose a support card",
                 nick
         );
-        server.sendAll(gson.toJson(message, CurrentPlayer.class));
+        server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
 
     /**
@@ -277,8 +277,8 @@ public class Controller {
                 for(Integer i: usableSupportCards)
                     text= text + i+"\n";
                 text= text +"Please choose another support card";
-                message= new NotValidSupportCard(text);
-                String json = gson.toJson(message, NotValidSupportCard.class);
+                message= new smNotValidSupportCard(text);
+                String json = gson.toJson(message, smNotValidSupportCard.class);
                 server.sendMessage(game.getCurrentPlayer().getNickName(),json);
                 return;
             }
@@ -286,11 +286,11 @@ public class Controller {
         else {
             text = "Player " + nick + " used support card number " + cardId;
         }
-        message=new UsedSupportCard(
+        message=new smUsedSupportCard(
                 text,
                 cardId,
                 game.getCurrentPlayer().getCardById(cardId).getAdditionalTurnOrder());
-        server.sendAll(gson.toJson(message, UsedSupportCard.class));
+        server.sendAll(gson.toJson(message, smUsedSupportCard.class));
         try {
             game.getCurrentPlayer().setUsedSupportCard(cardId);
         } catch (LastSupportCardUsedException e) {
@@ -298,8 +298,8 @@ public class Controller {
                 game.setLastSupportCardUsed();
                 text = "This will be the last round because " + nick +
                         " has used their last support card";
-                message = new Notify(text);
-                String json = gson.toJson(message, Notify.class);
+                message = new smNotify(text);
+                String json = gson.toJson(message, smNotify.class);
                 server.sendAll(json);
             }
         }
@@ -309,8 +309,8 @@ public class Controller {
             else {
                 game.nextPlayer();
                 String text2 = game.getCurrentPlayer().getNickName() + " will chose their support card";
-                CurrentPlayer message2 = new CurrentPlayer(text2, game.getCurrentPlayer().getNickName());
-                server.sendAll(gson.toJson(message2, CurrentPlayer.class));
+                smCurrentPlayer message2 = new smCurrentPlayer(text2, game.getCurrentPlayer().getNickName());
+                server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
             }
         }
     }
@@ -353,12 +353,12 @@ public class Controller {
         }
         String s="The players order for the current action phase and the next planning phase will be the following"+
                 nicks;
-        PlayerOrder message = new PlayerOrder(s,nicks);
-        String json= gson.toJson(message, PlayerOrder.class);
+        smPlayerOrder message = new smPlayerOrder(s,nicks);
+        String json= gson.toJson(message, smPlayerOrder.class);
         server.sendAll(json);
         String text = game.getCurrentPlayer().getNickName() + " will chose which students to move to their dining hall";
-        CurrentPlayer message2 = new CurrentPlayer(text, game.getCurrentPlayer().getNickName());
-        server.sendAll(gson.toJson(message2, CurrentPlayer.class));
+        smCurrentPlayer message2 = new smCurrentPlayer(text, game.getCurrentPlayer().getNickName());
+        server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }
 
     /**
@@ -373,25 +373,25 @@ public class Controller {
         ServerMessage message;
         board.getIsland(island).addStudents(students);
         game.getCurrentPlayer().getBoard().removeStudentsFromHall(students);
-        message = new StudentsOnIsland(
+        message = new smStudentsOnIsland(
                 "Students on island "+ island+" have been updated",
                 island,
                 board.getIsland(island).getStudents());
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, StudentsOnIsland.class));
+                gson.toJson(message, smStudentsOnIsland.class));
         String text = "Students in the hall of " + game.getCurrentPlayer().getNickName() + " have been updated";
-        message= new StudentsInHall(
+        message= new smStudentsInHall(
                 text,
                 students,
                 false);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, StudentsInHall.class));
-        message = new ResumeTurn();
+                gson.toJson(message, smStudentsInHall.class));
+        message = new smResumeTurn();
         server.sendMessage(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, ResumeTurn.class));
+                gson.toJson(message, smResumeTurn.class));
     }
 
     /**
@@ -409,30 +409,30 @@ public class Controller {
         game.getCurrentPlayer().getBoard().addStudentsToDiningHall(students);
         game.getCurrentPlayer().getBoard().removeStudentsFromHall(students);
         text="Students in the dining hall of " + nickName + " have been updated";
-        message= new StudentsInDiningHall(
+        message= new smStudentsInDiningHall(
                 text,
                 nickName,
                 students,
                 true);
         server.sendAllExceptPlayer(
                 nickName,
-                gson.toJson(message, StudentsInDiningHall.class));
+                gson.toJson(message, smStudentsInDiningHall.class));
         text="Students in " + nickName + " hall have been updated";
-        message= new StudentsInHall(
+        message= new smStudentsInHall(
                 text,
                 students,
                 false);
         server.sendAllExceptPlayer(
                 nickName,
-                gson.toJson(message, StudentsInHall.class));
+                gson.toJson(message, smStudentsInHall.class));
         if(game.isExpertMode()){
             if(game.getCurrentPlayer().getBoard().assignCoins()){
                 text = nickName + " coins have been increased";
-                message = new Coins(
+                message = new smCoins(
                         text,
                         //nickName,
                         game.getCurrentPlayer().getBoard().getCoins());
-                server.sendAll(gson.toJson(message, Coins.class));
+                server.sendAll(gson.toJson(message, smCoins.class));
             }
         }
         assignTeachers();
@@ -487,18 +487,18 @@ public class Controller {
             }
         }
         game.getCurrentPlayer().setBonusToPromotion(false);
-        TeacherAssignment message=new TeacherAssignment(s, roles);
-        String json= gson.toJson(message, TeacherAssignment.class);
+        smTeacherAssignment message=new smTeacherAssignment(s, roles);
+        String json= gson.toJson(message, smTeacherAssignment.class);
         server.sendAll(json);
         String nick = game.getCurrentPlayer().getNickName();
         String text = nick + " will chose movements of Mother Nature";
-        CurrentPlayer message2 = new CurrentPlayer(
+        smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
                 nick
         );
         server.sendMessage(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message2, CurrentPlayer.class));
+                gson.toJson(message2, smCurrentPlayer.class));
     }
 
 
@@ -530,22 +530,22 @@ public class Controller {
         String nick = game.getCurrentPlayer().getNickName();
         int currentIsland = board.getMotherNature().getCurrentIsland() + 1;
         String text  = "Mother Nature is now visiting island " + currentIsland;
-        MotherPosition message = new MotherPosition(text, currentIsland -1 );
-        server.sendAll( gson.toJson(message, MotherPosition.class));
+        smMotherPosition message = new smMotherPosition(text, currentIsland -1 );
+        server.sendAll( gson.toJson(message, smMotherPosition.class));
         try {
             board.MajorityOnCurrentIsland(server, game.getCurrentPlayer());
         } catch (EndGameException e) {
-            Notify message2 = new Notify("Game will end now because " + e.getMessage());
-            server.sendAll(gson.toJson(gson.toJson(message2, Notify.class)));
+            smNotify message2 = new smNotify("Game will end now because " + e.getMessage());
+            server.sendAll(gson.toJson(gson.toJson(message2, smNotify.class)));
             gameResults();
             return;
         }
         text = game.getCurrentPlayer().getNickName() + " will chose a cloud";
-        CurrentPlayer message2 = new CurrentPlayer(
+        smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
                 nick
         );
-        server.sendAll(gson.toJson(gson.toJson(message2, CurrentPlayer.class)));
+        server.sendAll(gson.toJson(gson.toJson(message2, smCurrentPlayer.class)));
     }
 
     /**
@@ -562,28 +562,28 @@ public class Controller {
         game.getCurrentPlayer().getBoard().addStudentsToHall(students);
         System.out.println("students in hall");
         text = nick + " has chosen cloud " + (cloud + 1);
-        message = new ChosenCloud(text, cloud);
-        server.sendAllExceptPlayer(nick, gson.toJson(message, ChosenCloud.class));
-        message= new StudentsInHall(
+        message = new smChosenCloud(text, cloud);
+        server.sendAllExceptPlayer(nick, gson.toJson(message, smChosenCloud.class));
+        message= new smStudentsInHall(
                 text,
                 students,
                 true);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message, StudentsInHall.class));
+                gson.toJson(message, smStudentsInHall.class));
         if(!game.lastPlayerOfRound()){
             game.nextPlayer();
-            CurrentPlayer message3 = new CurrentPlayer(
+            smCurrentPlayer message3 = new smCurrentPlayer(
                     nick + " will chose a cloud",
                     nick);
-            server.sendAll(gson.toJson(message3, CurrentPlayer.class));
+            server.sendAll(gson.toJson(message3, smCurrentPlayer.class));
         }
         else{
             if(game.lastStudentDrawn() || game.lastSupportCardUsed()){
-                Notify message3 = new Notify(
+                smNotify message3 = new smNotify(
                         "The game has ended because this was the last round"
                 );
-                server.sendAll(gson.toJson(message3, Notify.class));
+                server.sendAll(gson.toJson(message3, smNotify.class));
             }
             else{
                 newRound();
@@ -598,8 +598,8 @@ public class Controller {
      */
     public void newRound(){
         if(game.lastStudentDrawn()||game.lastSupportCardUsed()){
-            Notify message = new Notify("Game has ended. Please wait for game results");
-            String json= gson.toJson(message, Notify.class);
+            smNotify message = new smNotify("Game has ended. Please wait for game results");
+            String json= gson.toJson(message, smNotify.class);
             server.sendAll(json);
             gameResults();
         }
@@ -637,8 +637,8 @@ public class Controller {
                 losers.add(player.getNickName());
         }
         String s= "Game results";
-        Results message = new Results(s,winners,losers);
-        String json=gson.toJson(message, Results.class);
+        smResults message = new smResults(s,winners,losers);
+        String json=gson.toJson(message, smResults.class);
         server.sendAll(json);
     }
 
@@ -680,8 +680,8 @@ public class Controller {
             } catch (LastStudentDrawnException e) {
                 game.setLastStudentDrawn(true);
                 String text2 = "This will be the last round because the last student has been drawn";
-                Notify message = new Notify(text2);
-                server.sendAll(gson.toJson(message, Notify.class));
+                smNotify message = new smNotify(text2);
+                server.sendAll(gson.toJson(message, smNotify.class));
                 gameResults();
                 return;
             }
@@ -691,17 +691,17 @@ public class Controller {
             else{
                 text = "Students on card " + card + " have been refilled";
             }
-            StudentsOnCard message = new StudentsOnCard(
+            smStudentsOnCard message = new smStudentsOnCard(
                     text,
                     card,
                     students,
                     true);
-            server.sendAll(gson.toJson(message, StudentsOnCard.class));
+            server.sendAll(gson.toJson(message, smStudentsOnCard.class));
         }
         else{
             text = "Card " + card + " was not refilled because the are no more students";
-            Notify message = new Notify(text);
-            server.sendAll(gson.toJson(message, Notify.class));
+            smNotify message = new smNotify(text);
+            server.sendAll(gson.toJson(message, smNotify.class));
         }
         resumeTurn();
     }
@@ -733,17 +733,17 @@ public class Controller {
         ServerMessage message;
         board.getIsland(island).addBlockCard();
         String text1= game.getCurrentPlayer().getNickName() + " has placed a block on island number " + island;
-        message= new BlockOnIsland(
+        message= new smBlockOnIsland(
                 text1,
                 island,
                 true);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, BlockOnIsland.class));
-        message = new BlockOnCard(true);
+                gson.toJson(message, smBlockOnIsland.class));
+        message = new smBlockOnCard(true);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, BlockOnCard.class));
+                gson.toJson(message, smBlockOnCard.class));
         resumeTurn();
     }
 
@@ -766,8 +766,8 @@ public class Controller {
                 board.getBag().addStudents(students);
                 if (game.lastStudentDrawn()) {
                     game.setLastStudentDrawn(false);
-                    message = new Notify("This is no more the last round because some students have been added to the bag");
-                    server.sendAll(gson.toJson(message, Notify.class));
+                    message = new smNotify("This is no more the last round because some students have been added to the bag");
+                    server.sendAll(gson.toJson(message, smNotify.class));
 
                 }
             }
@@ -777,11 +777,11 @@ public class Controller {
             else
                 text = text + " students have";
             text = text + " been removed form the hall of " + player.getNickName();
-            message = new StudentsInHall(
+            message = new smStudentsInHall(
                     text,
                     students,
                     false);
-            server.sendAll(gson.toJson(message, StudentsInHall.class));
+            server.sendAll(gson.toJson(message, smStudentsInHall.class));
         }
         resumeTurn();
     }
@@ -793,8 +793,8 @@ public class Controller {
     public void ignoreColor(StudentColor color){
         board.addIgnoredColor(color);
         String text = "For this turn " + color.toString().toLowerCase() + " students will not be counted in the assigment of influence points";
-        IgnoreColor message = new IgnoreColor(text,color, true);
-        server.sendAll(gson.toJson(message, IgnoreColor.class));
+        smIgnoreColor message = new smIgnoreColor(text,color, true);
+        server.sendAll(gson.toJson(message, smIgnoreColor.class));
         resumeTurn();
     }
 
@@ -806,8 +806,8 @@ public class Controller {
         board.moveMotherNature(movements);
         int currentIsland = board.getMotherNature().getCurrentIsland() + 1;
         String text  = "Mother Nature has been moved to island " + currentIsland;
-        MotherPosition message = new MotherPosition(text, currentIsland -1 );
-        server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, MotherPosition.class));
+        smMotherPosition message = new smMotherPosition(text, currentIsland -1 );
+        server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smMotherPosition.class));
         resumeTurn();
     }
 
@@ -819,8 +819,8 @@ public class Controller {
         try {
             board.MajorityOnIsland(island, server, game.getCurrentPlayer());
         } catch (EndGameException e) {
-            Notify message = new Notify("Game will end now because " + e.getMessage());
-            server.sendAll(gson.toJson(message, Notify.class));
+            smNotify message = new smNotify("Game will end now because " + e.getMessage());
+            server.sendAll(gson.toJson(message, smNotify.class));
             gameResults();
             return;
         }
@@ -840,22 +840,22 @@ public class Controller {
         player.getBoard().addStudentsToHall(students);
         player.getBoard().removeStudentsFromD(students);
         text="Students in the dining hall "+player.getNickName()+" have been updated";
-        message= new StudentsInDiningHall(
+        message= new smStudentsInDiningHall(
                 text,
                 player.getNickName(),
                 students,
                 false);
         server.sendAllExceptPlayer(
                 player.getNickName(),
-                gson.toJson(message, StudentsInDiningHall.class));
+                gson.toJson(message, smStudentsInDiningHall.class));
         text="Students in the hall of "+player.getNickName()+" have been updated";
-        message= new StudentsInHall(
+        message= new smStudentsInHall(
                 text,
                 students,
                 true);
         server.sendAllExceptPlayer(
                 player.getNickName(),
-                gson.toJson(message, StudentsInHall.class));
+                gson.toJson(message, smStudentsInHall.class));
         resumeTurn();
     }
 
@@ -870,32 +870,32 @@ public class Controller {
         if(increasedPrice){
             text = text + " The price of the card has been increased by one";
         }
-        UsedCharacterCard message = new UsedCharacterCard(
+        smUsedCharacterCard message = new smUsedCharacterCard(
                 text,
                 card,
                 increasedPrice);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, UsedCharacterCard.class));
+                gson.toJson(message, smUsedCharacterCard.class));
     }
 
     /**
      * this method is used to notify the current player so that they resumes their turn
      */
     public void resumeTurn(){
-        ServerMessage message = new ResumeTurn();
+        ServerMessage message = new smResumeTurn();
         server.sendMessage(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, ResumeTurn.class));
+                gson.toJson(message, smResumeTurn.class));
     }
 
     public void setIgnoreTower(int island){
         board.getIsland(island).setIgnoreTower(true);
         String text = "For this turn towers will not give influence points";
-        ServerMessage message = new IgnoreTower(text, island, true);
+        ServerMessage message = new smIgnoreTower(text, island, true);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message,IgnoreTower.class)
+                gson.toJson(message, smIgnoreTower.class)
         );
         resumeTurn();
     }
@@ -913,18 +913,18 @@ public class Controller {
         ServerMessage message;
         board.getIsland(island).addStudent(student);
         text = "One " + student + " student has be4en taken from character card 1";
-        message= new StudentsOnCard(text,
+        message= new smStudentsOnCard(text,
                 1,
                 students,
                 false);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message,StudentsOnCard.class));
+                gson.toJson(message, smStudentsOnCard.class));
         text = "One " + student +" student has been added to island "+ (island+1);
-        message = new StudentsOnIsland(text,island,students);
+        message = new smStudentsOnIsland(text,island,students);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message,StudentsOnIsland.class)
+                gson.toJson(message, smStudentsOnIsland.class)
         );
     }
 
@@ -940,18 +940,18 @@ public class Controller {
         ServerMessage message;
         game.getCurrentPlayer().getBoard().getDiningHall().addStudent(student);
         text = "One " + student.toString().toLowerCase() + " student has been taken from character card 11";
-        message= new StudentsOnCard(text,
+        message= new smStudentsOnCard(text,
                 1,
                 students,
                 false);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message,StudentsOnCard.class));
+                gson.toJson(message, smStudentsOnCard.class));
         text = "One " + student.toString().toLowerCase() +" student has been added to the dining hall of " + nick;
-        message = new StudentsInDiningHall(text,nick,students,true);
+        message = new smStudentsInDiningHall(text,nick,students,true);
         server.sendAllExceptPlayer(
                 nick,
-                gson.toJson(message,StudentsInDiningHall.class)
+                gson.toJson(message, smStudentsInDiningHall.class)
         );
     }
 
@@ -965,39 +965,39 @@ public class Controller {
         String text;
         ServerMessage message;
         game.getCurrentPlayer().getBoard().addStudentsToHall(studentToH);
-        message = new StudentsOnCard(
+        message = new smStudentsOnCard(
                 11,
                 studentToH,
                 false);
         server.sendAllExceptPlayer(
                 currentPlayer.getNickName(),
-                gson.toJson(message,StudentsOnCard.class)
+                gson.toJson(message, smStudentsOnCard.class)
         );
-        message = new StudentsInHall(
+        message = new smStudentsInHall(
                 studentToH,
                 true);
         server.sendAllExceptPlayer(
                 currentPlayer.getNickName(),
-                gson.toJson(message, StudentsInHall.class)
+                gson.toJson(message, smStudentsInHall.class)
         );
         game.getCurrentPlayer().getBoard().removeStudentsFromHall(studentToCC7);
         text = "Students on character card 7 have been updated";
-        message = new StudentsOnCard(
+        message = new smStudentsOnCard(
                 text,
                 11,
                 studentToH,
                 true);
         server.sendAllExceptPlayer(
                 currentPlayer.getNickName(),
-                gson.toJson(message,StudentsOnCard.class)
+                gson.toJson(message, smStudentsOnCard.class)
         );
         text = "Students in the hall of " + currentPlayer.getNickName() + " have been updated";
-        message = new StudentsInHall(text,
+        message = new smStudentsInHall(text,
                 studentToH,
                 false);
         server.sendAllExceptPlayer(
                 currentPlayer.getNickName(),
-                gson.toJson(message, StudentsInHall.class)
+                gson.toJson(message, smStudentsInHall.class)
         );
     }
 }

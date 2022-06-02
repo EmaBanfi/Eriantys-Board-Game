@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.client.clientModel;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.messages.clientMessages.CCG6;
+import it.polimi.ingsw.network.messages.clientMessages.cmCCG6;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
@@ -87,8 +87,8 @@ public class CharacterCardGroup6 extends CharacterCard {
                     chosenStudentsFromHall.add(color);
                 }
             }while(numOfStudents < numberChoice);
-            CCG6 message = new CCG6(7, chosenStudentsFromCard, chosenStudentsFromHall);
-            getView().getClient().send(new Gson().toJson(message, CCG6.class));
+            cmCCG6 message = new cmCCG6(7, chosenStudentsFromCard, chosenStudentsFromHall);
+            getView().getClient().send(new Gson().toJson(message, cmCCG6.class));
         }
         else{
             System.out.println("Choose 2 students from your Hall to swap with other 2 students from your Dining Hall: ");
@@ -141,8 +141,8 @@ public class CharacterCardGroup6 extends CharacterCard {
                     getView().getPlayerByNick(currentPlayer).getDiningHall().remove(color);
                 }
             }while(numOfStudents < 2);
-            CCG6 message = new CCG6(10, studentsInHall, studentsInDiningHall);
-            getView().getClient().send(new Gson().toJson(message, CCG6.class));
+            cmCCG6 message = new cmCCG6(10, studentsInHall, studentsInDiningHall);
+            getView().getClient().send(new Gson().toJson(message, cmCCG6.class));
         }
     }
 

@@ -14,37 +14,37 @@ public class ClientMessageDeserializer implements JsonDeserializer<ClientMessage
         if (field != null)
             switch (field.getAsString()){
                 case "nickname":
-                    return jsonDeserializationContext.deserialize(jsonObject, Nickname.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmNickname.class);
                 case "set status":
-                    return jsonDeserializationContext.deserialize(jsonObject, SetGameStatus.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmSetGameStatus.class);
                 case "deck":
-                    return jsonDeserializationContext.deserialize(jsonObject, Deck.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmDeck.class);
                 case "tower":
-                    return jsonDeserializationContext.deserialize(jsonObject, Tower.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmTower.class);
                 case "support card":
                     return jsonDeserializationContext.deserialize(jsonObject, cmSupportCard.class);
                 case "H to D":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsMovementsHToD.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmStudentsMovementsHToD.class);
                 case "H to I":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsMovementsHToI.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmStudentsMovementsHToI.class);
                 case "move mother":
-                    return jsonDeserializationContext.deserialize(jsonObject, MoveMother.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmMoveMother.class);
                 case "CCG1":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG1.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG1.class);
                 case "CCG2":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG2.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG2.class);
                 case "CCG3":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG3.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG3.class);
                 case "CCG4":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG4.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG4.class);
                 case "CCG5":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG5.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG5.class);
                 case "CCG6":
-                    return jsonDeserializationContext.deserialize(jsonObject, CCG6.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCCG6.class);
                 case "cloud":
-                    return jsonDeserializationContext.deserialize(jsonObject, Cloud.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmCloud.class);
                 case "refill request":
-                    return jsonDeserializationContext.deserialize(jsonObject, RefillRequest.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, cmRefillRequest.class);
             }
 
         return null;

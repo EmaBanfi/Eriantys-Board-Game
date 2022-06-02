@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.messages.clientMessages.CCG5;
+import it.polimi.ingsw.network.messages.clientMessages.cmCCG5;
 import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -57,8 +57,8 @@ public class CharacterCardGroup5 extends CharacterCard {
                     e.printStackTrace();
                 }
             }while(islandChoice < 0 || islandChoice > islands.size());
-            CCG5 message = new CCG5(3, islandChoice);
-            getView().getClient().send(new Gson().toJson(message, CCG5.class));
+            cmCCG5 message = new cmCCG5(3, islandChoice);
+            getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else if(getCardId() == 5){
             for(int i = 0; i < islands.size(); i++){
@@ -83,8 +83,8 @@ public class CharacterCardGroup5 extends CharacterCard {
                     e.printStackTrace();
                 }
             }while(islandChoice < 0 || islandChoice > islands.size());
-            CCG5 message = new CCG5(5, islandChoice);
-            getView().getClient().send(new Gson().toJson(message, CCG5.class));
+            cmCCG5 message = new cmCCG5(5, islandChoice);
+            getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else{
             System.out.println("Choose an island: ");
@@ -99,8 +99,8 @@ public class CharacterCardGroup5 extends CharacterCard {
                     e.printStackTrace();
                 }
             }while(islandChoice < 0 || islandChoice > islands.size());
-            CCG5 message = new CCG5(6, islandChoice);
-            getView().getClient().send(new Gson().toJson(message, CCG5.class));
+            cmCCG5 message = new cmCCG5(6, islandChoice);
+            getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
     }
 

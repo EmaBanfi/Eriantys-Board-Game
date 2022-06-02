@@ -15,63 +15,63 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
         if(field!=null){
             switch (field.getAsString()){
                 case "login failed":
-                    return jsonDeserializationContext.deserialize(jsonObject, LoginFailedMessage.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smLoginFailedMessage.class);
                 case "notify":
-                    return jsonDeserializationContext.deserialize(jsonObject, Notify.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smNotify.class);
                 case "nickname":
-                    return jsonDeserializationContext.deserialize(jsonObject, AskNickname.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smAskNickname.class);
                 case "status":
-                    return jsonDeserializationContext.deserialize(jsonObject, AskGameStatus.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smAskGameStatus.class);
                 case "used deck":
-                    return jsonDeserializationContext.deserialize(jsonObject, UsedDeck.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smUsedDeck.class);
                 case "chosen tower":
-                    return jsonDeserializationContext.deserialize(jsonObject, ChosenTower.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smChosenTower.class);
                 case "students on cloud":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsOnCloud.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smStudentsOnCloud.class);
                 case "used support card":
-                    return jsonDeserializationContext.deserialize(jsonObject, UsedSupportCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smUsedSupportCard.class);
                 case "player order":
-                    return jsonDeserializationContext.deserialize(jsonObject, PlayerOrder.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smPlayerOrder.class);
                 case "used character card":
-                    return jsonDeserializationContext.deserialize(jsonObject, UsedCharacterCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smUsedCharacterCard.class);
                 case "students in dining hall":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsInDiningHall.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smStudentsInDiningHall.class);
                 case "coins":
-                    return jsonDeserializationContext.deserialize(jsonObject, Coins.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smCoins.class);
                 case "students on island":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsOnIsland.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smStudentsOnIsland.class);
                 case "students in hall":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsInHall.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smStudentsInHall.class);
                 case "teacher assignment":
-                    return jsonDeserializationContext.deserialize(jsonObject, TeacherAssignment.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smTeacherAssignment.class);
                 case "mother position":
-                    return jsonDeserializationContext.deserialize(jsonObject, MotherPosition.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smMotherPosition.class);
                 case "tower color":
-                    return jsonDeserializationContext.deserialize(jsonObject, TowerColor.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smTowerColor.class);
                 case "merge":
-                    return jsonDeserializationContext.deserialize(jsonObject, Merge.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smMerge.class);
                 case "chosen cloud":
-                    return jsonDeserializationContext.deserialize(jsonObject, ChosenCloud.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smChosenCloud.class);
                 case "results":
-                    return jsonDeserializationContext.deserialize(jsonObject, Results.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smResults.class);
                 case "students on card":
-                    return jsonDeserializationContext.deserialize(jsonObject, StudentsOnCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smStudentsOnCard.class);
                 case "block on island":
-                    return jsonDeserializationContext.deserialize(jsonObject, BlockOnIsland.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smBlockOnIsland.class);
                 case "blocks on card":
-                    return jsonDeserializationContext.deserialize(jsonObject, BlockOnCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smBlockOnCard.class);
                 case "ignore tower":
-                    return jsonDeserializationContext.deserialize(jsonObject, IgnoreTower.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smIgnoreTower.class);
                 case "available cc":
-                    return jsonDeserializationContext.deserialize(jsonObject, AvailableCharacterCards.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smAvailableCharacterCards.class);
                 case "current player":
-                    return jsonDeserializationContext.deserialize(jsonObject, CurrentPlayer.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smCurrentPlayer.class);
                 case "ignore color":
-                    return jsonDeserializationContext.deserialize(jsonObject, IgnoreColor.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smIgnoreColor.class);
                 case "not valid support card":
-                    return jsonDeserializationContext.deserialize(jsonObject, NotValidSupportCard.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smNotValidSupportCard.class);
                 case "resume turn":
-                    return jsonDeserializationContext.deserialize(jsonObject, ResumeTurn.class);
+                    return jsonDeserializationContext.deserialize(jsonObject, smResumeTurn.class);
             }
         }
         return null;

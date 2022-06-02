@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.client;
 import com.google.gson.Gson;
 
 import it.polimi.ingsw.network.client.gui.GUI;
-import it.polimi.ingsw.network.messages.clientMessages.SetGameStatus;
+import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
 import it.polimi.ingsw.network.messages.serverMessages.ServerMessage;
 import it.polimi.ingsw.network.messages.serverMessages.ServerGson;
 
@@ -29,7 +29,7 @@ public class Client {
         if(viewType.equals("1"))
             view = new CLI(this);
         else
-            view = new GUI(this);
+            view = new GUI();
 
         connection();
 
@@ -122,8 +122,8 @@ public class Client {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        SetGameStatus message = new SetGameStatus(numOfPlayers, mode);
-        String text = gson.toJson(message, SetGameStatus.class);
+        cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
+        String text = gson.toJson(message, cmSetGameStatus.class);
         try {
             dos.writeBytes(text + "\n");
         } catch (IOException e) {

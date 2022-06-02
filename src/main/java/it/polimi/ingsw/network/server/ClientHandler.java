@@ -85,25 +85,25 @@ public class ClientHandler extends Thread {
 
     public void addToGame(String nick) {
         if (!server.addToGame(nick,this)) {
-            AskNickname message = new AskNickname("Nickname already taken. Choose another one ");
+            smAskNickname message = new smAskNickname("Nickname already taken. Choose another one ");
             Gson gson = new Gson();
-            String text = gson.toJson(message, AskNickname.class);
+            String text = gson.toJson(message, smAskNickname.class);
             sendMessage(text);
         } else {
             Gson gson = new Gson();
-            Notify notify;
+            smNotify smNotify;
             if (server.isAlreadyPresent(nick)) {
-                notify = new Notify("You have been connected");
+                smNotify = new smNotify("You have been connected");
             } else {
-                notify = new Notify("Not connected");
+                smNotify = new smNotify("Not connected");
             }
-            String text = gson.toJson(notify, Notify.class);
+            String text = gson.toJson(smNotify, smNotify.class);
             sendMessage(text);
         }
         if (handlerId == 1) {
-            AskGameStatus message = new AskGameStatus("Please choose num of players and mode");
+            smAskGameStatus message = new smAskGameStatus("Please choose num of players and mode");
             Gson gson = new Gson();
-            String text = gson.toJson(message, AskGameStatus.class);
+            String text = gson.toJson(message, smAskGameStatus.class);
             sendMessage(text);
         }
     }

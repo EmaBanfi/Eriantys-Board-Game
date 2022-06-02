@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.client.clientModel;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.messages.clientMessages.CCG1;
+import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.Island;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -96,8 +96,8 @@ public class CharacterCardGroup1 extends CharacterCard {
         if(color != null) {
             studentsOnCard.remove(color);
             islands.get(islandChoice).addStudent(color);
-            CCG1 message = new CCG1(islandChoice, color);
-            getView().getClient().send(new Gson().toJson(message, CCG1.class));
+            cmCCG1 message = new cmCCG1(islandChoice, color);
+            getView().getClient().send(new Gson().toJson(message, cmCCG1.class));
         }
     }
 }

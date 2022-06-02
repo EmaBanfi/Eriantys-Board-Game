@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.messages.clientMessages.CCG2;
+import it.polimi.ingsw.network.messages.clientMessages.cmCCG2;
 
 public class CharacterCardGroup2 extends CharacterCard{
 
@@ -18,13 +18,13 @@ public class CharacterCardGroup2 extends CharacterCard{
 
     @Override
     public void activate(){
-        CCG2 message;
+        cmCCG2 message;
         if(getCardId() == 2) {
-            message = new CCG2(2);
+            message = new cmCCG2(2);
         }
         else{
-            message = new CCG2(8);
+            message = new cmCCG2(8);
         }
-        getView().getClient().send(new Gson().toJson(message, CCG2.class));
+        getView().getClient().send(new Gson().toJson(message, cmCCG2.class));
     }
 }

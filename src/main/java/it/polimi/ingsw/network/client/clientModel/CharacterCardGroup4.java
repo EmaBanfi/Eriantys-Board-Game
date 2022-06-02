@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.messages.clientMessages.CCG4;
+import it.polimi.ingsw.network.messages.clientMessages.cmCCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
@@ -48,8 +48,8 @@ public class CharacterCardGroup4 extends CharacterCard {
                 }
                 color = StudentColor.getStudentFromString(colorChoice);
             }while(!color.equals(StudentColor.BLUE) || !color.equals(StudentColor.BLUE) || !color.equals(StudentColor.PURPLE) || !color.equals(StudentColor.YELLOW) || !color.equals(StudentColor.RED) || !color.equals(StudentColor.GREEN));
-            CCG4 message = new CCG4(9, color);
-            getView().getClient().send(new Gson().toJson(message, CCG4.class));
+            cmCCG4 message = new cmCCG4(9, color);
+            getView().getClient().send(new Gson().toJson(message, cmCCG4.class));
         }
         else if(getCardId() == 11){
             System.out.println("Students on card: ");
@@ -67,8 +67,8 @@ public class CharacterCardGroup4 extends CharacterCard {
                 }
                 color = StudentColor.getStudentFromString(studentChoice);
             }while(!studentsOnCard.contains(color));
-            CCG4 message = new CCG4(11, color);
-            getView().getClient().send(new Gson().toJson(message, CCG4.class));
+            cmCCG4 message = new cmCCG4(11, color);
+            getView().getClient().send(new Gson().toJson(message, cmCCG4.class));
         }
         else{
             String colorChoice = null;
@@ -82,8 +82,8 @@ public class CharacterCardGroup4 extends CharacterCard {
                 }
                 color = StudentColor.getStudentFromString(colorChoice);
             }while(!color.equals(StudentColor.BLUE) || !color.equals(StudentColor.BLUE) || !color.equals(StudentColor.PURPLE) || !color.equals(StudentColor.YELLOW) || !color.equals(StudentColor.RED) || !color.equals(StudentColor.GREEN));
-            CCG4 message = new CCG4(12, color);
-            getView().getClient().send(new Gson().toJson(message, CCG4.class));
+            cmCCG4 message = new cmCCG4(12, color);
+            getView().getClient().send(new Gson().toJson(message, cmCCG4.class));
         }
     }
 
