@@ -5,7 +5,6 @@ import it.polimi.ingsw.network.messages.clientMessages.CCG2;
 
 public class CharacterCardGroup2 extends CharacterCard{
 
-
     public CharacterCardGroup2(int id, View view) {
         super(id, view);
         setPrice(2);

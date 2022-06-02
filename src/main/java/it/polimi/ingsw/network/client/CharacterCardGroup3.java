@@ -5,12 +5,13 @@ import it.polimi.ingsw.network.messages.clientMessages.CCG3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class CharacterCardGroup3 extends CharacterCard{
 
     private int chosenIsland;
     private RequiredInfo requiredInfo;
-    private BufferedReader br;
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CharacterCardGroup3(int id, View view) {
         super(id, view);

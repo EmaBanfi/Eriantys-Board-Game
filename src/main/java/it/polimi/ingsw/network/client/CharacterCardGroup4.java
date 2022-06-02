@@ -7,12 +7,13 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup4 extends CharacterCard {
     private StudentColor chosenColor;
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
-    private BufferedReader br;
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CharacterCardGroup4(int id, View view) {
         super(id, view);

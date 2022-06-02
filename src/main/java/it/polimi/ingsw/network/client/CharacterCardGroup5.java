@@ -6,12 +6,13 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;
     private ArrayList<IslandView> islands;
-    private BufferedReader br;
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * create the CharacterCard 3, 5 or 6 and put on it 4 students
