@@ -106,7 +106,6 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
-        resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
         boolean result = false;
         try {
             if (br.readLine() == "yes") {
@@ -196,7 +195,7 @@ public class CLI implements View, Runnable {
             Gson gson = new Gson();
             cmTower message = new cmTower(colorChoice);
             String text = gson.toJson(message, cmTower.class);
-            client.send(text + "\n");
+            client.send(text);
             availableTowers.remove(colorChoice.toUpperCase());
         } else {
             try {
@@ -209,7 +208,7 @@ public class CLI implements View, Runnable {
             System.out.println("Chosen tower color: " + colorChoice);
             cmTower message = new cmTower(colorChoice);
             String text = gson.toJson(message, cmTower.class);
-            client.send(text + "\n");
+            client.send(text);
             availableTowers.remove(colorChoice.toUpperCase());
         }
     }
@@ -240,7 +239,7 @@ public class CLI implements View, Runnable {
         System.out.println("Chosen deck: " + userChoice);
         cmDeck message = new cmDeck(userChoice);
         String text = gson.toJson(message, cmDeck.class);
-        client.send(text + "\n");
+        client.send(text);
         availableDecks.remove(userChoice.toUpperCase());
     }
 
@@ -269,7 +268,7 @@ public class CLI implements View, Runnable {
         System.out.println("Chosen support card: " + supportCardChoice);
         cmSupportCard message = new cmSupportCard(supportCardChoice);
         String text = gson.toJson(message, cmSupportCard.class);
-        client.send(text + "\n");
+        client.send(text);
         player.getSupportCards().remove(supportCardChoice);
     }
 
@@ -288,8 +287,9 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
+        resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
+
         if(numOfPlayers > 0) {
-            resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
             int numStudents = 0;
             boolean validMovements = false;
             System.out.println("Your current Hall: ");
