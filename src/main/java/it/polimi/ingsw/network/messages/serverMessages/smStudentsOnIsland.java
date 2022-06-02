@@ -19,6 +19,13 @@ public class smStudentsOnIsland extends ServerMessage {
         setType("students on island");
     }
 
+    public smStudentsOnIsland( int island, ArrayList<StudentColor> students) {
+        this.island = island;
+        this.students = students;
+        setType("students on island");
+    }
+
+
     /**
      * print the message and call the method of the view that add students to a specific island
      * @param client client to which the message is sent

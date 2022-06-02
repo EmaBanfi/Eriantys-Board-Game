@@ -95,10 +95,9 @@ class GameBoardTest {
         } catch (EndGameException e) {
             error=true;
         }
-        System.out.println(board.getIsland(7).getTower());
+        System.out.println(board.getIsland(7).getTower().getTowerColor());
         assertEquals(whiteTower.getInfluencePoints(),player1.getInfluencePoints()+player3.getInfluencePoints());
         assertEquals(blackTower.getInfluencePoints(),player2.getInfluencePoints()+ player4.getInfluencePoints());
-        System.out.println(board.getIsland(7).getTower());
         assertEquals(blackTower,board.getIsland(7).getTower());
         assertEquals(11,board.getIslands().size());
         assertTrue(error);
@@ -170,6 +169,7 @@ class GameBoardTest {
         }
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
+        assertFalse(endGameExceptionThrown);
         board.getIsland(6).setIgnoreTower(false);
     }
 
@@ -200,6 +200,7 @@ class GameBoardTest {
         assertEquals(11, board.getIslands().size());
         assertEquals(blackTower,board.getIsland(6).getTower());
         player2.setAdditionalInfluencePoints(false);
+        assertFalse(endGameExceptionThrown);
     }
 
     /**
@@ -238,6 +239,7 @@ class GameBoardTest {
         }
         assertEquals(board.getIsland(0).getStudents(), students);
         assertEquals(2,board.getIslands().get(0).getNumOfTowers());
+        assertFalse(endGameExceptionThrown);
     }
 
     @Test

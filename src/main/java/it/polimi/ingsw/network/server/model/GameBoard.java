@@ -9,7 +9,7 @@ import it.polimi.ingsw.network.server.Server;
 import java.util.ArrayList;
 
 public class GameBoard {
-    private Gson gson;
+    private final Gson gson;
     private final MotherNature motherNature;
     private ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
@@ -68,6 +68,7 @@ public class GameBoard {
             try {
                 refillCloud(cloud);
             } catch (LastStudentDrawnException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -85,6 +86,7 @@ public class GameBoard {
                     e.printStackTrace();
                 }
             }
+            smStudentsOnIsland message = new smStudentsOnIsland(i,islands.get(i).getStudents());
         }
     }
 
@@ -127,7 +129,7 @@ public class GameBoard {
                                 " gains " +
                                 num +
                                 " influence points because they is the " +
-                                teacher.toString() + " teacher. \n";
+                                teacher.toString().toLowerCase() + " teacher. \n";
                     }else{
                         text = text +
                                 ignoreColor.toString().toLowerCase() +
@@ -160,12 +162,12 @@ public class GameBoard {
             } else {
                 currentIsland.setIgnoreTower(false);
                 text = text +
-                        "for this turn towers on islands don't provide influence points\n";
+                        "for this turn towers on islands do not provide influence points\n";
             }
             for (Tower tower : towers) {
                 text = text +
                         tower.getTowerColor() + " tower has " +
-                        tower.getInfluencePoints() + " influence points";
+                        tower.getInfluencePoints() + " influence points \n";
 
             }
             message = new smNotify(text);
@@ -203,10 +205,12 @@ public class GameBoard {
             previous= island-1;
         Tower newTower=islands.get(island).getTower();
         int currentTowerInfluencePoints;
-        if(newTower==null)
-            currentTowerInfluencePoints =0;
-        else
-            currentTowerInfluencePoints=newTower.getInfluencePoints();
+        if(newTower==null) {
+            currentTowerInfluencePoints = 0;
+        }
+        else {
+            currentTowerInfluencePoints = newTower.getInfluencePoints();
+        }
         for(Tower tower: towers){
             if(tower.getInfluencePoints()>currentTowerInfluencePoints) {
                 if(newTower!=null) {
@@ -216,22 +220,21 @@ public class GameBoard {
                     server.sendAll(gson.toJson(message, smNotify.class));
                 }
                 newTower = tower;
-                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-                text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
-                message = new smNotify(text);
-                server.sendAll(gson.toJson(message, smNotify.class));
+                System.out.println(newTower.getTowerColor());
+                currentTowerInfluencePoints = newTower.getInfluencePoints();
+                System.out.println(currentTowerInfluencePoints);
                 if (towerNotChanged)
                     towerNotChanged= false;
             }
-
         }
         if(!towerNotChanged) {
             if(islands.get(island).getTower()!=null) {
-                text = "The tower of island" + (island + 1) + " changed from " +
+                text = "The tower of island " + (island + 1) + " changed from " +
                         islands.get(island).getTower().getTowerColor().toLowerCase() + " to " + newTower.getTowerColor().toLowerCase() + " tower";
             }
-            else
+            else {
                 text = "The tower of island " + (island + 1) + " is the " + newTower.getTowerColor().toLowerCase() + " tower";
+            }
             message = new smTowerColor(
                     text,
                     island,
@@ -239,7 +242,7 @@ public class GameBoard {
             );
             server.sendAll(gson.toJson(message, smTowerColor.class));
             islands.get(island).setTower(newTower);
-            //System.out.println("island n "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
+//            System.out.println("island n "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
             if (islands.get(island).getTower()==islands.get(next).getTower()) {
                 text = "island " + (previous + 1) + " has been merged in to island " + (island +1);
                 message = new smMerge(
@@ -250,7 +253,6 @@ public class GameBoard {
                 server.sendAll(gson.toJson(message, smMerge.class));
                 mergeIslands(island, next);
                 newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-                islands.get(island).getNumOfTowers();
             }
             if (islands.get(island).getTower() == islands.get(previous).getTower()) {
                 text = "island " + (next + 1) + " has been merged in to island " + (island +1);
@@ -262,20 +264,21 @@ public class GameBoard {
                 server.sendAll(gson.toJson(message, smMerge.class));
                 mergeIslands(island, previous);
                 newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-                islands.get(island).getNumOfTowers();
             }
             else{
                 text = "There will be no merging because adjacent islands have tower of different colors than" +
                         " island " + (island +1 );
                 message = new smNotify(text);
                 server.sendAll(gson.toJson(message));
+                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
             }
+            text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
         }
         else{
             text = "island " + (island+1) + " tower color has not changed";
-            message = new smNotify(text);
-            server.sendAll(gson.toJson(message, smNotify.class));
         }
+        message = new smNotify(text);
+        server.sendAll(gson.toJson(message, smNotify.class));
     }
 
     /**
@@ -371,7 +374,6 @@ public class GameBoard {
     }
 
     public int getCloudNumber(Cloud cloud){
-        int num = clouds.indexOf(cloud)+1;
-        return  num;
+        return clouds.indexOf(cloud)+1;
     }
 }
