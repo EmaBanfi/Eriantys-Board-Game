@@ -14,11 +14,11 @@ public class Server {
 
     private ServerSocket serverSocket;
     private Controller controller;
-    private final HashMap<Integer,ClientHandler> lobby;
-    private final HashMap<String,ClientHandler> clientHandlers;
+    private HashMap<Integer,ClientHandler> lobby;
+    private HashMap<String,ClientHandler> clientHandlers;
     private int  id=1;
-    private boolean listeningSocket = true;
-    private boolean  acceptingConnection = true;
+    private final boolean listeningSocket = true;
+    private final boolean  acceptingConnection = true;
 
     public Server(int port){
         serverSocket = null;
@@ -37,8 +37,6 @@ public class Server {
     }
 
     public Server(){
-        lobby = new HashMap<>();
-        clientHandlers = new HashMap<>();
     }
 
     public static void main(String[] args) throws IOException {
@@ -192,5 +190,19 @@ public class Server {
 
     public Controller getController() {
         return controller;
+    }
+
+    public void removeFromLobby(int id) {
+        lobby.remove(id);
+    }
+
+    public void removeClientHandler(String nick) {
+        clientHandlers.remove(nick);
+
+        if (clientHandlers.isEmpty()) {
+            lobby = new HashMap<>();
+            clientHandlers = new HashMap<>();
+            controller = new Controller(this);
+        }
     }
 }

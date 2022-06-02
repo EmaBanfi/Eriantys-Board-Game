@@ -119,4 +119,10 @@ public class ClientHandler extends Thread {
     public Server getServer() {
         return server;
     }
+
+    public void closeClientConnection(String nick) {
+        server.removeFromLobby(handlerId);
+
+        server.removeClientHandler(nick);
+    }
 }

@@ -94,6 +94,9 @@ public class CLI implements View, Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        player = new PlayerView(str);
+
         cmNickname message = new cmNickname(str);
         String text = gson.toJson(message, cmNickname.class);
         client.send(text);
@@ -576,6 +579,8 @@ public class CLI implements View, Runnable {
             System.out.println("Winner: " + winners + "\n" + "Losers: " + losers);
         else if (numOfPlayers == 4)
             System.out.println("Winners: " + winners + "\n" + "Losers: " + losers);
+
+        disconnectFromServer();
     }
 
     /**
@@ -787,6 +792,25 @@ public class CLI implements View, Runnable {
     @Override
     public void addAvailableCard(int card) {
         availableCC.add(ccc.createCard(card, this));
+    }
+
+    @Override
+    public void disconnectFromServer() {
+        System.out.println("The game is finished, press enter to close the game.");
+        String str = null;
+        try {
+            str = br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!str.isEmpty()) {
+            cmDisconnect disconnect = new cmDisconnect(player.getNickname());
+            String text = gson.toJson(disconnect, cmNickname.class);
+            client.send(text);
+        }
+
+        System.exit(0);
     }
 
 

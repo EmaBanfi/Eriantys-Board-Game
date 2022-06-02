@@ -319,4 +319,9 @@ public class GUI extends Application implements View {
     public void addAvailableCard(int card) {
 
     }
+
+    @Override
+    public void disconnectFromServer() {
+
+    }
 }

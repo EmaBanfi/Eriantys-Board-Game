@@ -347,4 +347,11 @@ public interface View {
      * @param card card to add
      */
     void addAvailableCard(int card);
+
+    /**
+     * after the view received the game results, the player will communicate the disconnection from the server
+     * The player have to insert anything and when he press enter the game will be closed and he will be disconnected
+     * from the server
+     */
+    void disconnectFromServer();
 }
