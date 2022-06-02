@@ -793,8 +793,8 @@ public class Controller {
     public void ignoreColor(StudentColor color){
         board.addIgnoredColor(color);
         String text = "For this turn " + color.toString().toLowerCase() + " students will not be counted in the assigment of influence points";
-        smIgnoreColor message = new smIgnoreColor(text,color, true);
-        server.sendAll(gson.toJson(message, smIgnoreColor.class));
+        smNotify message = new smNotify(text);
+        server.sendAll(gson.toJson(message, smNotify.class));
         resumeTurn();
     }
 
@@ -892,10 +892,9 @@ public class Controller {
     public void setIgnoreTower(int island){
         board.getIsland(island).setIgnoreTower(true);
         String text = "For this turn towers will not give influence points";
-        ServerMessage message = new smIgnoreTower(text, island, true);
-        server.sendAllExceptPlayer(
-                game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, smIgnoreTower.class)
+        ServerMessage message = new smNotify(text);
+        server.sendAll(
+                gson.toJson(message, smNotify.class)
         );
         resumeTurn();
     }
