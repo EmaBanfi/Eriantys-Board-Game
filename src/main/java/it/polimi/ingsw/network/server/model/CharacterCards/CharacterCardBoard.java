@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CharacterCardBoard {
-    private ArrayList<CharacterCard> deck;
-    private ArrayList<CharacterCard> availableCards;
+    private final ArrayList<CharacterCard> deck;
+    private final ArrayList<CharacterCard> availableCards;
 
 
     public CharacterCardBoard(){
@@ -25,7 +25,7 @@ public class CharacterCardBoard {
         CharacterCard card;
         for(int i=1;i<4;i++){
             Random random= new Random();
-            card = deck.get( random.nextInt(11));
+            card = deck.get( random.nextInt(deck.size()));
             availableCards.add(card);
             deck.remove(card);
         }
