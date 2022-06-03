@@ -81,6 +81,7 @@ public class Client {
                 e.printStackTrace();
             }
             if(str != null) {
+                System.out.println("received from server: "+ str);
                 ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }

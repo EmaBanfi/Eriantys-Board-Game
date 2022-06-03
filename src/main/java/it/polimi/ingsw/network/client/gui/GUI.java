@@ -191,10 +191,6 @@ public class GUI extends Application implements View {
 
     }
 
-    @Override
-    public void updatePlayerOrder(ArrayList<String> playerOrder) {
-
-    }
 
     @Override
     public void resumeFrom() {

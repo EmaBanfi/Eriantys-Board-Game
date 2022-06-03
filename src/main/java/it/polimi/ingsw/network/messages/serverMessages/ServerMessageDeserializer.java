@@ -30,8 +30,6 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
                     return jsonDeserializationContext.deserialize(jsonObject, smStudentsOnCloud.class);
                 case "used support card":
                     return jsonDeserializationContext.deserialize(jsonObject, smUsedSupportCard.class);
-                case "player order":
-                    return jsonDeserializationContext.deserialize(jsonObject, smPlayerOrder.class);
                 case "used character card":
                     return jsonDeserializationContext.deserialize(jsonObject, smUsedCharacterCard.class);
                 case "students in dining hall":

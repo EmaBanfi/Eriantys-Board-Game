@@ -55,7 +55,7 @@ public class ClientHandler extends Thread {
                 e.printStackTrace();
             }
             if(str!=null) {
-                System.out.println(str);
+                System.out.println("received by client handler from client "+str);
                 ClientMessage message = clientGson.deserialize(str);
                 message.processMessage(this);
             }
@@ -109,6 +109,7 @@ public class ClientHandler extends Thread {
     }
 
     public void sendMessage(String message){
+        System.out.println("send by server: "+message);
         ps.println(message);
     }
 

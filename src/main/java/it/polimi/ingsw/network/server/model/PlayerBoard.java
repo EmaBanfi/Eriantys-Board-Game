@@ -13,7 +13,7 @@ public class PlayerBoard {
     public PlayerBoard() {
         this.diningHall = new DiningHall();
         this.hall = new Hall();
-        this.coins = 0;
+        this.coins = 1;
     }
 
     /**

@@ -10,8 +10,7 @@ public class smGameStatus extends ServerMessage {
     public smGameStatus() {
     }
 
-    public smGameStatus(String message, int numOfPlayers, String mode) {
-        super(message);
+    public smGameStatus( int numOfPlayers, String mode) {
         this.numOfPlayers = numOfPlayers;
         this.mode = mode;
     }
@@ -22,7 +21,6 @@ public class smGameStatus extends ServerMessage {
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
 
         client.getView().updateGameStatus(numOfPlayers, mode);
     }

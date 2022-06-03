@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class PlayerView {
 
-    private ArrayList<StudentColor> hall;
-    private ArrayList<StudentColor> diningHall;
-    private String nickname;
-    private int usedSupportCard;
+    private final ArrayList<StudentColor> hall;
+    private final ArrayList<StudentColor> diningHall;
+    private final String nickname;
+    private SupportCard usedSupportCard;
     private int coins;
     private int availableSupportCard;
     private String tower;
@@ -54,18 +54,16 @@ public class PlayerView {
     }
 
     public ArrayList<StudentColor> getHall() {
-        ArrayList<StudentColor> studentColor = new ArrayList<>();
-        studentColor.addAll(hall);
+        ArrayList<StudentColor> studentColor = new ArrayList<>(hall);
         return studentColor;
     }
 
     public ArrayList<StudentColor> getDiningHall() {
-        ArrayList<StudentColor> studentColor = new ArrayList<>();
-        studentColor.addAll(diningHall);
+        ArrayList<StudentColor> studentColor = new ArrayList<>(diningHall);
         return studentColor;
     }
 
-    public int getUsedSupportCard() {
+    public SupportCard getUsedSupportCard() {
         return usedSupportCard;
     }
 
@@ -74,7 +72,11 @@ public class PlayerView {
     }
 
     public void setUsedSupportCard(int usedSupportCard) {
-        this.usedSupportCard = usedSupportCard;
+        for(SupportCard card: supportCards)
+            if(card.getId()==usedSupportCard){
+                this.usedSupportCard=card;
+                return;
+            }
     }
 
     public void setCoins(int coins) {
@@ -107,4 +109,6 @@ public class PlayerView {
 
     public void decreaseCoins() {
     }
+
+    public void resetSupportCard(){usedSupportCard=null;}
 }

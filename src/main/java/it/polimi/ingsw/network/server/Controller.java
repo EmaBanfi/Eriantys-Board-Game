@@ -34,8 +34,13 @@ public class Controller {
         this.server=server;
     }
 
+    public void notifyGameStatus(){
+        smGameStatus message= new smGameStatus(game.getNumOfPlayers(), game.getMode());
+        server.sendAll(gson.toJson(message, smGameStatus.class));
+    }
+
     /**
-     * @return true if game.numOfPlayers and game.mode have been set
+     * @return true if game numOfPlayers and game mode have been set
      */
     public boolean gameIsSet(){
         return game.gameIsSet();
@@ -185,11 +190,11 @@ public class Controller {
         smStudentsOnCloud message;
         int num;
         for(Cloud cloud : board.getClouds()){
-            num = board.getCloudNumber(cloud) +1;
+            num = board.getCloudNumber(cloud) ;
             text = "Cloud " + num + " have been refilled";
             message = new smStudentsOnCloud(
                     text,
-                    num-1,
+                    num,
                     cloud.getStudents()
             );
             server.sendAll(gson.toJson(message, smStudentsOnCloud.class));
@@ -353,8 +358,8 @@ public class Controller {
         }
         String s="The players order for the current action phase and the next planning phase will be the following"+
                 nicks;
-        smPlayerOrder message = new smPlayerOrder(s,nicks);
-        String json= gson.toJson(message, smPlayerOrder.class);
+        smNotify message = new smNotify(s);
+        String json= gson.toJson(message, smNotify.class);
         server.sendAll(json);
         String text = game.getCurrentPlayer().getNickName() + " will chose which students to move to their dining hall";
         smCurrentPlayer message2 = new smCurrentPlayer(text, game.getCurrentPlayer().getNickName());
@@ -592,9 +597,9 @@ public class Controller {
     }
 
     /**
-     * if this is the last round this method will notify all players and
+     * if this is the last round this method will notify all players, and
      * it will call gameResults.
-     * Otherwise it will call refill Clouds to start a new round
+     * Otherwise, it will call refill Clouds to start a new round
      */
     public void newRound(){
         if(game.lastStudentDrawn()||game.lastSupportCardUsed()){
@@ -643,7 +648,7 @@ public class Controller {
     }
 
     /**
-     * return the tower with the the most teachers connected. if the num of players is 4
+     * return the tower with the most teachers connected. if the num of players is 4
      * the num of teachers connected to a tower is the sum
      * of the number of teachers connected to players that shares that tower
      * @return the tower with more teachers
@@ -861,7 +866,7 @@ public class Controller {
 
     /**
      * notify players except current of the character card used by the current players.
-     * It also notify if the price is increased
+     * It also notifies if the price is increased
      * @param card id of the used card
      */
     public void notifyUsedCharacterCard( int card){
@@ -880,7 +885,7 @@ public class Controller {
     }
 
     /**
-     * this method is used to notify the current player so that they resumes their turn
+     * this method is used to notify the current player so that they resume their turn
      */
     public void resumeTurn(){
         ServerMessage message = new smResumeTurn();

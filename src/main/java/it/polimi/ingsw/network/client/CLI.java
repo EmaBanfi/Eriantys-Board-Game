@@ -15,7 +15,7 @@ import it.polimi.ingsw.network.server.model.SupportCard;
 
 public class CLI implements View, Runnable {
 
-    private HashMap<StudentColor, String> teachers;
+    private final HashMap<StudentColor, String> teachers;
     private MotherNatureView motherNature;
     private ArrayList<CloudView> availableClouds;
     private ArrayList<IslandView> availableIslands;
@@ -24,7 +24,6 @@ public class CLI implements View, Runnable {
     private ArrayList<PlayerView> players;
     private ArrayList<String> availableDecks;
     private ArrayList<String> availableTowers;
-    private ArrayList<String> playerOrder;
     private ArrayList<CharacterCard> availableCC;
     private CharacterCardCreator ccc;
     private boolean usedCharacterCard;
@@ -47,7 +46,7 @@ public class CLI implements View, Runnable {
         availableClouds = new ArrayList<>();
         availableIslands = new ArrayList<>();
         teachers = new HashMap<>();
-        playerOrder = new ArrayList<>();
+        players = new ArrayList<>();
         motherNature = new MotherNatureView();
     }
 
@@ -85,7 +84,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askNickName(){
-        resumeFrom = Phase.CHOOSE_GAME_STATUS;
+        resumeFrom = Phase.CHOOSE_TOWER;
 
         String str = null;
         try {
@@ -106,7 +105,6 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
-        boolean result = false;
         try {
             if (br.readLine() == "yes") {
                 usedCharacterCard = true;
@@ -124,6 +122,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCharacterCard(){
+        usedCharacterCard= true;
         String availableCards = "";
         for(CharacterCard c: availableCC){
             availableCards = availableCards + c.getCardId() + "\n";
@@ -239,8 +238,10 @@ public class CLI implements View, Runnable {
         System.out.println("Chosen deck: " + userChoice);
         cmDeck message = new cmDeck(userChoice);
         String text = gson.toJson(message, cmDeck.class);
+        System.out.println("in ask deck: "+text);
         client.send(text);
         availableDecks.remove(userChoice.toUpperCase());
+        System.out.println("in ask deck: " + resumeFrom);
     }
 
     /**
@@ -248,9 +249,20 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askSupportCard(){
-        usedCharacterCard = false;
+        usedCharacterCard=false;
+        resumeFrom= Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
+        String card;
+        System.out.println("Already chosen support cards:");
+        for(PlayerView playerView: players){
+            if(playerView.getUsedSupportCard()!=null){
+                card= "Card id: "+playerView.getUsedSupportCard().getId()+", card turn order: "+playerView.getUsedSupportCard().getTurnOrder()+", card movements: "+playerView.getUsedSupportCard().getMovement();
+                System.out.println(card);
+            }
+        }
+        System.out.println("Please chose the id of a support card among the following:");
         for (SupportCard supportCard : player.getSupportCards()) {
-            System.out.println(supportCard);
+            card= "Card id: "+supportCard.getId()+", card turn order: "+supportCard.getTurnOrder()+", card movements: "+supportCard.getMovement();
+            System.out.println(card);
         }
         boolean supportCardAvailable = false;
         int supportCardChoice = 0;
@@ -272,6 +284,11 @@ public class CLI implements View, Runnable {
         player.getSupportCards().remove(supportCardChoice);
     }
 
+    public void resetSupportCards(){
+        for(PlayerView playerView: players)
+            playerView.resetSupportCard();
+    }
+
     public SupportCard getSupportCardByID(int id){
         SupportCard card = null;
         for(SupportCard c : player.getSupportCards()){
@@ -287,11 +304,13 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
+        System.out.println("in ask students to dh "+resumeFrom);
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
 
-        if(numOfPlayers > 0) {
+        if(availableStudentsMovements > 0) {
             int numStudents = 0;
             boolean validMovements = false;
+            ArrayList<StudentColor> chosenStudents;
             System.out.println("Your current Hall: ");
             for (StudentColor student : getPlayerByNick(currentPlayer).getHall()) {
                 System.out.println(student);
@@ -300,30 +319,12 @@ public class CLI implements View, Runnable {
             for (StudentColor student : getPlayerByNick(currentPlayer).getDiningHall()) {
                 System.out.println(student);
             }
-            System.out.println("You can move " + availableStudentsMovements + " more students");
-            if (numStudents > 0) {
-                System.out.println("Choose the student that you want to move: ");
-                StudentColor color = null;
-                String studentChoice = "";
-                ArrayList<StudentColor> chosenStudents = new ArrayList<>();
-                System.out.println("Choose the students that you want to move: ");
-                for (int i = 0; i < availableStudentsMovements; i++) {
-                    do {
-                        System.out.println("Please select a student: ");
-                        try {
-                            studentChoice = br.readLine();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        color = StudentColor.getStudentFromString(studentChoice);
-                    } while (!getPlayerByNick(currentPlayer).getHall().contains(color));
-                    chosenStudents.add(color);
-                }
-                player.removeFromHall(chosenStudents);
+            System.out.println("You can move " + availableStudentsMovements + " students");
+
+                chosenStudents=askStudents(availableStudentsMovements);
                 player.addToDiningHall(chosenStudents);
                 cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(chosenStudents);
                 client.send(gson.toJson(message, cmStudentsMovementsHToD.class));
-            }
         }
         else {
             System.out.println("You can't select anymore students.");
@@ -353,19 +354,27 @@ public class CLI implements View, Runnable {
             do {
                 numStudents = Integer.parseInt(br.readLine());
                 if (numStudents > 3 || numStudents < 0)
-                    System.out.println("Not valid, please choose a value between 0 and 3: ");
-            } while (numStudents > 3 || numStudents < 0);
+                    System.out.println("Not valid, please choose a value between 0 and "+availableStudentsMovements+": ");
+            } while (numStudents > availableStudentsMovements|| numStudents < 0);
         }catch(IOException e){e.printStackTrace();}
         availableStudentsMovements = availableStudentsMovements - numStudents;
         System.out.println("Your current Hall: ");
         for(StudentColor student: getPlayerByNick(currentPlayer).getHall()){
             System.out.println(student);
         }
-        StudentColor color = null;
+        ArrayList <StudentColor> studentsToI=askStudents(numStudents);
+        HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
+        movementsHtoI.put(chosenIsland, studentsToI);
+        cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
+        client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
+    }
+
+    public ArrayList<StudentColor> askStudents(int numOfStudents){
+        StudentColor color;
         String studentChoice = "";
         ArrayList<StudentColor> chosenStudents = new ArrayList<>();
         System.out.println("Choose the students that you want to move: ");
-        for(int i = 0; i< numStudents; i++) {
+        for(int i = 0; i< numOfStudents; i++) {
             do {
                 System.out.println("Please select a student: ");
                 try {
@@ -374,14 +383,11 @@ public class CLI implements View, Runnable {
                     e.printStackTrace();
                 }
                 color = StudentColor.getStudentFromString(studentChoice);
-            } while (!getPlayerByNick(currentPlayer).getHall().contains(color));
+            } while (!player.getHall().contains(color));
             chosenStudents.add(color);
+            player.getHall().remove(color);
         }
-        getPlayerByNick(currentPlayer).getHall().remove(chosenStudents);
-        HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
-        movementsHtoI.put(chosenIsland, chosenStudents);
-        cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
-        client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
+        return chosenStudents;
     }
 
     /**
@@ -656,17 +662,12 @@ public class CLI implements View, Runnable {
         return availableIslands;
     }
 
-    public void updatePlayerOrder(ArrayList<String> playerOrder) {
-        this.playerOrder = playerOrder;
-    }
 
     /**
      * keep track of the status of the turn
      */
     public void resumeFrom(){
         switch (resumeFrom){
-            case CHOOSE_GAME_STATUS:
-                askSetGameStatus();
             case CHOOSE_SUPPORT_CARD :
                 askSupportCard();
             case CHOOSE_MOTHER_MOVEMENTS:

@@ -188,11 +188,6 @@ public interface View {
      */
     void updateCurrentPlayer(String currentPlayer);
 
-    /**
-     * update the player order.
-     * @param playerOrder list of players puts respecting the turn order.
-     */
-    void updatePlayerOrder(ArrayList<String> playerOrder);
 
     /**
      *  keep track of the status of the turn

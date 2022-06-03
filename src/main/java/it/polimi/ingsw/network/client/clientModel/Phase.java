@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.client.clientModel;
 
 public enum Phase {
-    CHOOSE_GAME_STATUS,
     CHOOSE_SUPPORT_CARD,
     CHOOSE_MOTHER_MOVEMENTS,
     CHOOSE_CLOUDS,
