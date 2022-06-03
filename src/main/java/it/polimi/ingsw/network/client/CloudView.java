@@ -5,20 +5,15 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 import java.util.ArrayList;
 
 public class CloudView {
-    private final int maxStudents;
     private final ArrayList<StudentColor> students;
 
-    public CloudView(int maxStudents, ArrayList<StudentColor> students) {
-        this.maxStudents = maxStudents;
-        this.students = students;
-    }
-
-    public int getMaxStudents(){
-        return maxStudents;
+    public CloudView() {
+        this.students = new ArrayList<>();
     }
 
     public void addStudents(ArrayList<StudentColor> students) {
-        this.students.addAll(students);
+        for(StudentColor color: students)
+            this.students.add(color);
     }
 
     public void addStudent(StudentColor student){students.add(student);}

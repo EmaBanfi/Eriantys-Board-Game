@@ -194,7 +194,7 @@ public class Controller {
             text = "Cloud " + num + " have been refilled";
             message = new smStudentsOnCloud(
                     text,
-                    num,
+                    num-1,
                     cloud.getStudents()
             );
             server.sendAll(gson.toJson(message, smStudentsOnCloud.class));

@@ -107,30 +107,6 @@ public class Client {
         }
     }
 
-    public void askGameStatus() {
-        // questa parte va sostituita con input da GUI
-        int numOfPlayers = 0;
-        String mode = null;
-        try {
-            do {
-                numOfPlayers = Integer.parseInt(kb.readLine());
-            } while (numOfPlayers < 2 || numOfPlayers > 4);
-
-            do {
-                mode = kb.readLine();
-            } while (!mode.equals("expert") && !mode.equals("normal"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Gson gson = new Gson();
-        cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
-        String text = gson.toJson(message, cmSetGameStatus.class);
-        try {
-            dos.writeBytes(text + "\n");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public View getView() {
         return view;

@@ -217,6 +217,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askDeck(){
+        System.out.println("Please select a deck");
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         for (String deck : availableDecks) {
             System.out.println(deck);
@@ -250,7 +251,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askSupportCard(){
         usedCharacterCard=false;
-        resumeFrom= Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
+        resumeFrom= Phase.CHOOSE_STUDENTS_TO_ISLAND;
         String card;
         System.out.println("Already chosen support cards:");
         for(PlayerView playerView: players){
@@ -670,18 +671,25 @@ public class CLI implements View, Runnable {
         switch (resumeFrom){
             case CHOOSE_SUPPORT_CARD :
                 askSupportCard();
+                break;
             case CHOOSE_MOTHER_MOVEMENTS:
                 askMotherNatureMovements();
+                break;
             case CHOOSE_CLOUDS:
                 askCloud();
+                break;
             case CHOOSE_TOWER:
                 askTower();
+                break;
             case CHOOSE_DECK:
                 askDeck();
+                break;
             case CHOOSE_STUDENTS_TO_DINING_HALL:
                 askMoveStudentsHToD();
+                break;
             case CHOOSE_STUDENTS_TO_ISLAND:
                 askMoveStudentsHToI();
+                break;
         }
 
     }
@@ -733,6 +741,8 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
+        if(availableClouds.size()-1<cloud)
+            availableClouds.add(new CloudView());
         availableClouds.get(cloud).addStudents(students);
     }
 
