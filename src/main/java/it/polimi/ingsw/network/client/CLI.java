@@ -347,14 +347,12 @@ public class CLI implements View, Runnable {
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
 
-        //stampa la hall e le isole con tutte le relative informazioni
         showIslands();
         System.out.println("Your current Hall: ");
         for(StudentColor student: getPlayerByNick(currentPlayer).getHall()){
             System.out.println(student);
         }
 
-        //chiedi se vuole aggiungere studenti alle isole
         String decisionToMoveStudents = "";
         do{
             System.out.println("Do you want to move some students from your Hall to an Island? (yes|no)");
@@ -365,7 +363,6 @@ public class CLI implements View, Runnable {
             }
         }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
 
-        //se decide di sì => inizia il corpo del metodo
         if(decisionToMoveStudents.toLowerCase().equals("yes")) {
             int chosenIsland = 0;
             int availableIslandChoices = 3;
@@ -373,7 +370,6 @@ public class CLI implements View, Runnable {
             ArrayList<StudentColor> studentsToI = new ArrayList<>();
             HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
 
-            //scegli la singola isola su cui vuoi fare gli spostamenti
             do {
                 System.out.println("Choose the island in which you want to move the students: ");
                 System.out.println("You can choose up to " + availableIslandChoices + "islands: ");
@@ -382,7 +378,6 @@ public class CLI implements View, Runnable {
                 System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ": ");
                 do {
 
-                    //scegli gli studenti da spostare su quell'isola
                     try {
                         numStudents = Integer.parseInt(br.readLine());
                     } catch (IOException e) {
@@ -392,13 +387,11 @@ public class CLI implements View, Runnable {
                         System.out.println("Not valid, please choose a value between 0 and " + availableStudentsMovements + ": ");
                 } while (numStudents > availableStudentsMovements || numStudents < 0);
 
-                //aggiungi (isola | studenti) alla HashMap e rimuovi gli studenti scelti dalla Hall del current player
                 availableStudentsMovements -= numStudents;
                 studentsToI.addAll(askStudents(numStudents));
                 movementsHtoI.put(chosenIsland, studentsToI);
                 getPlayerByNick(currentPlayer).getHall().removeAll(studentsToI);
 
-                //chiedi se vuole spostare altri studenti
                 decisionToMoveStudents = null;
                 do{
                     System.out.println("Do you want to move any more students? (yes|no)");
@@ -409,7 +402,6 @@ public class CLI implements View, Runnable {
                     }
                 }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
 
-                // ripeti finché puoi scegliere isole, hai studenti da spostare e il player ti dice che vuole spostare
             } while (availableIslandChoices > 0 && availableStudentsMovements > 0 && decisionToMoveStudents.toLowerCase().equals("yes"));
 
             cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
@@ -761,7 +753,7 @@ public class CLI implements View, Runnable {
     }
 
     /**
-     * updates the tower on an island (chiedi ad adriano come cazzo fare sta roba)
+     * updates the tower on an island
      * @param island
      * @param tower
      */
