@@ -109,7 +109,7 @@ class ControllerTest {
         controller.moveStudentsHToD(students);
         assertFalse(game.getCurrentPlayer().getBoard().getHall().getStudents().contains(StudentColor.RED));
         assertTrue(game.getCurrentPlayer().getBoard().getDiningHall().getStudents().contains(StudentColor.RED));
-        assertEquals(1, game.getCurrentPlayer().getBoard().getCoins());
+        assertEquals(2, game.getCurrentPlayer().getBoard().getCoins());
     }
 
     @Test

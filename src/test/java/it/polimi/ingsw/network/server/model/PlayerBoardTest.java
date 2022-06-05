@@ -87,9 +87,7 @@ class PlayerBoardTest {
      */
     @Test
     void coinsUsage() {
-        assertEquals(0, playerBoard.getCoins());
-
-        assertEquals(0, playerBoard.getCoins());
+        assertEquals(1, playerBoard.getCoins());
 
         ArrayList<StudentColor> arrayList = new ArrayList<>();
         // fill the array of StudentColor that I'll put in the Hall
@@ -108,9 +106,9 @@ class PlayerBoardTest {
 
         playerBoard.assignCoins();
 
-        assertEquals(4, playerBoard.getCoins());
+        assertEquals(5, playerBoard.getCoins());
 
         playerBoard.useCoins(1);
-        assertEquals(3, playerBoard.getCoins());
+        assertEquals(4, playerBoard.getCoins());
     }
 }

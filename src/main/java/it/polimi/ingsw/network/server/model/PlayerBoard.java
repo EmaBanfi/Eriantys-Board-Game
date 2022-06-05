@@ -8,7 +8,7 @@ public class PlayerBoard {
     private int coins;
 
     /**
-     * create a new PlayerBoard with a DiningHall and am Hall and, at the end, set at zero the coins of the owner
+     * create a new PlayerBoard with a DiningHall and an Hall and, at the end, set at zero the coins of the owner
      */
     public PlayerBoard() {
         this.diningHall = new DiningHall();
