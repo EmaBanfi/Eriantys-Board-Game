@@ -178,7 +178,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add) {
-        
+
     }
 
     @Override
@@ -286,4 +286,7 @@ public class GUI extends Application implements View {
     public void disconnectFromServer() {
 
     }
+
+    @Override
+    public void addPlayers(ArrayList<String> players){}
 }

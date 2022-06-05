@@ -16,12 +16,12 @@ import it.polimi.ingsw.network.server.model.SupportCard;
 public class CLI implements View, Runnable {
 
     private final HashMap<StudentColor, String> teachers;
-    private MotherNatureView motherNature;
-    private ArrayList<CloudView> availableClouds;
-    private ArrayList<IslandView> availableIslands;
+    private final MotherNatureView motherNature;
+    private final ArrayList<CloudView> availableClouds;
+    private final ArrayList<IslandView> availableIslands;
     private Phase resumeFrom = null;
     private PlayerView player;
-    private ArrayList<PlayerView> players;
+    private final ArrayList<PlayerView> players;
     private ArrayList<String> availableDecks;
     private ArrayList<String> availableTowers;
     private ArrayList<CharacterCard> availableCC;
@@ -189,36 +189,31 @@ public class CLI implements View, Runnable {
     public void askTower(){
         resumeFrom = Phase.CHOOSE_DECK;
         System.out.println("Choose tower color:");
+        System.out.println("The available towers are: ");
+        if(availableTowers.contains("WHITE"))
+            System.out.println("WHITE");
+        if(availableTowers.contains("WHITE"))
+            System.out.println("WHITE");
+        if(numOfPlayers==3&&availableTowers.contains("GRAY"))
+            System.out.println("GRAY");
+        if(numOfPlayers==4)
+            System.out.println("Two players can chose the same tower color and they will be in the same team");
         String colorChoice = null;
-        if (numOfPlayers == 3) {
             try {
                 do {
-                    colorChoice = br.readLine();
-                    if (!colorChoice.toUpperCase().equals("WHITE") & !colorChoice.toUpperCase().equals("GREY") & !colorChoice.toUpperCase().equals("BLACK"))
+                    colorChoice = br.readLine().toUpperCase();
+                    if (!availableTowers.contains(colorChoice))
                         System.out.println("Invalid Tower color, please select a valid one: ");
-                } while (!colorChoice.toUpperCase().equals("WHITE") & !colorChoice.toUpperCase().equals("GREY") & !colorChoice.toUpperCase().equals("BLACK"));
+                } while (!availableTowers.contains(colorChoice));
             }catch(IOException e)
             {e.printStackTrace();}
-            System.out.println("Chosen Tower color: " + colorChoice);
+            player.setTower(colorChoice);
+            System.out.println("Chosen Tower color: " + colorChoice.toLowerCase());
             Gson gson = new Gson();
             cmTower message = new cmTower(colorChoice);
             String text = gson.toJson(message, cmTower.class);
             client.send(text);
-            availableTowers.remove(colorChoice.toUpperCase());
-        } else {
-            try {
-                do {
-                    colorChoice = br.readLine();
-                    if ((!colorChoice.toUpperCase().equals("WHITE")) & (!colorChoice.toUpperCase().equals("BLACK")))
-                        System.out.println("Invalid Tower color, please select a valid one: ");
-                } while ((!colorChoice.toUpperCase().equals("WHITE")) & (!colorChoice.toUpperCase().equals("BLACK")));
-            }catch(IOException e){e.printStackTrace();}
-            System.out.println("Chosen tower color: " + colorChoice);
-            cmTower message = new cmTower(colorChoice);
-            String text = gson.toJson(message, cmTower.class);
-            client.send(text);
-            availableTowers.remove(colorChoice.toUpperCase());
-        }
+            availableTowers.remove(colorChoice);
     }
 
     /**
@@ -342,7 +337,6 @@ public class CLI implements View, Runnable {
         availableStudentsMovements = 3;
     }
 
-    //l'idea è: per prima stampargli le isole disponibili e la sua hall, poi chiedergli se vuole spostare studenti sulle isole, se sì => in quale isola vuole fare lo spostamento, poi chiedergli quali studenti vuole spostare su quell'isola. Ripeti fin tanto che può scegliere isole (max 3), finché ha studenti da spostare e finché il player vuole spostare.
     /**
      * ask to the client which students wants to move from H to I (single or multiple). Called by method
      */
@@ -787,6 +781,7 @@ public class CLI implements View, Runnable {
         availableClouds.get(cloud).addStudents(students);
     }
 
+
     /**
      * updates which player is a teacher
      * @param roles
@@ -846,4 +841,13 @@ public class CLI implements View, Runnable {
                 return card;
         return null;
     }
+
+    @Override
+    public void addPlayers(ArrayList<String> players){
+        for(String nick: players){
+            if(!player.getNickname().equals(nick))
+                this.players.add(new PlayerView(nick));
+        }
+    }
+
 }

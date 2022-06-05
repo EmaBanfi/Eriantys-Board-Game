@@ -58,6 +58,13 @@ public class Controller {
         }
     }
 
+    public void notifyPlayers(){
+        smAddPlayers message = new smAddPlayers();
+        for(Player player: game.getPlayers())
+            message.addNick(player.getNickName());
+        server.sendAll(gson.toJson(message, smAddPlayers.class));
+    }
+
     /**
      * this method is used to check if a player with the specified nick already exists
      * @param nick nick we want to check if it is already present

@@ -299,8 +299,14 @@ public interface View {
 
     /**
      * after the view received the game results, the player will communicate the disconnection from the server
-     * The player have to insert anything and when he press enter the game will be closed and he will be disconnected
+     * The player have to insert anything and when he presses enter the game will be closed, and he will be disconnected
      * from the server
      */
     void disconnectFromServer();
+
+    /**
+     * this method is used to initialise the players arraylist
+     * @param players nick of all the players in the match
+     */
+    void addPlayers(ArrayList<String> players);
 }

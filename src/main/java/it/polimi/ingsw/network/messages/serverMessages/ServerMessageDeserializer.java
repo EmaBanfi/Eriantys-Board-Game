@@ -16,6 +16,8 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
             switch (field.getAsString()){
                 case "login failed":
                     return jsonDeserializationContext.deserialize(jsonObject, smLoginFailedMessage.class);
+                case "add players":
+                    return jsonDeserializationContext.deserialize(jsonObject, smAddPlayers.class);
                 case "notify":
                     return jsonDeserializationContext.deserialize(jsonObject, smNotify.class);
                 case "nickname":
