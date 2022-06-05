@@ -24,6 +24,12 @@ public class cmSetGameStatus extends ClientMessage {
     public void processMessage(ClientHandler handler) {
         handler.getServer().getController().setGameStatus(mode, numOfPlayers);
 
-        handler.getServer().getController().resumeTurn();
+        System.out.println("DELETE LINES 27 -> 33 IN cmSetGameStatus");
+        handler.getServer().getController().notifyPlayers();
+        handler.getServer().getController().notifyStudentsOnIslands();
+        if(handler.getServer().getController().getGame().isExpertMode())
+            handler.getServer().getController().notifyAvailableCC();
+        //game start
+        handler.getServer().getController().notifyCurrentPlayer();
     }
 }

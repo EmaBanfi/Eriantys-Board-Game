@@ -196,8 +196,8 @@ public class CLI implements View, Runnable {
         System.out.println("The available towers are: ");
         if(availableTowers.contains("WHITE"))
             System.out.println("WHITE");
-        if(availableTowers.contains("WHITE"))
-            System.out.println("WHITE");
+        if(availableTowers.contains("BLACK"))
+            System.out.println("BLACK");
         if(numOfPlayers==3&&availableTowers.contains("GRAY"))
             System.out.println("GRAY");
         if(numOfPlayers==4)
@@ -321,11 +321,11 @@ public class CLI implements View, Runnable {
         if(availableStudentsMovements > 0) {
             ArrayList<StudentColor> chosenStudents;
             System.out.println("Your current Hall: ");
-            for (StudentColor student : getPlayerByNick(currentPlayer).getHall()) {
+            for (StudentColor student : player.getHall()) {
                 System.out.println(student);
             }
             System.out.println("Your current Dining Hall: ");
-            for (StudentColor student : getPlayerByNick(currentPlayer).getDiningHall()) {
+            for (StudentColor student : player.getDiningHall()) {
                 System.out.println(student);
             }
             System.out.println("You can move " + availableStudentsMovements + " students");
@@ -353,7 +353,7 @@ public class CLI implements View, Runnable {
 
         showIslands();
         System.out.println("Your current Hall: ");
-        for(StudentColor student: getPlayerByNick(currentPlayer).getHall()){
+        for(StudentColor student: player.getHall()){
             System.out.println(student);
         }
 
@@ -376,10 +376,10 @@ public class CLI implements View, Runnable {
 
             do {
                 System.out.println("Choose the island in which you want to move the students: ");
-                System.out.println("You can choose up to " + availableIslandChoices + "islands: ");
-                chosenIsland = getChosenIsland();
+                System.out.println("You can choose up to " + availableIslandChoices + " islands: ");
+                chosenIsland = askIsland(false);
                 availableIslandChoices--;
-                System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ": ");
+                System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ") : ");
                 do {
 
                     try {
@@ -394,7 +394,7 @@ public class CLI implements View, Runnable {
                 availableStudentsMovements -= numStudents;
                 studentsToI.addAll(askStudents(numStudents));
                 movementsHtoI.put(chosenIsland, studentsToI);
-                getPlayerByNick(currentPlayer).getHall().removeAll(studentsToI);
+                player.getHall().removeAll(studentsToI);
 
                 decisionToMoveStudents = null;
                 do{
@@ -420,7 +420,7 @@ public class CLI implements View, Runnable {
         System.out.println("Choose the students that you want to move: ");
         for(int i = 0; i< numOfStudents; i++) {
             do {
-                System.out.println("Please select a student: ");
+                System.out.println("Please select a student (choice " + i + ") : ");
                 try {
                     studentChoice = br.readLine();
                 } catch (IOException e) {
@@ -471,7 +471,7 @@ public class CLI implements View, Runnable {
         resumeFrom = Phase.CHOOSE_CLOUDS;
         int chosenIsland = 0;
         System.out.println("Current Mother Nature position: " + motherNature.getCurrentIsland());
-        chosenIsland = getChosenIsland();
+        chosenIsland = askIsland(true);
         System.out.println("Chosen island: " + chosenIsland);
         cmMoveMother message = new cmMoveMother(chosenIsland);
         client.send(gson.toJson(message, cmMoveMother.class));
@@ -484,15 +484,16 @@ public class CLI implements View, Runnable {
             System.out.println(text);
             System.out.println("Block on island: " + availableIslands.get(i).getBlockCard());
             System.out.println("Tower on island: " + availableIslands.get(i).getTower());
-            System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers());
+            System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers() + "\n");
         }
     }
 
     @Override
-    public int getChosenIsland() {
+    public int askIsland(boolean show) {
         int chosenIsland=-1;
-        showIslands();
-        System.out.println("Chosen Island");
+        if (show)
+            showIslands();
+        System.out.println("Choose an island");
         do {
             try {
                 chosenIsland = Integer.parseInt(br.readLine());
@@ -545,11 +546,17 @@ public class CLI implements View, Runnable {
     @Override
     public void updateUsedSupportCard(int id) {
         getPlayerByNick(currentPlayer).setUsedSupportCard(id);
+        updateAvailableSupportCards();
     }
 
     @Override
     public PlayerView getPlayerByNick(String nick){
+        System.out.println(currentPlayer);
+        System.out.println("getPlayerByNick: " + nick);
+        if (player.getNickname().equals(nick))
+            return player;
         for(PlayerView player: players){
+            System.out.println("getPlayerByNick for: " + nick);
             if(player.getNickname() == nick)
                 return player;
         }

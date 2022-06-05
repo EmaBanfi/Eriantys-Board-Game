@@ -6,22 +6,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class IslandView {
-    private HashMap<StudentColor, Integer> students;
+    private final HashMap<StudentColor, Integer> students;
     private boolean blockCard;
     private String tower;
     private int numOfTowers;
 
     public IslandView(){
         students = new HashMap<>();
+        for (StudentColor color : StudentColor.values())
+            students.put(color, 0);
         blockCard = false;
         tower = null;
         numOfTowers = 1;
     }
 
     public String getStudents(){
-        String text = " ";
+        String text = "";
         for(StudentColor color : StudentColor.values()){
-            text = text + color.toString().toLowerCase() + " students: " + students.get(color) + "\n";
+            text = text + color.toString().toLowerCase() + " students: " + students.get(color);
+            if (!color.equals(StudentColor.GREEN))
+                text = text + "\n";
         }
         return text;
     }

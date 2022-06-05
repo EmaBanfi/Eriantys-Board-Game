@@ -136,13 +136,15 @@ public class Server {
 
         clientHandlers.put(nick,clientHandler);
         controller.addPlayerToGame(nick);
+
         if(controller.gameIsFull()){
             controller.notifyGameStatus();
             controller.notifyPlayers();
+            controller.notifyStudentsOnIslands();
             if(controller.getGame().isExpertMode())
                 controller.notifyAvailableCC();
             //game start
-            controller.resumeTurn();
+            controller.notifyCurrentPlayer();
         }
         else if (lobby.size() >= (clientHandlers.size() + 1)) {
             smAskNickname message = new smAskNickname("Please select nickname. The following nicknames have already taken " + alreadyConnectedPlayers() +

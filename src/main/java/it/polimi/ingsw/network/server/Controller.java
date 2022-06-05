@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.EndGameException;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 import it.polimi.ingsw.Exceptions.LastSupportCardUsedException;
+import it.polimi.ingsw.network.client.clientModel.IslandView;
 import it.polimi.ingsw.network.messages.serverMessages.*;
 import it.polimi.ingsw.network.server.model.*;
 
@@ -58,6 +59,9 @@ public class Controller {
         }
     }
 
+    /**
+     * notify players of other players
+     */
     public void notifyPlayers(){
         smAddPlayers message = new smAddPlayers();
         for(Player player: game.getPlayers())
@@ -108,6 +112,33 @@ public class Controller {
     }
 
     /**
+     * notify to the view the initialization of the islands
+     */
+    public void notifyStudentsOnIslands() {
+        smStudentsOnIsland message;
+        for (int i=0; i<board.getIslands().size(); i++) {
+            message = new smStudentsOnIsland(i, board.getIsland(i).getStudents());
+            server.sendAll(gson.toJson(message, smStudentsOnIsland.class));
+        }
+    }
+
+    public void notifyCurrentPlayer() {
+        String nickname = game.getCurrentPlayer().getNickName();
+        smCurrentPlayer message = new smCurrentPlayer("The current player is " + nickname, nickname);
+        server.sendAll(gson.toJson(message, smCurrentPlayer.class));
+    }
+
+    public void initializePlayersHall() {
+        for (Player player : game.getPlayers()) {
+            try {
+                player.getBoard().addStudentsToHall(board.getBag().draw(7));
+            } catch (LastStudentDrawnException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
      * sets game status
      * @param mode it could be "normal" or "expert"
      * @param numOfPlayers it is an int between 1 and 4
@@ -117,6 +148,7 @@ public class Controller {
         game.setNumOfPlayers(numOfPlayers);
         board=new GameBoard(numOfPlayers);
         board.setPlayers(game.getPlayers());
+        initializePlayersHall();
         if(mode.equals("expert")){
             characterCardBoard=new CharacterCardBoard();
             characterCardBoard.initializeAvailableCC();
@@ -135,6 +167,9 @@ public class Controller {
     public void setTower( String tower){
         String nick;
         nick = game.getCurrentPlayer().getNickName();
+        ServerMessage message;
+        message = new smStudentsInHall(game.getCurrentPlayer().getBoard().getHall().getStudents(), true);
+        server.sendAll(gson.toJson(message, smStudentsInHall.class));
         game.getCurrentPlayer().setTower(board.getTower(tower));
         String text="Player " + nick + " has chosen the "+ tower+ " tower.";
         if(game.getNumOfPlayers()==4) {
@@ -144,7 +179,7 @@ public class Controller {
                         text = text + "\nThey will be in team with " + player.getNickName();
             }
         }
-        smChosenTower message= new smChosenTower(
+        message= new smChosenTower(
                 text,
                 tower);
         server.sendAllExceptPlayer(
@@ -367,15 +402,15 @@ public class Controller {
         }
         game.getPlayers().addAll(roundOrder);
         game.setCurrentPlayer();
-        for(Player player : roundOrder){
+        for(Player player : roundOrder) {
             nicks.add(player.getNickName());
         }
-        String s="The players order for the current action phase and the next planning phase will be the following "+
+        String s="The players order for the current action phase and the next planning phase will be the following: "+
                 nicks;
         smNotify message = new smNotify(s);
         String json= gson.toJson(message, smNotify.class);
         server.sendAll(json);
-        String text = game.getCurrentPlayer().getNickName() + " will chose which students to move to islands";
+        String text = game.getCurrentPlayer().getNickName() + " will choose which students to move to islands";
         smCurrentPlayer message2 = new smCurrentPlayer(text, game.getCurrentPlayer().getNickName());
         server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }

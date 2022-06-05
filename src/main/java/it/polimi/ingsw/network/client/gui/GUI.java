@@ -278,7 +278,7 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public int getChosenIsland() {
+    public int askIsland(boolean show) {
         return 0;
     }
 

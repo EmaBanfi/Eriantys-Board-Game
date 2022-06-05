@@ -6,9 +6,7 @@ import it.polimi.ingsw.network.messages.clientMessages.ClientMessage;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG5;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;
@@ -42,14 +40,14 @@ public class CharacterCardGroup5 extends CharacterCard {
      */
     public void activate() {
         System.out.println(getText());
-        int islandChoice = getView().getChosenIsland();
+        int islandChoice = getView().askIsland(true);
         ClientMessage message ;
         if(getCardId() == 3){
             message = new cmCCG5(3, islandChoice);
             getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else if(getCardId() == 5){
-            message = new cmCCG5(5, getView().getChosenIsland());
+            message = new cmCCG5(5, getView().askIsland(true));
             getView().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
         else{

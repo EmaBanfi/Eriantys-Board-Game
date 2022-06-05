@@ -19,7 +19,7 @@ public class smStudentsOnIsland extends ServerMessage {
         setType("students on island");
     }
 
-    public smStudentsOnIsland( int island, ArrayList<StudentColor> students) {
+    public smStudentsOnIsland(int island, ArrayList<StudentColor> students) {
         this.island = island;
         this.students = students;
         setType("students on island");

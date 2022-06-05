@@ -295,7 +295,7 @@ public interface View {
      */
     void addAvailableCard(int card);
 
-    int getChosenIsland();
+    int askIsland(boolean show);
 
     /**
      * after the view received the game results, the player will communicate the disconnection from the server

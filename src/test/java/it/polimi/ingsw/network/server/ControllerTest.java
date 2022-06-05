@@ -90,6 +90,7 @@ class ControllerTest {
     @Test
     void moveStudentsHtoI() {
         controller.setGameStatus("normal", 4);
+        game.getCurrentPlayer().getBoard().getHall().removeStudents(game.getCurrentPlayer().getBoard().getHall().getStudents());
         ArrayList<StudentColor> students = new ArrayList<>();
         students.add(StudentColor.RED);
         game.getCurrentPlayer().getBoard().addStudentsToHall(students);
@@ -315,7 +316,7 @@ class ControllerTest {
         controller.setGameStatus("expert",4);
         Bag bag = controller.getBoard().getBag();
         controller.refillCard(4,4);
-        assertEquals(96-4,bag.totalNumOfStudents());
+        assertEquals(96-4-(7*controller.getGame().getNumOfPlayers()),bag.totalNumOfStudents());
 
     }
 
