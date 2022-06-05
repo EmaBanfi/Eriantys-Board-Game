@@ -39,9 +39,6 @@ public class CLI implements View, Runnable {
         br = new BufferedReader(new InputStreamReader(System.in));
         this.client = client;
         gson = new Gson();
-        initAvailableDecks();
-        initAvailableTowers();
-        initAvailableIslands();
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
         availableClouds = new ArrayList<>();
@@ -49,6 +46,9 @@ public class CLI implements View, Runnable {
         teachers = new HashMap<>();
         players = new ArrayList<>();
         motherNature = new MotherNatureView();
+        initAvailableDecks();
+        initAvailableTowers();
+        initAvailableIslands();
     }
 
     public void initAvailableIslands(){
@@ -175,6 +175,10 @@ public class CLI implements View, Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.mode = mode;
+        this.numOfPlayers = numOfPlayers;
+
         System.out.println("Number of players selected: " + numOfPlayers + "\n" + "Mode selected: " + mode);
         Gson gson = new Gson();
         cmSetGameStatus message = new cmSetGameStatus(numOfPlayers, mode);
@@ -475,7 +479,7 @@ public class CLI implements View, Runnable {
 
     private void showIslands(){
         for(int i = 0; i < availableIslands.size(); i++){
-            String text = "Students on island " + (i+1) ;
+            String text = "Students on island " + (i+1) + "\n";
             text = text + availableIslands.get(i).getStudents();
             System.out.println(text);
             System.out.println("Block on island: " + availableIslands.get(i).getBlockCard());

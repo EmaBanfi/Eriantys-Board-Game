@@ -94,8 +94,15 @@ public class Controller {
      */
     public void notifyAvailableCC(){
         ArrayList<Integer> availableCards = new ArrayList<>();
-        for (CharacterCard card : characterCardBoard.getAvailableCards())
+        for (CharacterCard card : characterCardBoard.getAvailableCards()) {
             availableCards.add(card.getCardId());
+            if (card.getCardId() == 1)
+                refillCard(1, 4);
+            else if (card.getCardId() == 7)
+                refillCard(7, 6);
+            else if (card.getCardId() == 11)
+                refillCard(11, 4);
+        }
         smAvailableCharacterCards message = new smAvailableCharacterCards(availableCards);
         server.sendAll(gson.toJson(message, smAvailableCharacterCards.class));
     }
@@ -363,12 +370,12 @@ public class Controller {
         for(Player player : roundOrder){
             nicks.add(player.getNickName());
         }
-        String s="The players order for the current action phase and the next planning phase will be the following"+
+        String s="The players order for the current action phase and the next planning phase will be the following "+
                 nicks;
         smNotify message = new smNotify(s);
         String json= gson.toJson(message, smNotify.class);
         server.sendAll(json);
-        String text = game.getCurrentPlayer().getNickName() + " will chose which students to move to their dining hall";
+        String text = game.getCurrentPlayer().getNickName() + " will chose which students to move to islands";
         smCurrentPlayer message2 = new smCurrentPlayer(text, game.getCurrentPlayer().getNickName());
         server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }
