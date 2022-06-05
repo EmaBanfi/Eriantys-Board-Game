@@ -177,6 +177,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add) {
+        
+    }
+
+    @Override
     public void updatePlayerCoins(int coin) {
 
     }
@@ -198,6 +203,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void updateBlockOnCard(boolean add) {
+
+    }
+
+    @Override
     public void updateEmptyCloud(int cloud) {
 
     }
@@ -213,11 +223,6 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void removeStudentsFromCloud(int cloud, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
     public void updateTeacher(HashMap<StudentColor, String> roles) {
 
     }
@@ -229,16 +234,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void setSupportCard(int id) {
-
-    }
-
-    @Override
-    public void removeBlockOnCard() {
-
-    }
-
-    @Override
-    public void addBlockOnCard() {
 
     }
 
@@ -259,16 +254,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void removeStudentsFromHall(ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void addStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void removeStudentsFromCard(int cardId, ArrayList<StudentColor> students) {
 
     }
 

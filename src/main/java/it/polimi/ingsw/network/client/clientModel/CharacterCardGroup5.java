@@ -61,8 +61,12 @@ public class CharacterCardGroup5 extends CharacterCard {
     /**
      * used to add an block card on the CharacterCard n°5
      */
-    public void addAvailableBlockCards() {
-        this.availableBlockCards++;
+    @Override
+    public void updateAvailableBlockCards(boolean update){
+        if(update)
+            availableBlockCards++;
+        else
+            availableBlockCards--;
     }
 
     public int getAvailableBlockCards() {

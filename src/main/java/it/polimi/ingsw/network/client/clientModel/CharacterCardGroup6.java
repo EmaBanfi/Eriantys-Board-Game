@@ -146,19 +146,24 @@ public class CharacterCardGroup6 extends CharacterCard {
         }
     }
 
-    /**
-     * used to put 6 students on the CharacterCard n°7
-     * @throws LastStudentDrawnException called if the last student is taken from the bag
-     */
-    public void putStudentsOnCard(ArrayList<StudentColor> students) {
-        studentsOnCard.addAll(students);
-    }
-
     public ArrayList<StudentColor> getStudentsOnCard() {
         return studentsOnCard;
     }
 
     public int countStudentColor(StudentColor color) {
         return (int) studentsOnCard.stream().filter(x -> x.equals(color)).count();
+    }
+
+    /**
+     * updates the students on card
+     * @param students students to manage
+     * @param add add the block card if it's true, else remove
+     */
+    @Override
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){
+        if(add)
+            studentsOnCard.addAll(students);
+        else
+            studentsOnCard.removeAll(students);
     }
 }

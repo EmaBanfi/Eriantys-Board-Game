@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup4 extends CharacterCard {
-    private StudentColor chosenColor;
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -92,9 +91,15 @@ public class CharacterCardGroup4 extends CharacterCard {
     }
 
     /**
-     * used to put 4 students on the CharacterCard n°11
+     * updates the students on card
+     * @param students students to manage
+     * @param add add the block card if it's true, else remove
      */
-    public void putStudentsOnCard(ArrayList<StudentColor> students){
-        studentsOnCard.addAll(students);
+    @Override
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){
+        if(add)
+            studentsOnCard.addAll(students);
+        else
+            studentsOnCard.removeAll(students);
     }
 }

@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 
 public class CharacterCardGroup3 extends CharacterCard{
 
-    private int chosenIsland;
-
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CharacterCardGroup3(int id, View view) {

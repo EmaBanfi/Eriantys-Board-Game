@@ -4,13 +4,13 @@ import it.polimi.ingsw.network.client.Client;
 
 public class smBlockOnCard extends ServerMessage{
 
-    private boolean decreasedBlocks;
+    private boolean addBlock;
 
     public smBlockOnCard() {
     }
 
-    public smBlockOnCard(boolean decreasedBlocks) {
-        this.decreasedBlocks = decreasedBlocks;
+    public smBlockOnCard(boolean addBlock) {
+        this.addBlock = addBlock;
         setType("blocks on card");
     }
 
@@ -20,9 +20,6 @@ public class smBlockOnCard extends ServerMessage{
      */
     @Override
     public void processMessage(Client client) {
-        if (decreasedBlocks)
-            client.getView().removeBlockOnCard();
-        else
-            client.getView().addBlockOnCard();
+        client.getView().updateBlockOnCard(addBlock);
     }
 }

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-//può servire un metodo resetAvailableStudentsMovements()?
-
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.clientModel.*;
 import it.polimi.ingsw.network.messages.clientMessages.*;
@@ -11,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
 import it.polimi.ingsw.network.server.model.SupportCard;
 
 public class CLI implements View, Runnable {
@@ -41,6 +41,7 @@ public class CLI implements View, Runnable {
         gson = new Gson();
         initAvailableDecks();
         initAvailableTowers();
+        initAvailableIslands();
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
         availableClouds = new ArrayList<>();
@@ -48,6 +49,12 @@ public class CLI implements View, Runnable {
         teachers = new HashMap<>();
         players = new ArrayList<>();
         motherNature = new MotherNatureView();
+    }
+
+    public void initAvailableIslands(){
+        for(int i = 0; i < 12; i++){
+            availableIslands.add(new IslandView());
+        }
     }
 
     private void initAvailableDecks() {
@@ -105,8 +112,10 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
+        System.out.println("Do you want to activate a character card? (yes|no)");
+        System.out.println("You have " + player.getCoins() + " coins");
         try {
-            if (br.readLine() == "yes") {
+            if (br.readLine().toLowerCase().equals("yes")) {
                 usedCharacterCard = true;
                 askCharacterCard();
             } else {
@@ -137,7 +146,7 @@ public class CLI implements View, Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            card = getCardById(choice);
+            card = getCharacterCardById(choice);
         }while(card.equals(null));
         card.activate();
     }
@@ -250,6 +259,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askSupportCard(){
+        resetSupportCards();
         usedCharacterCard=false;
         resumeFrom= Phase.CHOOSE_STUDENTS_TO_ISLAND;
         String card;
@@ -305,12 +315,11 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
-        System.out.println("in ask students to dh "+resumeFrom);
+        if((!usedCharacterCard) && mode.equals("expert"))
+            askActivateCharacterCard();
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
 
         if(availableStudentsMovements > 0) {
-            int numStudents = 0;
-            boolean validMovements = false;
             ArrayList<StudentColor> chosenStudents;
             System.out.println("Your current Hall: ");
             for (StudentColor student : getPlayerByNick(currentPlayer).getHall()) {
@@ -333,41 +342,85 @@ public class CLI implements View, Runnable {
         availableStudentsMovements = 3;
     }
 
-    public boolean validColor(String color) {
-        for (StudentColor C : StudentColor.values()) {
-            if (color.toString().equals(color))
-                return true;
-        }
-        return false;
-    }
-
+    //l'idea è: per prima stampargli le isole disponibili e la sua hall, poi chiedergli se vuole spostare studenti sulle isole, se sì => in quale isola vuole fare lo spostamento, poi chiedergli quali studenti vuole spostare su quell'isola. Ripeti fin tanto che può scegliere isole (max 3), finché ha studenti da spostare e finché il player vuole spostare.
     /**
      * ask to the client which students wants to move from H to I (single or multiple). Called by method
      */
     @Override
     public void askMoveStudentsHToI(){
+        if((!usedCharacterCard) && mode.equals("expert"))
+            askActivateCharacterCard();
+
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
-        System.out.println("Choose the island in which you want to move the students: ");
-        int chosenIsland = getChosenIsland();
-        System.out.println("Choose the number of students that you want to move to the island (from 0 up to 3): ");
-        int numStudents = 0;
-        try {
-            do {
-                numStudents = Integer.parseInt(br.readLine());
-                if (numStudents > 3 || numStudents < 0)
-                    System.out.println("Not valid, please choose a value between 0 and "+availableStudentsMovements+": ");
-            } while (numStudents > availableStudentsMovements|| numStudents < 0);
-        }catch(IOException e){e.printStackTrace();}
-        availableStudentsMovements = availableStudentsMovements - numStudents;
+
+        //stampa la hall e le isole con tutte le relative informazioni
+        showIslands();
         System.out.println("Your current Hall: ");
         for(StudentColor student: getPlayerByNick(currentPlayer).getHall()){
             System.out.println(student);
         }
-        ArrayList <StudentColor> studentsToI=askStudents(numStudents);
-        HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
-        movementsHtoI.put(chosenIsland, studentsToI);
-        cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
-        client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
+
+        //chiedi se vuole aggiungere studenti alle isole
+        String decisionToMoveStudents = "";
+        do{
+            System.out.println("Do you want to move some students from your Hall to an Island? (yes|no)");
+            try {
+                decisionToMoveStudents = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+
+        //se decide di sì => inizia il corpo del metodo
+        if(decisionToMoveStudents.toLowerCase().equals("yes")) {
+            int chosenIsland = 0;
+            int availableIslandChoices = 3;
+            int numStudents = 0;
+            ArrayList<StudentColor> studentsToI = new ArrayList<>();
+            HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
+
+            //scegli la singola isola su cui vuoi fare gli spostamenti
+            do {
+                System.out.println("Choose the island in which you want to move the students: ");
+                System.out.println("You can choose up to " + availableIslandChoices + "islands: ");
+                chosenIsland = getChosenIsland();
+                availableIslandChoices--;
+                System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ": ");
+                do {
+
+                    //scegli gli studenti da spostare su quell'isola
+                    try {
+                        numStudents = Integer.parseInt(br.readLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (numStudents > 3 || numStudents < 0)
+                        System.out.println("Not valid, please choose a value between 0 and " + availableStudentsMovements + ": ");
+                } while (numStudents > availableStudentsMovements || numStudents < 0);
+
+                //aggiungi (isola | studenti) alla HashMap e rimuovi gli studenti scelti dalla Hall del current player
+                availableStudentsMovements -= numStudents;
+                studentsToI.addAll(askStudents(numStudents));
+                movementsHtoI.put(chosenIsland, studentsToI);
+                getPlayerByNick(currentPlayer).getHall().removeAll(studentsToI);
+
+                //chiedi se vuole spostare altri studenti
+                decisionToMoveStudents = null;
+                do{
+                    System.out.println("Do you want to move any more students? (yes|no)");
+                    try {
+                        decisionToMoveStudents = br.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+
+                // ripeti finché puoi scegliere isole, hai studenti da spostare e il player ti dice che vuole spostare
+            } while (availableIslandChoices > 0 && availableStudentsMovements > 0 && decisionToMoveStudents.toLowerCase().equals("yes"));
+
+            cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
+            client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
+        }
     }
 
     public ArrayList<StudentColor> askStudents(int numOfStudents){
@@ -392,12 +445,13 @@ public class CLI implements View, Runnable {
     }
 
     /**
-     * ask to the client from which C wants to take the students. Called by method
+     * ask the client from which C wants to take the students. Called by method
      */
     @Override
     public void askCloud(){
+        if((!usedCharacterCard) && mode.equals("expert"))
+            askActivateCharacterCard();
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
-        int chosenIsland = 0;
         for (int i = 0; i < availableClouds.size(); i++) {
             System.out.println("Cloud: " + i + "  " + "Students on Cloud " + i + ": " + availableClouds.get(i).getStudents() + ";");
         }
@@ -422,6 +476,9 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMotherNatureMovements(){
+        if((!usedCharacterCard) && Objects.equals(mode, "expert"))
+            askActivateCharacterCard();
+        resumeFrom = Phase.CHOOSE_CLOUDS;
         int chosenIsland = 0;
         System.out.println("Current Mother Nature position: " + motherNature.getCurrentIsland());
         chosenIsland = getChosenIsland();
@@ -430,9 +487,7 @@ public class CLI implements View, Runnable {
         client.send(gson.toJson(message, cmMoveMother.class));
     }
 
-    @Override
-    public int getChosenIsland() {
-        int chosenIsland=-1;
+    private void showIslands(){
         for(int i = 0; i < availableIslands.size(); i++){
             String text = "Students on island " + (i+1) ;
             text = text + availableIslands.get(i).getStudents();
@@ -441,6 +496,12 @@ public class CLI implements View, Runnable {
             System.out.println("Tower on island: " + availableIslands.get(i).getTower());
             System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers());
         }
+    }
+
+    @Override
+    public int getChosenIsland() {
+        int chosenIsland=-1;
+        showIslands();
         System.out.println("Chosen Island");
         do {
             try {
@@ -469,7 +530,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void showCharacterCard(int id) {
-        System.out.println("Character card: " + id + "\n" + "Character card price: " + getCardById(id).getPrice());
+        System.out.println("Character card: " + id + "\n" + "Character card price: " + getCharacterCardById(id).getPrice());
         System.out.println("\n");
     }
 
@@ -519,7 +580,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void updateCharacterCardPrice(int id) {
-        getCardById(id).increasePrice();
+        getCharacterCardById(id).increasePrice();
     }
 
     /**
@@ -626,13 +687,8 @@ public class CLI implements View, Runnable {
     }
 
     @Override
-    public void addStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void removeStudentsFromCard(int cardId, ArrayList<StudentColor> students) {
-
+    public void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add){
+        getCharacterCardById(id).updateStudentsOnCard(students, add);
     }
 
     /**
@@ -697,13 +753,9 @@ public class CLI implements View, Runnable {
     /**
      * add a block-sign for the character card 5
      */
-    public void addBlockOnCard(){
-    }
-
-    /**
-     * updates the blockCard effect of the character card
-     */
-    public void removeBlockOnCard() {
+    @Override
+    public void updateBlockOnCard(boolean add){
+        getCharacterCardById(5).updateAvailableBlockCards(add);
     }
 
     /**
@@ -719,20 +771,9 @@ public class CLI implements View, Runnable {
      * @param island
      * @param tower
      */
+    @Override
     public void updateTowerOnIsland(int island, String tower) {
-    }
-
-    public void getTowerByColor(String color){
-
-    }
-
-    /**
-     * updates the student on the character card
-     * @param cardId
-     * @param students
-     */
-    public void updateStudentsOnCard(int cardId, ArrayList<StudentColor> students) {
-
+        availableIslands.get(island).setTower(tower);
     }
 
     /**
@@ -744,15 +785,6 @@ public class CLI implements View, Runnable {
         if(availableClouds.size()-1<cloud)
             availableClouds.add(new CloudView());
         availableClouds.get(cloud).addStudents(students);
-    }
-
-    /**
-     * remove students from cloud
-     * @param students
-     */
-    @Override
-    public void removeStudentsFromCloud(int cloud, ArrayList<StudentColor> students) {
-        availableClouds.get(cloud).removeStudents();
     }
 
     /**
@@ -808,11 +840,10 @@ public class CLI implements View, Runnable {
     }
 
 
-    public CharacterCard getCardById(int id){
+    public CharacterCard getCharacterCardById(int id){
         for (CharacterCard card : availableCC)
-            if (card.getCardId() == id)
+            if(card.getCardId()==id)
                 return card;
-
         return null;
     }
 }

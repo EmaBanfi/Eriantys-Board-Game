@@ -11,6 +11,13 @@ public class IslandView {
     private String tower;
     private int numOfTowers;
 
+    public IslandView(){
+        students = new HashMap<>();
+        blockCard = false;
+        tower = null;
+        numOfTowers = 1;
+    }
+
     public String getStudents(){
         String text = " ";
         for(StudentColor color : StudentColor.values()){

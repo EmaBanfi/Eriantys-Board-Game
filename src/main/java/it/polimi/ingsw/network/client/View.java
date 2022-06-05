@@ -170,6 +170,14 @@ public interface View {
     void setAdditionalTurnOrder(int id, double additionalTurnOrder);
 
     /**
+     * updates the students on card
+     * @param id id of the character card
+     * @param students students to manage
+     * @param add add the block card if it's true, else remove
+     */
+    void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add);
+
+    /**
      * update the amount of coins that the player has. Called by message.
      * @param coin the updated coins
      */
@@ -195,6 +203,12 @@ public interface View {
     void resumeFrom();
 
     /**
+     * updates the block cards on the CC 5
+     * @param add add the block card if it's true, else remove
+     */
+    void updateBlockOnCard(boolean add);
+
+    /**
      * updates the clouds already chosen
      * @param cloud the last cloud chosen
      */
@@ -215,13 +229,6 @@ public interface View {
     void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students);
 
     /**
-     * remove students from cloud
-     * @param students students to remove
-     * @param cloud cloud chosen
-     */
-    void removeStudentsFromCloud(int cloud, ArrayList<StudentColor> students);
-
-    /**
      *  updates which player is a teacher
      * @param roles hashmap of the
      */
@@ -238,16 +245,6 @@ public interface View {
      * @param id id of the support card.
      */
     void setSupportCard(int id);
-
-    /**
-     * remove a block card from the character card 5
-     */
-    void removeBlockOnCard();
-
-    /**
-     * add a block card from the character card 5
-     */
-    void addBlockOnCard();
 
     /**
      * block an island
@@ -272,20 +269,6 @@ public interface View {
      * @param students students to remove
      */
     void removeStudentsFromHall(ArrayList<StudentColor> students);
-
-    /**
-     * add the students on the character card
-     * @param students students to add
-     * @param cardId id of the character card
-     */
-    void addStudentsOnCard(int cardId, ArrayList<StudentColor> students);
-
-    /**
-     * remove the students from the character card
-     * @param students students to remove
-     * @param cardId id of the character card
-     */
-    void removeStudentsFromCard(int cardId, ArrayList<StudentColor> students);
 
     /**
      * to get the current player nickname

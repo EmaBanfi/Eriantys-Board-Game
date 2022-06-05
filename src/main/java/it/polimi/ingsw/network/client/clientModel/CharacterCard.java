@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.model.GameBoard;
 import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
 
@@ -53,5 +54,10 @@ public class CharacterCard {
         } else
             return false;
 
+    }
+
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){}
+
+    public void updateAvailableBlockCards(boolean update){
     }
 }

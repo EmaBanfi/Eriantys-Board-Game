@@ -32,15 +32,16 @@ public class CharacterCardGroup1 extends CharacterCard {
     }
 
     /**
-     * puts 4 students on the CharacterCard
-     * @throws LastStudentDrawnException called if the last student is taken from the bag
+     * updates the students on card
+     * @param students students to manage
+     * @param add add the block card if it's true, else remove
      */
-    public void putStudentsOnCard(ArrayList<StudentColor> students) {
-        studentsOnCard.addAll(students);
-    }
-
-    public void removeStudentsOnCard(ArrayList<StudentColor> students){
-        studentsOnCard.removeAll(students);
+    @Override
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){
+        if(add)
+            studentsOnCard.addAll(students);
+        else
+            studentsOnCard.removeAll(students);
     }
 
     /**
