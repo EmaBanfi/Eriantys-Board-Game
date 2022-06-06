@@ -278,6 +278,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void showIslands() {
+
+    }
+
+    @Override
     public int askIsland(boolean show) {
         return 0;
     }
@@ -289,4 +294,6 @@ public class GUI extends Application implements View {
 
     @Override
     public void addPlayers(ArrayList<String> players){}
+
+
 }

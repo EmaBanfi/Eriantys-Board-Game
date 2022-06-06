@@ -291,7 +291,6 @@ public class CLI implements View, Runnable {
         cmSupportCard message = new cmSupportCard(supportCardChoice);
         String text = gson.toJson(message, cmSupportCard.class);
         client.send(text);
-        player.getSupportCards().remove(supportCardChoice);
     }
 
     public void resetSupportCards(){
@@ -301,7 +300,7 @@ public class CLI implements View, Runnable {
 
     public SupportCard getSupportCardByID(int id){
         SupportCard card = null;
-        for(SupportCard c : player.getSupportCards()){
+        for(SupportCard c : getPlayerByNick(currentPlayer).getSupportCards()){
             if(c.getId()== id){
                 card = c;
             }
@@ -337,6 +336,7 @@ public class CLI implements View, Runnable {
         }
         else {
             System.out.println("You can't select anymore students.");
+            client.send(gson.toJson(new cmStudentsMovementsHToD(null), cmStudentsMovementsHToD.class));
         }
         availableStudentsMovements = 3;
     }
@@ -377,7 +377,8 @@ public class CLI implements View, Runnable {
             do {
                 System.out.println("Choose the island in which you want to move the students: ");
                 System.out.println("You can choose up to " + availableIslandChoices + " islands: ");
-                chosenIsland = askIsland(false);
+
+                chosenIsland = askIsland(false)-1;
                 availableIslandChoices--;
                 System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ") : ");
                 do {
@@ -395,22 +396,26 @@ public class CLI implements View, Runnable {
                 studentsToI.addAll(askStudents(numStudents));
                 movementsHtoI.put(chosenIsland, studentsToI);
                 player.getHall().removeAll(studentsToI);
-
-                decisionToMoveStudents = null;
-                do{
-                    System.out.println("Do you want to move any more students? (yes|no)");
-                    try {
-                        decisionToMoveStudents = br.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+                availableIslands.get(chosenIsland).addStudents(studentsToI);
+                if(availableStudentsMovements>0) {
+                    decisionToMoveStudents = "false";
+                    do {
+                        System.out.println("Do you want to move any more students? (yes|no)");
+                        try {
+                            decisionToMoveStudents = br.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } while ((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+                }
 
             } while (availableIslandChoices > 0 && availableStudentsMovements > 0 && decisionToMoveStudents.toLowerCase().equals("yes"));
 
             cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
             client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
         }
+        else
+            client.send(gson.toJson(new cmStudentsMovementsHToI(null), cmStudentsMovementsHToI.class));
     }
 
     public ArrayList<StudentColor> askStudents(int numOfStudents){
@@ -420,16 +425,21 @@ public class CLI implements View, Runnable {
         System.out.println("Choose the students that you want to move: ");
         for(int i = 0; i< numOfStudents; i++) {
             do {
-                System.out.println("Please select a student (choice " + i + ") : ");
+                System.out.println("Please select a student (choice " + (i+1) + ") : ");
                 try {
                     studentChoice = br.readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 color = StudentColor.getStudentFromString(studentChoice);
+                if(color==null)
+                    System.out.println("Not valid choice");
+                else if(!player.getHall().contains(color)){
+                    System.out.println("There are no "+studentChoice.toLowerCase()+" students");
+                }
             } while (!player.getHall().contains(color));
             chosenStudents.add(color);
-            player.getHall().remove(color);
+            player.removeFromHall(color);
         }
         return chosenStudents;
     }
@@ -439,6 +449,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCloud(){
+        System.out.println("Please select a cloud");
         if((!usedCharacterCard) && mode.equals("expert"))
             askActivateCharacterCard();
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
@@ -452,9 +463,9 @@ public class CLI implements View, Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (chosenCloud < 0 || chosenCloud > availableClouds.size())
+            if (chosenCloud < 0 || chosenCloud > availableClouds.size()-1)
                 System.out.println("Invalid cloud, please choose a valid one: ");
-        } while (chosenCloud < 0 || chosenCloud > availableClouds.size());
+        } while (chosenCloud < 0 || chosenCloud > availableClouds.size()-1);
         System.out.println("Chosen cloud:  " + chosenCloud);
         cmCloud message = new cmCloud(chosenCloud);
         client.send(gson.toJson(message, cmCloud.class));
@@ -470,14 +481,34 @@ public class CLI implements View, Runnable {
             askActivateCharacterCard();
         resumeFrom = Phase.CHOOSE_CLOUDS;
         int chosenIsland = 0;
-        System.out.println("Current Mother Nature position: " + motherNature.getCurrentIsland());
-        chosenIsland = askIsland(true);
-        System.out.println("Chosen island: " + chosenIsland);
-        cmMoveMother message = new cmMoveMother(chosenIsland);
+        int maxMovements=player.getUsedSupportCard().getMovement();
+        boolean show= true;
+        boolean validChoice;
+        System.out.println("Max movements: "+player.getUsedSupportCard().getMovement());
+
+        do {
+            chosenIsland = askIsland(show)-1;
+            show=false;
+            validChoice=(Math.abs(motherNature.getCurrentIsland()-(chosenIsland))<=maxMovements);
+            if(!validChoice)
+                System.out.println("Movements exceed max movements: " +maxMovements);
+        }while (!validChoice);
+        System.out.println("Chosen island: " + (chosenIsland+1));
+        cmMoveMother message = new cmMoveMother(covertIslandToMovements(chosenIsland));
         client.send(gson.toJson(message, cmMoveMother.class));
     }
 
-    private void showIslands(){
+    private int covertIslandToMovements(int island){
+        int movements = island-motherNature.getCurrentIsland();
+        if(movements<0){
+            movements=availableIslands.size()+movements;
+        }
+        return movements;
+    }
+
+    @Override
+    public void showIslands(){
+        System.out.println("Mother Nature is on island "+(motherNature.getCurrentIsland()+1));
         for(int i = 0; i < availableIslands.size(); i++){
             String text = "Students on island " + (i+1) + "\n";
             text = text + availableIslands.get(i).getStudents();
@@ -488,6 +519,11 @@ public class CLI implements View, Runnable {
         }
     }
 
+    /**
+     * used to ask the player to choose an island
+     * @param show if true then the list of islands is shown
+     * @return an int between 1 and 12
+     */
     @Override
     public int askIsland(boolean show) {
         int chosenIsland=-1;
@@ -500,9 +536,9 @@ public class CLI implements View, Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (chosenIsland < 0 || chosenIsland > availableIslands.size())
+            if (chosenIsland < 1 || chosenIsland > availableIslands.size())
                 System.out.println("Invalid island, please choose a valid one: ");
-        } while (chosenIsland < 0 || chosenIsland > availableIslands.size());
+        } while (chosenIsland < 1 || chosenIsland > availableIslands.size());
         return chosenIsland;
     }
 
@@ -538,6 +574,7 @@ public class CLI implements View, Runnable {
         System.out.println("Support card: " + id + "\n" +
                 "Support card movements: " + getSupportCardByID(id).getMovement() + "\n" +
                 "Support card turn order: " + getSupportCardByID(id).getTurnOrder() + "\n");
+        getPlayerByNick(currentPlayer).setUsedSupportCard(id);
     }
 
     /**
@@ -551,12 +588,9 @@ public class CLI implements View, Runnable {
 
     @Override
     public PlayerView getPlayerByNick(String nick){
-        System.out.println(currentPlayer);
-        System.out.println("getPlayerByNick: " + nick);
         if (player.getNickname().equals(nick))
             return player;
         for(PlayerView player: players){
-            System.out.println("getPlayerByNick for: " + nick);
             if(player.getNickname() == nick)
                 return player;
         }

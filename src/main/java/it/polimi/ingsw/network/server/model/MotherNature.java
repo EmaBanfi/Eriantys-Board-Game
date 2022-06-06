@@ -23,9 +23,6 @@ public class MotherNature {
         currentIsland = (currentIsland + movements) % islands.size();
     }
 
-    public void removeIsland(int island){
-        islands.remove(island);
-    }
 
     public ArrayList<Island> getIslands(){
         return islands;

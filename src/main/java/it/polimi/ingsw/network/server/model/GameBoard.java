@@ -86,7 +86,6 @@ public class GameBoard {
                     e.printStackTrace();
                 }
             }
-            smStudentsOnIsland message = new smStudentsOnIsland(i,islands.get(i).getStudents());
         }
     }
 
@@ -325,6 +324,7 @@ public class GameBoard {
 
 
     public void moveMotherNature(int movements){
+
         motherNature.move(movements);
     }
 

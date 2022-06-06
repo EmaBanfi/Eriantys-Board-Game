@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.messages.clientMessages;
 
 import it.polimi.ingsw.network.server.ClientHandler;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class cmMoveMother extends ClientMessage {
 
     private int position;

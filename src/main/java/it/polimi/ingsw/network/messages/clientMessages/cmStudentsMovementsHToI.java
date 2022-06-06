@@ -24,7 +24,11 @@ public class cmStudentsMovementsHToI extends ClientMessage {
      */
     @Override
     public void processMessage(ClientHandler handler) {
-        for (int i = 0; i < 12; i++)
-            handler.getServer().getController().moveStudentsHtoI(i, students.get(i));
+        if(students==null)
+            handler.getServer().getController().notifyNothingToIslands();
+        else {
+            for (Integer island : students.keySet())
+                handler.getServer().getController().moveStudentsHtoI(island, students.get(island));
+        }
     }
 }

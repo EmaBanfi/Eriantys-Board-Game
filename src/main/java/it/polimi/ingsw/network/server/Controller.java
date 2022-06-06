@@ -122,6 +122,14 @@ public class Controller {
         }
     }
 
+    /**
+     * notify to the view the position of Mother Nature
+     */
+    public void notifyMotherNaturePosition(){
+        smMotherPosition message= new smMotherPosition(board.getMotherNature().getCurrentIsland());
+        server.sendAll(gson.toJson(message, smMotherPosition.class));
+    }
+
     public void notifyCurrentPlayer() {
         String nickname = game.getCurrentPlayer().getNickName();
         smCurrentPlayer message = new smCurrentPlayer("The current player is " + nickname, nickname);
@@ -449,6 +457,26 @@ public class Controller {
     }
 
     /**
+     * notify other players if the current players doesn't move any students from their hall to dining hall
+     */
+    public void notifyNothingToDiningHall(){
+        String text= game.getCurrentPlayer().getNickName() +" will not move any students to their dining hall because they already move 3 students from their hall to islands";
+        smNotify message = new smNotify(text);
+        server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
+        server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+    }
+
+    /**
+     * notify other players if the current players doesn't move any students from their hall to islands
+     */
+    public void notifyNothingToIslands(){
+        String text= game.getCurrentPlayer().getNickName() +" chosen to not move students to islands";
+        smNotify message = new smNotify(text);
+        server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
+        server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+    }
+
+    /**
      * move specified students from current player's hall to dining hall
      * called by client message StudentsMovementsHToD
      * Notify to other players the students added to current player's dining hall
@@ -599,7 +627,7 @@ public class Controller {
                 text,
                 nick
         );
-        server.sendAll(gson.toJson(gson.toJson(message2, smCurrentPlayer.class)));
+        server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
     }
 
     /**

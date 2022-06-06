@@ -295,6 +295,8 @@ public interface View {
      */
     void addAvailableCard(int card);
 
+    void showIslands();
+
     int askIsland(boolean show);
 
     /**

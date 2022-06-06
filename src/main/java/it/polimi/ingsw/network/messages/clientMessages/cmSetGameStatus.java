@@ -27,9 +27,9 @@ public class cmSetGameStatus extends ClientMessage {
         System.out.println("DELETE LINES 27 -> 33 IN cmSetGameStatus");
         handler.getServer().getController().notifyPlayers();
         handler.getServer().getController().notifyStudentsOnIslands();
+        handler.getServer().getController().notifyMotherNaturePosition();
         if(handler.getServer().getController().getGame().isExpertMode())
             handler.getServer().getController().notifyAvailableCC();
-        //game start
         handler.getServer().getController().notifyCurrentPlayer();
     }
 }

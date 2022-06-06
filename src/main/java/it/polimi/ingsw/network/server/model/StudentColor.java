@@ -9,7 +9,7 @@ public enum StudentColor {
 
     public static StudentColor getStudentFromString(String student){
         for(StudentColor color : StudentColor.values()){
-            if(color.toString() == student){
+            if(color.toString().equals(student.toUpperCase())){
                 return color;
             }
         }

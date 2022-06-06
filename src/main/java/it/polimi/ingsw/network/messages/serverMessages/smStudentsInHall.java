@@ -31,7 +31,8 @@ public class smStudentsInHall extends ServerMessage {
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
+        if(getMessage()!=null)
+            super.processMessage(client);
 
         if (added)
             client.getView().addStudentsToHall(students);

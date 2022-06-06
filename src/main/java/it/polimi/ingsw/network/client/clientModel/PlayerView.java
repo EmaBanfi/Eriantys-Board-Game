@@ -72,10 +72,13 @@ public class PlayerView {
     }
 
     public void setUsedSupportCard(int usedSupportCard) {
+        SupportCard usedCard;
         for(SupportCard card: supportCards)
             if(card.getId()==usedSupportCard){
-                this.usedSupportCard=card;
-                return;
+                usedCard= new SupportCard((int)card.getTurnOrder(),card.getMovement(),card.getId());
+                this.usedSupportCard=usedCard;
+                supportCards.remove(card);
+                break;
             }
     }
 
@@ -93,6 +96,10 @@ public class PlayerView {
 
     public void addToHall(ArrayList<StudentColor> students){
         hall.addAll(students);
+    }
+
+    public void removeFromHall(StudentColor student){
+        hall.remove(student);
     }
 
     public void removeFromHall(ArrayList<StudentColor> students){

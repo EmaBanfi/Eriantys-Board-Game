@@ -23,6 +23,9 @@ public class cmStudentsMovementsHToD extends ClientMessage {
      */
     @Override
     public void processMessage(ClientHandler handler) {
-        handler.getServer().getController().moveStudentsHToD(students);
+        if(students==null)
+            handler.getServer().getController().notifyNothingToDiningHall();
+        else
+            handler.getServer().getController().moveStudentsHToD(students);
     }
 }

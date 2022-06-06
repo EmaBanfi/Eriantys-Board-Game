@@ -18,7 +18,6 @@ public class Server {
     private HashMap<String,ClientHandler> clientHandlers;
     private int  id=1;
     private final boolean listeningSocket = true;
-    private final boolean  acceptingConnection = true;
 
     public Server(int port){
         serverSocket = null;
@@ -141,6 +140,7 @@ public class Server {
             controller.notifyGameStatus();
             controller.notifyPlayers();
             controller.notifyStudentsOnIslands();
+            controller.notifyMotherNaturePosition();
             if(controller.getGame().isExpertMode())
                 controller.notifyAvailableCC();
             //game start

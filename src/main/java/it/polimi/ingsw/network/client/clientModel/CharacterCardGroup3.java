@@ -20,6 +20,8 @@ public class CharacterCardGroup3 extends CharacterCard{
     }
 
     public void activate(){
+
+        getView().showIslands();
         System.out.println("Choose how many islands do you want to move Mother Nature: ");
         int movementChoice = 0;
         do{

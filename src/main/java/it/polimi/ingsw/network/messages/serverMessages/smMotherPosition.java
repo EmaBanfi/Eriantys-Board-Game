@@ -15,13 +15,19 @@ public class smMotherPosition extends ServerMessage {
         setType("mother position");
     }
 
+    public smMotherPosition( int island) {
+        this.island = island;
+        setType("mother position");
+    }
+
     /**
      * print the message and tell to the player the new position of mother nature
      * @param client client to which the message is sent
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
+        if(getMessage()!=null)
+            super.processMessage(client);
 
         client.getView().updateMotherPosition(island);
     }

@@ -32,7 +32,8 @@ public class smStudentsOnIsland extends ServerMessage {
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
+        if(getMessage()!=null)
+            super.processMessage(client);
 
         client.getView().addStudentsOnIsland(island, students);
     }

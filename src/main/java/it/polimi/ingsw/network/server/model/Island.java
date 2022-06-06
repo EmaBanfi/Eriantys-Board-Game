@@ -60,8 +60,8 @@ public class Island implements ManageStudents {
         numOfTowers++;
     }
 
-    public void addStudents(ArrayList<StudentColor> students) {
-        for(StudentColor studentColor: students){
+    public void addStudents(ArrayList<StudentColor> studentsToAdd) {
+        for(StudentColor studentColor: studentsToAdd){
             this.students.add(studentColor);
         }
     }
