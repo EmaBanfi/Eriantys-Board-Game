@@ -93,7 +93,7 @@ public class CLI implements View, Runnable {
     public void askNickName(){
         resumeFrom = Phase.CHOOSE_TOWER;
 
-        String str = null;
+        String str;
         try {
             str = br.readLine();
         } catch (IOException e) {
@@ -115,7 +115,7 @@ public class CLI implements View, Runnable {
         System.out.println("Do you want to activate a character card? (yes|no)");
         System.out.println("You have " + player.getCoins() + " coins");
         try {
-            if (br.readLine().toLowerCase().equals("yes")) {
+            if (br.readLine().equalsIgnoreCase("yes")) {
                 usedCharacterCard = true;
                 askCharacterCard();
             } else {
@@ -140,14 +140,22 @@ public class CLI implements View, Runnable {
         System.out.println(availableCards);
         int choice = 0;
         CharacterCard card = null;
+        String str = "";
         do{
             try {
-                choice = Integer.parseInt(br.readLine());
+                str = br.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            card = getCharacterCardById(choice);
-        }while(card.equals(null));
+            if (stringToInteger(str) == null)
+                System.out.println("Not an int");
+            else {
+                choice = stringToInteger(str);
+                card = getCharacterCardById(choice);
+                if (card == null)
+                    System.out.println("Not valid character card id");
+            }
+        } while(card == null);
         card.activate();
     }
 
@@ -159,22 +167,37 @@ public class CLI implements View, Runnable {
         resumeFrom = Phase.CHOOSE_TOWER;
         System.out.println("Choose number of players (NELLA BETA PUOI SETTARLO A 1): ");
         int numOfPlayers = 0;
-        String mode = null;
-        try {
-            do {
-                numOfPlayers = Integer.parseInt(br.readLine());
-                if (numOfPlayers < 1 || numOfPlayers > 4)
+        String mode;
+        boolean notValidChoice;
+        String str = "";
+        do{
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (stringToInteger(str) == null) {
+                System.out.println("Not an int");
+                notValidChoice = true;
+            }
+            else {
+                numOfPlayers = stringToInteger(str);
+                notValidChoice = (numOfPlayers < 1 || numOfPlayers > 4);
+                if (notValidChoice)
                     System.out.println("Invalid num of players, please choose a new value (from 2 to 4): ");
-            } while (numOfPlayers < 1 || numOfPlayers > 4);
-            System.out.println("Choose mode: ");
-            do {
+            }
+        } while (notValidChoice);
+        System.out.println("Choose mode: ");
+        do {
+            try {
                 mode = br.readLine().toLowerCase();
-                if (!mode.equals("expert") && !mode.equals("normal"))
-                    System.out.println("Invalid game mode, please choose a valid one (between normal and expert): ");
-            } while (!mode.equals("expert") && !mode.equals("normal"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            notValidChoice = (!mode.equals("expert") && !mode.equals("normal"));
+            if (notValidChoice)
+                System.out.println("Invalid game mode, please choose a valid one (between normal and expert): ");
+        } while (notValidChoice);
 
         this.mode = mode;
         this.numOfPlayers = numOfPlayers;
@@ -247,10 +270,8 @@ public class CLI implements View, Runnable {
         System.out.println("Chosen deck: " + userChoice);
         cmDeck message = new cmDeck(userChoice);
         String text = gson.toJson(message, cmDeck.class);
-        System.out.println("in ask deck: "+text);
         client.send(text);
         availableDecks.remove(userChoice.toUpperCase());
-        System.out.println("in ask deck: " + resumeFrom);
     }
 
     /**
@@ -276,17 +297,27 @@ public class CLI implements View, Runnable {
         }
         boolean supportCardAvailable = false;
         int supportCardChoice = 0;
-        try {
+        String str = "";
             do {
-                supportCardChoice = Integer.parseInt(br.readLine());
-                for (SupportCard supportCard : player.getSupportCards()){
-                    if (supportCardChoice == supportCard.getId())
-                        supportCardAvailable = true;
+                try {
+                    str = br.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                if (!supportCardAvailable)
-                    System.out.println("Invalid support card, please choose a valid one: ");
+                if (stringToInteger(str) == null)
+                    System.out.println("Not an int");
+                else {
+                    for (SupportCard supportCard : player.getSupportCards()) {
+                        if (supportCardChoice == supportCard.getId()) {
+                            supportCardAvailable = true;
+                            break;
+                        }
+                    }
+                    if (!supportCardAvailable)
+                        System.out.println("Invalid support card, please choose a valid one: ");
+                }
             } while (!supportCardAvailable);
-        }catch(IOException e){e.printStackTrace();}
+
         System.out.println("Chosen support card: " + supportCardChoice);
         cmSupportCard message = new cmSupportCard(supportCardChoice);
         String text = gson.toJson(message, cmSupportCard.class);
@@ -324,9 +355,14 @@ public class CLI implements View, Runnable {
                 System.out.println(student);
             }
             System.out.println("Your current Dining Hall: ");
+            boolean empty = true;
             for (StudentColor student : player.getDiningHall()) {
+                if(empty)
+                    empty = false;
                 System.out.println(student);
             }
+            if (empty)
+                System.out.println("It is empty");
             System.out.println("You can move " + availableStudentsMovements + " students");
 
                 chosenStudents=askStudents(availableStudentsMovements);
@@ -381,16 +417,25 @@ public class CLI implements View, Runnable {
                 chosenIsland = askIsland(false)-1;
                 availableIslandChoices--;
                 System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ") : ");
+                String str = "";
+                boolean notValidChoice = false;
                 do {
-
                     try {
-                        numStudents = Integer.parseInt(br.readLine());
+                        str = br.readLine();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if (numStudents > 3 || numStudents < 0)
-                        System.out.println("Not valid, please choose a value between 0 and " + availableStudentsMovements + ": ");
-                } while (numStudents > availableStudentsMovements || numStudents < 0);
+                    if (stringToInteger(str) == null) {
+                        System.out.println("Not an int");
+                        notValidChoice = true;
+                    }
+                    else {
+                        numStudents = stringToInteger(str);
+                        notValidChoice = (numStudents > 3 || numStudents < 0);
+                        if (notValidChoice)
+                            System.out.println("Not valid, please choose a value between 0 and " + availableStudentsMovements + ": ");
+                    }
+                } while (notValidChoice);
 
                 availableStudentsMovements -= numStudents;
                 studentsToI.addAll(askStudents(numStudents));
@@ -406,10 +451,10 @@ public class CLI implements View, Runnable {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } while ((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+                    } while ((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
                 }
 
-            } while (availableIslandChoices > 0 && availableStudentsMovements > 0 && decisionToMoveStudents.toLowerCase().equals("yes"));
+            } while (availableIslandChoices > 0 && availableStudentsMovements > 0 && decisionToMoveStudents.equalsIgnoreCase("yes"));
 
             cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
             client.send(gson.toJson(message, cmStudentsMovementsHToI.class));
@@ -457,15 +502,25 @@ public class CLI implements View, Runnable {
             System.out.println("Cloud: " + i + "  " + "Students on Cloud " + i + ": " + availableClouds.get(i).getStudents() + ";");
         }
         int chosenCloud = 0;
+        boolean notValidChoice = false;
+        String str = "";
         do {
             try {
-                chosenCloud = Integer.parseInt(br.readLine());
+                str = br.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (chosenCloud < 0 || chosenCloud > availableClouds.size()-1)
-                System.out.println("Invalid cloud, please choose a valid one: ");
-        } while (chosenCloud < 0 || chosenCloud > availableClouds.size()-1);
+            if (stringToInteger(str) == null) {
+                System.out.println("Not an int");
+                notValidChoice = true;
+            }
+            else {
+                chosenCloud = stringToInteger(str);
+                notValidChoice = (chosenCloud < 0 || chosenCloud > availableClouds.size() - 1);
+                if (notValidChoice)
+                    System.out.println("Invalid cloud, please choose a valid one: ");
+            }
+        } while (notValidChoice);
         System.out.println("Chosen cloud:  " + chosenCloud);
         cmCloud message = new cmCloud(chosenCloud);
         client.send(gson.toJson(message, cmCloud.class));
@@ -514,8 +569,12 @@ public class CLI implements View, Runnable {
             text = text + availableIslands.get(i).getStudents();
             System.out.println(text);
             System.out.println("Block on island: " + availableIslands.get(i).getBlockCard());
-            System.out.println("Tower on island: " + availableIslands.get(i).getTower());
-            System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers() + "\n");
+            if (availableIslands.get(i).getTower() == null)
+                System.out.println("No tower on island");
+            else {
+                System.out.println("Tower on island: " + availableIslands.get(i).getTower());
+                System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers() + "\n");
+            }
         }
     }
 
@@ -530,15 +589,25 @@ public class CLI implements View, Runnable {
         if (show)
             showIslands();
         System.out.println("Choose an island");
+        boolean notValidChoice = false;
+        String str = "";
         do {
             try {
-                chosenIsland = Integer.parseInt(br.readLine());
+                str = br.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (chosenIsland < 1 || chosenIsland > availableIslands.size())
-                System.out.println("Invalid island, please choose a valid one: ");
-        } while (chosenIsland < 1 || chosenIsland > availableIslands.size());
+            if (stringToInteger(str) == null) {
+                System.out.println("Not an int");
+                notValidChoice = true;
+            }
+            else {
+                chosenIsland = stringToInteger(str);
+                notValidChoice = (chosenIsland < 1 || chosenIsland > availableIslands.size());
+                if (notValidChoice)
+                    System.out.println("Invalid island, please choose a valid one: ");
+            }
+        } while (notValidChoice);
         return chosenIsland;
     }
 
@@ -855,7 +924,7 @@ public class CLI implements View, Runnable {
     @Override
     public void disconnectFromServer() {
         System.out.println("The game is finished, press enter to close the game.");
-        String str = null;
+        String str;
         try {
             str = br.readLine();
         } catch (IOException e) {
@@ -887,4 +956,19 @@ public class CLI implements View, Runnable {
         }
     }
 
+    private Integer stringToInteger(String str) {
+        boolean valid = true;
+
+        for (int i=0; i<str.length(); i++) {
+            if (str.charAt(i) < 48 || str.charAt(i) > 57) {
+                valid = false;
+                break;
+            }
+        }
+
+        if (valid)
+            return Integer.valueOf(str);
+
+        return null;
+    }
 }
