@@ -307,6 +307,7 @@ public class CLI implements View, Runnable {
                 if (stringToInteger(str) == null)
                     System.out.println("Not an int");
                 else {
+                    supportCardChoice = stringToInteger(str);
                     for (SupportCard supportCard : player.getSupportCards()) {
                         if (supportCardChoice == supportCard.getId()) {
                             supportCardAvailable = true;
@@ -499,7 +500,7 @@ public class CLI implements View, Runnable {
             askActivateCharacterCard();
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         for (int i = 0; i < availableClouds.size(); i++) {
-            System.out.println("Cloud: " + i + "  " + "Students on Cloud " + i + ": " + availableClouds.get(i).getStudents() + ";");
+            System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
         }
         int chosenCloud = 0;
         boolean notValidChoice = false;
@@ -515,7 +516,7 @@ public class CLI implements View, Runnable {
                 notValidChoice = true;
             }
             else {
-                chosenCloud = stringToInteger(str);
+                chosenCloud = stringToInteger(str) - 1;
                 notValidChoice = (chosenCloud < 0 || chosenCloud > availableClouds.size() - 1);
                 if (notValidChoice)
                     System.out.println("Invalid cloud, please choose a valid one: ");
@@ -570,7 +571,7 @@ public class CLI implements View, Runnable {
             System.out.println(text);
             System.out.println("Block on island: " + availableIslands.get(i).getBlockCard());
             if (availableIslands.get(i).getTower() == null)
-                System.out.println("No tower on island");
+                System.out.println("No tower on island\n");
             else {
                 System.out.println("Tower on island: " + availableIslands.get(i).getTower());
                 System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers() + "\n");

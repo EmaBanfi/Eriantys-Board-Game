@@ -565,7 +565,7 @@ public class Controller {
                     teacher.addRole(color);
                 }
                 roles.put(color, teacher.getNickName());
-                s=s+color+" teacher is: "+teacher.getNickName()+"\n";
+                s=s + "the " + color.toString().toLowerCase()+" teacher is " + teacher.getNickName()+"\n";
             }
         }
         game.getCurrentPlayer().setBonusToPromotion(false);
