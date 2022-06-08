@@ -13,7 +13,6 @@ public class smStudentsOnCard extends ServerMessage{
     public smStudentsOnCard() {
     }
 
-
     public smStudentsOnCard(String message, int cardId, ArrayList<StudentColor> students, boolean added) {
         super(message);
         this.cardId = cardId;

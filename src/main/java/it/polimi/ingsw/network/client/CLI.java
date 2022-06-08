@@ -112,14 +112,16 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
+
+        if (player.getCoins() == 0) {
+            System.out.println("You can't activate any character card because you have 0 coins");
+            return;
+        }
         System.out.println("Do you want to activate a character card? (yes|no)");
         System.out.println("You have " + player.getCoins() + " coins");
         try {
             if (br.readLine().equalsIgnoreCase("yes")) {
-                usedCharacterCard = true;
                 askCharacterCard();
-            } else {
-                resumeFrom();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,17 +133,16 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCharacterCard(){
-        usedCharacterCard= true;
-        String availableCards = "";
+        System.out.println("Choose one of the followings character cards: \n");
         for(CharacterCard c: availableCC){
-            availableCards = availableCards + c.getCardId() + "\n";
+            System.out.println("Card id: " + c.getCardId());
+            System.out.println("Card price: " + c.getPrice());
+            System.out.println("Card effect: " + c.getText() + "\n");
         }
-        System.out.println("Choose one of the followings character cards: ");
-        System.out.println(availableCards);
         int choice = 0;
         CharacterCard card = null;
         String str = "";
-        do{
+        do {
             try {
                 str = br.readLine();
             } catch (IOException e) {
@@ -156,7 +157,13 @@ public class CLI implements View, Runnable {
                     System.out.println("Not valid character card id");
             }
         } while(card == null);
-        card.activate();
+
+        if (!card.activate())
+            askActivateCharacterCard();
+        else {
+            usedCharacterCard = true;
+            player.decreaseCoins(card.getPrice());
+        }
     }
 
     /**
@@ -345,8 +352,9 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
-        if((!usedCharacterCard) && mode.equals("expert"))
+        if(mode.equals("expert") && (!usedCharacterCard))
             askActivateCharacterCard();
+
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
 
         if(availableStudentsMovements > 0) {
@@ -366,7 +374,7 @@ public class CLI implements View, Runnable {
                 System.out.println("It is empty");
             System.out.println("You can move " + availableStudentsMovements + " students");
 
-                chosenStudents=askStudents(availableStudentsMovements);
+                chosenStudents= askStudentsFromHall(availableStudentsMovements, false);
                 player.addToDiningHall(chosenStudents);
                 cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(chosenStudents);
                 client.send(gson.toJson(message, cmStudentsMovementsHToD.class));
@@ -383,7 +391,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToI(){
-        if((!usedCharacterCard) && mode.equals("expert"))
+        if(mode.equals("expert") && (!usedCharacterCard))
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
@@ -412,12 +420,13 @@ public class CLI implements View, Runnable {
             HashMap<Integer, ArrayList<StudentColor>> movementsHtoI = new HashMap<>();
 
             do {
-                System.out.println("Choose the island in which you want to move the students: ");
-                System.out.println("You can choose up to " + availableIslandChoices + " islands: ");
+                System.out.println("Choose the island where you want to move the students. You can still move "
+                        + availableStudentsMovements + " students");
 
                 chosenIsland = askIsland(false)-1;
                 availableIslandChoices--;
-                System.out.println("Choose the number of students that you want to move to this island (from 0 up to " + availableStudentsMovements + ") : ");
+                System.out.println("Choose the number of students that you want to move to this island " +
+                        "(from 0 up to " + availableStudentsMovements + ") : ");
                 String str = "";
                 boolean notValidChoice = false;
                 do {
@@ -439,7 +448,7 @@ public class CLI implements View, Runnable {
                 } while (notValidChoice);
 
                 availableStudentsMovements -= numStudents;
-                studentsToI.addAll(askStudents(numStudents));
+                studentsToI.addAll(askStudentsFromHall(numStudents, false));
                 movementsHtoI.put(chosenIsland, studentsToI);
                 player.getHall().removeAll(studentsToI);
                 availableIslands.get(chosenIsland).addStudents(studentsToI);
@@ -464,10 +473,18 @@ public class CLI implements View, Runnable {
             client.send(gson.toJson(new cmStudentsMovementsHToI(null), cmStudentsMovementsHToI.class));
     }
 
-    public ArrayList<StudentColor> askStudents(int numOfStudents){
+    @Override
+    public ArrayList<StudentColor> askStudentsFromHall(int numOfStudents, boolean showHall){
         StudentColor color;
         String studentChoice = "";
         ArrayList<StudentColor> chosenStudents = new ArrayList<>();
+
+        if (showHall) {
+            System.out.println("Your current Hall: ");
+            for (StudentColor student : player.getHall())
+                System.out.println(student);
+        }
+
         System.out.println("Choose the students that you want to move: ");
         for(int i = 0; i< numOfStudents; i++) {
             do {
@@ -496,8 +513,9 @@ public class CLI implements View, Runnable {
     @Override
     public void askCloud(){
         System.out.println("Please select a cloud");
-        if((!usedCharacterCard) && mode.equals("expert"))
+        if(mode.equals("expert") && (!usedCharacterCard))
             askActivateCharacterCard();
+
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         for (int i = 0; i < availableClouds.size(); i++) {
             System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
@@ -533,8 +551,9 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMotherNatureMovements(){
-        if((!usedCharacterCard) && Objects.equals(mode, "expert"))
+        if(mode.equals("expert") && (!usedCharacterCard))
             askActivateCharacterCard();
+
         resumeFrom = Phase.CHOOSE_CLOUDS;
         int chosenIsland = 0;
         int maxMovements=player.getUsedSupportCard().getMovement();
@@ -918,7 +937,7 @@ public class CLI implements View, Runnable {
     }
 
     @Override
-    public void addAvailableCard(int card) {
+    public void addAvailableCC(int card) {
         availableCC.add(ccc.createCard(card, this));
     }
 
@@ -957,7 +976,7 @@ public class CLI implements View, Runnable {
         }
     }
 
-    private Integer stringToInteger(String str) {
+    public Integer stringToInteger(String str) {
         boolean valid = true;
 
         for (int i=0; i<str.length(); i++) {

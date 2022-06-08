@@ -9,16 +9,16 @@ import java.util.ArrayList;
 public class cmCCG6 extends ClientMessage{
 
     private int cardId;
-    private ArrayList<StudentColor> exchangeStudents1;
-    private ArrayList<StudentColor> exchangeStudents2;
+    private ArrayList<StudentColor> toHall;
+    private ArrayList<StudentColor> fromHall;
 
     public cmCCG6() {
     }
 
-    public cmCCG6(int cardId, ArrayList<StudentColor> exchangeStudents1, ArrayList<StudentColor> exchangeStudents2) {
+    public cmCCG6(int cardId, ArrayList<StudentColor> toHall, ArrayList<StudentColor> fromHall) {
         this.cardId = cardId;
-        this.exchangeStudents1 = exchangeStudents1;
-        this.exchangeStudents2 = exchangeStudents2;
+        this.toHall = toHall;
+        this.fromHall = fromHall;
         setType("CCG6");
     }
 
@@ -32,13 +32,11 @@ public class cmCCG6 extends ClientMessage{
         controller.notifyUsedCharacterCard(cardId);
 
         if (cardId == 7)
-            // per l'aggiunta dello studente alla carta se ne occupa la view
-            // exchangeStudents1 va nella hall, exchangeStudents2 va sulla carta
-            controller.switchCC7(exchangeStudents1, exchangeStudents2);
+            controller.switchCC7(toHall, fromHall);
 
         else {
-            controller.moveStudentsHToD(exchangeStudents1);
-            controller.moveStudentsDToH(exchangeStudents2);
+            controller.moveStudentsHToD(toHall);
+            controller.moveStudentsDToH(fromHall);
         }
     }
 }

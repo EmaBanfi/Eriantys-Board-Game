@@ -71,6 +71,8 @@ public interface View {
      */
     void askMoveStudentsHToI();
 
+    ArrayList<StudentColor> askStudentsFromHall(int numOfStudents, boolean showHall);
+
     /**
      * ask to the player from which cloud wants to take the students. Called by method.
      */
@@ -293,7 +295,7 @@ public interface View {
      * used to create available cards
      * @param card card to add
      */
-    void addAvailableCard(int card);
+    void addAvailableCC(int card);
 
     void showIslands();
 

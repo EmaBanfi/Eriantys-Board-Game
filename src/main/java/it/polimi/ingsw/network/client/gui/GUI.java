@@ -97,6 +97,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public ArrayList<StudentColor> askStudentsFromHall(int numOfStudents, boolean showHall) {
+        return null;
+    }
+
+    @Override
     public void askCloud() {
 
     }
@@ -273,7 +278,7 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void addAvailableCard(int card) {
+    public void addAvailableCC(int card) {
 
     }
 

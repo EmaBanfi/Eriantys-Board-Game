@@ -24,6 +24,6 @@ public class smAvailableCharacterCards extends ServerMessage{
     public void processMessage(Client client) {
 
         for (Integer card : availableCharacterCards)
-            client.getView().addAvailableCard(card);
+            client.getView().addAvailableCC(card);
     }
 }

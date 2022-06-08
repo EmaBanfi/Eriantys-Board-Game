@@ -6,15 +6,17 @@ public class smUsedCharacterCard extends ServerMessage {
 
     private int cardId;
     private boolean increasedPrice;
+    private int price;
 
     public smUsedCharacterCard() {
         super();
     }
 
-    public smUsedCharacterCard(String message, int cardId, boolean increasedPrice) {
+    public smUsedCharacterCard(String message, int cardId, boolean increasedPrice, int price) {
         super(message);
         this.cardId = cardId;
         this.increasedPrice = increasedPrice;
+        this.price = price;
         setType("used character card");
     }
 
@@ -28,7 +30,7 @@ public class smUsedCharacterCard extends ServerMessage {
 
         client.getView().showCharacterCard(cardId);
 
-        client.getView().getPlayerByNick(client.getView().getCurrentPlayer()).decreaseCoins();
+        client.getView().getPlayerByNick(client.getView().getCurrentPlayer()).decreaseCoins(price);
 
         if (increasedPrice)
             client.getView().updateCharacterCardPrice(cardId);

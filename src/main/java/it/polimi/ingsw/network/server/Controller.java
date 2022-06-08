@@ -100,6 +100,10 @@ public class Controller {
         ArrayList<Integer> availableCards = new ArrayList<>();
         for (CharacterCard card : characterCardBoard.getAvailableCards()) {
             availableCards.add(card.getCardId());
+        }
+        smAvailableCharacterCards message = new smAvailableCharacterCards(availableCards);
+        server.sendAll(gson.toJson(message, smAvailableCharacterCards.class));
+        for (CharacterCard card : characterCardBoard.getAvailableCards()) {
             if (card.getCardId() == 1)
                 refillCard(1, 4);
             else if (card.getCardId() == 7)
@@ -107,8 +111,6 @@ public class Controller {
             else if (card.getCardId() == 11)
                 refillCard(11, 4);
         }
-        smAvailableCharacterCards message = new smAvailableCharacterCards(availableCards);
-        server.sendAll(gson.toJson(message, smAvailableCharacterCards.class));
     }
 
     /**
@@ -768,10 +770,10 @@ public class Controller {
                 return;
             }
             if(students.size()<studentsToRefill){
-                text = "Only " + students.size() + " students have been refilled on card " + card;
+                text = "Only " + students.size() + " students have been refilled on character card " + card;
             }
             else{
-                text = "Students on card " + card + " have been refilled";
+                text = "Students on character card " + card + " have been refilled";
             }
             smStudentsOnCard message = new smStudentsOnCard(
                     text,
@@ -781,7 +783,7 @@ public class Controller {
             server.sendAll(gson.toJson(message, smStudentsOnCard.class));
         }
         else{
-            text = "Card " + card + " was not refilled because the are no more students";
+            text = "Character card " + card + " was not refilled because the are no more students";
             smNotify message = new smNotify(text);
             server.sendAll(gson.toJson(message, smNotify.class));
         }
@@ -955,7 +957,8 @@ public class Controller {
         smUsedCharacterCard message = new smUsedCharacterCard(
                 text,
                 card,
-                increasedPrice);
+                increasedPrice,
+                characterCardBoard.getCharacterCard(card).getPrice());
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smUsedCharacterCard.class));

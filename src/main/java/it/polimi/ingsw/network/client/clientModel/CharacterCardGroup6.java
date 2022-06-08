@@ -1,8 +1,7 @@
 package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
-import it.polimi.ingsw.network.client.View;
+import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG6;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -14,16 +13,16 @@ import java.util.ArrayList;
 public class CharacterCardGroup6 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private String currentPlayer = getView().getCurrentPlayer();
+    private PlayerView player = getCLI().getPlayer();
 
-    public CharacterCardGroup6(int id, View view) {
-        super(id, view);
+    public CharacterCardGroup6(int id, CLI cli) {
+        super(id, cli);
         if(getCardId() == 7) {
             setText("At the start of the game, draw 6 students and place them on top of this card;\n" +
                     "You can take up to 3 students from this card and change them with the same amount of students in your Hall");
             setPrice(1);
         }
-        else {
+        else if (getCardId() == 10){
             setText("You can swap 2 students from your Hall to your Dining Hall");
             setPrice(1);
         }
@@ -31,119 +30,128 @@ public class CharacterCardGroup6 extends CharacterCard {
 
     /**
      * implementation of the effect of the CharacterCard 7 and the CharacterCard 10; at the end increase the price of the CharacterCard
-    */
-    public void activate(){
-        if(getCardId() == 7){
-            int numberChoice = 0;
-            do{
-                System.out.println("Select the number of students that you want to change: ");
-                try {
-                    numberChoice = Integer.parseInt(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }while(numberChoice < 1 || numberChoice > 3);
-            String studentChoice = null;
-            StudentColor color = null;
-            int numOfStudents = 0;
-            ArrayList<StudentColor> chosenStudentsFromCard = new ArrayList<>();
-            do{
-                System.out.println("Students on card: ");
-                for(StudentColor student : studentsOnCard){
-                    System.out.println(student);
-                }
-                System.out.println("Please select a student: ");
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                color = StudentColor.getStudentFromString(studentChoice);
-                if(studentsOnCard.contains(color)){
-                    numOfStudents++;
-                    studentsOnCard.remove(color);
-                    chosenStudentsFromCard.add(color);
-                }
-            }while(numOfStudents < numberChoice);
+     *
+     * @return
+     */
+    public boolean activate(){
+        if (getCLI().getPlayer().getCoins() >= getPrice()) {
+            if (getCardId() == 7) {
+                if (!studentsOnCard.isEmpty()) {
+                    System.out.println("Students on card: ");
+                    for (StudentColor student : studentsOnCard) {
+                        System.out.println(student);
+                    }
+                    System.out.println("Students in your Hall: ");
+                    for (StudentColor student : player.getHall()) {
+                        System.out.println(student);
+                    }
 
-            studentChoice = null;
-            color = null;
-            numOfStudents = 0;
-            ArrayList<StudentColor> chosenStudentsFromHall = new ArrayList<>();
-            do{
+                    int numberChoice = askNumOfStudents(3);
+
+                    System.out.println("Choose " + numberChoice + " students to move from the card to the hall");
+                    String studentChoice = null;
+                    StudentColor color;
+                    int numOfStudents = 0;
+                    ArrayList<StudentColor> chosenStudentsFromCard = new ArrayList<>();
+                    do {
+                        try {
+                            studentChoice = br.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        color = StudentColor.getStudentFromString(studentChoice);
+                        if (color != null) {
+                            if (studentsOnCard.contains(color)) {
+                                numOfStudents++;
+                                studentsOnCard.remove(color);
+                                chosenStudentsFromCard.add(color);
+                            }
+                            else {
+                                System.out.println("There is no " + color.toString().toLowerCase() + " student on card");
+                            }
+                        }
+                        else {
+                            System.out.println("Not a student color");
+                        }
+                    } while (numOfStudents < numberChoice);
+
+                    player.getHall().addAll(chosenStudentsFromCard);
+                    System.out.println("Choose " + numberChoice + " students to move from the hall to the card");
+                    ArrayList<StudentColor> studentsFromHall = getCLI().askStudentsFromHall(numberChoice, false);
+
+                    studentsOnCard.addAll(studentsFromHall);
+
+                    cmCCG6 message = new cmCCG6(7, chosenStudentsFromCard, studentsFromHall);
+                    getCLI().getClient().send(new Gson().toJson(message, cmCCG6.class));
+
+                    return true;
+                }
+                else {
+                    System.out.println("It wasn't possible to activate the character card effect because you don't have any students on card");
+                }
+            }
+
+            else if (getCardId() == 10) {
                 System.out.println("Students in your Hall: ");
-                for(StudentColor student: getView().getPlayerByNick(currentPlayer).getHall()){
+                for (StudentColor student : player.getHall()) {
                     System.out.println(student);
                 }
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                color = StudentColor.getStudentFromString(studentChoice);
-                if(getView().getPlayerByNick(currentPlayer).getHall().contains(color)){
-                    numOfStudents++;
-                    getView().getPlayerByNick(currentPlayer).getHall().remove(color);
-                    chosenStudentsFromHall.add(color);
-                }
-            }while(numOfStudents < numberChoice);
-            cmCCG6 message = new cmCCG6(7, chosenStudentsFromCard, chosenStudentsFromHall);
-            getView().getClient().send(new Gson().toJson(message, cmCCG6.class));
-        }
-        else{
-            System.out.println("Choose 2 students from your Hall to swap with other 2 students from your Dining Hall: ");
-            System.out.println("Students in your Hall: ");
-            for(StudentColor student: getView().getPlayerByNick(currentPlayer).getHall()){
-                System.out.println(student);
-            }
-            System.out.println("Students in your Dining Hall: ");
-            for(StudentColor student: getView().getPlayerByNick(currentPlayer).getDiningHall()){
-                System.out.println(student);
-            }
-            String studentChoice = null;
-            StudentColor color = null;
-            int numOfStudents = 0;
-            ArrayList<StudentColor> studentsInHall = new ArrayList<>();
-            do{
-                System.out.println("Students in your Hall: ");
-                for(StudentColor student: getView().getPlayerByNick(currentPlayer).getHall()){
-                    System.out.println(student);
-                }
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                color = StudentColor.getStudentFromString(studentChoice);
-                if(getView().getPlayerByNick(currentPlayer).getHall().contains(color)){
-                    numOfStudents++;
-                    studentsInHall.add(color);
-                    getView().getPlayerByNick(currentPlayer).getHall().remove(color);
-                }
-            }while(numOfStudents < 2);
-            numOfStudents = 0;
-            color = null;
-            ArrayList<StudentColor> studentsInDiningHall = new ArrayList<>();
-            do{
                 System.out.println("Students in your Dining Hall: ");
-                for(StudentColor student: getView().getPlayerByNick(currentPlayer).getDiningHall()){
+                for (StudentColor student : player.getDiningHall()) {
                     System.out.println(student);
                 }
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                int numberChoice = 1;
+                int max = 2;
+
+                if (player.getDiningHall().size() < 2)
+                    max = player.getDiningHall().size();
+
+                if (max > 1) {
+                    if (max == 2)
+                        numberChoice = askNumOfStudents(max);
+
+                    System.out.println("Choose " + numberChoice + " students to move from the hall to the dining hall");
+                    ArrayList<StudentColor> studentsFromHall = new ArrayList<>();
+                    studentsFromHall.addAll(getCLI().askStudentsFromHall(numberChoice, false));
+
+                    System.out.println("Choose " + numberChoice + " students to move from the dining hall to the hall");
+                    int numOfStudents = 0;
+                    StudentColor color;
+                    String studentChoice = null;
+                    ArrayList<StudentColor> studentsToHall = new ArrayList<>();
+                    do {
+                        try {
+                            studentChoice = br.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        color = StudentColor.getStudentFromString(studentChoice);
+                        if (player.getDiningHall().contains(color)) {
+                            numOfStudents++;
+                            studentsToHall.add(color);
+                            player.getDiningHall().remove(color);
+                        }
+                    } while (numOfStudents < 2);
+
+                    player.getHall().addAll(studentsToHall);
+                    player.getDiningHall().addAll(studentsFromHall);
+
+                    cmCCG6 message = new cmCCG6(10, studentsToHall, studentsFromHall);
+                    getCLI().getClient().send(new Gson().toJson(message, cmCCG6.class));
+
+                    return true;
                 }
-                color = StudentColor.getStudentFromString(studentChoice);
-                if(getView().getPlayerByNick(currentPlayer).getDiningHall().contains(color)){
-                    numOfStudents++;
-                    studentsInDiningHall.add(color);
-                    getView().getPlayerByNick(currentPlayer).getDiningHall().remove(color);
+                else {
+                    System.out.println("It wasn't possible to activate the character card effect because you don't have any students in dining hall");
                 }
-            }while(numOfStudents < 2);
-            cmCCG6 message = new cmCCG6(10, studentsInHall, studentsInDiningHall);
-            getView().getClient().send(new Gson().toJson(message, cmCCG6.class));
+            }
         }
+        else {
+            System.out.println("Not enough coins");
+        }
+
+        return false;
     }
 
     public ArrayList<StudentColor> getStudentsOnCard() {
@@ -165,5 +173,31 @@ public class CharacterCardGroup6 extends CharacterCard {
             studentsOnCard.addAll(students);
         else
             studentsOnCard.removeAll(students);
+    }
+
+    private int askNumOfStudents(int max) {
+        System.out.println("How many students you want to move? (max " + max + ")");
+        int numberChoice = 0;
+        String str = "";
+        boolean notValidChoice;
+        do {
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (getCLI().stringToInteger(str) == null) {
+                System.out.println("Not an int");
+                notValidChoice = true;
+            }
+            else {
+                numberChoice = getCLI().stringToInteger(str);
+                notValidChoice = (numberChoice < 1 || numberChoice > 3);
+                if (notValidChoice)
+                    System.out.println("Not valid, please choose a value between 0 and 3");
+            }
+        } while (notValidChoice);
+
+        return numberChoice;
     }
 }

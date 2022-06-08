@@ -1,27 +1,24 @@
 package it.polimi.ingsw.network.client.clientModel;
 
-import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.network.server.model.GameBoard;
-import it.polimi.ingsw.network.server.model.Player;
+import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
 
-public class CharacterCard {
+public abstract class CharacterCard {
     private int cardId;
     private int price;
     private String text;
-    private View view;
+    private CLI cli;
     private transient boolean increasedPrice = false;
 
-    public CharacterCard(int cardId, View view) {
+    public CharacterCard(int cardId, CLI cli) {
         this.cardId = cardId;
-        this.view = view;
+        this.cli = cli;
     }
 
-    public View getView() {
-        return view;
+    public CLI getCLI() {
+        return cli;
     }
 
     public void setText(String text){
@@ -44,7 +41,7 @@ public class CharacterCard {
         this.price = price;
     }
 
-    public void activate(){}
+    public abstract boolean activate();
 
     public boolean increasePrice() {
         if (!increasedPrice) {

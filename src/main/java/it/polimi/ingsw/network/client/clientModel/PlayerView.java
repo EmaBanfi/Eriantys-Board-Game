@@ -21,7 +21,7 @@ public class PlayerView {
     public PlayerView(String nickname) {
         this.nickname = nickname;
         availableSupportCard = 10;
-        coins = 0;
+        coins = 1;
         initSupportDeck();
         hall = new ArrayList<>();
         diningHall = new ArrayList<>();
@@ -114,7 +114,8 @@ public class PlayerView {
         return supportCards;
     }
 
-    public void decreaseCoins() {
+    public void decreaseCoins(int price) {
+        coins = coins - price;
     }
 
     public void resetSupportCard(){usedSupportCard=null;}
