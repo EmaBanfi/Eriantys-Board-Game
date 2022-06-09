@@ -51,12 +51,18 @@ public class CLI implements View, Runnable {
         initAvailableIslands();
     }
 
-    public void initAvailableIslands(){
+    /**
+     * initialize the islands
+     */
+    private void initAvailableIslands(){
         for(int i = 0; i < 12; i++){
             availableIslands.add(new IslandView());
         }
     }
 
+    /**
+     * initialize the available decks
+     */
     private void initAvailableDecks() {
         availableDecks = new ArrayList<>();
         availableDecks.add("KING");
@@ -65,6 +71,9 @@ public class CLI implements View, Runnable {
         availableDecks.add("SAGE");
     }
 
+    /**
+     * initialize the available towers
+     */
     private void initAvailableTowers() {
         availableTowers = new ArrayList<>();
         availableTowers.add("WHITE");
@@ -84,6 +93,10 @@ public class CLI implements View, Runnable {
     @Override
     public PlayerView getPlayer() {
         return player;
+    }
+
+    public Phase getResumeFrom() {
+        return resumeFrom;
     }
 
     /**
@@ -117,8 +130,15 @@ public class CLI implements View, Runnable {
             System.out.println("You can't activate any character card because you have 0 coins");
             return;
         }
-        System.out.println("Do you want to activate a character card? (yes|no)");
+
         System.out.println("You have " + player.getCoins() + " coins");
+        System.out.println("The available character cards are the following\n");
+        for(CharacterCard c: availableCC){
+            c.showCard();
+            System.out.println("\n");
+        }
+        System.out.println("Do you want to activate a character card? (yes|no)");
+
         try {
             if (br.readLine().equalsIgnoreCase("yes")) {
                 askCharacterCard();
@@ -133,12 +153,8 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCharacterCard(){
-        System.out.println("Choose one of the followings character cards: \n");
-        for(CharacterCard c: availableCC){
-            System.out.println("Card id: " + c.getCardId());
-            System.out.println("Card price: " + c.getPrice());
-            System.out.println("Card effect: " + c.getText() + "\n");
-        }
+        System.out.println("Choose one of the character cards");
+
         int choice = 0;
         CharacterCard card = null;
         String str = "";
@@ -396,7 +412,7 @@ public class CLI implements View, Runnable {
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
 
-        showIslands();
+        showIslands(null);
         System.out.println("Your current Hall: ");
         for(StudentColor student: player.getHall()){
             System.out.println(student);
@@ -423,7 +439,7 @@ public class CLI implements View, Runnable {
                 System.out.println("Choose the island where you want to move the students. You can still move "
                         + availableStudentsMovements + " students");
 
-                chosenIsland = askIsland(false)-1;
+                chosenIsland = askIsland(false, null)-1;
                 availableIslandChoices--;
                 System.out.println("Choose the number of students that you want to move to this island " +
                         "(from 0 up to " + availableStudentsMovements + ") : ");
@@ -559,10 +575,13 @@ public class CLI implements View, Runnable {
         int maxMovements=player.getUsedSupportCard().getMovement();
         boolean show= true;
         boolean validChoice;
-        System.out.println("Max movements: "+player.getUsedSupportCard().getMovement());
+
+        System.out.println("\n");
+        System.out.println("MOTHER NATURE MOVEMENTS\n");
+        System.out.println("Max movements: "+ maxMovements + "\n");
 
         do {
-            chosenIsland = askIsland(show)-1;
+            chosenIsland = askIsland(show, maxMovements)-1;
             show=false;
             validChoice=(Math.abs(motherNature.getCurrentIsland()-(chosenIsland))<=maxMovements);
             if(!validChoice)
@@ -581,19 +600,41 @@ public class CLI implements View, Runnable {
         return movements;
     }
 
-    @Override
-    public void showIslands(){
-        System.out.println("Mother Nature is on island "+(motherNature.getCurrentIsland()+1));
-        for(int i = 0; i < availableIslands.size(); i++){
-            String text = "Students on island " + (i+1) + "\n";
-            text = text + availableIslands.get(i).getStudents();
+    public void showIslands(Integer range){
+        System.out.println("Mother Nature is on island "+(motherNature.getCurrentIsland()+1) + "\n");
+
+        int from = 0;
+        int to = availableIslands.size();
+
+        if (range != null) {
+            from = motherNature.getCurrentIsland();
+            if (from + range < availableIslands.size()) {
+                to = from + range;
+                showRange(from, to);
+            }
+            else {
+                showRange(from, availableIslands.size());
+                showRange(0, (from + range) % availableIslands.size());
+            }
+        }
+        else {
+            showRange(from, to);
+        }
+    }
+
+    private void showRange(int from, int to) {
+        for(; from < to; from++) {
+            String text = "Students on island " + (from+1) + "\n";
+            text = text + availableIslands.get(from).getStudents();
             System.out.println(text);
-            System.out.println("Block on island: " + availableIslands.get(i).getBlockCard());
-            if (availableIslands.get(i).getTower() == null)
+
+            System.out.println("Block on island: " + availableIslands.get(from).getBlockCard());
+
+            if (availableIslands.get(from).getTower() == null)
                 System.out.println("No tower on island\n");
             else {
-                System.out.println("Tower on island: " + availableIslands.get(i).getTower());
-                System.out.println("Num of towers: " + availableIslands.get(i).getNumOfTowers() + "\n");
+                System.out.println("Tower on island: " + availableIslands.get(from).getTower());
+                System.out.println("Num of towers: " + availableIslands.get(from).getNumOfTowers() + "\n");
             }
         }
     }
@@ -603,11 +644,10 @@ public class CLI implements View, Runnable {
      * @param show if true then the list of islands is shown
      * @return an int between 1 and 12
      */
-    @Override
-    public int askIsland(boolean show) {
+    public int askIsland(boolean show, Integer range) {
         int chosenIsland=-1;
         if (show)
-            showIslands();
+            showIslands(range);
         System.out.println("Choose an island");
         boolean notValidChoice = false;
         String str = "";
@@ -976,6 +1016,11 @@ public class CLI implements View, Runnable {
         }
     }
 
+    @Override
+    public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
+        getPlayerByNick(nick).removeFromHall(students);
+    }
+
     public Integer stringToInteger(String str) {
         boolean valid = true;
 
@@ -990,5 +1035,16 @@ public class CLI implements View, Runnable {
             return Integer.valueOf(str);
 
         return null;
+    }
+
+    public int getMotherPosition() {
+        return motherNature.getCurrentIsland();
+    }
+
+    public void showAllDH() {
+        System.out.println("Your dining hall: " + player.getDiningHall());
+
+        for (PlayerView pla : players)
+            System.out.println("Player " + pla.getNickname() + "'s dining hall: " + pla.getDiningHall());
     }
 }

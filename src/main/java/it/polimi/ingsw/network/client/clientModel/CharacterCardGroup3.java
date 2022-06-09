@@ -16,45 +16,57 @@ public class CharacterCardGroup3 extends CharacterCard{
         super(id, cli);
         setPrice(1);
         setText("You can move up to 2 more islands in this turn");
-
     }
 
     public boolean activate(){
-        if (getCLI().getPlayer().getCoins() >= getPrice()) {
-            getCLI().showIslands();
-            System.out.println("Choose how many islands do you want to move Mother Nature (1 or 2)");
-            Integer movementChoice;
-            String str = "";
-            boolean validChoice;
-            do {
-                validChoice = false;
+        if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+            getCLI().showIslands(2);
+        else
+            getCLI().showIslands(2 + getCLI().getPlayer().getUsedSupportCard().getMovement());
 
-                try {
-                    str = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (confirmActivation())
+            return false;
 
-                movementChoice = getCLI().stringToInteger(str);
+        System.out.println("Choose how many islands do you want to move Mother Nature (1 or 2)");
+        Integer movementChoice;
+        String str = "";
+        boolean validChoice;
+        do {
+            validChoice = false;
 
-                if (movementChoice != null) {
-                    if (movementChoice == 1 || movementChoice == 2)
-                        validChoice = true;
-                    else
-                        System.out.println("Please select 1 or 2");
-                }
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            movementChoice = getCLI().stringToInteger(str);
+
+            if (movementChoice != null) {
+                if (movementChoice == 1 || movementChoice == 2)
+                    validChoice = true;
                 else
-                    System.out.println("Not an int");
-            } while (!validChoice);
+                    System.out.println("Please select 1 or 2");
+            }
+            else
+                System.out.println("Not an int");
+        } while (!validChoice);
 
-            cmCCG3 message = new cmCCG3(movementChoice);
-            getCLI().getClient().send(new Gson().toJson(message, cmCCG3.class));
+        getCLI().updateMotherPosition((getCLI().getMotherPosition() + 2) % getCLI().getAvailableIslands().size());
 
-            return true;
-        }
-        else {
+        cmCCG3 message = new cmCCG3(movementChoice);
+        getCLI().getClient().send(new Gson().toJson(message, cmCCG3.class));
+
+        return true;
+    }
+
+    @Override
+    public boolean checkCCPrecondition() {
+        if (getCLI().getPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
-        }
+
+        else
+            return true;
 
         return false;
     }

@@ -283,22 +283,17 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void showIslands() {
-
-    }
-
-    @Override
-    public int askIsland(boolean show) {
-        return 0;
-    }
-
-    @Override
     public void disconnectFromServer() {
 
     }
 
     @Override
     public void addPlayers(ArrayList<String> players){}
+
+    @Override
+    public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
+
+    }
 
 
 }

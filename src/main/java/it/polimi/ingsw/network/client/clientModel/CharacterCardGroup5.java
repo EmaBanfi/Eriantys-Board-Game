@@ -24,9 +24,8 @@ public class CharacterCardGroup5 extends CharacterCard {
         }
         else if (getCardId() == 5) {
             this.availableBlockCards = 4;
-            setText("At the start of the game, put 4 Block Card on top of this card; \n" +
-                    "You can place a Block Card on an island: on the first time Mother Nature lands on that island," +
-                    "put back the Block Card on top of this card and skip the majority count for that island");
+            setText("You can place a Block Card on an island: on the first time Mother Nature lands on that island," +
+                    "the block card will come back on top of this card and skip the majority count for that island");
             setPrice(2);
         }
         else if (getCardId() == 6){
@@ -41,32 +40,38 @@ public class CharacterCardGroup5 extends CharacterCard {
      * @return
      */
     public boolean activate() {
-        if (getCLI().getPlayer().getCoins() >= getPrice()) {
-            int islandChoice = getCLI().askIsland(true);
-            ClientMessage message;
+        getCLI().showIslands(null);
 
-            if (getCardId() == 3) {
-                message = new cmCCG5(3, islandChoice);
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
-            }
+        ClientMessage message;
 
-            else if (getCardId() == 5) {
-                message = new cmCCG5(5, getCLI().askIsland(true));
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
-            }
+        if (getCardId() == 3) {
+            if (confirmActivation())
+                return false;
 
-            else if (getCardId() == 6){
-                message = new cmCCG5(6, islandChoice);
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
-            }
-
-            return true;
-        }
-        else {
-            System.out.println("Not enough coins");
+            message = new cmCCG5(3, getCLI().askIsland(false, null));
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
 
-        return false;
+        else if (getCardId() == 5) {
+            System.out.println("Blocks on card: " + availableBlockCards);
+            getCLI().showIslands(null);
+
+            if (confirmActivation())
+                return false;
+
+            message = new cmCCG5(5, getCLI().askIsland(false, null));
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
+        }
+
+        else if (getCardId() == 6){
+            if (confirmActivation())
+                return false;
+
+            message = new cmCCG5(6, getCLI().askIsland(false, null));
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
+        }
+
+        return true;
     }
 
     /**
@@ -78,5 +83,24 @@ public class CharacterCardGroup5 extends CharacterCard {
             availableBlockCards++;
         else
             availableBlockCards--;
+    }
+
+    @Override
+    public boolean checkCCPrecondition() {
+        if (getCLI().getPlayer().getCoins() < getPrice())
+            System.out.println("Not enough coins");
+
+        else if (getCardId() == 5)
+            if (availableBlockCards == 0)
+                System.out.println("0 block cards");
+
+        else if (getCardId() == 6)
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Majority has already been calculated, please select another character card");
+
+        else
+             return true;
+
+        return false;
     }
 }

@@ -98,6 +98,10 @@ public class PlayerView {
         hall.addAll(students);
     }
 
+    public void addToHall(StudentColor student){
+        hall.add(student);
+    }
+
     public void removeFromHall(StudentColor student){
         hall.remove(student);
     }

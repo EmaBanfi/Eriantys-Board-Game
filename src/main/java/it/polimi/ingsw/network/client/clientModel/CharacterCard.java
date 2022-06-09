@@ -3,6 +3,9 @@ package it.polimi.ingsw.network.client.clientModel;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public abstract class CharacterCard {
@@ -57,4 +60,28 @@ public abstract class CharacterCard {
 
     public void updateAvailableBlockCards(boolean update){
     }
+
+    public void showCard() {
+        System.out.println("Card id: " + cardId);
+        System.out.println("Card price: " + price);
+        System.out.println("Card effect: " + text);
+    }
+
+    public boolean confirmActivation() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Do you still want to activate the card?");
+        String str = "";
+        do {
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } while (!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
+
+        return str.equalsIgnoreCase("no");
+    }
+
+    public abstract boolean checkCCPrecondition();
 }

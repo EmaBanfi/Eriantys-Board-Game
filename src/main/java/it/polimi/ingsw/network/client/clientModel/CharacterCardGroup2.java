@@ -4,13 +4,16 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG2;
 
+import java.io.IOException;
+
 public class CharacterCardGroup2 extends CharacterCard{
 
     public CharacterCardGroup2(int id, CLI cli) {
         super(id, cli);
         setPrice(2);
         if(getCardId() == 2)
-            setText("During this turn, you can take control of a teacher even if you have the same amounts of students of the player that controls him in your Dining Hall");
+            setText("During this turn, you can take control of a teacher even if you have the same amounts of " +
+                    "students of the player that controls him in your Dining Hall");
         else if (getCardId() == 8)
             setText("You have 2 more additional influence points during the majority count in this turn");
     }
@@ -18,23 +21,45 @@ public class CharacterCardGroup2 extends CharacterCard{
 
     @Override
     public boolean activate(){
-        if (getCLI().getPlayer().getCoins() >= getPrice()) {
-            cmCCG2 message = null;
+        cmCCG2 message = null;
 
-            if (getCardId() == 2) {
-                message = new cmCCG2(2);
-            }
-            else if (getCardId() == 8){
-                message = new cmCCG2(8);
-            }
+        if (getCardId() == 2) {
+            getCLI().showAllDH();
 
-            getCLI().getClient().send(new Gson().toJson(message, cmCCG2.class));
+            if (confirmActivation())
+                return false;
 
-            return true;
+            message = new cmCCG2(2);
         }
-        else {
+        else if (getCardId() == 8){
+            getCLI().showIslands(getCLI().getPlayer().getUsedSupportCard().getMovement());
+
+            if (confirmActivation())
+                return false;
+
+            message = new cmCCG2(8);
+        }
+
+        getCLI().getClient().send(new Gson().toJson(message, cmCCG2.class));
+
+        return true;
+    }
+
+    @Override
+    public boolean checkCCPrecondition() {
+        if (getCLI().getPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
-        }
+
+        else if (getCardId() == 2)
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_MOTHER_MOVEMENTS) || getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Teachers have already been assigned, please select another character card");
+
+        else if (getCardId() == 8)
+                if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                    System.out.println("Majority has already been calculated, please select another character card");
+
+        else
+            return true;
 
         return false;
     }

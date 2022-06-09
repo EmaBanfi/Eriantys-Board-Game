@@ -21,12 +21,12 @@ public class CharacterCardGroup4 extends CharacterCard {
             setPrice(3);
         }
         else if (getCardId() == 11) {
-            setText("At the start of the game, draw 4 students and place them on top of this card; \n" +
-                    "You can choose one student from this card and place it in your Hall, then draw a new student and place it on top of this card");
+            setText("You can choose one student from this card and place it in your Hall");
             setPrice(2);
         }
         else if (getCardId() == 12){
-            setText("Choose a student color: every player has to put back in the bag 3 students of the same color. Whoever has less than 3 students of the specified color, will put all the remaining students of that color ");
+            setText("Choose a student color: every player has to put back in the bag 3 students of the same color. " +
+                    "Whoever has less than 3 students of the specified color, will put all the remaining students of that color ");
             setPrice(3);
         }
     }
@@ -37,47 +37,52 @@ public class CharacterCardGroup4 extends CharacterCard {
      * @return
      */
     public boolean activate(){
-        if (getCLI().getPlayer().getCoins() >= getPrice()) {
-            if (getCardId() == 9) {
+        if (getCardId() == 9) {
+            getCLI().showIslands(getCLI().getPlayer().getUsedSupportCard().getMovement());
 
-                System.out.println("\nSelect ignored student color");
+            if (confirmActivation())
+                return false;
 
-                cmCCG4 message = new cmCCG4(9, askStudent());
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
-            }
+            System.out.println("\nSelect ignored student color");
 
-            else if (getCardId() == 11) {
-                System.out.println("Students on card: ");
-                for (StudentColor student : studentsOnCard) {
-                    System.out.println(student);
-                }
-
-                System.out.println("Please select a student to move to your hall");
-                StudentColor color;
-                do {
-                    color = askStudent();
-                    if (!studentsOnCard.contains(color))
-                        System.out.println("There is no " + color + " student on card");
-                } while (!studentsOnCard.contains(color));
-
-                cmCCG4 message = new cmCCG4(11, color);
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
-            }
-
-            else if (getCardId() == 12) {
-                System.out.println("Choose which student color you want to remove");
-
-                cmCCG4 message = new cmCCG4(12, askStudent());
-                getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
-            }
-
-            return true;
-        }
-        else {
-            System.out.println("Not enough coins");
+            cmCCG4 message = new cmCCG4(9, askStudent());
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
         }
 
-        return false;
+        else if (getCardId() == 11) {
+            System.out.println("Students on card: " + studentsOnCard);
+            System.out.println("Students in hall: " + getCLI().getPlayer().getHall());
+
+            if (confirmActivation())
+                return false;
+
+            System.out.println("Please select a student to move to your hall");
+            StudentColor color;
+            do {
+                color = askStudent();
+                if (!studentsOnCard.contains(color))
+                    System.out.println("There is no " + color + " student on card");
+            } while (!studentsOnCard.contains(color));
+
+            getCLI().getPlayer().addToHall(color);
+
+            cmCCG4 message = new cmCCG4(11, color);
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
+        }
+
+        else if (getCardId() == 12) {
+            getCLI().showAllDH();
+
+            if (confirmActivation())
+                return false;
+
+            System.out.println("Choose which student color you want to remove");
+
+            cmCCG4 message = new cmCCG4(12, askStudent());
+            getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
+        }
+
+        return true;
     }
 
     private StudentColor askStudent() {
@@ -109,5 +114,24 @@ public class CharacterCardGroup4 extends CharacterCard {
             studentsOnCard.addAll(students);
         else
             studentsOnCard.removeAll(students);
+    }
+
+    @Override
+    public boolean checkCCPrecondition() {
+        if (getCLI().getPlayer().getCoins() < getPrice())
+            System.out.println("Not enough coins");
+
+        else if (getCardId() == 9)
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Majority has already been calculated, please select another character card");
+
+        else if (getCardId() == 11)
+            if (studentsOnCard.isEmpty())
+                System.out.println("Not enough students on card");
+
+        else
+            return true;
+
+        return false;
     }
 }

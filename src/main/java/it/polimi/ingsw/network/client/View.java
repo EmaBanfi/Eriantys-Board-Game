@@ -21,11 +21,6 @@ public interface View {
      */
     PlayerView getPlayerByNick(String nick);
 
-
-    private void initAvailableDecks() {}
-
-    private void initAvailableTowers() {}
-
     /**
      * communicate to the player to insert the nickname. Called by message.
      */
@@ -297,10 +292,6 @@ public interface View {
      */
     void addAvailableCC(int card);
 
-    void showIslands();
-
-    int askIsland(boolean show);
-
     /**
      * after the view received the game results, the player will communicate the disconnection from the server
      * The player have to insert anything and when he presses enter the game will be closed, and he will be disconnected
@@ -313,4 +304,11 @@ public interface View {
      * @param players nick of all the players in the match
      */
     void addPlayers(ArrayList<String> players);
+
+    /**
+     * remove students to a specific player's hall
+     * @param nick nickname of the player
+     * @param students students to remove
+     */
+    void removeFromPlayerHall(String nick, ArrayList<StudentColor> students);
 }

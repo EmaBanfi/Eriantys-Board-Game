@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.StudentColor;
@@ -24,7 +23,7 @@ public class CharacterCardGroup1 extends CharacterCard {
         setPrice(1);
         this.studentsOnCard = new ArrayList<>();
         islands = getCLI().getAvailableIslands();
-        setText("At the start of the game, take 4 students and place them on top of this card;\n You can take one student from this card and place it on an island at your choice. Then, draw one student and place it on top of this card.");
+        setText("You can take one student from this card and place it on an island at your choice.");
     }
 
     public ArrayList<StudentColor> getStudentsOnCard(){
@@ -49,89 +48,91 @@ public class CharacterCardGroup1 extends CharacterCard {
      *
      * @return
      */
+    @Override
     public boolean activate() {
-        if (getCLI().getPlayer().getCoins() >= getPrice() && studentsOnCard.size() > 0) {
+        getCLI().showIslands(null);
+        System.out.println("Students on card: " + studentsOnCard);
 
-            StudentColor color;
+        if (confirmActivation())
+            return false;
 
-            System.out.println("Choose the student to move to an island");
-            String studentChoice = "";
-            boolean isPresent;
-            do {
-                isPresent = false;
-                System.out.println("Please select student among the following:");
-                for (StudentColor student : studentsOnCard) {
-                    System.out.println(student);
-                }
+        StudentColor color;
 
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                color = StudentColor.getStudentFromString(studentChoice);
+        System.out.println("Choose the student to move to an island");
+        String studentChoice = "";
+        boolean isPresent;
+        do {
+            isPresent = false;
 
-                if (color != null) {
-                    if (studentsOnCard.contains(color))
-                        isPresent = true;
-
-                    if (!isPresent)
-                        System.out.println("There is no " + color.toString().toLowerCase() + " student on card");
-                }
-                else {
-                    System.out.println("Not a color");
-                }
-
-            } while (!isPresent);
-            System.out.println("Chosen student: " + studentChoice.toLowerCase());
-
-            System.out.println("\nChoose an island\n");
-            for (IslandView island : islands) {
-                String text = "Students on island " + (islands.indexOf(island) + 1);
-                text = text + island.getStudents();
-                System.out.println(text);
+            try {
+                studentChoice = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            Integer islandChoice;
-            String str = "";
-            boolean validChoice;
-            do {
-                validChoice = false;
+            color = StudentColor.getStudentFromString(studentChoice);
 
-                try {
-                    str = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                islandChoice = getCLI().stringToInteger(str);
+            if (color != null) {
+                if (studentsOnCard.contains(color))
+                    isPresent = true;
 
-                if(islandChoice != null) {
-                    islandChoice--;
-                    if (islandChoice >= 0 && islandChoice <= islands.size()) {
-                        validChoice = true;
-                    }
-                    else {
-                        System.out.println("The value must be between 1 and " + islands.size() + " included");
-                    }
+                if (!isPresent)
+                    System.out.println("There is no " + color.toString().toLowerCase() + " student on card");
+            }
+            else {
+                System.out.println("Not a color");
+            }
+
+        } while (!isPresent);
+        System.out.println("Chosen student: " + studentChoice.toLowerCase());
+
+        System.out.println("\nChoose an island\n");
+
+        Integer islandChoice;
+        String str = "";
+        boolean validChoice;
+        do {
+            validChoice = false;
+
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            islandChoice = getCLI().stringToInteger(str);
+
+            if(islandChoice != null) {
+                islandChoice--;
+                if (islandChoice >= 0 && islandChoice <= islands.size()) {
+                    validChoice = true;
                 }
                 else {
-                    System.out.println("Not an int");
+                    System.out.println("The value must be between 1 and " + islands.size() + " included");
                 }
-            } while (!validChoice);
+            }
+            else {
+                System.out.println("Not an int");
+            }
+        } while (!validChoice);
 
-            studentsOnCard.remove(color);
-            islands.get(islandChoice).addStudent(color);
+        studentsOnCard.remove(color);
+        islands.get(islandChoice).addStudent(color);
 
-            cmCCG1 message = new cmCCG1(islandChoice, color);
-            getCLI().getClient().send(new Gson().toJson(message, cmCCG1.class));
+        cmCCG1 message = new cmCCG1(islandChoice, color);
+        getCLI().getClient().send(new Gson().toJson(message, cmCCG1.class));
 
-            return true;
-        }
-        else if (getCLI().getPlayer().getCoins() < getPrice()) {
+        return true;
+    }
+
+    @Override
+    public boolean checkCCPrecondition() {
+        if (getCLI().getPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
-        }
-        else if (studentsOnCard.size() == 0) {
+
+        else if (studentsOnCard.isEmpty())
             System.out.println("Not enough students on card");
-        }
+
+        else
+            return true;
 
         return false;
     }

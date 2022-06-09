@@ -863,6 +863,7 @@ public class Controller {
             text = text + " been removed form the hall of " + player.getNickName();
             message = new smStudentsInHall(
                     text,
+                    player.getNickName(),
                     students,
                     false);
             server.sendAll(gson.toJson(message, smStudentsInHall.class));
