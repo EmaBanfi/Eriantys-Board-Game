@@ -13,6 +13,7 @@ public class smGameStatus extends ServerMessage {
     public smGameStatus( int numOfPlayers, String mode) {
         this.numOfPlayers = numOfPlayers;
         this.mode = mode;
+        setType("notify status");
     }
 
     /**

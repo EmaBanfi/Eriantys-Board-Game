@@ -68,6 +68,8 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
                     return jsonDeserializationContext.deserialize(jsonObject, smNotValidSupportCard.class);
                 case "resume turn":
                     return jsonDeserializationContext.deserialize(jsonObject, smResumeTurn.class);
+                case "notify status":
+                    return jsonDeserializationContext.deserialize(jsonObject, smGameStatus.class);
             }
         }
         return null;

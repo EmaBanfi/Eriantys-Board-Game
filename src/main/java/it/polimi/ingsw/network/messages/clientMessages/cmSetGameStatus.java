@@ -22,14 +22,14 @@ public class cmSetGameStatus extends ClientMessage {
      */
     @Override
     public void processMessage(ClientHandler handler) {
-        handler.getServer().getController().setGameStatus(mode, numOfPlayers);
+        handler.getServer().setGameStatus(mode,numOfPlayers, handler);
 
-        System.out.println("DELETE LINES 27 -> 33 IN cmSetGameStatus");
+        /*System.out.println("DELETE LINES 27 -> 33 IN cmSetGameStatus");
         handler.getServer().getController().notifyPlayers();
         handler.getServer().getController().notifyStudentsOnIslands();
         handler.getServer().getController().notifyMotherNaturePosition();
         if(handler.getServer().getController().getGame().isExpertMode())
             handler.getServer().getController().notifyAvailableCC();
-        handler.getServer().getController().notifyCurrentPlayer();
+        handler.getServer().getController().notifyCurrentPlayer();*/
     }
 }
