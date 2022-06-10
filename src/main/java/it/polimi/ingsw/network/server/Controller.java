@@ -787,7 +787,6 @@ public class Controller {
             smNotify message = new smNotify(text);
             server.sendAll(gson.toJson(message, smNotify.class));
         }
-        resumeTurn();
     }
 
     /**

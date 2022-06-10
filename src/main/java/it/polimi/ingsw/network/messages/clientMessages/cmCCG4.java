@@ -33,6 +33,7 @@ public class cmCCG4 extends ClientMessage {
         else if (cardId == 11) {
             controller.addStudentToD(color);
             controller.refillCard(cardId, 1);
+            controller.resumeTurn();
         }
 
         else

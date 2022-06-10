@@ -257,12 +257,13 @@ public class CLI implements View, Runnable {
             }catch(IOException e)
             {e.printStackTrace();}
             player.setTower(colorChoice);
+            availableTowers.remove(colorChoice);
             System.out.println("Chosen Tower color: " + colorChoice.toLowerCase());
             Gson gson = new Gson();
             cmTower message = new cmTower(colorChoice);
             String text = gson.toJson(message, cmTower.class);
             client.send(text);
-            availableTowers.remove(colorChoice);
+
     }
 
     /**
@@ -811,6 +812,7 @@ public class CLI implements View, Runnable {
     @Override
     public void updateTowerColor(String tower) {
         getPlayerByNick(currentPlayer).setTower(tower);
+        availableTowers.remove(tower);
     }
 
     /**
