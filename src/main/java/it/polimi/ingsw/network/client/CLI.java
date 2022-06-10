@@ -187,7 +187,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askSetGameStatus() {
         resumeFrom = Phase.CHOOSE_TOWER;
-        System.out.println("Choose number of players (NELLA BETA PUOI SETTARLO A 1): ");
+        System.out.println("Choose number of players (2,3 or 4): ");
         int numOfPlayers = 0;
         String mode;
         boolean notValidChoice;
@@ -204,7 +204,7 @@ public class CLI implements View, Runnable {
             }
             else {
                 numOfPlayers = stringToInteger(str);
-                notValidChoice = (numOfPlayers < 1 || numOfPlayers > 4);
+                notValidChoice = (numOfPlayers < 2 || numOfPlayers > 4);
                 if (notValidChoice)
                     System.out.println("Invalid num of players, please choose a new value (from 2 to 4): ");
             }
