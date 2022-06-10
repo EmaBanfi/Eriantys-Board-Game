@@ -123,10 +123,18 @@ public class Server {
         }
     }
 
-    public boolean addToGame(String nick, ClientHandler clientHandler) {
-        if (isAlreadyPresent(nick))
-            return false;
-
+    public void addToGame(String nick, ClientHandler clientHandler) {
+        smAskNickname message;
+        Gson gson = new Gson();
+        if (isAlreadyPresent(nick)) {
+            message = new smAskNickname("Nickname already taken. Choose another one ");
+            String text = gson.toJson(message, smAskNickname.class);
+            clientHandler.sendMessage(text);
+            return ;
+        }
+        message = new smAskNickname("You have been connected ");
+        String text = gson.toJson(message, smAskNickname.class);
+        clientHandler.sendMessage(text);
         clientHandlers.put(nick,clientHandler);
         controller.addPlayerToGame(nick);
 
@@ -143,8 +151,6 @@ public class Server {
         else if ((lobby.size() >= (clientHandlers.size() + 1))&&controller.gameIsSet()) {
             askNickname(clientHandler);
         }
-
-        return true;
     }
 
     public boolean isAlreadyPresent(String nick){
