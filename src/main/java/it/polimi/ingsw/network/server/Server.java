@@ -19,25 +19,26 @@ public class Server {
     private int  id=1;
     private final boolean listeningSocket = true;
 
-    public Server(){
+    public Server(int port){
         serverSocket = null;
         try {
-            serverSocket = new ServerSocket(888);
+            serverSocket = new ServerSocket(port);
 
         } catch (IOException e) {
-            System.err.println("Could not listen on port 888");
+            System.err.println("Could not listen on port "+port);
         }
-        System.out.println("Listening on port 888...");
+        System.out.println("Listening on port "+port+"...");
         lobby = new HashMap<>();
         clientHandlers = new HashMap<>();
         controller = new Controller(this);
 
         waitForPlayers();
     }
+    public Server(){}
 
 
     public static void main(String[] args) throws IOException {
-        Server server = new Server();
+        Server server = new Server(888);
     }
 
     private synchronized Integer newClientHandlerId(){
