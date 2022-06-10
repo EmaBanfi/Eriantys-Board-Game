@@ -19,15 +19,15 @@ public class Server {
     private int  id=1;
     private final boolean listeningSocket = true;
 
-    public Server(int port){
+    public Server(){
         serverSocket = null;
         try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Connection established");
-        } catch (IOException e) {
-            System.err.println("Could not listen on port: " + port);
-        }
+            serverSocket = new ServerSocket(888);
 
+        } catch (IOException e) {
+            System.err.println("Could not listen on port 888");
+        }
+        System.out.println("Listening on port 888...");
         lobby = new HashMap<>();
         clientHandlers = new HashMap<>();
         controller = new Controller(this);
@@ -35,30 +35,9 @@ public class Server {
         waitForPlayers();
     }
 
-    public Server(){
-    }
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        boolean validInput = true;
-
-        System.out.println("Insert the port which server will listen on.");
-        int port = 0;
-
-        do {
-            try {
-                port = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                validInput = false;
-                System.out.println("The value must be a number");
-            }
-            if (port < 0 || port > 1024){
-                validInput = false;
-                System.out.println("The port number must be positive and minor than 1024");
-            }
-        } while (!validInput);
-
-        Server server = new Server(port);
+        Server server = new Server();
     }
 
     private synchronized Integer newClientHandlerId(){
@@ -116,7 +95,7 @@ public class Server {
             }
 
             else {
-                askNickname(handler);
+                askNickname(false,handler);
             }
 
             handler.start();
@@ -149,7 +128,7 @@ public class Server {
             controller.notifyCurrentPlayer();
         }
         else if ((lobby.size() >= (clientHandlers.size() + 1))&&controller.gameIsSet()) {
-            askNickname(clientHandler);
+            askNickname(true,clientHandler);
         }
     }
 
@@ -207,17 +186,22 @@ public class Server {
         controller.setGameStatus(mode, numOfPlayers);
 
         if (lobby.size() >= (clientHandlers.size() + 1)) {
-            askNickname(clientHandler);
+            askNickname(true,clientHandler);
         }
     }
 
-    private void askNickname(ClientHandler clientHandler){
-        smAskNickname message = new smAskNickname("Please select nickname.\nThe following nicknames have already taken: " + alreadyConnectedPlayers() +
+    private void askNickname(boolean nextPlayer, ClientHandler clientHandler){
+        smAskNickname message = new smAskNickname(
                 "\nGame mode: " + controller.getGame().getMode() +
                 "\nNum of players: " + controller.getGame().getNumOfPlayers() +
-                "\nPlayers connected: " + clientHandlers.keySet().size());
+                "\nPlayers connected: " + clientHandlers.keySet().size()+
+                "\nThe following nicknames have already taken: " + alreadyConnectedPlayers() +
+                "\nPlease select a nickname");
         Gson gson = new Gson();
         String text = gson.toJson(message, smAskNickname.class);
-        lobby.get(clientHandler.getHandlerId() + 1).sendMessage(text);
+        if(nextPlayer)
+            lobby.get(clientHandler.getHandlerId() + 1).sendMessage(text);
+        else
+            clientHandler.sendMessage(text);
     }
 }

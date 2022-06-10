@@ -338,8 +338,7 @@ public class Controller {
             }
             else {
                 text="Your chosen support card has already been used by another player in this round and you have support cards that you can use in this round:\n";
-                for(Integer i: usableSupportCards)
-                    text= text + i+"\n";
+                text=text+usableSupportCards+"\n";
                 text= text +"Please choose another support card";
                 message= new smNotValidSupportCard(text);
                 String json = gson.toJson(message, smNotValidSupportCard.class);

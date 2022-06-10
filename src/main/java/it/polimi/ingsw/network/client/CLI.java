@@ -1010,6 +1010,7 @@ public class CLI implements View, Runnable {
      */
     public void setPlayerDeck(String deck) {
         getPlayerByNick(currentPlayer).setDeck(deck);
+        availableDecks.remove(deck.toUpperCase());
     }
 
     /**
