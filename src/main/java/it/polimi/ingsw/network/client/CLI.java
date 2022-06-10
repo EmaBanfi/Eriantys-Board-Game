@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import it.polimi.ingsw.network.server.model.SupportCard;
 
@@ -24,15 +23,15 @@ public class CLI implements View, Runnable {
     private final ArrayList<PlayerView> players;
     private ArrayList<String> availableDecks;
     private ArrayList<String> availableTowers;
-    private ArrayList<CharacterCard> availableCC;
-    private CharacterCardCreator ccc;
+    private final ArrayList<CharacterCard> availableCC;
+    private final CharacterCardCreator ccc;
     private boolean usedCharacterCard;
-    private Client client;
+    private final Client client;
     private String currentPlayer;
     private String mode;
     private int numOfPlayers;
-    private BufferedReader br;
-    private Gson gson;
+    private final BufferedReader br;
+    private final Gson gson;
     private int availableStudentsMovements = 3;
 
     public CLI(Client client) {
@@ -155,7 +154,7 @@ public class CLI implements View, Runnable {
     public void askCharacterCard(){
         System.out.println("Choose one of the character cards");
 
-        int choice = 0;
+        int choice;
         CharacterCard card = null;
         String str = "";
         do {
@@ -248,7 +247,7 @@ public class CLI implements View, Runnable {
             System.out.println("GRAY");
         if(numOfPlayers==4)
             System.out.println("Two players can chose the same tower color and they will be in the same team");
-        String colorChoice = null;
+        String colorChoice = "";
             try {
                 do {
                     colorChoice = br.readLine().toUpperCase();
@@ -276,14 +275,16 @@ public class CLI implements View, Runnable {
         for (String deck : availableDecks) {
             System.out.println(deck);
         }
-        String userChoice = null;
+        String userChoice ="";
         boolean deckAvailable = false;
         try {
             do {
                 userChoice = br.readLine();
                 for (String deck : availableDecks) {
-                    if (userChoice.toUpperCase().equals(deck))
+                    if (userChoice.toUpperCase().equals(deck)) {
                         deckAvailable = true;
+                        break;
+                    }
                 }
                 if (!deckAvailable)
                     System.out.println("Invalid deck, please choose a valid one: ");
@@ -412,6 +413,7 @@ public class CLI implements View, Runnable {
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
 
+        System.out.println("\n\nSTUDENTS FROM HALL TO ISLANDS");
         showIslands(null);
         System.out.println("Your current Hall: ");
         for(StudentColor student: player.getHall()){
@@ -426,10 +428,10 @@ public class CLI implements View, Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }while((!decisionToMoveStudents.toLowerCase().equals("yes")) && (!decisionToMoveStudents.toLowerCase().equals("no")));
+        }while((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
 
-        if(decisionToMoveStudents.toLowerCase().equals("yes")) {
-            int chosenIsland = 0;
+        if(decisionToMoveStudents.equalsIgnoreCase("yes")) {
+            int chosenIsland;
             int availableIslandChoices = 3;
             int numStudents = 0;
             ArrayList<StudentColor> studentsToI = new ArrayList<>();
@@ -444,7 +446,7 @@ public class CLI implements View, Runnable {
                 System.out.println("Choose the number of students that you want to move to this island " +
                         "(from 0 up to " + availableStudentsMovements + ") : ");
                 String str = "";
-                boolean notValidChoice = false;
+                boolean notValidChoice;
                 do {
                     try {
                         str = br.readLine();
@@ -537,7 +539,7 @@ public class CLI implements View, Runnable {
             System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
         }
         int chosenCloud = 0;
-        boolean notValidChoice = false;
+        boolean notValidChoice;
         String str = "";
         do {
             try {
@@ -571,7 +573,7 @@ public class CLI implements View, Runnable {
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_CLOUDS;
-        int chosenIsland = 0;
+        int chosenIsland;
         int maxMovements=player.getUsedSupportCard().getMovement();
         boolean show= true;
         boolean validChoice;
@@ -601,10 +603,16 @@ public class CLI implements View, Runnable {
     }
 
     public void showIslands(Integer range){
-        System.out.println("Mother Nature is on island "+(motherNature.getCurrentIsland()+1) + "\n");
-
+        System.out.println("\nMother Nature is on island "+(motherNature.getCurrentIsland()+1));
+        String text;
+        for(StudentColor color: StudentColor.values()){
+            text= "The "+ color.toString().toLowerCase()+ " teacher is ";
+            text = text + teachers.getOrDefault(color, "yet to be decided");
+            System.out.println(text);
+        }
+        System.out.println("\n");
         int from = 0;
-        int to = availableIslands.size();
+        int to = availableIslands.size()-1;
 
         if (range != null) {
             from = motherNature.getCurrentIsland();
@@ -613,30 +621,73 @@ public class CLI implements View, Runnable {
                 showRange(from, to);
             }
             else {
-                showRange(from, availableIslands.size());
+                showRange(from, availableIslands.size()-1);
                 showRange(0, (from + range) % availableIslands.size());
             }
         }
         else {
-            showRange(from, to);
+            if(to>6) {
+                showRange(from, 5);
+                showRange(6, to);
+            }
+            else
+                showRange(from,to);
         }
     }
 
     private void showRange(int from, int to) {
-        for(; from < to; from++) {
-            String text = "Students on island " + (from+1) + "\n";
-            text = text + availableIslands.get(from).getStudents();
-            System.out.println(text);
-
-            System.out.println("Block on island: " + availableIslands.get(from).getBlockCard());
-
-            if (availableIslands.get(from).getTower() == null)
-                System.out.println("No tower on island\n");
-            else {
-                System.out.println("Tower on island: " + availableIslands.get(from).getTower());
-                System.out.println("Num of towers: " + availableIslands.get(from).getNumOfTowers() + "\n");
-            }
+        int numOfSpaces=10;
+        int maxSegmentLength=23;
+        String text="";
+        String segment;
+        for(int i= from; i <= to; i++) {
+            segment = "Students on island " + (i+1);
+            text = text+segment;
+            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
+                text=text+" ";
         }
+        System.out.println(text);
+        for(StudentColor color: StudentColor.values()) {
+            text="";
+            for (int i = from; i <= to; i++) {
+                segment = color.toString().toLowerCase() + " students: " + availableIslands.get(i).getStudentsByColor(color);
+                text = text + segment;
+                for (int j = 1; j < (numOfSpaces + (maxSegmentLength - segment.length())); j++)
+                    text = text + " ";
+            }
+            System.out.println(text);
+        }
+        text="";
+        for(int i= from; i <= to; i++){
+            segment="Block on island: " + availableIslands.get(i).getBlockCard();
+            text = text+segment;
+            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
+                text=text+" ";
+        }
+        System.out.println(text);
+        text="";
+        for(int i= from; i <=to; i++){
+            if (availableIslands.get(i).getTower() == null)
+               segment="No tower on island";
+            else
+                segment="Tower on island: " + availableIslands.get(i).getTower();
+            text = text+segment;
+            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
+                text=text+" ";
+        }
+        System.out.println(text);
+        text="";
+        for(int i= from; i <= to; i++){
+            if(availableIslands.get(i).getTower()!=null)
+                segment="Num of towers: " + availableIslands.get(i).getNumOfTowers();
+            else
+                segment="";
+            text = text+segment;
+            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
+                text=text+" ";
+        }
+        System.out.println(text);
+
     }
 
     /**
@@ -649,7 +700,7 @@ public class CLI implements View, Runnable {
         if (show)
             showIslands(range);
         System.out.println("Choose an island");
-        boolean notValidChoice = false;
+        boolean notValidChoice;
         String str = "";
         do {
             try {
@@ -673,7 +724,7 @@ public class CLI implements View, Runnable {
 
     /**
      * show a message (string) on the client screen. Called by message
-     * @param message
+     * @param message message to be shown
      */
     @Override
     public void showString(String message) {
@@ -682,7 +733,7 @@ public class CLI implements View, Runnable {
 
     /**
      * show the character card used by a player and his name. Called by message
-     * @param id
+     * @param id id of the used card
      */
     @Override
     public void showCharacterCard(int id) {
@@ -696,10 +747,11 @@ public class CLI implements View, Runnable {
 
     /**
      * show the support card used by a player and his name. Called by message
-     * @param id
+     * @param id id of the card
      */
     @Override
     public void showSupportCard(int id) {
+        System.out.println(currentPlayer + " used the following support card");
         System.out.println("Support card: " + id + "\n" +
                 "Support card movements: " + getSupportCardByID(id).getMovement() + "\n" +
                 "Support card turn order: " + getSupportCardByID(id).getTurnOrder() + "\n");
@@ -720,7 +772,7 @@ public class CLI implements View, Runnable {
         if (player.getNickname().equals(nick))
             return player;
         for(PlayerView player: players){
-            if(player.getNickname() == nick)
+            if(player.getNickname().equals(nick))
                 return player;
         }
         return null;
@@ -736,7 +788,7 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the price of a specific character card. Called by message
-     * @param id
+     * @param id id of the character card
      */
     @Override
     public void updateCharacterCardPrice(int id) {
@@ -745,7 +797,7 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the new position of mother nature (when other players changes it). Called by message
-     * @param island
+     * @param island island where mother nature is
      */
     @Override
     public void updateMotherPosition(int island) {
@@ -754,7 +806,7 @@ public class CLI implements View, Runnable {
 
     /**
      * update the Tower color chosen by the current player. Called by message
-     * @param tower
+     * @param tower color of the chosen tower
      */
     @Override
     public void updateTowerColor(String tower) {
@@ -762,14 +814,18 @@ public class CLI implements View, Runnable {
     }
 
     /**
-     * updates the status of the island. Called by message
-     * @param island
+     * place a block on the specified island. Called by message
+     * @param island: island to lock
      */
     @Override
     public void blockIsland(int island) {
         availableIslands.get(island).addBlockCard();
     }
 
+    /**
+     * removes the block on the specified island
+     * @param island island to unblock
+     */
     @Override
     public void unlockIsland(int island){
         availableIslands.get(island).removeBlockCard();
@@ -777,8 +833,8 @@ public class CLI implements View, Runnable {
 
     /**
      * merge two islands. Called by message
-     * @param toBeMerged
-     * @param mergeTo
+     * @param toBeMerged island that will be merged
+     * @param mergeTo island in to which the other island will be merged
      */
     @Override
     public void mergeIslands(int toBeMerged, int mergeTo) {
@@ -789,8 +845,8 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the added students on a specific island. Called by message
-     * @param island
-     * @param students
+     * @param island specified island
+     * @param students students to add
      */
     @Override
     public void addStudentsOnIsland(int island, ArrayList<StudentColor> students) {
@@ -799,7 +855,8 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the added students in the dining hall of the specified player. Called by message
-     * @param students
+     * @param nick nick of the player
+     * @param students students to add
      */
     @Override
     public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
@@ -825,7 +882,8 @@ public class CLI implements View, Runnable {
 
     /**
      * remove the students from the dining hall of a specified player. Called by message
-     * @param students
+     * @param nick nick of the player
+     * @param students students to remove
      */
     @Override
     public void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students) {
@@ -834,7 +892,7 @@ public class CLI implements View, Runnable {
 
     /**
      * update the hall of a specified player. Called by message
-     * @param students
+     * @param students students to add
      */
     @Override
     public void addStudentsToHall(ArrayList<StudentColor> students) {
@@ -853,7 +911,7 @@ public class CLI implements View, Runnable {
 
     /**
      * update the amount of coins that the player has. Called by message
-     * @param coin
+     * @param coin amount of coins
      */
     @Override
     public void updatePlayerCoins(int coin) {
@@ -884,28 +942,14 @@ public class CLI implements View, Runnable {
      * keep track of the status of the turn
      */
     public void resumeFrom(){
-        switch (resumeFrom){
-            case CHOOSE_SUPPORT_CARD :
-                askSupportCard();
-                break;
-            case CHOOSE_MOTHER_MOVEMENTS:
-                askMotherNatureMovements();
-                break;
-            case CHOOSE_CLOUDS:
-                askCloud();
-                break;
-            case CHOOSE_TOWER:
-                askTower();
-                break;
-            case CHOOSE_DECK:
-                askDeck();
-                break;
-            case CHOOSE_STUDENTS_TO_DINING_HALL:
-                askMoveStudentsHToD();
-                break;
-            case CHOOSE_STUDENTS_TO_ISLAND:
-                askMoveStudentsHToI();
-                break;
+        switch (resumeFrom) {
+            case CHOOSE_SUPPORT_CARD -> askSupportCard();
+            case CHOOSE_MOTHER_MOVEMENTS -> askMotherNatureMovements();
+            case CHOOSE_CLOUDS -> askCloud();
+            case CHOOSE_TOWER -> askTower();
+            case CHOOSE_DECK -> askDeck();
+            case CHOOSE_STUDENTS_TO_DINING_HALL -> askMoveStudentsHToD();
+            case CHOOSE_STUDENTS_TO_ISLAND -> askMoveStudentsHToI();
         }
 
     }
@@ -920,7 +964,7 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the clouds already chose, removing it from the available ones
-     * @param cloud
+     * @param cloud cloud to empty
      */
     public void updateEmptyCloud(int cloud) {
         availableClouds.get(cloud).removeStudents();
@@ -928,8 +972,8 @@ public class CLI implements View, Runnable {
 
     /**
      * updates the tower on an island
-     * @param island
-     * @param tower
+     * @param island index of the island (first index is 0)
+     * @param tower color of the tower
      */
     @Override
     public void updateTowerOnIsland(int island, String tower) {
@@ -938,7 +982,9 @@ public class CLI implements View, Runnable {
 
     /**
      * add students on cloud
-     * @param students
+     * if the cloud doesn't exit, it will be created
+     * @param cloud index of the cloud (first index is 0)
+     * @param students students to add
      */
     @Override
     public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
@@ -950,7 +996,7 @@ public class CLI implements View, Runnable {
 
     /**
      * updates which player is a teacher
-     * @param roles
+     * @param roles specifies of each teacher color which player is the the teacher;
      */
     public void updateTeacher(HashMap<StudentColor, String> roles) {
         teachers.putAll(roles);
@@ -958,7 +1004,7 @@ public class CLI implements View, Runnable {
 
     /**
      * show the deck chosen by the current player
-     * @param deck
+     * @param deck chosen deck
      */
     public void setPlayerDeck(String deck) {
         getPlayerByNick(currentPlayer).setDeck(deck);
