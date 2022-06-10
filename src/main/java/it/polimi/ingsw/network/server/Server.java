@@ -124,7 +124,7 @@ public class Server {
     }
 
     public void addToGame(String nick, ClientHandler clientHandler) {
-        smAskNickname message;
+        ServerMessage message;
         Gson gson = new Gson();
         if (isAlreadyPresent(nick)) {
             message = new smAskNickname("Nickname already taken. Choose another one ");
@@ -132,8 +132,8 @@ public class Server {
             clientHandler.sendMessage(text);
             return ;
         }
-        message = new smAskNickname("You have been connected ");
-        String text = gson.toJson(message, smAskNickname.class);
+        message = new smNotify("You have been connected ");
+        String text = gson.toJson(message, smNotify.class);
         clientHandler.sendMessage(text);
         clientHandlers.put(nick,clientHandler);
         controller.addPlayerToGame(nick);
