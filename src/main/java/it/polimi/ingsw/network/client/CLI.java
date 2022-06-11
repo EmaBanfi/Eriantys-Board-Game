@@ -559,10 +559,12 @@ public class CLI implements View, Runnable {
                     System.out.println("Invalid cloud, please choose a valid one: ");
             }
         } while (notValidChoice);
-        System.out.println("Chosen cloud:  " + chosenCloud);
+        player.addToHall(availableClouds.get(chosenCloud).getStudents());
+        availableClouds.get(chosenCloud).removeStudents();
+        System.out.println("Chosen cloud:  " + chosenCloud+1);
         cmCloud message = new cmCloud(chosenCloud);
         client.send(gson.toJson(message, cmCloud.class));
-        player.addToHall(availableClouds.get(chosenCloud).getStudents());
+
     }
 
     /**
@@ -613,35 +615,44 @@ public class CLI implements View, Runnable {
         }
         System.out.println("\n");
         int from = 0;
-        int to = availableIslands.size()-1;
+        int to = availableIslands.size();
 
         if (range != null) {
             from = motherNature.getCurrentIsland();
-            if (from + range < availableIslands.size()) {
-                to = from + range;
-                showRange(from, to);
+            if (from + range +1< availableIslands.size()) {
+                to = from + range + 1;
+                setRange(from, to);
             }
             else {
-                showRange(from, availableIslands.size()-1);
-                showRange(0, (from + range) % availableIslands.size());
+                setRange(from, to);
+                setRange(0, (from + range) % availableIslands.size()+1);
             }
         }
         else {
-            if(to>6) {
-                showRange(from, 5);
-                showRange(6, to);
-            }
-            else
-                showRange(from,to);
+            setRange(from,to);
         }
     }
 
+    /**
+     * set the values to pass to showIsland() so that only 5 island maxRange island are shown on the same line
+     * @param from first island to be shown
+     * @param to first island that will not be shown
+     */
+    private void setRange(int from, int to){
+        int maxRange=5;
+        while(to-from>maxRange){
+            showRange(from,from+maxRange);
+            from=from+maxRange;
+        }
+        showRange(from,to);
+    }
+
     private void showRange(int from, int to) {
-        int numOfSpaces=10;
+        int numOfSpaces=9;
         int maxSegmentLength=23;
         String text="";
         String segment;
-        for(int i= from; i <= to; i++) {
+        for(int i= from; i <to; i++) {
             segment = "Students on island " + (i+1);
             text = text+segment;
             for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
@@ -650,7 +661,7 @@ public class CLI implements View, Runnable {
         System.out.println(text);
         for(StudentColor color: StudentColor.values()) {
             text="";
-            for (int i = from; i <= to; i++) {
+            for (int i = from; i < to; i++) {
                 segment = color.toString().toLowerCase() + " students: " + availableIslands.get(i).getStudentsByColor(color);
                 text = text + segment;
                 for (int j = 1; j < (numOfSpaces + (maxSegmentLength - segment.length())); j++)
@@ -659,7 +670,7 @@ public class CLI implements View, Runnable {
             System.out.println(text);
         }
         text="";
-        for(int i= from; i <= to; i++){
+        for(int i= from; i < to; i++){
             segment="Block on island: " + availableIslands.get(i).getBlockCard();
             text = text+segment;
             for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
@@ -667,7 +678,7 @@ public class CLI implements View, Runnable {
         }
         System.out.println(text);
         text="";
-        for(int i= from; i <=to; i++){
+        for(int i= from; i <to; i++){
             if (availableIslands.get(i).getTower() == null)
                segment="No tower on island";
             else
@@ -678,7 +689,7 @@ public class CLI implements View, Runnable {
         }
         System.out.println(text);
         text="";
-        for(int i= from; i <= to; i++){
+        for(int i= from; i < to; i++){
             if(availableIslands.get(i).getTower()!=null)
                 segment="Num of towers: " + availableIslands.get(i).getNumOfTowers();
             else

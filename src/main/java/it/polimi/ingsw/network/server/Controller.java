@@ -656,6 +656,7 @@ public class Controller {
                 gson.toJson(message, smStudentsInHall.class));
         if(!game.lastPlayerOfRound()){
             game.nextPlayer();
+            nick=game.getCurrentPlayer().getNickName();
             smCurrentPlayer message3 = new smCurrentPlayer(
                     nick + " will chose a cloud",
                     nick);
