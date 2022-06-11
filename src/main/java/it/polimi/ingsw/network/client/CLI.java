@@ -136,14 +136,19 @@ public class CLI implements View, Runnable {
             c.showCard();
             System.out.println("\n");
         }
-        System.out.println("Do you want to activate a character card? (yes|no)");
-
-        try {
-            if (br.readLine().equalsIgnoreCase("yes")) {
-                askCharacterCard();
+        String str = "";
+        do {
+            System.out.println("Do you want to activate a character card? (yes|no)");
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if(!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"))
+                System.out.println("Please select yes or no");
+        }while(!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
+        if (str.equalsIgnoreCase("yes")) {
+            askCharacterCard();
         }
     }
 
@@ -537,7 +542,9 @@ public class CLI implements View, Runnable {
 
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         for (int i = 0; i < availableClouds.size(); i++) {
-            System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
+            if(!availableClouds.get(i).getStudents().isEmpty()){
+                System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
+            }
         }
         int chosenCloud = 0;
         boolean notValidChoice;
@@ -588,16 +595,16 @@ public class CLI implements View, Runnable {
         do {
             chosenIsland = askIsland(show, maxMovements)-1;
             show=false;
-            validChoice=(Math.abs(motherNature.getCurrentIsland()-(chosenIsland))<=maxMovements);
+            validChoice = convertIslandToMovements(chosenIsland) <= maxMovements;
             if(!validChoice)
                 System.out.println("Movements exceed max movements: " +maxMovements);
         }while (!validChoice);
         System.out.println("Chosen island: " + (chosenIsland+1));
-        cmMoveMother message = new cmMoveMother(covertIslandToMovements(chosenIsland));
+        cmMoveMother message = new cmMoveMother(convertIslandToMovements(chosenIsland));
         client.send(gson.toJson(message, cmMoveMother.class));
     }
 
-    private int covertIslandToMovements(int island){
+    private int convertIslandToMovements(int island){
         int movements = island-motherNature.getCurrentIsland();
         if(movements<0){
             movements=availableIslands.size()+movements;

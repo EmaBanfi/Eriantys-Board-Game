@@ -67,7 +67,7 @@ public class Client {
 
     public void connection() {
         try {
-            s = new Socket("192.168.1.157", 888);
+            s = new Socket("192.168.3.80", 888);
         } catch (IOException e) {
             e.printStackTrace();
         }

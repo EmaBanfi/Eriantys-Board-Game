@@ -119,6 +119,7 @@ public class Server {
         controller.addPlayerToGame(nick);
 
         if(controller.gameIsFull()){
+            controller.initializePlayersHall();
             controller.notifyGameStatus();
             controller.notifyPlayers();
             controller.notifyStudentsOnIslands();

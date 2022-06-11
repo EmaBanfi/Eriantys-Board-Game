@@ -158,7 +158,6 @@ public class Controller {
         game.setNumOfPlayers(numOfPlayers);
         board=new GameBoard(numOfPlayers);
         board.setPlayers(game.getPlayers());
-        initializePlayersHall();
         if(mode.equals("expert")){
             characterCardBoard=new CharacterCardBoard();
             characterCardBoard.initializeAvailableCC();
@@ -688,7 +687,7 @@ public class Controller {
             gameResults();
         }
         else {
-            game.nextPlayer();
+            //game.nextPlayer();
             for (Player player : game.getPlayers())
                 player.clearUsedSupportCard();
             refillClouds();
