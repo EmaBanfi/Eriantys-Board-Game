@@ -102,11 +102,12 @@ class ControllerTest {
     @Test
     void moveStudentsHToD() {
         controller.setGameStatus("expert", 4);
+        game.getCurrentPlayer().getBoard().removeStudentsFromHall(game.getCurrentPlayer().getBoard().getHall().getStudents());
         ArrayList<StudentColor> students = new ArrayList<>();
-        for(int i =1; i<3; i++) {
+        for(int i =1; i<=3; i++) {
             students.add(StudentColor.RED);
         }
-        game.getCurrentPlayer().getBoard().addStudentsToDiningHall(students);
+        game.getCurrentPlayer().getBoard().addStudentsToHall(students);
         controller.moveStudentsHToD(students);
         assertFalse(game.getCurrentPlayer().getBoard().getHall().getStudents().contains(StudentColor.RED));
         assertTrue(game.getCurrentPlayer().getBoard().getDiningHall().getStudents().contains(StudentColor.RED));
@@ -116,13 +117,12 @@ class ControllerTest {
     @Test
     void setChosenCloud() {
         controller.setGameStatus("normal", 4);
-        ArrayList<StudentColor> students = new ArrayList<>();
-        students.addAll(controller.getBoard().getClouds().get(0).getStudents());
+        ArrayList<StudentColor> students = new ArrayList<>(controller.getBoard().getClouds().get(0).getStudents());
         controller.setChosenCloud(0);
         for(StudentColor color : students){
             assertTrue(game.getPlayers().get(0).getBoard().getHall().getStudents().contains(color));
         }
-        assertFalse(controller.getBoard().getClouds().get(0).getStudents().contains(students));
+        assertTrue(controller.getBoard().getClouds().get(0).getStudents().isEmpty());
     }
 
 
