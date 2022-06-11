@@ -316,7 +316,7 @@ class ControllerTest {
         controller.setGameStatus("expert",4);
         Bag bag = controller.getBoard().getBag();
         controller.refillCard(4,4);
-        assertEquals(96-4-(7*controller.getGame().getNumOfPlayers()),bag.totalNumOfStudents());
+        assertEquals(96-4,bag.totalNumOfStudents());
 
     }
 
