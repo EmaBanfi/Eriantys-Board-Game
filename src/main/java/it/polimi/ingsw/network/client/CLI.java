@@ -561,7 +561,7 @@ public class CLI implements View, Runnable {
         } while (notValidChoice);
         player.addToHall(availableClouds.get(chosenCloud).getStudents());
         availableClouds.get(chosenCloud).removeStudents();
-        System.out.println("Chosen cloud:  " + chosenCloud+1);
+        System.out.println("Chosen cloud:  " + (chosenCloud+1));
         cmCloud message = new cmCloud(chosenCloud);
         client.send(gson.toJson(message, cmCloud.class));
 

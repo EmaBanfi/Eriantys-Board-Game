@@ -658,7 +658,7 @@ public class Controller {
             game.nextPlayer();
             nick=game.getCurrentPlayer().getNickName();
             smCurrentPlayer message3 = new smCurrentPlayer(
-                    nick + " will chose a cloud",
+                    nick + " will chose which students to move to islands",
                     nick);
             server.sendAll(gson.toJson(message3, smCurrentPlayer.class));
         }
