@@ -12,6 +12,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
@@ -48,7 +49,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Do you want to play with CLI or GUI?");
+        System.out.println("\nDo you want to play with CLI or GUI?");
         System.out.println("CLI: 1");
         System.out.println("GUI: 2");
 
@@ -66,10 +67,19 @@ public class Client {
     }
 
     public void connection() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\nInsert the server IP address");
+        String ip = scanner.nextLine();
+
+        System.out.println("Insert the server port");
+        int port = scanner.nextInt();
+
         try {
-            s = new Socket("192.168.3.80", 888);
+            s = new Socket(ip, port);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Server not found, the executable will be closed");
+            System.exit(-1);
         }
     }
 
@@ -81,7 +91,7 @@ public class Client {
                 e.printStackTrace();
             }
             if(str != null) {
-                System.out.println("received from server: "+ str);
+                //System.out.println("received from server: "+ str);
                 ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }
@@ -107,7 +117,21 @@ public class Client {
         }
     }
 
+    public Integer stringToInteger(String str) {
+        boolean valid = true;
 
+        for (int i=0; i<str.length(); i++) {
+            if (str.charAt(i) < 48 || str.charAt(i) > 57) {
+                valid = false;
+                break;
+            }
+        }
+
+        if (valid)
+            return Integer.valueOf(str);
+
+        return null;
+    }
     public View getView() {
         return view;
     }

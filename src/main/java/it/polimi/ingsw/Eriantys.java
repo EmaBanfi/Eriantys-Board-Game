@@ -1,0 +1,26 @@
+package it.polimi.ingsw;
+
+import it.polimi.ingsw.network.client.Client;
+import it.polimi.ingsw.network.server.Server;
+
+import java.util.Scanner;
+
+public class Eriantys {
+
+    public static void main(String[] args) throws Exception {
+        System.out.println("Welcome to Eriantys!");
+        System.out.println("Select:\n0 -> Server\n1 -> Client");
+        System.out.println("Insert your choice");
+
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        choice = scanner.nextInt();
+
+        switch (choice) {
+            case 0 -> Server.main(null);
+            case 1 -> Client.main(null);
+            default -> System.err.println("Not a valid choice, the executable will be closed");
+        }
+    }
+}

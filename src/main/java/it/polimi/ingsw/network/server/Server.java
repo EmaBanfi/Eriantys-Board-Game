@@ -17,7 +17,6 @@ public class Server {
     private HashMap<Integer,ClientHandler> lobby;
     private HashMap<String,ClientHandler> clientHandlers;
     private int  id=1;
-    private final boolean listeningSocket = true;
 
     public Server(int port){
         serverSocket = null;
@@ -25,9 +24,9 @@ public class Server {
             serverSocket = new ServerSocket(port);
 
         } catch (IOException e) {
-            System.err.println("Could not listen on port "+port);
+            System.err.println("\nCould not listen on port "+port);
         }
-        System.out.println("Listening on port "+port+"...");
+        System.out.println("\nListening on port "+port+"...\n");
         lobby = new HashMap<>();
         clientHandlers = new HashMap<>();
         controller = new Controller(this);
@@ -54,6 +53,8 @@ public class Server {
     }
 
     public void waitForPlayers() {
+        boolean listeningSocket = true;
+
         while (listeningSocket) {
             Socket clientSocket = null;
             try {
