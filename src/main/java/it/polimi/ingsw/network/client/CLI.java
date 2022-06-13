@@ -1064,7 +1064,12 @@ public class CLI implements View, Runnable {
             client.send(text);
         }
 
-        System.exit(0);
+        closeGame();
+    }
+
+    @Override
+    public void closeGame() {
+        System.exit(-1);
     }
 
 

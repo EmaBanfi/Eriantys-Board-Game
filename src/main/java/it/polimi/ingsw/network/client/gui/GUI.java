@@ -288,6 +288,11 @@ public class GUI extends Application implements View {
     }
 
     @Override
+    public void closeGame() {
+
+    }
+
+    @Override
     public void addPlayers(ArrayList<String> players){}
 
     @Override

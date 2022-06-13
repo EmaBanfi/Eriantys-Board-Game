@@ -45,6 +45,8 @@ public class ClientMessageDeserializer implements JsonDeserializer<ClientMessage
                     return jsonDeserializationContext.deserialize(jsonObject, cmCloud.class);
                 case "disconnect":
                     return jsonDeserializationContext.deserialize(jsonObject, cmDisconnect.class);
+                case "test":
+                    return jsonDeserializationContext.deserialize(jsonObject, cmTestConnection.class);
             }
 
         return null;

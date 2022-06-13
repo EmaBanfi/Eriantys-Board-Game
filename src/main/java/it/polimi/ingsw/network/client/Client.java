@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.client;
 import com.google.gson.Gson;
 
 import it.polimi.ingsw.network.client.gui.GUI;
-import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
+import it.polimi.ingsw.network.messages.clientMessages.cmTestConnection;
 import it.polimi.ingsw.network.messages.serverMessages.ServerMessage;
 import it.polimi.ingsw.network.messages.serverMessages.ServerGson;
 
@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class Client extends Thread {
 
     private Socket s;
     private DataOutputStream dos;
@@ -24,6 +24,7 @@ public class Client {
     private boolean serverUp;
     private ServerGson smgson;
     private View view;
+    private int timeout = 15000;
 
 
     public Client(String viewType) {
@@ -44,6 +45,9 @@ public class Client {
 
         kb = new BufferedReader(new InputStreamReader(System.in));
         serverUp = true;
+
+        Thread thread1 = new ClientTimer(this);
+        thread1.start();
 
         receive();
     }
@@ -72,23 +76,22 @@ public class Client {
         System.out.println("\nInsert the server IP address");
         String ip = scanner.nextLine();
 
-        System.out.println("Insert the server port");
-        int port = scanner.nextInt();
-
         try {
-            s = new Socket(ip, port);
+            s = new Socket(ip, 888);
         } catch (IOException e) {
             System.out.println("Server not found, the executable will be closed");
             System.exit(-1);
         }
     }
 
-    public void receive() {
+    public synchronized void receive() {
         while (serverUp) {
             try {
                 str = br.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("You are not anymore connected.\nThe game will be closed.");
+
+                System.exit(-1);
             }
             if(str != null) {
                 //System.out.println("received from server: "+ str);
@@ -113,8 +116,23 @@ public class Client {
         try {
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
+            System.out.println("You are not anymore connected.\nThe game will be closed.");
+
+            System.exit(-1);
+        }
+    }
+
+    private synchronized void testConnection() {
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        Gson gson = new Gson();
+        cmTestConnection message = new cmTestConnection();
+        String text =  gson.toJson(message, cmTestConnection.class);
+        send(text);
     }
 
     public Integer stringToInteger(String str) {

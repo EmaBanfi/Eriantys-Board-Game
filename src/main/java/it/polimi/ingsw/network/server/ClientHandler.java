@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.ClientTimer;
 import it.polimi.ingsw.network.messages.clientMessages.ClientMessage;
 import it.polimi.ingsw.network.messages.clientMessages.ClientGson;
 import it.polimi.ingsw.network.messages.serverMessages.*;
@@ -18,6 +19,7 @@ public class ClientHandler extends Thread {
     private final Server server;
     private final int handlerId;
     private final ClientGson clientGson;
+    private ServerTimer serverTimer;
 
     public ClientHandler(Socket socket, Server server, int id) {
         super("ClientHandler");
@@ -33,6 +35,9 @@ public class ClientHandler extends Thread {
         }
 
         clientGson = new ClientGson();
+
+        serverTimer = new ServerTimer(this);
+        serverTimer.start();
     }
 
     public synchronized void run() {
@@ -48,14 +53,18 @@ public class ClientHandler extends Thread {
         String str = null;
 
         while (true) {
+            serverTimer.resetWaitingTime();
+
             try {
                 if ((str = br.readLine()) == null)
                     break;
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("The connection is lost. The game is finished.");
+
+                System.exit(-1);
             }
             if(str!=null) {
-                System.out.println("received by client handler "+handlerId+" from client "+str);
+                System.out.println("received by client handler " + handlerId + " from client " + str);
                 ClientMessage message = clientGson.deserialize(str);
                 message.processMessage(this);
             }
@@ -110,5 +119,19 @@ public class ClientHandler extends Thread {
         server.removeFromLobby(handlerId);
 
         server.removeClientHandler(nick);
+    }
+
+    public void manageDisconnection() {
+        String text = "The game will be closed because the connection with player " + server.getNickByHandlerId(handlerId) + " is lost";
+
+        Gson gson = new Gson();
+        smCloseThemAll message = new smCloseThemAll(text);
+        text = gson.toJson(message, smCloseThemAll.class);
+
+        getServer().sendAll(text);
+
+        System.out.println("The connection is lost. The game is finished.");
+
+        System.exit(-1);
     }
 }

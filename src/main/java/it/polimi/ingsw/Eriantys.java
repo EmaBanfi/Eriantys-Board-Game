@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Eriantys {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Welcome to Eriantys!");
+        System.out.println("\nWelcome to Eriantys!");
         System.out.println("Select:\n0 -> Server\n1 -> Client");
         System.out.println("Insert your choice");
 

@@ -299,6 +299,8 @@ public interface View {
      */
     void disconnectFromServer();
 
+    void closeGame();
+
     /**
      * this method is used to initialise the players arraylist
      * @param players nick of all the players in the match
