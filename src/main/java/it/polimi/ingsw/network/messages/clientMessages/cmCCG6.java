@@ -35,8 +35,8 @@ public class cmCCG6 extends ClientMessage{
             controller.switchCC7(toHall, fromHall);
 
         else {
-            controller.moveStudentsHToD(toHall);
             controller.moveStudentsDToH(fromHall);
+            controller.moveStudentsHToD(toHall);
         }
     }
 }

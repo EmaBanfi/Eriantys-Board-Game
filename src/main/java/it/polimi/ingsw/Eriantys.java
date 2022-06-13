@@ -8,9 +8,10 @@ import java.util.Scanner;
 public class Eriantys {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("\nWelcome to Eriantys!");
-        System.out.println("Select:\n0 -> Server\n1 -> Client");
-        System.out.println("Insert your choice");
+        System.out.println("\n");
+        System.out.println("Welcome to Eriantys!\n");
+        System.out.println("Do you want to run the Server or a Client? \n\n0 -> Server\n1 -> Client");
+        System.out.println("\nInsert your choice: ");
 
         Scanner scanner = new Scanner(System.in);
 

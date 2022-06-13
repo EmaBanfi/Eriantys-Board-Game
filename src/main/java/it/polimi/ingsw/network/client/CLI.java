@@ -595,7 +595,8 @@ public class CLI implements View, Runnable {
         do {
             chosenIsland = askIsland(show, maxMovements)-1;
             show=false;
-            validChoice = convertIslandToMovements(chosenIsland) <= maxMovements;
+            int movements = convertIslandToMovements(chosenIsland);
+            validChoice = (movements <= maxMovements && movements > 0);
             if(!validChoice)
                 System.out.println("Movements exceed max movements: " +maxMovements);
         }while (!validChoice);
@@ -626,7 +627,7 @@ public class CLI implements View, Runnable {
 
         if (range != null) {
             from = motherNature.getCurrentIsland();
-            if (from + range +1< availableIslands.size()) {
+            if (from + range< availableIslands.size()) {
                 to = from + range + 1;
                 setRange(from, to);
             }
@@ -706,7 +707,7 @@ public class CLI implements View, Runnable {
                 text=text+" ";
         }
         System.out.println(text);
-
+        System.out.println("\n");
     }
 
     /**

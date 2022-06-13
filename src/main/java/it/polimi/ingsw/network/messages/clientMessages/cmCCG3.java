@@ -22,7 +22,7 @@ public class cmCCG3 extends ClientMessage {
     @Override
     public void processMessage(ClientHandler handler) {
         Controller controller = handler.getServer().getController();
-        controller.notifyUsedCharacterCard(3);
+        controller.notifyUsedCharacterCard(4);
 
         controller.additionalMotherMovements(movements);
     }

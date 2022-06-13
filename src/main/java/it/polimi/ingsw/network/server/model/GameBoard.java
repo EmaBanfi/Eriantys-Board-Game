@@ -242,23 +242,23 @@ public class GameBoard {
             server.sendAll(gson.toJson(message, smTowerColor.class));
             islands.get(island).setTower(newTower);
 //            System.out.println("island n "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
-            if (islands.get(island).getTower()==islands.get(next).getTower()) {
-                text = "island " + (previous + 1) + " has been merged in to island " + (island +1);
-                message = new smMerge(
-                        text,
-                        island,
-                        previous
-                );
-                server.sendAll(gson.toJson(message, smMerge.class));
-                mergeIslands(island, next);
-                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-            }
-            if (islands.get(island).getTower() == islands.get(previous).getTower()) {
+            if (islands.get(island).getTower().equals(islands.get(next).getTower())) {
                 text = "island " + (next + 1) + " has been merged in to island " + (island +1);
                 message = new smMerge(
                         text,
                         island,
                         next
+                );
+                server.sendAll(gson.toJson(message, smMerge.class));
+                mergeIslands(island, next);
+                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+            }
+            if (islands.get(island).getTower().equals(islands.get(previous).getTower())) {
+                text = "island " + (previous + 1) + " has been merged in to island " + (island +1);
+                message = new smMerge(
+                        text,
+                        island,
+                        previous
                         );
                 server.sendAll(gson.toJson(message, smMerge.class));
                 mergeIslands(island, previous);

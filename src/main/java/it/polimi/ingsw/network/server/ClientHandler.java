@@ -19,7 +19,7 @@ public class ClientHandler extends Thread {
     private final Server server;
     private final int handlerId;
     private final ClientGson clientGson;
-    private ServerTimer serverTimer;
+    //private ServerTimer serverTimer;
 
     public ClientHandler(Socket socket, Server server, int id) {
         super("ClientHandler");
@@ -36,8 +36,8 @@ public class ClientHandler extends Thread {
 
         clientGson = new ClientGson();
 
-        serverTimer = new ServerTimer(this);
-        serverTimer.start();
+       // serverTimer = new ServerTimer(this);
+        // serverTimer.start();
     }
 
     public synchronized void run() {
@@ -53,7 +53,7 @@ public class ClientHandler extends Thread {
         String str = null;
 
         while (true) {
-            serverTimer.resetWaitingTime();
+            //serverTimer.resetWaitingTime();
 
             try {
                 if ((str = br.readLine()) == null)

@@ -46,8 +46,8 @@ public class Client extends Thread {
         kb = new BufferedReader(new InputStreamReader(System.in));
         serverUp = true;
 
-        Thread thread1 = new ClientTimer(this);
-        thread1.start();
+        //Thread thread1 = new ClientTimer(this);
+        //thread1.start();
 
         receive();
     }
@@ -135,21 +135,6 @@ public class Client extends Thread {
         send(text);
     }
 
-    public Integer stringToInteger(String str) {
-        boolean valid = true;
-
-        for (int i=0; i<str.length(); i++) {
-            if (str.charAt(i) < 48 || str.charAt(i) > 57) {
-                valid = false;
-                break;
-            }
-        }
-
-        if (valid)
-            return Integer.valueOf(str);
-
-        return null;
-    }
     public View getView() {
         return view;
     }

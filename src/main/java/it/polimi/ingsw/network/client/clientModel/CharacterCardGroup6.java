@@ -22,7 +22,7 @@ public class CharacterCardGroup6 extends CharacterCard {
             setPrice(1);
         }
         else if (getCardId() == 10){
-            setText("You can swap 2 students from your Hall to your Dining Hall");
+            setText("You can swap up to 2 students from your Hall to your Dining Hall");
             setPrice(1);
         }
     }
@@ -90,10 +90,10 @@ public class CharacterCardGroup6 extends CharacterCard {
             int numberChoice = 1;
             int max = player.getDiningHall().size();
 
-            if (max > 2)
+            if (max < 2)
                 max = 1;
 
-            if (max == 2)
+            if (max >= 2)
                 numberChoice = askNumOfStudents(max);
 
             System.out.println("Choose " + numberChoice + " students to move from the hall to the dining hall");
@@ -117,7 +117,7 @@ public class CharacterCardGroup6 extends CharacterCard {
                     studentsToHall.add(color);
                     player.getDiningHall().remove(color);
                 }
-            } while (numOfStudents < 2);
+            } while (numOfStudents < numberChoice);
 
             player.addToHall(studentsToHall);
             player.addToDiningHall(studentsFromHall);

@@ -438,7 +438,7 @@ public class Controller {
         message = new smStudentsOnIsland(
                 "Students on island "+ island+" have been updated",
                 island,
-                board.getIsland(island).getStudents());
+                students);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smStudentsOnIsland.class));
@@ -939,7 +939,6 @@ public class Controller {
         server.sendAllExceptPlayer(
                 player.getNickName(),
                 gson.toJson(message, smStudentsInHall.class));
-        resumeTurn();
     }
 
     /**
@@ -1049,7 +1048,7 @@ public class Controller {
         ServerMessage message;
         game.getCurrentPlayer().getBoard().addStudentsToHall(studentToH);
         message = new smStudentsOnCard(
-                11,
+                7,
                 studentToH,
                 false);
         server.sendAllExceptPlayer(
@@ -1067,7 +1066,7 @@ public class Controller {
         text = "Students on character card 7 have been updated";
         message = new smStudentsOnCard(
                 text,
-                11,
+                7,
                 studentToH,
                 true);
         server.sendAllExceptPlayer(
