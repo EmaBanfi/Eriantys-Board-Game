@@ -484,7 +484,7 @@ public class Controller {
      * if mode is "expert" notify all student of the coins earned by the current player
      * @param students students to move
      */
-    public void moveStudentsHToD(ArrayList<StudentColor> students){
+    public void moveStudentsHToD(ArrayList<StudentColor> students, boolean normal){
         String nickName = game.getCurrentPlayer().getNickName();
         String text;
         ServerMessage message;
@@ -517,7 +517,7 @@ public class Controller {
                 server.sendAll(gson.toJson(message, smCoins.class));
             }
         }
-        assignTeachers();
+        assignTeachers(normal);
     }
 
     /**
@@ -525,7 +525,7 @@ public class Controller {
      * depending on the number of students on each player's hall
      * notify all players
      */
-    public void assignTeachers(){
+    public void assignTeachers(boolean normal){
         String s="The new teachers are the following:\n";
         HashMap<StudentColor,String> roles= new HashMap<>();
         for(StudentColor color : StudentColor.values()){
@@ -572,15 +572,17 @@ public class Controller {
         smTeacherAssignment message=new smTeacherAssignment(s, roles);
         String json= gson.toJson(message, smTeacherAssignment.class);
         server.sendAll(json);
-        String nick = game.getCurrentPlayer().getNickName();
-        String text = nick + " will chose movements of Mother Nature";
-        smCurrentPlayer message2 = new smCurrentPlayer(
-                text,
-                nick
-        );
-        server.sendMessage(
-                game.getCurrentPlayer().getNickName(),
-                gson.toJson(message2, smCurrentPlayer.class));
+        if(normal) {
+            String nick = game.getCurrentPlayer().getNickName();
+            String text = nick + " will chose movements of Mother Nature";
+            smCurrentPlayer message2 = new smCurrentPlayer(
+                    text,
+                    nick
+            );
+            server.sendMessage(
+                    game.getCurrentPlayer().getNickName(),
+                    gson.toJson(message2, smCurrentPlayer.class));
+        }
     }
 
 
@@ -794,7 +796,7 @@ public class Controller {
      */
     public void setBonusToPromotion(){
         game.getCurrentPlayer().setBonusToPromotion(true);
-        resumeTurn();
+        //resumeTurn();
     }
 
     /**
@@ -803,7 +805,7 @@ public class Controller {
      */
     public void setAdditionalInfluencePoints(){
         game.getCurrentPlayer().setAdditionalInfluencePoints(true);
-        resumeTurn();
+        //resumeTurn();
     }
 
     /**
@@ -826,7 +828,6 @@ public class Controller {
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smBlockOnCard.class));
-        resumeTurn();
     }
 
     /**
@@ -866,7 +867,6 @@ public class Controller {
                     false);
             server.sendAll(gson.toJson(message, smStudentsInHall.class));
         }
-        resumeTurn();
     }
 
     /**
@@ -878,7 +878,7 @@ public class Controller {
         String text = "For this turn " + color.toString().toLowerCase() + " students will not be counted in the assigment of influence points";
         smNotify message = new smNotify(text);
         server.sendAll(gson.toJson(message, smNotify.class));
-        resumeTurn();
+        //resumeTurn();
     }
 
     /**
@@ -891,7 +891,6 @@ public class Controller {
         String text  = "Mother Nature has been moved to island " + currentIsland;
         smMotherPosition message = new smMotherPosition(text, currentIsland -1 );
         server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smMotherPosition.class));
-        resumeTurn();
     }
 
     /**
@@ -907,7 +906,6 @@ public class Controller {
             gameResults();
             return;
         }
-        resumeTurn();
     }
 
     /**
@@ -979,7 +977,6 @@ public class Controller {
         server.sendAll(
                 gson.toJson(message, smNotify.class)
         );
-        resumeTurn();
     }
 
     /**

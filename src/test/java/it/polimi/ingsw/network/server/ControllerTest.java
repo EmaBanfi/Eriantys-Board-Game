@@ -108,7 +108,7 @@ class ControllerTest {
             students.add(StudentColor.RED);
         }
         game.getCurrentPlayer().getBoard().addStudentsToHall(students);
-        controller.moveStudentsHToD(students);
+        controller.moveStudentsHToD(students, true);
         assertFalse(game.getCurrentPlayer().getBoard().getHall().getStudents().contains(StudentColor.RED));
         assertTrue(game.getCurrentPlayer().getBoard().getDiningHall().getStudents().contains(StudentColor.RED));
         assertEquals(2, game.getCurrentPlayer().getBoard().getCoins());
@@ -131,7 +131,7 @@ class ControllerTest {
         controller.setGameStatus("expert", 4);
         controller.setBonusToPromotion();
         assertTrue(game.getCurrentPlayer().hasBonusToPromotion());
-        controller.assignTeachers();
+        controller.assignTeachers(false);
         assertFalse(game.getCurrentPlayer().hasBonusToPromotion());
     }
 
@@ -355,7 +355,7 @@ class ControllerTest {
         game.getPlayers().get(2).addRole(StudentColor.YELLOW);
         game.getPlayers().get(2).getBoard().getDiningHall().addStudent(StudentColor.YELLOW);
         game.getPlayers().get(3).getBoard().getDiningHall().addStudent(StudentColor.PURPLE);
-        controller.assignTeachers();
+        controller.assignTeachers(false);
         assertTrue(game.getPlayers().get(0).getRoles().contains(StudentColor.GREEN));
         assertTrue(game.getPlayers().get(0).getRoles().contains(StudentColor.YELLOW));
         assertTrue(game.getPlayers().get(0).getRoles().contains(StudentColor.BLUE));

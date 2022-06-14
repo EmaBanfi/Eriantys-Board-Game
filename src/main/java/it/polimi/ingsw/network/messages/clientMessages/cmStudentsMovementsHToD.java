@@ -26,6 +26,6 @@ public class cmStudentsMovementsHToD extends ClientMessage {
         if(students==null)
             handler.getServer().getController().notifyNothingToDiningHall();
         else
-            handler.getServer().getController().moveStudentsHToD(students);
+            handler.getServer().getController().moveStudentsHToD(students, true);
     }
 }

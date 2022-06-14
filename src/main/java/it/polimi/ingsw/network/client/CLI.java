@@ -748,6 +748,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void showString(String message) {
+        String s = message;
         System.out.println(message);
     }
 
@@ -1097,6 +1098,8 @@ public class CLI implements View, Runnable {
     public Integer stringToInteger(String str) {
         boolean valid = true;
 
+        if(str.equals(""))
+            return null;
         for (int i=0; i<str.length(); i++) {
             if (str.charAt(i) < 48 || str.charAt(i) > 57) {
                 valid = false;

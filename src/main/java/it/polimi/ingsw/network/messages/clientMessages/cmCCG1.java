@@ -30,6 +30,5 @@ public class cmCCG1 extends ClientMessage{
         controller.addStudentToIsland(island, color);
 
         controller.refillCard(1, 1);
-        controller.resumeTurn();
     }
 }

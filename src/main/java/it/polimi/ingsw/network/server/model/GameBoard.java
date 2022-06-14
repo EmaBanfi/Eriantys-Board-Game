@@ -261,8 +261,8 @@ public class GameBoard {
                         previous
                         );
                 server.sendAll(gson.toJson(message, smMerge.class));
-                mergeIslands(island, previous);
                 newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                mergeIslands(island, previous);
             }
             else{
                 text = "There will be no merging because adjacent islands have tower of different colors than" +

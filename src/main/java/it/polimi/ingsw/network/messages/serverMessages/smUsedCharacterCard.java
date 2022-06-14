@@ -28,11 +28,13 @@ public class smUsedCharacterCard extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
+        if (increasedPrice)
+            client.getView().updateCharacterCardPrice(cardId);
+
         client.getView().showCharacterCard(cardId);
 
         client.getView().getPlayerByNick(client.getView().getCurrentPlayer()).decreaseCoins(price);
 
-        if (increasedPrice)
-            client.getView().updateCharacterCardPrice(cardId);
+
     }
 }
