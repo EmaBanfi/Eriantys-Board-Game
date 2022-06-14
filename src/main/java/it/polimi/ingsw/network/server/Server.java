@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Server {
 
@@ -223,5 +221,45 @@ public class Server {
                 return nick;
 
         return null;
+    }
+
+    public void manageDisconnection(int handlerId) {
+        if (clientHandlers.size() != maxPlayers)
+            nameUnknownDisconnection(handlerId);
+        else
+            nameKnownDisconnection(handlerId);
+    }
+
+    private void nameUnknownDisconnection(int id) {
+        String text = "\nThe game will be closed because the connection with player " + id + " is lost.";
+
+        Gson gson = new Gson();
+        smCloseThemAll message = new smCloseThemAll(text);
+        text = gson.toJson(message, smCloseThemAll.class);
+
+        communicateDisconnection(id, text);
+
+        if (clientHandlers.size() <= id)
+            System.out.println("\nThe connection whit player " + getNickByHandlerId(id) + " is lost. The game is finished.");
+        else
+            System.out.println("\nThe connection whit player " + id + " is lost. The game is finished.");
+    }
+
+    private void communicateDisconnection(int id, String message) {
+        for(int player: lobby.keySet())
+            if(player != id)
+                lobby.get(player).sendMessage(message);
+    }
+
+    private void nameKnownDisconnection(int id) {
+        String text = "\nThe game will be closed because the connection with player " + getNickByHandlerId(id) + " is lost.";
+
+        Gson gson = new Gson();
+        smCloseThemAll message = new smCloseThemAll(text);
+        text = gson.toJson(message, smCloseThemAll.class);
+
+        sendAllExceptPlayer(getNickByHandlerId(id), text);
+
+        System.out.println("\nThe connection whit player " + getNickByHandlerId(id) + " is lost. The game is finished.");
     }
 }

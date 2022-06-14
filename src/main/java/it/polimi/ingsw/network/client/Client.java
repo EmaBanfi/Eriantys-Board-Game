@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Client extends Thread {
 
-    private Socket s;
+    private Socket socket;
     private DataOutputStream dos;
     private BufferedReader br;
     private BufferedReader kb;
@@ -37,8 +37,8 @@ public class Client extends Thread {
 
         smgson = new ServerGson();
         try {
-            dos = new DataOutputStream(s.getOutputStream());
-            br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            dos = new DataOutputStream(socket.getOutputStream());
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,19 +46,16 @@ public class Client extends Thread {
         kb = new BufferedReader(new InputStreamReader(System.in));
         serverUp = true;
 
-        //Thread thread1 = new ClientTimer(this);
-        //thread1.start();
-
         receive();
     }
 
     public static void main(String[] args) throws Exception {
+        BufferedReader br;
+        br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("\nDo you want to play with CLI or GUI?");
         System.out.println("CLI: 1");
         System.out.println("GUI: 2");
-
-        BufferedReader br;
-        br = new BufferedReader(new InputStreamReader(System.in));
 
         String viewType;
         do {
@@ -67,7 +64,7 @@ public class Client extends Thread {
                 System.out.println("Please digit 1 or 2");
         } while (!(viewType.equals("1")) & !(viewType.equals("2")));
 
-        Client client = new Client(viewType);
+        new Client(viewType);
     }
 
     public void connection() {
@@ -77,7 +74,7 @@ public class Client extends Thread {
         String ip = scanner.nextLine();
 
         try {
-            s = new Socket(ip, 888);
+            socket = new Socket(ip, 888);
         } catch (IOException e) {
             System.out.println("Server not found, the executable will be closed");
             System.exit(-1);
@@ -89,7 +86,7 @@ public class Client extends Thread {
             try {
                 str = br.readLine();
             } catch (IOException e) {
-                System.out.println("You are not anymore connected.\nThe game will be closed.");
+                System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
 
                 System.exit(-1);
             }
@@ -98,6 +95,19 @@ public class Client extends Thread {
                 ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }
+
+            try {
+                if(br.read() == -1){
+                    System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
+
+                    System.exit(-1);
+                }
+            } catch (IOException e) {
+                System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
+
+                System.exit(-1);
+            }
+
         }
     }
 
@@ -106,7 +116,7 @@ public class Client extends Thread {
             dos.close();
             br.close();
             kb.close();
-            s.close();
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,7 +126,7 @@ public class Client extends Thread {
         try {
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
-            System.out.println("You are not anymore connected.\nThe game will be closed.");
+            System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
 
             System.exit(-1);
         }
