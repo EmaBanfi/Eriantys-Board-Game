@@ -96,16 +96,18 @@ public class Client extends Thread {
                 message.processMessage(this);
             }
 
-            try {
-                if(br.read() == -1){
+            else {
+                try {
+                    if (br.read() == -1) {
+                        System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
+
+                        System.exit(-1);
+                    }
+                } catch (IOException e) {
                     System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
 
                     System.exit(-1);
                 }
-            } catch (IOException e) {
-                System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
-
-                System.exit(-1);
             }
 
         }
