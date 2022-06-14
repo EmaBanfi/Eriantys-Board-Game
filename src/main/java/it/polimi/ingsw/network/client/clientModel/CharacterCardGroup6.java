@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class CharacterCardGroup6 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private PlayerView player = getCLI().getPlayer();
+    private PlayerView player = getCLI().getMainPlayer();
 
     public CharacterCardGroup6(int id, CLI cli) {
         super(id, cli);
@@ -152,7 +152,7 @@ public class CharacterCardGroup6 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getPlayer().getCoins() < getPrice())
+        if (getCLI().getMainPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
 
         else if (getCardId() == 7)

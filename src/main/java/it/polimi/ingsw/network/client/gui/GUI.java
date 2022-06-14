@@ -42,7 +42,7 @@ public class GUI extends Application implements View {
 
 
     @Override
-    public PlayerView getPlayer() {
+    public PlayerView getMainPlayer() {
         return null;
     }
 

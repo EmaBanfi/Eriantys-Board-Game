@@ -38,7 +38,7 @@ public class CharacterCardGroup4 extends CharacterCard {
      */
     public boolean activate(){
         if (getCardId() == 9) {
-            getCLI().showIslands(getCLI().getPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
 
             if (confirmActivation())
                 return false;
@@ -51,7 +51,7 @@ public class CharacterCardGroup4 extends CharacterCard {
 
         else if (getCardId() == 11) {
             System.out.println("Students on card: " + studentsOnCard);
-            System.out.println("Students in hall: " + getCLI().getPlayer().getHall());
+            System.out.println("Students in hall: " + getCLI().getMainPlayer().getHall());
 
             if (confirmActivation())
                 return false;
@@ -64,7 +64,7 @@ public class CharacterCardGroup4 extends CharacterCard {
                     System.out.println("There is no " + color + " student on card");
             } while (!studentsOnCard.contains(color));
 
-            getCLI().getPlayer().addToHall(color);
+            getCLI().getMainPlayer().addToHall(color);
 
             cmCCG4 message = new cmCCG4(11, color);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
@@ -118,7 +118,7 @@ public class CharacterCardGroup4 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getPlayer().getCoins() < getPrice())
+        if (getCLI().getMainPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
 
         else if (getCardId() == 9)

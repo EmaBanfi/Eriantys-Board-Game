@@ -13,7 +13,7 @@ public interface View {
      * get the player
      * @return the player
      */
-    PlayerView getPlayer();
+    PlayerView getMainPlayer();
 
     /**
      * get the player by nickname

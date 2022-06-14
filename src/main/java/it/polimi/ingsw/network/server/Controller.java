@@ -940,32 +940,24 @@ public class Controller {
     /**
      * notify players except current of the character card used by the current players.
      * It also notifies if the price is increased
-     * @param card id of the used card
+     * @param cardId id of the used card
      */
-    public void notifyUsedCharacterCard( int card){
-        String text = game.getCurrentPlayer().getNickName() + " has used character card " + card + "\n";
-        boolean increasedPrice=characterCardBoard.getCharacterCard(card).increasePrice();
+    public void notifyUsedCharacterCard(int cardId){
+        CharacterCard card = characterCardBoard.getCharacterCard(cardId);
+        String text = game.getCurrentPlayer().getNickName() + " has used character card " + cardId + "\n";
+        game.getCurrentPlayer().getBoard().useCoins(card.getPrice());
+        boolean increasedPrice=card.increasePrice();
         if(increasedPrice){
             text = text + " The price of the card has been increased by one";
         }
         smUsedCharacterCard message = new smUsedCharacterCard(
                 text,
-                card,
+                cardId,
                 increasedPrice,
-                characterCardBoard.getCharacterCard(card).getPrice());
+                card.getPrice());
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smUsedCharacterCard.class));
-    }
-
-    /**
-     * this method is used to notify the current player so that they resume their turn
-     */
-    public void resumeTurn(){
-        ServerMessage message = new smResumeTurn();
-        server.sendMessage(
-                game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, smResumeTurn.class));
     }
 
     public void setIgnoreTower(int island){

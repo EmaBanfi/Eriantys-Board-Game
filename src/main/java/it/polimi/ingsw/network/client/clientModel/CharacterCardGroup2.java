@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG2;
 
-import java.io.IOException;
-
 public class CharacterCardGroup2 extends CharacterCard{
 
     public CharacterCardGroup2(int id, CLI cli) {
@@ -32,7 +30,7 @@ public class CharacterCardGroup2 extends CharacterCard{
             message = new cmCCG2(2);
         }
         else if (getCardId() == 8){
-            getCLI().showIslands(getCLI().getPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
 
             if (confirmActivation())
                 return false;
@@ -47,8 +45,8 @@ public class CharacterCardGroup2 extends CharacterCard{
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
+        if (getCLI().getMainPlayer().getCoins() < getPrice())
+            System.out.println("Card " + getCardId() + ": not enough coins");
 
         else if (getCardId() == 2)
             if (getCLI().getResumeFrom().equals(Phase.CHOOSE_MOTHER_MOVEMENTS) || getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))

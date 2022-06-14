@@ -19,7 +19,7 @@ public class CLI implements View, Runnable {
     private final ArrayList<CloudView> availableClouds;
     private final ArrayList<IslandView> availableIslands;
     private Phase resumeFrom = null;
-    private PlayerView player;
+    private PlayerView mainPlayer;
     private final ArrayList<PlayerView> players;
     private ArrayList<String> availableDecks;
     private ArrayList<String> availableTowers;
@@ -94,8 +94,8 @@ public class CLI implements View, Runnable {
     }
 
     @Override
-    public PlayerView getPlayer() {
-        return player;
+    public PlayerView getMainPlayer() {
+        return mainPlayer;
     }
 
     public Phase getResumeFrom() {
@@ -116,7 +116,7 @@ public class CLI implements View, Runnable {
             throw new RuntimeException(e);
         }
 
-        player = new PlayerView(str);
+        mainPlayer = new PlayerView(str);
 
         cmNickname message = new cmNickname(str);
         String text = gson.toJson(message, cmNickname.class);
@@ -128,13 +128,13 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
-
-        if (player.getCoins() == 0) {
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
+        if (mainPlayer.getCoins() == 0) {
             System.out.println("You can't activate any character card because you have 0 coins");
             return;
         }
 
-        System.out.println("You have " + player.getCoins() + " coins");
+        System.out.println("You have " + mainPlayer.getCoins() + " coins");
         System.out.println("The available character cards are the following\n");
         updateUsableCC();
         for(CharacterCard c: usableCC){
@@ -186,8 +186,10 @@ public class CLI implements View, Runnable {
         if (!card.activate())
             askActivateCharacterCard();
         else {
+
             usedCharacterCard = true;
-            player.decreaseCoins(card.getPrice());
+            mainPlayer.decreaseCoins(card.getPrice());
+            updateCharacterCardPrice(card.getCardId());
         }
     }
 
@@ -247,6 +249,8 @@ public class CLI implements View, Runnable {
     @Override
     public void askTower(){
         resumeFrom = Phase.CHOOSE_DECK;
+        System.out.println("\n\nCHOOSING TOWER\n2" +
+                "");
         System.out.println("Choose tower color:");
         System.out.println("The available towers are: ");
         if(availableTowers.contains("WHITE"))
@@ -266,7 +270,7 @@ public class CLI implements View, Runnable {
                 } while (!availableTowers.contains(colorChoice));
             }catch(IOException e)
             {e.printStackTrace();}
-            player.setTower(colorChoice);
+            mainPlayer.setTower(colorChoice);
             availableTowers.remove(colorChoice);
             System.out.println("Chosen Tower color: " + colorChoice.toLowerCase());
             Gson gson = new Gson();
@@ -281,6 +285,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askDeck(){
+        System.out.println("\n\nCHOOSING DECK\n");
         System.out.println("Please select a deck");
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
         for (String deck : availableDecks) {
@@ -317,6 +322,7 @@ public class CLI implements View, Runnable {
         resetSupportCards();
         usedCharacterCard=false;
         resumeFrom= Phase.CHOOSE_STUDENTS_TO_ISLAND;
+        System.out.println("\n\nCHOOSING SUPPORT CARD\n");
         String card;
         System.out.println("Already chosen support cards:");
         for(PlayerView playerView: players){
@@ -326,7 +332,7 @@ public class CLI implements View, Runnable {
             }
         }
         System.out.println("Please chose the id of a support card among the following:");
-        for (SupportCard supportCard : player.getSupportCards()) {
+        for (SupportCard supportCard : mainPlayer.getSupportCards()) {
             card= "Card id: "+supportCard.getId()+", card turn order: "+supportCard.getTurnOrder()+", card movements: "+supportCard.getMovement();
             System.out.println(card);
         }
@@ -343,7 +349,7 @@ public class CLI implements View, Runnable {
                     System.out.println("Not an int");
                 else {
                     supportCardChoice = stringToInteger(str);
-                    for (SupportCard supportCard : player.getSupportCards()) {
+                    for (SupportCard supportCard : mainPlayer.getSupportCards()) {
                         if (supportCardChoice == supportCard.getId()) {
                             supportCardAvailable = true;
                             break;
@@ -384,16 +390,16 @@ public class CLI implements View, Runnable {
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
-
+        System.out.println("\n\nSTUDENTS FROM HALL TO DINING HALL\n");
         if(availableStudentsMovements > 0) {
             ArrayList<StudentColor> chosenStudents;
             System.out.println("Your current Hall: ");
-            for (StudentColor student : player.getHall()) {
+            for (StudentColor student : mainPlayer.getHall()) {
                 System.out.println(student);
             }
             System.out.println("Your current Dining Hall: ");
             boolean empty = true;
-            for (StudentColor student : player.getDiningHall()) {
+            for (StudentColor student : mainPlayer.getDiningHall()) {
                 if(empty)
                     empty = false;
                 System.out.println(student);
@@ -403,12 +409,12 @@ public class CLI implements View, Runnable {
             System.out.println("You can move " + availableStudentsMovements + " students");
 
                 chosenStudents= askStudentsFromHall(availableStudentsMovements, false);
-                player.addToDiningHall(chosenStudents);
+                mainPlayer.addToDiningHall(chosenStudents);
                 cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(chosenStudents);
                 client.send(gson.toJson(message, cmStudentsMovementsHToD.class));
         }
         else {
-            System.out.println("You can't select anymore students.");
+            System.out.println("You can't select anymore students.\n");
             client.send(gson.toJson(new cmStudentsMovementsHToD(null), cmStudentsMovementsHToD.class));
         }
         availableStudentsMovements = 3;
@@ -427,7 +433,7 @@ public class CLI implements View, Runnable {
         System.out.println("\n\nSTUDENTS FROM HALL TO ISLANDS");
         showIslands(null);
         System.out.println("Your current Hall: ");
-        for(StudentColor student: player.getHall()){
+        for(StudentColor student: mainPlayer.getHall()){
             System.out.println(student);
         }
 
@@ -479,7 +485,7 @@ public class CLI implements View, Runnable {
                 availableStudentsMovements -= numStudents;
                 studentsToI.addAll(askStudentsFromHall(numStudents, false));
                 movementsHtoI.put(chosenIsland, studentsToI);
-                player.getHall().removeAll(studentsToI);
+                mainPlayer.getHall().removeAll(studentsToI);
                 availableIslands.get(chosenIsland).addStudents(studentsToI);
                 if(availableStudentsMovements>0) {
                     decisionToMoveStudents = "false";
@@ -510,7 +516,7 @@ public class CLI implements View, Runnable {
 
         if (showHall) {
             System.out.println("Your current Hall: ");
-            for (StudentColor student : player.getHall())
+            for (StudentColor student : mainPlayer.getHall())
                 System.out.println(student);
         }
 
@@ -526,12 +532,12 @@ public class CLI implements View, Runnable {
                 color = StudentColor.getStudentFromString(studentChoice);
                 if(color==null)
                     System.out.println("Not valid choice");
-                else if(!player.getHall().contains(color)){
+                else if(!mainPlayer.getHall().contains(color)){
                     System.out.println("There are no "+studentChoice.toLowerCase()+" students");
                 }
-            } while (!player.getHall().contains(color));
+            } while (!mainPlayer.getHall().contains(color));
             chosenStudents.add(color);
-            player.removeFromHall(color);
+            mainPlayer.removeFromHall(color);
         }
         return chosenStudents;
     }
@@ -546,6 +552,7 @@ public class CLI implements View, Runnable {
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
+        System.out.println("\n\nCHOOSING CLOUD\n");
         for (int i = 0; i < availableClouds.size(); i++) {
             if(!availableClouds.get(i).getStudents().isEmpty()){
                 System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");
@@ -571,7 +578,7 @@ public class CLI implements View, Runnable {
                     System.out.println("Invalid cloud, please choose a valid one: ");
             }
         } while (notValidChoice);
-        player.addToHall(availableClouds.get(chosenCloud).getStudents());
+        mainPlayer.addToHall(availableClouds.get(chosenCloud).getStudents());
         availableClouds.get(chosenCloud).removeStudents();
         System.out.println("Chosen cloud:  " + (chosenCloud+1));
         cmCloud message = new cmCloud(chosenCloud);
@@ -589,12 +596,12 @@ public class CLI implements View, Runnable {
 
         resumeFrom = Phase.CHOOSE_CLOUDS;
         int chosenIsland;
-        int maxMovements=player.getUsedSupportCard().getMovement();
+        int maxMovements= mainPlayer.getUsedSupportCard().getMovement();
         boolean show= true;
         boolean validChoice;
 
         System.out.println("\n");
-        System.out.println("MOTHER NATURE MOVEMENTS\n");
+        System.out.println("\nMOTHER NATURE MOVEMENTS\n");
         System.out.println("Max movements: "+ maxMovements + "\n");
 
         do {
@@ -621,6 +628,10 @@ public class CLI implements View, Runnable {
     public void showIslands(Integer range){
         System.out.println("\nMother Nature is on island "+(motherNature.getCurrentIsland()+1));
         String text;
+        System.out.println(mainPlayer.getNickname() + "'s tower is " + mainPlayer.getTower());
+        for(PlayerView player : players){
+            System.out.println(player.getNickname() + "'s tower is " + player.getTower());
+        }
         for(StudentColor color: StudentColor.values()){
             text= "The "+ color.toString().toLowerCase()+ " teacher is ";
             text = text + teachers.getOrDefault(color, "yet to be decided");
@@ -794,8 +805,8 @@ public class CLI implements View, Runnable {
 
     @Override
     public PlayerView getPlayerByNick(String nick){
-        if (player.getNickname().equals(nick))
-            return player;
+        if (mainPlayer.getNickname().equals(nick))
+            return mainPlayer;
         for(PlayerView player: players){
             if(player.getNickname().equals(nick))
                 return player;
@@ -886,7 +897,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
-        getPlayerByNick(nick).getDiningHall().addAll(students);
+        getPlayerByNick(nick).addToDiningHall(students);
     }
 
     /**
@@ -1065,7 +1076,7 @@ public class CLI implements View, Runnable {
         }
 
         if (!str.isEmpty()) {
-            cmDisconnect disconnect = new cmDisconnect(player.getNickname());
+            cmDisconnect disconnect = new cmDisconnect(mainPlayer.getNickname());
             String text = gson.toJson(disconnect, cmNickname.class);
             client.send(text);
         }
@@ -1089,7 +1100,7 @@ public class CLI implements View, Runnable {
     @Override
     public void addPlayers(ArrayList<String> players){
         for(String nick: players){
-            if(!player.getNickname().equals(nick))
+            if(!mainPlayer.getNickname().equals(nick))
                 this.players.add(new PlayerView(nick));
         }
     }
@@ -1122,7 +1133,7 @@ public class CLI implements View, Runnable {
     }
 
     public void showAllDH() {
-        System.out.println("Your dining hall: " + player.getDiningHall());
+        System.out.println("Your dining hall: " + mainPlayer.getDiningHall());
 
         for (PlayerView pla : players)
             System.out.println("Player " + pla.getNickname() + "'s dining hall: " + pla.getDiningHall());

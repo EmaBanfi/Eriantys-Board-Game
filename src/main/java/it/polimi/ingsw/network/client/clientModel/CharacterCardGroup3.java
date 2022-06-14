@@ -22,7 +22,7 @@ public class CharacterCardGroup3 extends CharacterCard{
         if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
             getCLI().showIslands(2);
         else
-            getCLI().showIslands(2 + getCLI().getPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(2 + getCLI().getMainPlayer().getUsedSupportCard().getMovement());
 
         if (confirmActivation())
             return false;
@@ -62,7 +62,7 @@ public class CharacterCardGroup3 extends CharacterCard{
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getPlayer().getCoins() < getPrice())
+        if (getCLI().getMainPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
 
         else

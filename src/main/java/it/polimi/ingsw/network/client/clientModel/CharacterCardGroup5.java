@@ -87,7 +87,7 @@ public class CharacterCardGroup5 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getPlayer().getCoins() < getPrice())
+        if (getCLI().getMainPlayer().getCoins() < getPrice())
             System.out.println("Not enough coins");
 
         else if (getCardId() == 5)

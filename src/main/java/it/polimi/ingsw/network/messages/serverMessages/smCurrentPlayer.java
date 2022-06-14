@@ -30,7 +30,7 @@ public class smCurrentPlayer extends ServerMessage{
             super.processMessage(client);
 
         client.getView().updateCurrentPlayer(nickname);
-        if (client.getView().getPlayer().getNickname().equals(nickname))
+        if (client.getView().getMainPlayer().getNickname().equals(nickname))
             client.getView().resumeFrom();
     }
 }
