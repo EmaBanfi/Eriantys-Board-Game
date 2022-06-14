@@ -450,10 +450,12 @@ public class Controller {
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smStudentsInHall.class));
-        message = new smResumeTurn();
+        /*message = new smResumeTurn();
         server.sendMessage(
                 game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, smResumeTurn.class));
+                gson.toJson(message, smResumeTurn.class));*/
+        message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
+        server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
 
     /**
@@ -461,9 +463,12 @@ public class Controller {
      */
     public void notifyNothingToDiningHall(){
         String text= game.getCurrentPlayer().getNickName() +" will not move any students to their dining hall because they already move 3 students from their hall to islands";
-        smNotify message = new smNotify(text);
+        ServerMessage message ;
+        message = new smNotify(text);
         server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
-        server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+        //server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+        message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
+        server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
 
     /**
@@ -471,9 +476,12 @@ public class Controller {
      */
     public void notifyNothingToIslands(){
         String text= game.getCurrentPlayer().getNickName() +" chosen to not move students to islands";
-        smNotify message = new smNotify(text);
+        ServerMessage message ;
+        message = new smNotify(text);
         server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
-        server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+        //server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
+        message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
+        server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
 
     /**
@@ -644,12 +652,10 @@ public class Controller {
         String nick = game.getCurrentPlayer().getNickName();
         ArrayList<StudentColor> students = board.takeStudentsFromCloud(cloud);
         game.getCurrentPlayer().getBoard().addStudentsToHall(students);
-        System.out.println("students in hall");
-        text = nick + " has chosen cloud " + (cloud + 1);
+        text = "\n" + nick + " has chosen cloud " + (cloud + 1);
         message = new smChosenCloud(text, cloud);
         server.sendAllExceptPlayer(nick, gson.toJson(message, smChosenCloud.class));
         message= new smStudentsInHall(
-                text,
                 students,
                 true);
         server.sendAllExceptPlayer(
@@ -664,15 +670,7 @@ public class Controller {
             server.sendAll(gson.toJson(message3, smCurrentPlayer.class));
         }
         else{
-            if(game.lastStudentDrawn() || game.lastSupportCardUsed()){
-                smNotify message3 = new smNotify(
-                        "The game has ended because this was the last round"
-                );
-                server.sendAll(gson.toJson(message3, smNotify.class));
-            }
-            else{
-                newRound();
-            }
+            newRound();
         }
     }
 
@@ -796,7 +794,7 @@ public class Controller {
      */
     public void setBonusToPromotion(){
         game.getCurrentPlayer().setBonusToPromotion(true);
-        //resumeTurn();
+
     }
 
     /**
@@ -805,7 +803,7 @@ public class Controller {
      */
     public void setAdditionalInfluencePoints(){
         game.getCurrentPlayer().setAdditionalInfluencePoints(true);
-        //resumeTurn();
+
     }
 
     /**
@@ -878,7 +876,7 @@ public class Controller {
         String text = "For this turn " + color.toString().toLowerCase() + " students will not be counted in the assigment of influence points";
         smNotify message = new smNotify(text);
         server.sendAll(gson.toJson(message, smNotify.class));
-        //resumeTurn();
+
     }
 
     /**

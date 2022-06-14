@@ -24,6 +24,8 @@ public class CLI implements View, Runnable {
     private ArrayList<String> availableDecks;
     private ArrayList<String> availableTowers;
     private final ArrayList<CharacterCard> availableCC;
+
+    private final ArrayList<CharacterCard> usableCC;
     private final CharacterCardCreator ccc;
     private boolean usedCharacterCard;
     private final Client client;
@@ -33,6 +35,7 @@ public class CLI implements View, Runnable {
     private final BufferedReader br;
     private final Gson gson;
     private int availableStudentsMovements = 3;
+
 
     public CLI(Client client) {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -48,6 +51,7 @@ public class CLI implements View, Runnable {
         initAvailableDecks();
         initAvailableTowers();
         initAvailableIslands();
+        usableCC = new ArrayList<>();
     }
 
     /**
@@ -132,7 +136,8 @@ public class CLI implements View, Runnable {
 
         System.out.println("You have " + player.getCoins() + " coins");
         System.out.println("The available character cards are the following\n");
-        for(CharacterCard c: availableCC){
+        updateUsableCC();
+        for(CharacterCard c: usableCC){
             c.showCard();
             System.out.println("\n");
         }
@@ -172,7 +177,7 @@ public class CLI implements View, Runnable {
                 System.out.println("Not an int");
             else {
                 choice = stringToInteger(str);
-                card = getCharacterCardById(choice);
+                card = getUsableCharacterCardById(choice);
                 if (card == null)
                     System.out.println("Not valid character card id");
             }
@@ -375,7 +380,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
-        if(mode.equals("expert") && (!usedCharacterCard))
+        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
@@ -414,7 +419,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToI(){
-        if(mode.equals("expert") && (!usedCharacterCard))
+        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
@@ -537,7 +542,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askCloud(){
         System.out.println("Please select a cloud");
-        if(mode.equals("expert") && (!usedCharacterCard))
+        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
@@ -579,7 +584,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMotherNatureMovements(){
-        if(mode.equals("expert") && (!usedCharacterCard))
+        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_CLOUDS;
@@ -748,7 +753,6 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void showString(String message) {
-        String s = message;
         System.out.println(message);
     }
 
@@ -1122,5 +1126,26 @@ public class CLI implements View, Runnable {
 
         for (PlayerView pla : players)
             System.out.println("Player " + pla.getNickname() + "'s dining hall: " + pla.getDiningHall());
+    }
+
+    private boolean anyUsableCC(){
+        updateUsableCC();
+        return !usableCC.isEmpty();
+
+    }
+
+    private void updateUsableCC(){
+        usableCC.clear();
+        for(CharacterCard card: availableCC){
+            if(card.checkCCPrecondition())
+                usableCC.add(card);
+        }
+    }
+
+    public CharacterCard getUsableCharacterCardById(int id){
+        for (CharacterCard card : usableCC)
+            if(card.getCardId()==id)
+                return card;
+        return null;
     }
 }

@@ -15,13 +15,19 @@ public class smCurrentPlayer extends ServerMessage{
         setType("current player");
     }
 
+    public smCurrentPlayer(String nickname) {
+        this.nickname = nickname;
+        setType("current player");
+    }
+
     /**
      * print the message and call the method updateCurrentPlayer() of the view sending it the nickname of the current player
      * @param client client to which the message is sent
      */
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
+        if(getMessage()!=null)
+            super.processMessage(client);
 
         client.getView().updateCurrentPlayer(nickname);
         if (client.getView().getPlayer().getNickname().equals(nickname))
