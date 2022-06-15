@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 
 public class CharacterCardGroup3 extends CharacterCard{
 
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
     public CharacterCardGroup3(int id, CLI cli) {
         super(id, cli);
         setPrice(1);
@@ -35,7 +33,7 @@ public class CharacterCardGroup3 extends CharacterCard{
             validChoice = false;
 
             try {
-                str = br.readLine();
+                str = getBr().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,11 +60,10 @@ public class CharacterCardGroup3 extends CharacterCard{
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
-
-        else
-            return true;
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins");
+            return  false;
+        }
 
         return false;
     }

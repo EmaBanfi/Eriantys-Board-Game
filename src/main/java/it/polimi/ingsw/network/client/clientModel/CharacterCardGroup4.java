@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup4 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CharacterCardGroup4(int id, CLI cli) {
         super(id, cli);
@@ -34,12 +33,13 @@ public class CharacterCardGroup4 extends CharacterCard {
     /**
      * implementation of the effect of the CharacterCard 9, the CharacterCard 11 and the CharacterCard 12; at the end increase the price of the CharacterCard
      *
-     * @return
+     * @return true if the card has been activated
      */
     public boolean activate(){
         if (getCardId() == 9) {
             getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
-
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Majority has already been calculated");
             if (confirmActivation())
                 return false;
 
@@ -90,7 +90,7 @@ public class CharacterCardGroup4 extends CharacterCard {
         StudentColor color;
         do {
             try {
-                colorChoice = br.readLine();
+                colorChoice = getBr().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,20 +118,17 @@ public class CharacterCardGroup4 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
+        String text = "Card "+getCardId()+ " can't be activated because ";
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println(text + " you don't have enough coins");
+            return  false;
+        }
 
-        else if (getCardId() == 9)
-            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
-                System.out.println("Majority has already been calculated, please select another character card");
+        if (getCardId() == 11 && studentsOnCard.isEmpty()) {
+            System.out.println(text + " there no students on card");
+            return  false;
+        }
 
-        else if (getCardId() == 11)
-            if (studentsOnCard.isEmpty())
-                System.out.println("Not enough students on card");
-
-        else
-            return true;
-
-        return false;
+        return true;
     }
 }

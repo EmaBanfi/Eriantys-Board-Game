@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup1 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard;
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private ArrayList<IslandView> islands;
+    private final ArrayList<IslandView> islands;
 
     /**
      * create a new CharacterCard n°1 and put on it 4 students; at the end increase the price of the CharacterCard
@@ -46,7 +45,7 @@ public class CharacterCardGroup1 extends CharacterCard {
     /**
      * implement the effect of the characterCard n°1
      *
-     * @return
+     * @return true if the card has been activated
      */
     @Override
     public boolean activate() {
@@ -65,7 +64,7 @@ public class CharacterCardGroup1 extends CharacterCard {
             isPresent = false;
 
             try {
-                studentChoice = br.readLine();
+                studentChoice = getBr().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,7 +93,7 @@ public class CharacterCardGroup1 extends CharacterCard {
             validChoice = false;
 
             try {
-                str = br.readLine();
+                str = getBr().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,15 +124,16 @@ public class CharacterCardGroup1 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
+        String text = "Card "+getCardId()+ " can't be activated because ";
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println(text + " you don't have enough coins");
+            return false;
+        }
+        if (studentsOnCard.isEmpty()) {
+            System.out.println(text + " there are not enough students on card");
+            return false;
+        }
+        return true;
 
-        else if (studentsOnCard.isEmpty())
-            System.out.println("Not enough students on card");
-
-        else
-            return true;
-
-        return false;
     }
 }

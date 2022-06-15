@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup6 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private PlayerView player = getCLI().getMainPlayer();
+    private final PlayerView player = getCLI().getMainPlayer();
 
     public CharacterCardGroup6(int id, CLI cli) {
         super(id, cli);
@@ -30,7 +29,7 @@ public class CharacterCardGroup6 extends CharacterCard {
     /**
      * implementation of the effect of the CharacterCard 7 and the CharacterCard 10; at the end increase the price of the CharacterCard
      *
-     * @return
+     * @return true if the card is activated
      */
     public boolean activate(){
         if (getCardId() == 7) {
@@ -39,8 +38,16 @@ public class CharacterCardGroup6 extends CharacterCard {
 
             if (confirmActivation())
                 return false;
+            int numberChoice;
 
-            int numberChoice = askNumOfStudents(3);
+            int studentsOnC= studentsOnCard.size();
+            int studentsInH = player.getHall().size();
+            int min = Math.min(studentsInH, studentsOnC);
+
+            if(min<3)
+                numberChoice = askNumOfStudents(studentsOnC);
+            else
+                numberChoice= askNumOfStudents(3);
 
             System.out.println("Choose " + numberChoice + " students to move from the card to the hall");
             String studentChoice = null;
@@ -50,7 +57,7 @@ public class CharacterCardGroup6 extends CharacterCard {
             do {
                 System.out.println("Please select a student (" + (numOfStudents + 1) + ")");
                 try {
-                    studentChoice = br.readLine();
+                    studentChoice = getBr().readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -87,18 +94,19 @@ public class CharacterCardGroup6 extends CharacterCard {
             if (confirmActivation())
                 return false;
 
-            int numberChoice = 1;
-            int max = player.getDiningHall().size();
+            int numberChoice;
 
-            if (max < 2)
-                max = 1;
+            int studentsInDH = player.getDiningHall().size();
+            int studentsInH = player.getHall().size();
 
-            if (max >= 2)
-                numberChoice = askNumOfStudents(max);
+
+            if (studentsInDH< 2 || studentsInH<2)
+                numberChoice = 1;
+            else
+                numberChoice = askNumOfStudents(2);
 
             System.out.println("Choose " + numberChoice + " students to move from the hall to the dining hall");
-            ArrayList<StudentColor> studentsFromHall = new ArrayList<>();
-            studentsFromHall.addAll(getCLI().askStudentsFromHall(numberChoice, false));
+            ArrayList<StudentColor> studentsFromHall = new ArrayList<>(getCLI().askStudentsFromHall(numberChoice, false));
 
             System.out.println("Choose " + numberChoice + " students to move from the dining hall to the hall");
             int numOfStudents = 0;
@@ -107,7 +115,7 @@ public class CharacterCardGroup6 extends CharacterCard {
             ArrayList<StudentColor> studentsToHall = new ArrayList<>();
             do {
                 try {
-                    studentChoice = br.readLine();
+                    studentChoice = getBr().readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -129,9 +137,6 @@ public class CharacterCardGroup6 extends CharacterCard {
         return true;
     }
 
-    public ArrayList<StudentColor> getStudentsOnCard() {
-        return studentsOnCard;
-    }
 
     public int countStudentColor(StudentColor color) {
         return (int) studentsOnCard.stream().filter(x -> x.equals(color)).count();
@@ -150,25 +155,43 @@ public class CharacterCardGroup6 extends CharacterCard {
             studentsOnCard.removeAll(students);
     }
 
+    /**
+     * used to check if a card can be activated
+     * @return true if the card can be activated
+     */
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
+        String text = "Card "+getCardId()+ " can't be activated because ";
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println(text + " you don't have enough coins");
+            return  false;
+        }
 
-        else if (getCardId() == 7)
-            if (studentsOnCard.isEmpty())
-                System.out.println("Not enough students on card");
+        if (getCardId() == 7)
+            if (studentsOnCard.isEmpty()) {
+                System.out.println(text + " there are no students on card");
+                return  false;
+            }
 
-        else if (player.getDiningHall().isEmpty())
-                if (studentsOnCard.isEmpty())
-                    System.out.println("Not enough students in dining hall");
+        if (getCardId()==10 && player.getDiningHall().isEmpty())
+                if (studentsOnCard.isEmpty()) {
+                    System.out.println(text + " there are no students in your dining hall");
+                    return  false;
+                }
 
-        else
-            return true;
+        if(player.getHall().isEmpty()){
+            System.out.println(text + " there are no students in your hall");
+            return  false;
+        }
 
-        return false;
+        return true;
     }
 
+    /**
+     * used to ask the number of students to move
+     * @param max max number selectable
+     * @return number selected
+     */
     private int askNumOfStudents(int max) {
         System.out.println("How many students you want to move? (max " + max + ")");
         int numberChoice = 0;
@@ -176,7 +199,7 @@ public class CharacterCardGroup6 extends CharacterCard {
         boolean notValidChoice;
         do {
             try {
-                str = br.readLine();
+                str = getBr().readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }

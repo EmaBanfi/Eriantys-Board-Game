@@ -9,10 +9,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public abstract class CharacterCard {
-    private int cardId;
+    private final int cardId;
     private int price;
     private String text;
-    private CLI cli;
+    private final CLI cli;
+
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private transient boolean increasedPrice = false;
 
     public CharacterCard(int cardId, CLI cli) {
@@ -68,10 +70,9 @@ public abstract class CharacterCard {
     }
 
     public boolean confirmActivation() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Do you still want to activate the card?");
-        String str = "";
+        String str;
         do {
             try {
                 str = br.readLine();
@@ -84,4 +85,8 @@ public abstract class CharacterCard {
     }
 
     public abstract boolean checkCCPrecondition();
+
+    public  BufferedReader getBr(){
+        return br;
+    }
 }

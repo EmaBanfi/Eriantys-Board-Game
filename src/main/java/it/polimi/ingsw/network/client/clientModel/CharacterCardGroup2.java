@@ -23,7 +23,8 @@ public class CharacterCardGroup2 extends CharacterCard{
 
         if (getCardId() == 2) {
             getCLI().showAllDH();
-
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_MOTHER_MOVEMENTS) || getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Teachers have already been assigned");
             if (confirmActivation())
                 return false;
 
@@ -31,7 +32,8 @@ public class CharacterCardGroup2 extends CharacterCard{
         }
         else if (getCardId() == 8){
             getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
-
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Majority has already been calculated.");
             if (confirmActivation())
                 return false;
 
@@ -45,20 +47,11 @@ public class CharacterCardGroup2 extends CharacterCard{
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Card " + getCardId() + ": not enough coins");
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins");
+            return  false;
+        }
 
-        else if (getCardId() == 2)
-            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_MOTHER_MOVEMENTS) || getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
-                System.out.println("Teachers have already been assigned, please select another character card");
-
-        else if (getCardId() == 8)
-                if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
-                    System.out.println("Majority has already been calculated, please select another character card");
-
-        else
-            return true;
-
-        return false;
+        return true;
     }
 }

@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 
 public class CharacterCardGroup5 extends CharacterCard {
     private int availableBlockCards;
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * create the CharacterCard 3, 5 or 6 and put on it 4 students
@@ -24,8 +23,8 @@ public class CharacterCardGroup5 extends CharacterCard {
         }
         else if (getCardId() == 5) {
             this.availableBlockCards = 4;
-            setText("You can place a Block Card on an island: on the first time Mother Nature lands on that island," +
-                    "the block card will come back on top of this card and skip the majority count for that island");
+            setText("You can place a Block token on an island: on the first time Mother Nature lands on that island," +
+                    "the block token will come back on top of this card and skip the majority count for that island");
             setPrice(2);
         }
         else if (getCardId() == 6){
@@ -37,7 +36,7 @@ public class CharacterCardGroup5 extends CharacterCard {
     /**
      * implementation of the effect of the CharacterCard 5 and the CharacterCard 6; at the end increase the price of the CharacterCard
      *
-     * @return
+     * @return true if the card has been activated
      */
     public boolean activate() {
         getCLI().showIslands(null);
@@ -53,7 +52,7 @@ public class CharacterCardGroup5 extends CharacterCard {
         }
 
         else if (getCardId() == 5) {
-            System.out.println("Blocks on card: " + availableBlockCards);
+            System.out.println("Block tokens on card: " + availableBlockCards);
             getCLI().showIslands(null);
 
             if (confirmActivation())
@@ -64,6 +63,8 @@ public class CharacterCardGroup5 extends CharacterCard {
         }
 
         else if (getCardId() == 6){
+            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
+                System.out.println("Majority has already been calculated, please select another character card");
             if (confirmActivation())
                 return false;
 
@@ -75,7 +76,7 @@ public class CharacterCardGroup5 extends CharacterCard {
     }
 
     /**
-     * used to add an block card on the CharacterCard n°5
+     * used to add a block token on the CharacterCard n°5
      */
     @Override
     public void updateAvailableBlockCards(boolean update){
@@ -87,20 +88,18 @@ public class CharacterCardGroup5 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        if (getCLI().getMainPlayer().getCoins() < getPrice())
-            System.out.println("Not enough coins");
+        String text = "Card "+getCardId()+ " can't be activated because ";
+        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+            System.out.println(text + " you don't have enough coins");
+            return  false;
+        }
 
-        else if (getCardId() == 5)
-            if (availableBlockCards == 0)
-                System.out.println("0 block cards");
+        if (getCardId() == 5 && availableBlockCards == 0){
+            System.out.println(text + " there are 0 block tokens on card");
+            return  false;
+        }
 
-        else if (getCardId() == 6)
-            if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
-                System.out.println("Majority has already been calculated, please select another character card");
+        return true;
 
-        else
-             return true;
-
-        return false;
     }
 }
