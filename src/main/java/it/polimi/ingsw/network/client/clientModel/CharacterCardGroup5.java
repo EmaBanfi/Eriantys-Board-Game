@@ -83,8 +83,8 @@ public class CharacterCardGroup5 extends CharacterCard {
      * used to add a block token on the CharacterCard n°5
      */
     @Override
-    public void updateAvailableBlockCards(boolean update){
-        if(update)
+    public void updateAvailableBlockCards(boolean add){
+        if(add)
             availableBlockCards++;
         else
             availableBlockCards--;

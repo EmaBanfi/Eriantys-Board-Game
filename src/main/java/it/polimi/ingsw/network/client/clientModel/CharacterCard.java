@@ -60,7 +60,7 @@ public abstract class CharacterCard {
 
     public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){}
 
-    public void updateAvailableBlockCards(boolean update){
+    public void updateAvailableBlockCards(boolean add){
     }
 
     public void showCard() {

@@ -181,6 +181,9 @@ public class GameBoard {
             server.sendAll(gson.toJson(message, smNotify.class));
             message = new smBlockOnCard(false);
             server.sendAll(gson.toJson(message, smBlockOnCard.class));
+            text= "Block on island " +(island + 1) + " has been removed";
+            message = new smBlockOnIsland(text, island, false);
+            server.sendAll(gson.toJson(message, smBlockOnIsland.class));
         }
     }
 
