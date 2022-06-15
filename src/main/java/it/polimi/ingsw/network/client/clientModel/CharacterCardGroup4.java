@@ -118,14 +118,19 @@ public class CharacterCardGroup4 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        String text = "Card "+getCardId()+ " can't be activated because ";
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
+
+        String text = "Card "+getCardId()+ " can't be activated because";
+
         if (getCLI().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
+
             return  false;
         }
 
         if (getCardId() == 11 && studentsOnCard.isEmpty()) {
             System.out.println(text + " there no students on card\n");
+
             return  false;
         }
 

@@ -58,7 +58,11 @@ public class CharacterCardGroup5 extends CharacterCard {
             if (confirmActivation())
                 return false;
 
-            message = new cmCCG5(5, getCLI().askIsland(false, null));
+            int chosenIsland = getCLI().askIsland(false, null);
+
+            getCLI().blockIsland(chosenIsland - 1);
+
+            message = new cmCCG5(5, chosenIsland);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }
 
@@ -88,18 +92,22 @@ public class CharacterCardGroup5 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        String text = "Card "+getCardId()+ " can't be activated because ";
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
+
+        String text = "Card "+getCardId()+ " can't be activated because";
+
         if (getCLI().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
+
             return  false;
         }
 
         if (getCardId() == 5 && availableBlockCards == 0){
             System.out.println(text + " there are 0 block tokens on card\n");
+
             return  false;
         }
 
         return true;
-
     }
 }

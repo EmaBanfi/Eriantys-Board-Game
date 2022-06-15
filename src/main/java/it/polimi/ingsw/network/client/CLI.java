@@ -125,7 +125,6 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askActivateCharacterCard(){
-        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
         if (mainPlayer.getCoins() == 0) {
             System.out.println("You can't activate any character card because you have 0 coins");
             return;
@@ -133,7 +132,7 @@ public class CLI implements View, Runnable {
 
         System.out.println("You have " + mainPlayer.getCoins() + " coins");
         System.out.println("The available character cards are the following\n");
-        updateUsableCC();
+
         for(CharacterCard c: usableCC){
             c.showCard();
         }
@@ -514,12 +513,15 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCloud(){
-        System.out.println("Please select a cloud");
         if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
+
         System.out.println("\n\nCHOOSING CLOUD\n");
+
+        System.out.println("Please select a cloud");
+
         for (int i = 0; i < availableClouds.size(); i++) {
             if(!availableClouds.get(i).getStudents().isEmpty()){
                 System.out.println("Cloud: " + (i+1) + "\n" + "Students on Cloud " + (i+1) + ": " + availableClouds.get(i).getStudents() + ";");

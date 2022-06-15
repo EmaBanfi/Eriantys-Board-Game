@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.EndGameException;
 import it.polimi.ingsw.Exceptions.LastStudentDrawnException;
 import it.polimi.ingsw.Exceptions.LastSupportCardUsedException;
-import it.polimi.ingsw.network.client.clientModel.IslandView;
 import it.polimi.ingsw.network.messages.serverMessages.*;
 import it.polimi.ingsw.network.server.model.*;
 
@@ -197,10 +196,10 @@ public class Controller {
         game.nextPlayer();
         nick = game.getCurrentPlayer().getNickName();
         if(game.firstPlayerOfRound()){
-            text = nick + " will chose their deck";
+            text = nick + " will choose their deck";
         }
         else{
-            text = nick + " will chose their tower";
+            text = nick + " will choose their tower";
         }
         smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
@@ -227,11 +226,11 @@ public class Controller {
         game.nextPlayer();
         nick = game.getCurrentPlayer().getNickName();
         if(game.firstPlayerOfRound()){
-            text = nick + " will chose their support card";
+            text = nick + " will choose their support card";
             notifyStudentsOnCloud();
         }
         else {
-            text = nick + " will chose their deck";
+            text = nick + " will choose their deck";
         }
         smCurrentPlayer message2 = new smCurrentPlayer(
                 text,
@@ -370,7 +369,7 @@ public class Controller {
                 TurnOrder();
             else {
                 game.nextPlayer();
-                String text2 = game.getCurrentPlayer().getNickName() + " will chose their support card";
+                String text2 = game.getCurrentPlayer().getNickName() + " will choose their support card";
                 smCurrentPlayer message2 = new smCurrentPlayer(text2, game.getCurrentPlayer().getNickName());
                 server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
             }
@@ -813,11 +812,12 @@ public class Controller {
      */
     public void setBlockOnIsland(int island){
         ServerMessage message;
-        board.getIsland(island).addBlockCard();
+        System.out.println("\n\nISLAND: " + island + "\n\n");
+        board.getIsland(island - 1).addBlockCard();
         String text1= game.getCurrentPlayer().getNickName() + " has placed a block on island number " + island;
         message= new smBlockOnIsland(
                 text1,
-                island,
+                island - 1,
                 true);
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
@@ -981,7 +981,7 @@ public class Controller {
         String text;
         ServerMessage message;
         board.getIsland(island).addStudent(student);
-        text = "One " + student + " student has be4en taken from character card 1";
+        text = "One " + student + " student has been taken from character card 1";
         message= new smStudentsOnCard(text,
                 1,
                 students,
