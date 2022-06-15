@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import it.polimi.ingsw.network.server.model.SupportCard;
 
@@ -32,13 +33,13 @@ public class CLI implements View, Runnable {
     private String currentPlayer;
     private String mode;
     private int numOfPlayers;
-    private final BufferedReader br;
+    private final Scanner input;
     private final Gson gson;
     private int availableStudentsMovements = 3;
 
 
     public CLI(Client client) {
-        br = new BufferedReader(new InputStreamReader(System.in));
+        input = new Scanner(System.in);
         this.client = client;
         gson = new Gson();
         availableCC = new ArrayList<>();
@@ -110,11 +111,7 @@ public class CLI implements View, Runnable {
         resumeFrom = Phase.CHOOSE_TOWER;
 
         String str;
-        try {
-            str = br.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        str = input.nextLine();
 
         mainPlayer = new PlayerView(str);
 
@@ -139,16 +136,13 @@ public class CLI implements View, Runnable {
         updateUsableCC();
         for(CharacterCard c: usableCC){
             c.showCard();
-            System.out.println("\n");
         }
-        String str = "";
+        String str;
         do {
             System.out.println("Do you want to activate a character card? (yes|no)");
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            str = input.nextLine();
+
             if(!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"))
                 System.out.println("Please select yes or no");
         }while(!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
@@ -166,13 +160,10 @@ public class CLI implements View, Runnable {
 
         int choice;
         CharacterCard card = null;
-        String str = "";
+        String str;
         do {
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = input.nextLine();
+
             if (stringToInteger(str) == null)
                 System.out.println("Not an int");
             else {
@@ -203,13 +194,10 @@ public class CLI implements View, Runnable {
         int numOfPlayers = 0;
         String mode;
         boolean notValidChoice;
-        String str = "";
+        String str;
         do{
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = input.nextLine();
+
             if (stringToInteger(str) == null) {
                 System.out.println("Not an int");
                 notValidChoice = true;
@@ -223,11 +211,8 @@ public class CLI implements View, Runnable {
         } while (notValidChoice);
         System.out.println("Choose mode: ");
         do {
-            try {
-                mode = br.readLine().toLowerCase();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            mode = input.nextLine().toLowerCase();
+
             notValidChoice = (!mode.equals("expert") && !mode.equals("normal"));
             if (notValidChoice)
                 System.out.println("Invalid game mode, please choose a valid one (between normal and expert): ");
@@ -262,14 +247,12 @@ public class CLI implements View, Runnable {
         if(numOfPlayers==4)
             System.out.println("Two players can chose the same tower color and they will be in the same team");
         String colorChoice = "";
-            try {
-                do {
-                    colorChoice = br.readLine().toUpperCase();
-                    if (!availableTowers.contains(colorChoice))
-                        System.out.println("Invalid Tower color, please select a valid one: ");
-                } while (!availableTowers.contains(colorChoice));
-            }catch(IOException e)
-            {e.printStackTrace();}
+            do {
+                colorChoice = input.nextLine().toUpperCase();
+
+                if (!availableTowers.contains(colorChoice))
+                    System.out.println("Invalid Tower color, please select a valid one: ");
+            } while (!availableTowers.contains(colorChoice));
             mainPlayer.setTower(colorChoice);
             availableTowers.remove(colorChoice);
             System.out.println("Chosen Tower color: " + colorChoice.toLowerCase());
@@ -293,20 +276,19 @@ public class CLI implements View, Runnable {
         }
         String userChoice ="";
         boolean deckAvailable = false;
-        try {
-            do {
-                userChoice = br.readLine();
-                for (String deck : availableDecks) {
-                    if (userChoice.toUpperCase().equals(deck)) {
-                        deckAvailable = true;
-                        break;
-                    }
+        do {
+            userChoice = input.nextLine();
+
+            for (String deck : availableDecks) {
+                if (userChoice.toUpperCase().equals(deck)) {
+                    deckAvailable = true;
+                    break;
                 }
-                if (!deckAvailable)
-                    System.out.println("Invalid deck, please choose a valid one: ");
-            } while (!deckAvailable);
-        }catch(IOException e)
-        {e.printStackTrace();}
+            }
+            if (!deckAvailable)
+                System.out.println("Invalid deck, please choose a valid one: ");
+        } while (!deckAvailable);
+
         System.out.println("Chosen deck: " + userChoice);
         cmDeck message = new cmDeck(userChoice);
         String text = gson.toJson(message, cmDeck.class);
@@ -340,11 +322,8 @@ public class CLI implements View, Runnable {
         int supportCardChoice = 0;
         String str = "";
             do {
-                try {
-                    str = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                str = input.nextLine();
+
                 if (stringToInteger(str) == null)
                     System.out.println("Not an int");
                 else {
@@ -440,12 +419,9 @@ public class CLI implements View, Runnable {
         String decisionToMoveStudents = "";
         do{
             System.out.println("Do you want to move some students from your Hall to an Island? (yes|no)");
-            try {
-                decisionToMoveStudents = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }while((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
+            decisionToMoveStudents = input.nextLine();
+
+        } while((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
 
         if(decisionToMoveStudents.equalsIgnoreCase("yes")) {
             int chosenIsland;
@@ -465,11 +441,8 @@ public class CLI implements View, Runnable {
                 String str = "";
                 boolean notValidChoice;
                 do {
-                    try {
-                        str = br.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    str = input.nextLine();
+
                     if (stringToInteger(str) == null) {
                         System.out.println("Not an int");
                         notValidChoice = true;
@@ -491,11 +464,8 @@ public class CLI implements View, Runnable {
                     decisionToMoveStudents = "false";
                     do {
                         System.out.println("Do you want to move any more students? (yes|no)");
-                        try {
-                            decisionToMoveStudents = br.readLine();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        decisionToMoveStudents = input.nextLine();
+
                     } while ((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
                 }
 
@@ -524,11 +494,8 @@ public class CLI implements View, Runnable {
         for(int i = 0; i< numOfStudents; i++) {
             do {
                 System.out.println("Please select a student (choice " + (i+1) + ") : ");
-                try {
-                    studentChoice = br.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                studentChoice = input.nextLine();
+
                 color = StudentColor.getStudentFromString(studentChoice);
                 if(color==null)
                     System.out.println("Not valid choice");
@@ -562,11 +529,8 @@ public class CLI implements View, Runnable {
         boolean notValidChoice;
         String str = "";
         do {
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = input.nextLine();
+
             if (stringToInteger(str) == null) {
                 System.out.println("Not an int");
                 notValidChoice = true;
@@ -626,12 +590,13 @@ public class CLI implements View, Runnable {
     }
 
     public void showIslands(Integer range){
-        System.out.println("\nMother Nature is on island "+(motherNature.getCurrentIsland()+1));
+        System.out.println("Mother Nature is on island "+(motherNature.getCurrentIsland()+1) + "\n");
         String text;
         System.out.println(mainPlayer.getNickname() + "'s tower is " + mainPlayer.getTower());
         for(PlayerView player : players){
             System.out.println(player.getNickname() + "'s tower is " + player.getTower());
         }
+        System.out.println();
         for(StudentColor color: StudentColor.values()){
             text= "The "+ color.toString().toLowerCase()+ " teacher is ";
             text = text + teachers.getOrDefault(color, "yet to be decided");
@@ -739,11 +704,8 @@ public class CLI implements View, Runnable {
         boolean notValidChoice;
         String str = "";
         do {
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = input.nextLine();
+
             if (stringToInteger(str) == null) {
                 System.out.println("Not an int");
                 notValidChoice = true;
@@ -1068,12 +1030,9 @@ public class CLI implements View, Runnable {
     @Override
     public void disconnectFromServer() {
         System.out.println("The game is finished, press enter to close the game.");
+
         String str;
-        try {
-            str = br.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        str = input.nextLine();
 
         if (!str.isEmpty()) {
             cmDisconnect disconnect = new cmDisconnect(mainPlayer.getNickname());

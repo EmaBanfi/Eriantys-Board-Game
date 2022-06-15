@@ -66,12 +66,12 @@ public abstract class CharacterCard {
     public void showCard() {
         System.out.println("Card id: " + cardId);
         System.out.println("Card price: " + price);
-        System.out.println("Card effect: " + text);
+        System.out.println("Card effect: " + text + "\n");
     }
 
     public boolean confirmActivation() {
 
-        System.out.println("Do you still want to activate the card?");
+        System.out.println("Do you still want to activate the card? (yes|no)");
         String str;
         do {
             try {

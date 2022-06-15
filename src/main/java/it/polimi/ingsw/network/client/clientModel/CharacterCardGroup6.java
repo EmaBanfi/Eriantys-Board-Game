@@ -163,24 +163,24 @@ public class CharacterCardGroup6 extends CharacterCard {
     public boolean checkCCPrecondition() {
         String text = "Card "+getCardId()+ " can't be activated because ";
         if (getCLI().getMainPlayer().getCoins() < getPrice()) {
-            System.out.println(text + " you don't have enough coins");
+            System.out.println(text + " you don't have enough coins\n");
             return  false;
         }
 
         if (getCardId() == 7)
             if (studentsOnCard.isEmpty()) {
-                System.out.println(text + " there are no students on card");
+                System.out.println(text + " there are no students on card\n");
                 return  false;
             }
 
         if (getCardId()==10 && player.getDiningHall().isEmpty())
                 if (studentsOnCard.isEmpty()) {
-                    System.out.println(text + " there are no students in your dining hall");
+                    System.out.println(text + " there are no students in your dining hall\n");
                     return  false;
                 }
 
         if(player.getHall().isEmpty()){
-            System.out.println(text + " there are no students in your hall");
+            System.out.println(text + " there are no students in your hall\n");
             return  false;
         }
 

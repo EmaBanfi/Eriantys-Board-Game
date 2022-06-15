@@ -50,8 +50,8 @@ public class Client extends Thread {
     }
 
     public static void main(String[] args) throws Exception {
-        BufferedReader br;
-        br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner input;
+        input = new Scanner(System.in);
 
         System.out.println("\nDo you want to play with CLI or GUI?");
         System.out.println("CLI: 1");
@@ -59,7 +59,7 @@ public class Client extends Thread {
 
         String viewType;
         do {
-            viewType = br.readLine();
+            viewType = input.nextLine();
             if (!(viewType.equals("1")) & !(viewType.equals("2")))
                 System.out.println("Please digit 1 or 2");
         } while (!(viewType.equals("1")) & !(viewType.equals("2")));
