@@ -26,7 +26,7 @@ public class CLI implements View, Runnable {
     private ArrayList<String> availableTowers;
     private final ArrayList<CharacterCard> availableCC;
 
-    private final ArrayList<CharacterCard> usableCC;
+    private final ArrayList<Integer> usableCC;
     private final CharacterCardCreator ccc;
     private boolean usedCharacterCard;
     private final Client client;
@@ -133,8 +133,8 @@ public class CLI implements View, Runnable {
         System.out.println("You have " + mainPlayer.getCoins() + " coins");
         System.out.println("The available character cards are the following\n");
 
-        for(CharacterCard c: usableCC){
-            c.showCard();
+        for(Integer c: usableCC){
+            getCharacterCardById(c).showCard();
         }
         String str;
         do {
@@ -157,8 +157,8 @@ public class CLI implements View, Runnable {
     public void askCharacterCard(){
         System.out.println("Choose one of the character cards");
 
-        int choice;
-        CharacterCard card = null;
+        int choice=0;
+        CharacterCard card;
         String str;
         do {
             str = input.nextLine();
@@ -167,12 +167,11 @@ public class CLI implements View, Runnable {
                 System.out.println("Not an int");
             else {
                 choice = stringToInteger(str);
-                card = getUsableCharacterCardById(choice);
-                if (card == null)
+                if (usableCC.contains(choice))
                     System.out.println("Not valid character card id");
             }
-        } while(card == null);
-
+        } while(usableCC.contains(choice));
+        card = getCharacterCardById(choice);
         if (!card.activate())
             askActivateCharacterCard();
         else {
@@ -233,8 +232,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askTower(){
         resumeFrom = Phase.CHOOSE_DECK;
-        System.out.println("\n\nCHOOSING TOWER\n2" +
-                "");
+        System.out.println("\n\nCHOOSING TOWER\n");
         System.out.println("Choose tower color:");
         System.out.println("The available towers are: ");
         if(availableTowers.contains("WHITE"))
@@ -245,7 +243,7 @@ public class CLI implements View, Runnable {
             System.out.println("GRAY");
         if(numOfPlayers==4)
             System.out.println("Two players can chose the same tower color and they will be in the same team");
-        String colorChoice = "";
+        String colorChoice;
             do {
                 colorChoice = input.nextLine().toUpperCase();
 
@@ -273,7 +271,7 @@ public class CLI implements View, Runnable {
         for (String deck : availableDecks) {
             System.out.println(deck);
         }
-        String userChoice ="";
+        String userChoice;
         boolean deckAvailable = false;
         do {
             userChoice = input.nextLine();
@@ -319,7 +317,7 @@ public class CLI implements View, Runnable {
         }
         boolean supportCardAvailable = false;
         int supportCardChoice = 0;
-        String str = "";
+        String str;
             do {
                 str = input.nextLine();
 
@@ -415,7 +413,7 @@ public class CLI implements View, Runnable {
             System.out.println(student);
         }
 
-        String decisionToMoveStudents = "";
+        String decisionToMoveStudents;
         do{
             System.out.println("Do you want to move some students from your Hall to an Island? (yes|no)");
             decisionToMoveStudents = input.nextLine();
@@ -437,7 +435,7 @@ public class CLI implements View, Runnable {
                 availableIslandChoices--;
                 System.out.println("Choose the number of students that you want to move to this island " +
                         "(from 0 up to " + availableStudentsMovements + ") : ");
-                String str = "";
+                String str;
                 boolean notValidChoice;
                 do {
                     str = input.nextLine();
@@ -460,7 +458,6 @@ public class CLI implements View, Runnable {
                 mainPlayer.getHall().removeAll(studentsToI);
                 availableIslands.get(chosenIsland).addStudents(studentsToI);
                 if(availableStudentsMovements>0) {
-                    decisionToMoveStudents = "false";
                     do {
                         System.out.println("Do you want to move any more students? (yes|no)");
                         decisionToMoveStudents = input.nextLine();
@@ -480,7 +477,7 @@ public class CLI implements View, Runnable {
     @Override
     public ArrayList<StudentColor> askStudentsFromHall(int numOfStudents, boolean showHall){
         StudentColor color;
-        String studentChoice = "";
+        String studentChoice;
         ArrayList<StudentColor> chosenStudents = new ArrayList<>();
 
         if (showHall) {
@@ -529,7 +526,7 @@ public class CLI implements View, Runnable {
         }
         int chosenCloud = 0;
         boolean notValidChoice;
-        String str = "";
+        String str;
         do {
             str = input.nextLine();
 
@@ -704,7 +701,7 @@ public class CLI implements View, Runnable {
             showIslands(range);
         System.out.println("Choose an island");
         boolean notValidChoice;
-        String str = "";
+        String str;
         do {
             str = input.nextLine();
 
@@ -1110,14 +1107,7 @@ public class CLI implements View, Runnable {
         usableCC.clear();
         for(CharacterCard card: availableCC){
             if(card.checkCCPrecondition())
-                usableCC.add(card);
+                usableCC.add(card.getCardId());
         }
-    }
-
-    public CharacterCard getUsableCharacterCardById(int id){
-        for (CharacterCard card : usableCC)
-            if(card.getCardId()==id)
-                return card;
-        return null;
     }
 }
