@@ -167,10 +167,10 @@ public class CLI implements View, Runnable {
                 System.out.println("Not an int");
             else {
                 choice = stringToInteger(str);
-                if (usableCC.contains(choice))
+                if (!usableCC.contains(choice))
                     System.out.println("Not valid character card id");
             }
-        } while(usableCC.contains(choice));
+        } while(!usableCC.contains(choice));
         card = getCharacterCardById(choice);
         if (!card.activate())
             askActivateCharacterCard();
@@ -362,6 +362,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToD(){
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
         if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
@@ -373,7 +374,7 @@ public class CLI implements View, Runnable {
             for (StudentColor student : mainPlayer.getHall()) {
                 System.out.println(student);
             }
-            System.out.println("Your current Dining Hall: ");
+            System.out.println("\nYour current Dining Hall: ");
             boolean empty = true;
             for (StudentColor student : mainPlayer.getDiningHall()) {
                 if(empty)
@@ -382,7 +383,7 @@ public class CLI implements View, Runnable {
             }
             if (empty)
                 System.out.println("It is empty");
-            System.out.println("You can move " + availableStudentsMovements + " students");
+            System.out.println("\nYou can move " + availableStudentsMovements + " students");
 
                 chosenStudents= askStudentsFromHall(availableStudentsMovements, false);
                 mainPlayer.addToDiningHall(chosenStudents);
@@ -401,6 +402,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMoveStudentsHToI(){
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
         if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
@@ -415,7 +417,7 @@ public class CLI implements View, Runnable {
 
         String decisionToMoveStudents;
         do{
-            System.out.println("Do you want to move some students from your Hall to an Island? (yes|no)");
+            System.out.println("\nDo you want to move some students from your Hall to an Island? (yes|no)");
             decisionToMoveStudents = input.nextLine();
 
         } while((!decisionToMoveStudents.equalsIgnoreCase("yes")) && (!decisionToMoveStudents.equalsIgnoreCase("no")));
@@ -510,6 +512,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askCloud(){
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
         if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
@@ -554,6 +557,7 @@ public class CLI implements View, Runnable {
      */
     @Override
     public void askMotherNatureMovements(){
+        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
         if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
             askActivateCharacterCard();
 
@@ -861,11 +865,6 @@ public class CLI implements View, Runnable {
         getPlayerByNick(nick).addToDiningHall(students);
     }
 
-    /**
-     * show the winners and the losers. Called by message
-     * @param winners
-     * @param losers
-     */
     @Override
     public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
         if (numOfPlayers == 2)

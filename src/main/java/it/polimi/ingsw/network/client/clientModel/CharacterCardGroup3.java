@@ -60,7 +60,6 @@ public class CharacterCardGroup3 extends CharacterCard{
 
     @Override
     public boolean checkCCPrecondition() {
-        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
 
         if (getCLI().getMainPlayer().getCoins() < getPrice()) {
             System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins\n");

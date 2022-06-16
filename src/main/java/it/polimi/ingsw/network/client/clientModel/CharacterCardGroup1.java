@@ -124,7 +124,6 @@ public class CharacterCardGroup1 extends CharacterCard {
 
     @Override
     public boolean checkCCPrecondition() {
-        System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
 
         String text = "Card "+getCardId()+ " can't be activated because";
 
