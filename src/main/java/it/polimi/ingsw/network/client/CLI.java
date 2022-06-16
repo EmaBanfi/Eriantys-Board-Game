@@ -35,7 +35,7 @@ public class CLI implements View, Runnable {
     private int numOfPlayers;
     private final Scanner input;
     private final Gson gson;
-    private int availableStudentsMovements = 3;
+    private int availableStudentsMovements;
 
 
     public CLI(Client client) {
@@ -218,6 +218,10 @@ public class CLI implements View, Runnable {
 
         this.mode = mode;
         this.numOfPlayers = numOfPlayers;
+        if(numOfPlayers==3)
+            availableStudentsMovements=4;
+        else
+            availableStudentsMovements=3;
 
         System.out.println("Number of players selected: " + numOfPlayers + "\n" + "Mode selected: " + mode);
         Gson gson = new Gson();
@@ -918,6 +922,10 @@ public class CLI implements View, Runnable {
     public void updateGameStatus(int numOfPlayers, String mode) {
         this.numOfPlayers = numOfPlayers;
         this.mode = mode;
+        if(numOfPlayers==3)
+            availableStudentsMovements=4;
+        else
+            availableStudentsMovements=3;
         initAvailableTowers();
     }
 

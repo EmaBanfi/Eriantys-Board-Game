@@ -41,4 +41,16 @@ class CloudTest {
         assertTrue(studentsTakenFormCloud.containsAll(studentsOnCloud));
         assertTrue(cloud.getStudents().isEmpty());
     }
+
+    @Test
+    void addRemoveAndCount(){
+        ArrayList<StudentColor> students = new ArrayList<>();
+        for(StudentColor color: StudentColor.values()){
+            cloud.addStudent(color);
+            assertEquals(1, cloud.countStudentColor(color));
+            students.add(color);
+        }
+        cloud.removeStudents(students);
+        assertTrue(cloud.getStudents().isEmpty());
+    }
 }

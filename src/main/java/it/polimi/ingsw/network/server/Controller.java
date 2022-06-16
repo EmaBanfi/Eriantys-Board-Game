@@ -627,7 +627,7 @@ public class Controller {
             board.MajorityOnCurrentIsland(server, game.getCurrentPlayer());
         } catch (EndGameException e) {
             smNotify message2 = new smNotify("Game will end now because " + e.getMessage());
-            server.sendAll(gson.toJson(gson.toJson(message2, smNotify.class)));
+            server.sendAll(gson.toJson(message2, smNotify.class));
             gameResults();
             return;
         }
@@ -686,7 +686,6 @@ public class Controller {
             gameResults();
         }
         else {
-            //game.nextPlayer();
             for (Player player : game.getPlayers())
                 player.clearUsedSupportCard();
             refillClouds();
@@ -808,7 +807,7 @@ public class Controller {
     /**
      * place a block on the specified island
      * called by client message CCG5
-     * @param island index of the island
+     * @param island index of the island ( first index is 1)
      */
     public void setBlockOnIsland(int island){
         ServerMessage message;
@@ -902,7 +901,6 @@ public class Controller {
             smNotify message = new smNotify("Game will end now because " + e.getMessage());
             server.sendAll(gson.toJson(message, smNotify.class));
             gameResults();
-            return;
         }
     }
 
@@ -998,7 +996,7 @@ public class Controller {
     }
 
     /**
-     * this method is used to put remove a student from characterCard 11 and put it in current player's dining hall and re
+     * this method is used to put remove a student from characterCard 11 and put it in current player's dining hall
      * @param student student to move
      */
     public void addStudentToD(StudentColor student){
@@ -1010,7 +1008,7 @@ public class Controller {
         game.getCurrentPlayer().getBoard().getDiningHall().addStudent(student);
         text = "One " + student.toString().toLowerCase() + " student has been taken from character card 11";
         message= new smStudentsOnCard(text,
-                1,
+                11,
                 students,
                 false);
         server.sendAllExceptPlayer(

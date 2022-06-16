@@ -28,6 +28,10 @@ public class MotherNature {
         return islands;
     }
 
+    /**
+     * used to set the position of mother nature
+     * @param isl index of the island ( first index is 0)
+     */
     public void setCurrentIsland(int isl){
         currentIsland = isl;
     }

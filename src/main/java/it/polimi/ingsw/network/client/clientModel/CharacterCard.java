@@ -73,13 +73,17 @@ public abstract class CharacterCard {
 
         System.out.println("Do you still want to activate the card? (yes|no)");
         String str;
+        boolean notValidChoice;
         do {
             try {
                 str = br.readLine();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } while (!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
+            notValidChoice = (!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
+            if(notValidChoice)
+                System.out.println("please select yes or no");
+        } while( notValidChoice);
 
         return str.equalsIgnoreCase("no");
     }

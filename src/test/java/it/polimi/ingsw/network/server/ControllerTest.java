@@ -155,7 +155,11 @@ class ControllerTest {
     @Test
     void setBlockOnIslandCase1() {
         controller.setGameStatus("expert",4);
-        controller.setBlockOnIsland(0);
+        controller.setTower("WHITE");
+        controller.setTower("WHITE");
+        controller.setTower("BLACK");
+        controller.setTower("BLACK");
+        controller.setBlockOnIsland(1);
         assertTrue(controller.getBoard().getIsland(0).isBlockCard());
         controller.getBoard().getMotherNature().setCurrentIsland(0);
         controller.moveMotherNature(0);
@@ -173,10 +177,10 @@ class ControllerTest {
         controller.setTower("WHITE");
         controller.setTower("BLACK");
         controller.setTower("BLACK");
-        controller.setBlockOnIsland(0);
+        controller.setBlockOnIsland(1);
         assertTrue(controller.getBoard().getIsland(0).isBlockCard());
         controller.getBoard().getMotherNature().setCurrentIsland(0);
-        controller.additionalMajority(0);
+        controller.additionalMajority(1);
         assertTrue(controller.getBoard().getIsland(0).isBlockCard());
     }
 

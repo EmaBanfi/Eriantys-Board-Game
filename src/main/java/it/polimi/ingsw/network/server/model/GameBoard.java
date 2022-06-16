@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.messages.serverMessages.*;
 import it.polimi.ingsw.network.server.Server;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class GameBoard {
     private final Gson gson;
@@ -31,7 +33,6 @@ public class GameBoard {
         islands = new ArrayList<>();
         for (int i = 0; i < 12; i++)
             islands.add(new Island());
-        //initTeachers();
         motherNature = new MotherNature(islands);
         initIslands();
         initTowers(numberOfPlayers);
@@ -41,13 +42,16 @@ public class GameBoard {
     }
 
 
-    private void initTowers(int numOfTowers){
+    private void initTowers(int numOfPlayers){
+        int numOfTowers=8;
+        if(numOfPlayers==3)
+            numOfTowers=6;
         towers=new ArrayList<>();
-        if(numOfTowers==3){
-            towers.add(new Tower("GRAY"));
+        if(numOfPlayers==3){
+            towers.add(new Tower("GRAY",numOfTowers));
         }
-        towers.add(new Tower("WHITE"));
-        towers.add(new Tower("BLACK"));
+        towers.add(new Tower("WHITE", numOfTowers));
+        towers.add(new Tower("BLACK", numOfTowers));
     }
 
     /**
@@ -93,8 +97,8 @@ public class GameBoard {
         assignInfluencePoints(motherNature.getCurrentIsland(),server, false, currentPlayer);
     }
 
-    public void MajorityOnIsland(int movements, Server server,Player currentPlayer) throws EndGameException {
-        assignInfluencePoints(motherNature.getCurrentIsland() + movements, server, true, currentPlayer);
+    public void MajorityOnIsland(int island, Server server,Player currentPlayer) throws EndGameException {
+        assignInfluencePoints( island, server, true, currentPlayer);
     }
 
     /**
@@ -194,8 +198,11 @@ public class GameBoard {
      */
     public void majority(int island, Server server) throws EndGameException{
         int next, previous;
-        boolean towerNotChanged = true;
+        Tower newTower;
+        Tower oldTower;
+        ArrayList<Integer> pointsOfTowers = new ArrayList<>();
         String text;
+        int maxInfluencePoints;
         ServerMessage message;
         if(island+1>=islands.size())
             next=0;
@@ -205,82 +212,72 @@ public class GameBoard {
             previous=islands.size()-1;
         else
             previous= island-1;
-        Tower newTower=islands.get(island).getTower();
-        int currentTowerInfluencePoints;
-        if(newTower==null) {
-            currentTowerInfluencePoints = 0;
+
+        oldTower = islands.get(island).getTower();
+
+        for(Tower tower: towers) {
+            pointsOfTowers.add(tower.getInfluencePoints());
         }
-        else {
-            currentTowerInfluencePoints = newTower.getInfluencePoints();
-        }
-        for(Tower tower: towers){
-            if(tower.getInfluencePoints()>currentTowerInfluencePoints) {
-                if(newTower!=null) {
-                    newTower.increaseAvailableTowers(islands.get(island).getNumOfTowers());
-                    text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
-                    message = new smNotify(text);
-                    server.sendAll(gson.toJson(message, smNotify.class));
-                }
-                newTower = tower;
-                System.out.println(newTower.getTowerColor());
-                currentTowerInfluencePoints = newTower.getInfluencePoints();
-                System.out.println(currentTowerInfluencePoints);
-                if (towerNotChanged)
-                    towerNotChanged= false;
-            }
-        }
-        if(!towerNotChanged) {
-            if(islands.get(island).getTower()!=null) {
+        maxInfluencePoints = Collections.max(pointsOfTowers);
+        if(Collections.frequency(pointsOfTowers, maxInfluencePoints)==1){
+            newTower = towers.get(pointsOfTowers.indexOf(maxInfluencePoints));
+            if(!newTower.equals(oldTower)) {
+                if(oldTower!=null){
+                oldTower.increaseAvailableTowers(islands.get(island).getNumOfTowers());
+                text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
+                message = new smNotify(text);
+                server.sendAll(gson.toJson(message, smNotify.class));
                 text = "The tower of island " + (island + 1) + " changed from " +
-                        islands.get(island).getTower().getTowerColor().toLowerCase() + " to " + newTower.getTowerColor().toLowerCase() + " tower";
-            }
-            else {
-                text = "The tower of island " + (island + 1) + " is the " + newTower.getTowerColor().toLowerCase() + " tower";
-            }
-            message = new smTowerColor(
-                    text,
-                    island,
-                    newTower.getTowerColor()
-            );
-            server.sendAll(gson.toJson(message, smTowerColor.class));
-            islands.get(island).setTower(newTower);
-//            System.out.println("island n "+island+" tower color is "+islands.get(island).getTower().getTowerColor());
-            if (islands.get(island).getTower().equals(islands.get(next).getTower())) {
-                text = "island " + (next + 1) + " has been merged in to island " + (island +1);
-                message = new smMerge(
+                        oldTower.getTowerColor().toLowerCase() + " to " + newTower.getTowerColor().toLowerCase() + " tower";
+                }
+                else {
+                    text = "The tower of island " + (island + 1) + " is the " + newTower.getTowerColor().toLowerCase() + " tower";
+                }
+                message = new smTowerColor(
                         text,
                         island,
-                        next
+                        newTower.getTowerColor()
                 );
-                server.sendAll(gson.toJson(message, smMerge.class));
-                mergeIslands(island, next);
-                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-            }
-            if (islands.get(island).getTower().equals(islands.get(previous).getTower())) {
-                text = "island " + (previous + 1) + " has been merged in to island " + (island +1);
-                message = new smMerge(
-                        text,
-                        island,
-                        previous
-                        );
-                server.sendAll(gson.toJson(message, smMerge.class));
-                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
-                mergeIslands(island, previous);
+                server.sendAll(gson.toJson(message, smTowerColor.class));
+                islands.get(island).setTower(newTower);
+                if (newTower.equals(islands.get(next).getTower())) {
+                    text = "island " + (next + 1) + " has been merged in to island " + (island +1);
+                    message = new smMerge(
+                            text,
+                            island,
+                            next
+                    );
+                    server.sendAll(gson.toJson(message, smMerge.class));
+                    mergeIslands(island, next);
+                    newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                }
+                if (islands.get(island).getTower().equals(islands.get(previous).getTower())) {
+                    text = "island " + (previous + 1) + " has been merged in to island " + (island +1);
+                    message = new smMerge(
+                            text,
+                            island,
+                            previous
+                    );
+                    server.sendAll(gson.toJson(message, smMerge.class));
+                    newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                    mergeIslands(island, previous);
+                }
+                else{
+                    text = "There will be no merging because adjacent islands have tower of different colors than" +
+                            " island " + (island +1 );
+                    message = new smNotify(text);
+                    server.sendAll(gson.toJson(message));
+                    newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                }
+                text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
             }
             else{
-                text = "There will be no merging because adjacent islands have tower of different colors than" +
-                        " island " + (island +1 );
-                message = new smNotify(text);
-                server.sendAll(gson.toJson(message));
-                newTower.decreaseAvailableTowers(islands.get(island).getNumOfTowers());
+                text = "island " + (island+1) + " tower color has not changed";
             }
-            text = newTower.getAvailableTowers() + " " + newTower.getTowerColor() + " towers remain";
+            message = new smNotify(text);
+            server.sendAll(gson.toJson(message, smNotify.class));
         }
-        else{
-            text = "island " + (island+1) + " tower color has not changed";
-        }
-        message = new smNotify(text);
-        server.sendAll(gson.toJson(message, smNotify.class));
+
     }
 
     /**

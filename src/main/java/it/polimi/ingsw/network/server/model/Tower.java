@@ -11,9 +11,9 @@ public class Tower {
     private int influencePoints;
     private int availableTowers;
 
-    public Tower(String towerColor) {
+    public Tower(String towerColor, int numOfTowers) {
         this.towerColor = towerColor;
-        availableTowers=8;
+        availableTowers=numOfTowers;
     }
     public void setInfluencePoints(int points){
         influencePoints=points;
