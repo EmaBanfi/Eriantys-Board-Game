@@ -5,9 +5,7 @@ import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup1 extends CharacterCard {
@@ -63,11 +61,8 @@ public class CharacterCardGroup1 extends CharacterCard {
         do {
             isPresent = false;
 
-            try {
-                studentChoice = getBr().readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            studentChoice = getInput().nextLine();
+
             color = StudentColor.getStudentFromString(studentChoice);
 
             if (color != null) {
@@ -92,11 +87,8 @@ public class CharacterCardGroup1 extends CharacterCard {
         do {
             validChoice = false;
 
-            try {
-                str = getBr().readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = getInput().nextLine();
+
             islandChoice = getCLI().stringToInteger(str);
 
             if(islandChoice != null) {

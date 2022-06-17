@@ -5,9 +5,7 @@ import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup4 extends CharacterCard {
@@ -20,11 +18,11 @@ public class CharacterCardGroup4 extends CharacterCard {
             setPrice(3);
         }
         else if (getCardId() == 11) {
-            setText("You can choose one student from this card and place it in your Hall");
+            setText("You can choose one student from this card and place it in your dining hall");
             setPrice(2);
         }
         else if (getCardId() == 12){
-            setText("Choose a student color: every player has to put back in the bag 3 students of the same color. " +
+            setText("Choose a student color: every player has to put back in the bag 3 students of the same color from the dining hall. " +
                     "Whoever has less than 3 students of the specified color, will put all the remaining students of that color ");
             setPrice(3);
         }
@@ -89,11 +87,8 @@ public class CharacterCardGroup4 extends CharacterCard {
         String colorChoice = "";
         StudentColor color;
         do {
-            try {
-                colorChoice = getBr().readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            colorChoice = getInput().nextLine();
+
             color = StudentColor.getStudentFromString(colorChoice);
 
             if (color == null)

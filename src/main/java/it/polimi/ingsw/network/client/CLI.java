@@ -367,7 +367,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askMoveStudentsHToD(){
         System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
-        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
+        if(mode.equals("expert") && (!usedCharacterCard) && anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_MOTHER_MOVEMENTS;
@@ -407,12 +407,12 @@ public class CLI implements View, Runnable {
     @Override
     public void askMoveStudentsHToI(){
         System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
-        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
+        if(mode.equals("expert") && (!usedCharacterCard) && anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_STUDENTS_TO_DINING_HALL;
 
-        System.out.println("\n\nSTUDENTS FROM HALL TO ISLANDS");
+        System.out.println("\n\nSTUDENTS FROM HALL TO ISLANDS\n");
         showIslands(null);
         System.out.println("Your current Hall: ");
         for(StudentColor student: mainPlayer.getHall()){
@@ -517,7 +517,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askCloud(){
         System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
-        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
+        if(mode.equals("expert") && (!usedCharacterCard) && anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_SUPPORT_CARD;
@@ -562,7 +562,7 @@ public class CLI implements View, Runnable {
     @Override
     public void askMotherNatureMovements(){
         System.out.println("\n\nCHARACTER CARD ACTIVATION\n");
-        if(mode.equals("expert") && (!usedCharacterCard)&& anyUsableCC())
+        if(mode.equals("expert") && (!usedCharacterCard) && anyUsableCC())
             askActivateCharacterCard();
 
         resumeFrom = Phase.CHOOSE_CLOUDS;
@@ -1112,9 +1112,10 @@ public class CLI implements View, Runnable {
 
     private void updateUsableCC(){
         usableCC.clear();
-        for(CharacterCard card: availableCC){
-            if(card.checkCCPrecondition())
+        for (CharacterCard card : availableCC) {
+            if (card.checkCCPrecondition()) {
                 usableCC.add(card.getCardId());
+            }
         }
     }
 }

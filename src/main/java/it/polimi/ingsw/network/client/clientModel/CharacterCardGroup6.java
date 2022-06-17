@@ -5,9 +5,7 @@ import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG6;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CharacterCardGroup6 extends CharacterCard {
@@ -56,11 +54,9 @@ public class CharacterCardGroup6 extends CharacterCard {
             ArrayList<StudentColor> chosenStudentsFromCard = new ArrayList<>();
             do {
                 System.out.println("Please select a student (" + (numOfStudents + 1) + ")");
-                try {
-                    studentChoice = getBr().readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                studentChoice = getInput().nextLine();
+
                 color = StudentColor.getStudentFromString(studentChoice);
                 if (color != null) {
                     if (studentsOnCard.contains(color)) {
@@ -109,26 +105,31 @@ public class CharacterCardGroup6 extends CharacterCard {
             ArrayList<StudentColor> studentsFromHall = new ArrayList<>(getCLI().askStudentsFromHall(numberChoice, false));
 
             System.out.println("Choose " + numberChoice + " students to move from the dining hall to the hall");
-            int numOfStudents = 0;
+            System.out.println("Choose the students that you want to move: ");
+
             StudentColor color;
-            String studentChoice = null;
+            String studentChoice;
             ArrayList<StudentColor> studentsToHall = new ArrayList<>();
-            do {
-                try {
-                    studentChoice = getBr().readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                color = StudentColor.getStudentFromString(studentChoice);
-                if (player.getDiningHall().contains(color)) {
-                    numOfStudents++;
-                    studentsToHall.add(color);
-                    player.getDiningHall().remove(color);
-                }
-            } while (numOfStudents < numberChoice);
+            for (int i = 0; i < numberChoice; i++) {
+                do {
+                    System.out.println("Please select a student (choice " + (i + 1) + "): ");
+                    studentChoice = getInput().nextLine();
+
+                    color = StudentColor.getStudentFromString(studentChoice);
+
+                    if (color == null)
+                        System.out.println("Not valid choice");
+
+                    else if (!player.getDiningHall().contains(color))
+                        System.out.println("There are no " + studentChoice.toLowerCase() + " students");
+
+                } while (!player.getDiningHall().contains(color));
+                studentsToHall.add(color);
+            }
 
             player.addToHall(studentsToHall);
             player.addToDiningHall(studentsFromHall);
+            player.removeFromDiningHall(studentsToHall);
 
             cmCCG6 message = new cmCCG6(10, studentsToHall, studentsFromHall);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG6.class));
@@ -204,11 +205,8 @@ public class CharacterCardGroup6 extends CharacterCard {
         String str = "";
         boolean notValidChoice;
         do {
-            try {
-                str = getBr().readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = getInput().nextLine();
+
             if (getCLI().stringToInteger(str) == null) {
                 System.out.println("Not an int");
                 notValidChoice = true;

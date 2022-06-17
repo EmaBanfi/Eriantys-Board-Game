@@ -91,11 +91,13 @@ public class PlayerView {
     }
 
     public void removeFromDiningHall(ArrayList<StudentColor> students){
-        diningHall.removeAll(students);
+        for (StudentColor color : students)
+            diningHall.remove(color);
     }
 
     public void addToHall(ArrayList<StudentColor> students){
-        hall.addAll(students);
+        for (StudentColor color : students)
+            hall.add(color);
     }
 
     public void addToHall(StudentColor student){
@@ -107,7 +109,8 @@ public class PlayerView {
     }
 
     public void removeFromHall(ArrayList<StudentColor> students){
-        hall.removeAll(students);
+        for (StudentColor color : students)
+            hall.remove(color);
     }
 
     public void setDeck(String deck){

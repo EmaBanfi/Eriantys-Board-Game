@@ -856,13 +856,13 @@ public class Controller {
                 text = text + " student has";
             else
                 text = text + " students have";
-            text = text + " been removed form the hall of " + player.getNickName();
-            message = new smStudentsInHall(
+            text = text + " been removed from the dining hall of " + player.getNickName();
+            message = new smStudentsInDiningHall(
                     text,
                     player.getNickName(),
                     students,
                     false);
-            server.sendAll(gson.toJson(message, smStudentsInHall.class));
+            server.sendAll(gson.toJson(message, smStudentsInDiningHall.class));
         }
     }
 

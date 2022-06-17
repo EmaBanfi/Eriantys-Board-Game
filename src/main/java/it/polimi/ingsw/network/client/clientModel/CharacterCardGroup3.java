@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG3;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class CharacterCardGroup3 extends CharacterCard{
 
@@ -32,11 +30,7 @@ public class CharacterCardGroup3 extends CharacterCard{
         do {
             validChoice = false;
 
-            try {
-                str = getBr().readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            str = getInput().nextLine();
 
             movementChoice = getCLI().stringToInteger(str);
 
@@ -67,6 +61,6 @@ public class CharacterCardGroup3 extends CharacterCard{
             return  false;
         }
 
-        return false;
+        return true;
     }
 }

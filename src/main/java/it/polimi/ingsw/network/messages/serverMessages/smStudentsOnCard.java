@@ -36,6 +36,6 @@ public class smStudentsOnCard extends ServerMessage{
     public void processMessage(Client client) {
         if(getMessage()!=null)
             super.processMessage(client);
-        client.getView().updateStudentsOnCard(cardId, students,added);
+        client.getView().updateStudentsOnCard(cardId, students, added);
     }
 }

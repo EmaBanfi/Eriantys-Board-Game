@@ -3,10 +3,9 @@ package it.polimi.ingsw.network.client.clientModel;
 import it.polimi.ingsw.network.client.CLI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class CharacterCard {
     private final int cardId;
@@ -14,7 +13,7 @@ public abstract class CharacterCard {
     private String text;
     private final CLI cli;
 
-    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final Scanner input = new Scanner(System.in);
     private transient boolean increasedPrice = false;
 
     public CharacterCard(int cardId, CLI cli) {
@@ -75,11 +74,8 @@ public abstract class CharacterCard {
         String str;
         boolean notValidChoice;
         do {
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            str = input.nextLine();
+
             notValidChoice = (!str.equalsIgnoreCase("yes") && !str.equalsIgnoreCase("no"));
             if(notValidChoice)
                 System.out.println("please select yes or no");
@@ -90,7 +86,7 @@ public abstract class CharacterCard {
 
     public abstract boolean checkCCPrecondition();
 
-    public  BufferedReader getBr(){
-        return br;
+    public  Scanner getInput(){
+        return input;
     }
 }
