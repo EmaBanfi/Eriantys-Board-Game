@@ -77,6 +77,7 @@ public class Ping extends Thread{
     }
 
     public void closePing(){
+
         connected = false;
         client.CloseClient();
     }

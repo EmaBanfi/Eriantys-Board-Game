@@ -45,7 +45,9 @@ public class Client extends Thread {
         }
 
         kb = new BufferedReader(new InputStreamReader(System.in));
+
         ping.start();
+
         receive();
     }
 

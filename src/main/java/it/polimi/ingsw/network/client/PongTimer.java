@@ -17,6 +17,7 @@ public class PongTimer extends  Thread{
 
     @Override
     public  void run(){
+
         boolean repeatTimer= true;
         while(repeatTimer) {
             try {
