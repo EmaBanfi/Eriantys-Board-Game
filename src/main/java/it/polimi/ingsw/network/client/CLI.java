@@ -646,53 +646,48 @@ public class CLI implements View, Runnable {
     private void showRange(int from, int to) {
         int numOfSpaces=9;
         int maxSegmentLength=23;
-        String text="";
+        StringBuilder text= new StringBuilder();
         String segment;
         for(int i= from; i <to; i++) {
             segment = "Students on island " + (i+1);
-            text = text+segment;
-            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
-                text=text+" ";
+            text.append(segment);
+            text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
         }
         System.out.println(text);
         for(StudentColor color: StudentColor.values()) {
-            text="";
+            text=new StringBuilder();
             for (int i = from; i < to; i++) {
                 segment = color.toString().toLowerCase() + " students: " + availableIslands.get(i).getStudentsByColor(color);
-                text = text + segment;
-                for (int j = 1; j < (numOfSpaces + (maxSegmentLength - segment.length())); j++)
-                    text = text + " ";
+                text.append(segment);
+                text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
             }
             System.out.println(text);
         }
-        text="";
+        text=new StringBuilder();
         for(int i= from; i < to; i++){
             segment="Block on island: " + availableIslands.get(i).getBlockCard();
-            text = text+segment;
-            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
-                text=text+" ";
+            text.append(segment);
+            text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
         }
         System.out.println(text);
-        text="";
+        text=new StringBuilder();
         for(int i= from; i <to; i++){
             if (availableIslands.get(i).getTower() == null)
                segment="No tower on island";
             else
                 segment="Tower on island: " + availableIslands.get(i).getTower();
-            text = text+segment;
-            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
-                text=text+" ";
+            text.append(segment);
+            text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
         }
         System.out.println(text);
-        text="";
+        text=new StringBuilder();
         for(int i= from; i < to; i++){
             if(availableIslands.get(i).getTower()!=null)
                 segment="Num of towers: " + availableIslands.get(i).getNumOfTowers();
             else
                 segment="";
-            text = text+segment;
-            for(int j=1;j<(numOfSpaces+(maxSegmentLength-segment.length()) );j++ )
-                text=text+" ";
+            text.append(segment);
+            text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
         }
         System.out.println(text);
         System.out.println("\n");
@@ -1041,7 +1036,7 @@ public class CLI implements View, Runnable {
         str = input.nextLine();
 
         if (!str.isEmpty()) {
-            cmDisconnect disconnect = new cmDisconnect(mainPlayer.getNickname());
+            cmDisconnect disconnect = new cmDisconnect();
             String text = gson.toJson(disconnect, cmNickname.class);
             client.send(text);
         }

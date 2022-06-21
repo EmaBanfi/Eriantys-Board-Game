@@ -18,6 +18,7 @@ public class ClientHandler extends Thread {
     private final Server server;
     private final int handlerId;
     private final ClientGson clientGson;
+    private  Pong pong;
 
     public ClientHandler(Socket socket, Server server, int id) {
         super("ClientHandler");
@@ -36,6 +37,7 @@ public class ClientHandler extends Thread {
     }
 
     public synchronized void run() {
+        pong= new Pong(this);
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -46,6 +48,7 @@ public class ClientHandler extends Thread {
         BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
 
         String str = null;
+        pong.start();
 
         while (!socket.isClosed()) {
             try {
@@ -56,11 +59,11 @@ public class ClientHandler extends Thread {
 
                 System.exit(-1);
             }
-            if(str!=null) {
-                System.out.println("received by client handler " + handlerId + " from client " + str);
-                ClientMessage message = clientGson.deserialize(str);
-                message.processMessage(this);
-            }
+
+            System.out.println("received by client handler " + handlerId + " from client " + str);
+            ClientMessage message = clientGson.deserialize(str);
+            message.processMessage(this);
+
         }
 
         server.manageDisconnection(handlerId);
@@ -87,6 +90,7 @@ public class ClientHandler extends Thread {
         System.exit(0);
     }
 
+
     public void addToGame(String nick) {
         server.addToGame(nick,this);
         if (handlerId == 1) {
@@ -110,9 +114,9 @@ public class ClientHandler extends Thread {
         return server;
     }
 
-    public void closeClientConnection(String nick) {
+    public void closeClientConnection() {
         server.removeFromLobby(handlerId);
 
-        server.removeClientHandler(nick);
+        server.removeClientHandler(this);
     }
 }

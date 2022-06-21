@@ -17,6 +17,7 @@ public class Controller {
     private final Gson gson;
     private final Game game;
     private GameBoard board;
+    private int blu;
     private CharacterCardBoard characterCardBoard;
     /**
      * necessary  to send messages
@@ -179,16 +180,17 @@ public class Controller {
         message = new smStudentsInHall(game.getCurrentPlayer().getBoard().getHall().getStudents(), true);
         server.sendAll(gson.toJson(message, smStudentsInHall.class));
         game.getCurrentPlayer().setTower(board.getTower(tower));
-        String text="Player " + nick + " has chosen the "+ tower+ " tower.";
+        StringBuilder text = new StringBuilder();
+        text.append("Player ").append(nick).append(" has chosen the ").append(tower).append(" tower.");
         if(game.getNumOfPlayers()==4) {
             for (Player player : game.getPlayers()) {
                 if(player.getTower()!=null)
                     if (game.getCurrentPlayer().getTower().equals(player.getTower()))
-                        text = text + "\nThey will be in team with " + player.getNickName();
+                        text.append("\nThey will be in team with ").append(player.getNickName());
             }
         }
         message= new smChosenTower(
-                text,
+                text.toString(),
                 tower);
         server.sendAllExceptPlayer(
                 nick,
@@ -196,13 +198,14 @@ public class Controller {
         game.nextPlayer();
         nick = game.getCurrentPlayer().getNickName();
         if(game.firstPlayerOfRound()){
-            text = nick + " will choose their deck";
+            text= new StringBuilder();
+            text.append(nick).append(" will choose their deck");
         }
         else{
-            text = nick + " will choose their tower";
+            text.append(nick).append(" will choose their tower");
         }
         smCurrentPlayer message2 = new smCurrentPlayer(
-                text,
+                text.toString(),
                 nick
         );
         server.sendAll(gson.toJson(message2, smCurrentPlayer.class));
@@ -533,7 +536,8 @@ public class Controller {
      * notify all players
      */
     public void assignTeachers(boolean normal){
-        String s="The new teachers are the following:\n";
+        StringBuilder text = new StringBuilder();
+        text.append("The new teachers are the following:\n");
         HashMap<StudentColor,String> roles= new HashMap<>();
         for(StudentColor color : StudentColor.values()){
             getTeacher(color);
@@ -572,18 +576,18 @@ public class Controller {
                     teacher.addRole(color);
                 }
                 roles.put(color, teacher.getNickName());
-                s=s + "the " + color.toString().toLowerCase()+" teacher is " + teacher.getNickName()+"\n";
+                text.append("the ").append(color.toString().toLowerCase()).append(" teacher is ").append(teacher.getNickName()).append("\n");
             }
         }
         game.getCurrentPlayer().setBonusToPromotion(false);
-        smTeacherAssignment message=new smTeacherAssignment(s, roles);
+        smTeacherAssignment message=new smTeacherAssignment(text.toString(), roles);
         String json= gson.toJson(message, smTeacherAssignment.class);
         server.sendAll(json);
         if(normal) {
             String nick = game.getCurrentPlayer().getNickName();
-            String text = nick + " will chose movements of Mother Nature";
+            String t = nick + " will chose movements of Mother Nature";
             smCurrentPlayer message2 = new smCurrentPlayer(
-                    text,
+                    t,
                     nick
             );
             server.sendMessage(

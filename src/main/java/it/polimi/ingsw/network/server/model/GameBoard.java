@@ -8,13 +8,14 @@ import it.polimi.ingsw.network.server.Server;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+
 
 public class GameBoard {
     private final Gson gson;
     private final MotherNature motherNature;
     private ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
+    private int blu;
     /**
      * This attribute is used to implement the effect of the CharacterCard n°9
      * The ignored color will not be considered in the assigment of influence points
@@ -108,7 +109,7 @@ public class GameBoard {
      */
     public void assignInfluencePoints(int island, Server server, boolean ignoreBlock, Player currentPlayer) throws EndGameException{
         ServerMessage message;
-        String text = "";
+        StringBuilder text = new StringBuilder();
         if((!islands.get(island).isBlockCard())||ignoreBlock) {
             Island currentIsland = islands.get(island);
             for (Player player : players) {
@@ -121,22 +122,15 @@ public class GameBoard {
                 if (player.hasAdditionalInfluencePoints()) {
                     currentPlayer.addInfluencePoints(2);
                     currentPlayer.setAdditionalInfluencePoints(false);
-                    text = player.getNickName() + " gains 2 influence points as effect of character card 8 \n";
+                    text.append(" gains 2 influence points as effect of character card 8 \n");
                 }
                 for (StudentColor teacher : player.getRoles()) {
                     if (!teacher.equals(ignoreColor)) {
                         int num = currentIsland.countStudentColor(teacher);
                         player.addInfluencePoints(num);
-                        text = text +
-                                player.getNickName() +
-                                " gains " +
-                                num +
-                                " influence points because they is the " +
-                                teacher.toString().toLowerCase() + " teacher. \n";
+                        text.append(player.getNickName()).append(" gains ").append(num).append(" influence points because they is the ").append(teacher.toString().toLowerCase()).append(" teacher. \n");
                     }else{
-                        text = text +
-                                ignoreColor.toString().toLowerCase() +
-                                " students are set to be ignored so they don't provide influence points \n";
+                        text.append(ignoreColor.toString().toLowerCase()).append(" students are set to be ignored so they don't provide influence points \n");
                         resetIgnoredColor();
                     }
                 }
@@ -145,48 +139,40 @@ public class GameBoard {
             for (Player player : players) {
                 int num = player.getInfluencePoints();
                 player.getTower().addInfluencePoints(num);
-                text = text +
-                        player.getTower().getTowerColor() +
-                        " tower gains " +
-                        num + " influence point from " +
-                        player.getNickName() + "\n";
+                text.append(player.getTower().getTowerColor()).append(" tower gains ").append(num).append(" influence point from ").append(player.getNickName()).append("\n");
             }
             if (!currentIsland.isIgnoreTower()) {
                 for (Tower tower : towers) {
                     int num = currentIsland.getNumOfTowers();
                     if (tower.equals(currentIsland.getTower())) {
                         tower.addInfluencePoints(num);
-                        text = text +
-                                tower.getTowerColor() + " tower " +
-                                "gains " + num + " influence points " +
-                                " form the towers on islands \n ";
+                        text.append(tower.getTowerColor()).append(" tower ").append("gains ").append(num).append(" influence points ").append(" form the towers on islands \n ");
                     }
                 }
             } else {
                 currentIsland.setIgnoreTower(false);
-                text = text +
-                        "for this turn towers on islands do not provide influence points\n";
+                text.append("for this player turn towers on islands do not provide influence points\n");
             }
             for (Tower tower : towers) {
-                text = text +
-                        tower.getTowerColor() + " tower has " +
-                        tower.getInfluencePoints() + " influence points \n";
+                text.append(tower.getTowerColor()).append(" tower has ").append(tower.getInfluencePoints()).append(" influence points \n");
 
             }
-            message = new smNotify(text);
+            message = new smNotify(text.toString());
             server.sendAll(gson.toJson(message, smNotify.class));
             majority(island, server);
         }
         else{
             getIsland(island).removeBlockCard();
-            text = "majority was not calculated on this island because there is a block.\n"
-                    + "The block will now be removed";
-            message = new smNotify(text);
+            message = new smNotify(
+                    "majority was not calculated on this island because there is a block.\n"
+                            + "The block will now be removed"
+            );
             server.sendAll(gson.toJson(message, smNotify.class));
             message = new smBlockOnCard(false);
             server.sendAll(gson.toJson(message, smBlockOnCard.class));
-            text= "Block on island " +(island + 1) + " has been removed";
-            message = new smBlockOnIsland(text, island, false);
+            message = new smBlockOnIsland(
+                    "Block on island " +(island + 1) + " has been removed",
+                    island, false);
             server.sendAll(gson.toJson(message, smBlockOnIsland.class));
         }
     }

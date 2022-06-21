@@ -52,9 +52,8 @@ public class Server {
     }
 
     public void waitForPlayers() {
-        boolean listeningSocket = true;
 
-        while (listeningSocket) {
+        while (true) {
             Socket clientSocket = null;
             try {
                 clientSocket = serverSocket.accept();
@@ -152,14 +151,14 @@ public class Server {
     }
 
     private String alreadyConnectedPlayers(){
-        String nicks = "";
+        StringBuilder nicks = new StringBuilder();
         for (String nickname : clientHandlers.keySet()) {
             if (nicks.length() == 0) {
-                nicks = nickname;
+                nicks.append(nickname);
             } else
-                nicks = nicks + ", " + nickname;
+                nicks.append(nicks + ", " + nickname);
         }
-        return nicks;
+        return nicks.toString();
     }
 
     public Controller getController() {
@@ -170,15 +169,22 @@ public class Server {
         lobby.remove(id);
     }
 
-    public void removeClientHandler(String nick) {
-        clientHandlers.remove(nick);
+    public void removeClientHandler(ClientHandler handler) {
+        for(String nick: clientHandlers.keySet()){
+            if(clientHandlers.get(nick).equals(handler)){
+                clientHandlers.remove(nick);
+                break;
+            }
+        }
 
-        if (clientHandlers.isEmpty()) {
+        if (clientHandlers.keySet().isEmpty()) {
             lobby = new HashMap<>();
             clientHandlers = new HashMap<>();
             controller = new Controller(this);
+            maxPlayers = 4;
         }
     }
+
 
     public void setGameStatus(String mode, int numOfPlayers, ClientHandler clientHandler){
         maxPlayers = numOfPlayers;
