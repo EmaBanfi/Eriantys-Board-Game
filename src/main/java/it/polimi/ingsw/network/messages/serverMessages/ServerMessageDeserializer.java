@@ -72,6 +72,8 @@ public class ServerMessageDeserializer implements JsonDeserializer<ServerMessage
                     return jsonDeserializationContext.deserialize(jsonObject, smGameStatus.class);
                 case "closeAll":
                     return jsonDeserializationContext.deserialize(jsonObject, smCloseThemAll.class);
+                case "pong":
+                    return jsonDeserializationContext.deserialize(jsonObject, smPongPort.class);
             }
         }
         return null;

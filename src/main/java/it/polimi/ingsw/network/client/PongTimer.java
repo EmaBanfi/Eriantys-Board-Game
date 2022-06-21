@@ -6,7 +6,7 @@ public class PongTimer extends  Thread{
 
     private boolean resetTimer;
     public  PongTimer(Ping ping){
-        timer = 5000;
+        timer = 15000;
         this. ping=ping;
         resetTimer = false;
     }

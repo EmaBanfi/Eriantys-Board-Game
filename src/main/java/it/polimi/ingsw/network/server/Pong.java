@@ -14,12 +14,12 @@ public class Pong extends  Thread{
     private BufferedReader bufferedReader =null;
     private boolean connected;
     private PingTimer pingTimer;
-    private ClientHandler clientHandler;
+    private final ClientHandler clientHandler;
 
     public  Pong(ClientHandler handler){
         clientHandler = handler;
         try {
-            serverSocket = new ServerSocket(777);
+            serverSocket = new ServerSocket(777+handler.getHandlerId());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,10 +60,10 @@ public class Pong extends  Thread{
                 System.exit(-1);
             }
             if(ping.equals("ping")){
-                System.out.println("ping received");
+                //System.out.println("ping received");
                 pingTimer.resetTimer();
                 printStream.println(pong);
-                System.out.println("pong sent");
+                //System.out.println("pong sent");
             }
             else{
                 connected = false;

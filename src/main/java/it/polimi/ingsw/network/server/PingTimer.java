@@ -10,7 +10,7 @@ public class PingTimer extends  Thread{
 
     public PingTimer(Pong pong){
         this.pong= pong;
-        timer = 7000;
+        timer = 15000;
         resetTimer= false;
     }
 

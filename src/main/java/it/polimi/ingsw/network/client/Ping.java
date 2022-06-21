@@ -16,10 +16,10 @@ public class Ping extends Thread{
 
     private boolean connected;
 
-    public Ping(String ip, Client client){
+    public Ping(String ip, Client client, int port){
         this.client=client;
         try {
-            socket = new Socket(ip, 777);
+            socket = new Socket(ip, 777+port);
         } catch (IOException e) {
             System.out.println("Server not found, the executable will be closed");
             System.exit(-1);
@@ -48,7 +48,7 @@ public class Ping extends Thread{
             System.out.println("server is down");
             System.exit(-1);
         }
-        System.out.println("ping sent");
+        //System.out.println("ping sent");
         while (connected){
             try {
                 pong=br.readLine();
@@ -57,10 +57,10 @@ public class Ping extends Thread{
                 System.exit(-1);
             }
             if (pong.equals("pong")) {
-                System.out.println("pong received");
+                //System.out.println("pong received");
                 pongTimer.resetTimer();
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -70,7 +70,7 @@ public class Ping extends Thread{
                     System.out.println("server is down");
                     System.exit(-1);
                 }
-                System.out.println("ping sent");
+                //System.out.println("ping sent");
             }
         }
 

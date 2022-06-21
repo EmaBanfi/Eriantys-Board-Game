@@ -23,6 +23,8 @@ public class Client extends Thread {
     private String str;
     private final ServerGson smgson;
 
+    private String ip;
+
     private final View view;
 
     private Ping ping;
@@ -73,7 +75,7 @@ public class Client extends Thread {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nInsert the server IP address");
-        String ip = scanner.nextLine();
+        ip = scanner.nextLine();
 
         try {
             socket = new Socket(ip, 888);
@@ -82,7 +84,6 @@ public class Client extends Thread {
             System.exit(-1);
         }
 
-        ping = new Ping(ip,this);
     }
 
     public synchronized void receive() {
@@ -145,5 +146,9 @@ public class Client extends Thread {
 
     public View getView() {
         return view;
+    }
+
+    public void startPing(int port){
+        ping = new Ping(ip,this, port);
     }
 }
