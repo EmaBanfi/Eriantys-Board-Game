@@ -19,12 +19,13 @@ public class Client extends Thread {
     private Socket socket;
     private DataOutputStream dos;
     private BufferedReader br;
-    private BufferedReader kb;
+    private final BufferedReader kb;
     private String str;
-    private boolean serverUp;
-    private ServerGson smgson;
-    private View view;
-    private int timeout = 15000;
+    private final ServerGson smgson;
+
+    private final View view;
+
+    private Ping ping;
 
 
     public Client(String viewType) {
@@ -44,8 +45,7 @@ public class Client extends Thread {
         }
 
         kb = new BufferedReader(new InputStreamReader(System.in));
-        serverUp = true;
-
+        ping.start();
         receive();
     }
 
@@ -79,10 +79,12 @@ public class Client extends Thread {
             System.out.println("Server not found, the executable will be closed");
             System.exit(-1);
         }
+
+        ping = new Ping(ip,this);
     }
 
     public synchronized void receive() {
-        while (serverUp) {
+        while (true) {
             try {
                 str = br.readLine();
             } catch (IOException e) {
@@ -134,17 +136,9 @@ public class Client extends Thread {
         }
     }
 
-    private synchronized void testConnection() {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        Gson gson = new Gson();
-        cmTestConnection message = new cmTestConnection();
-        String text =  gson.toJson(message, cmTestConnection.class);
-        send(text);
+    public  void CloseClient(){
+        System.out.println("Connection is down");
+        System.exit(-1);
     }
 
     public View getView() {
