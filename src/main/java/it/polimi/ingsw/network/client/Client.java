@@ -27,16 +27,16 @@ public class Client extends Thread {
 
     private final View view;
 
-    private Ping ping;
-
 
     public Client(String viewType) {
+        connection();
+
         if(viewType.equals("1"))
             view = new CLI(this);
-        else
-            view = new GUI();
-
-        connection();
+        else {
+            view = new GUI(this);
+            GUI.main(null);
+        }
 
         smgson = new ServerGson();
         try {
@@ -147,6 +147,6 @@ public class Client extends Thread {
     }
 
     public void startPing(int port){
-        ping = new Ping(ip,this, port);
+        Ping ping = new Ping(ip, this, port);
     }
 }

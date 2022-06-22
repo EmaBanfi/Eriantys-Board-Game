@@ -169,6 +169,17 @@ public class Server {
 
     public void removeFromLobby(int id) {
         lobby.remove(id);
+
+        if (lobby.keySet().isEmpty()&&!alreadyRestarted) {
+            alreadyRestarted= true;
+            System.out.println("Ready for a new game");
+            lobby = new HashMap<>();
+            clientHandlers = new HashMap<>();
+            controller = new Controller(this);
+            maxPlayers = 4;
+            this.id = 1;
+            //waitForPlayers();
+        }
     }
 
     public void removeClientHandler(ClientHandler handler) {
@@ -178,17 +189,6 @@ public class Server {
                 clientHandlers.remove(nick);
                 break;
             }
-        }
-
-        if (clientHandlers.keySet().isEmpty()&&!alreadyRestarted) {
-            alreadyRestarted= true;
-            System.out.println("Ready for a new game");
-            lobby = new HashMap<>();
-            clientHandlers = new HashMap<>();
-            controller = new Controller(this);
-            maxPlayers = 4;
-            id = 1;
-            //waitForPlayers();
         }
     }
 
@@ -239,6 +239,9 @@ public class Server {
             nameUnknownDisconnection(handlerId);
         else
             nameKnownDisconnection(handlerId);
+
+        for (ClientHandler handler : lobby.values())
+            handler.closeHandler();
     }
 
     private void nameUnknownDisconnection(int id) {
@@ -249,7 +252,7 @@ public class Server {
 
         communicateDisconnection(id, text);
 
-        if (clientHandlers.size() <= id)
+        if (clientHandlers.size() >= id)
             System.out.println("\nThe connection whit player " + getNickByHandlerId(id) + " is lost. The game is finished.");
         else
             System.out.println("\nThe connection whit player " + id + " is lost. The game is finished.");

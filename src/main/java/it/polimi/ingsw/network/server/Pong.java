@@ -58,7 +58,7 @@ public class Pong extends  Thread{
             } catch (IOException e) {
                 closePong();
             }
-            if(ping.equals("ping")){
+            if(ping!=null && ping.equals("ping")){
                 System.out.println("ping received");
                 pingTimer.resetTimer();
                 printStream.println(pong);
@@ -72,14 +72,13 @@ public class Pong extends  Thread{
         connected = false;
         try {
             socket.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             serverSocket.close();
+            bufferedReader.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        printStream.close();
+        pingTimer = null;
         clientHandler.closeClientConnection();
     }
 }

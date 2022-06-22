@@ -12,7 +12,7 @@ public class Ping extends Thread{
     private BufferedReader br;
 
     private  final Client client;
-    private  final PongTimer pongTimer;
+    private PongTimer pongTimer;
 
     private boolean connected;
 
@@ -80,9 +80,12 @@ public class Ping extends Thread{
     public void closePing(){
         try {
             socket.close();
+            br.close();
+            dos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        pongTimer = null;
         connected = false;
         client.CloseClient();
     }

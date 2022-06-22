@@ -94,7 +94,16 @@ public class ClientHandler extends Thread {
     }
 
     public void closeClientConnection() {
+        closeHandler();
 
+        server.manageDisconnection(handlerId);
+
+        server.removeClientHandler(this);
+
+        server.removeFromLobby(handlerId);
+    }
+
+    public void closeHandler() {
         try {
             socket.close();
         } catch (IOException e) {
@@ -113,11 +122,5 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        server.manageDisconnection(handlerId);
-
-        server.removeFromLobby(handlerId);
-
-        server.removeClientHandler(this);
     }
 }
