@@ -18,7 +18,8 @@ public class ClientHandler extends Thread {
     private final Server server;
     private final int handlerId;
     private final ClientGson clientGson;
-    private  Pong pong;
+    private BufferedReader br = null;
+    BufferedReader kb;
 
     public ClientHandler(Socket socket, Server server, int id) {
         super("ClientHandler");
@@ -37,17 +38,17 @@ public class ClientHandler extends Thread {
     }
 
     public synchronized void run() {
-        pong= new Pong(this);
-        BufferedReader br = null;
+        Pong pong = new Pong(this);
+
         try {
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
+        kb = new BufferedReader(new InputStreamReader(System.in));
 
-        String str = null;
+        String str;
         pong.start();
 
         while (!socket.isClosed()) {
@@ -56,8 +57,7 @@ public class ClientHandler extends Thread {
                     break;
             } catch (IOException e) {
                 System.out.println("The connection is lost. The game is finished.");
-
-                System.exit(-1);
+                break;
             }
 
             System.out.println("received by client handler " + handlerId + " from client " + str);
@@ -66,28 +66,7 @@ public class ClientHandler extends Thread {
 
         }
 
-        server.manageDisconnection(handlerId);
-
-        ps.close();
-        try {
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            kb.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.exit(0);
+        closeClientConnection();
     }
 
 
@@ -115,6 +94,28 @@ public class ClientHandler extends Thread {
     }
 
     public void closeClientConnection() {
+
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ps.close();
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            kb.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        server.manageDisconnection(handlerId);
+
         server.removeFromLobby(handlerId);
 
         server.removeClientHandler(this);
