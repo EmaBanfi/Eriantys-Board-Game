@@ -56,23 +56,30 @@ public class Pong extends  Thread{
             try {
                 ping = bufferedReader.readLine();
             } catch (IOException e) {
-                System.out.println("client is down");
-                System.exit(-1);
+                closePong();
             }
             if(ping.equals("ping")){
-                //System.out.println("ping received");
+                System.out.println("ping received");
                 pingTimer.resetTimer();
                 printStream.println(pong);
-                //System.out.println("pong sent");
-            }
-            else{
-                connected = false;
+                System.out.println("pong sent");
             }
         }
 
     }
 
-    public  void closePong(){
+    public  synchronized void closePong(){
+        connected = false;
+        try {
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         clientHandler.closeClientConnection();
     }
 }

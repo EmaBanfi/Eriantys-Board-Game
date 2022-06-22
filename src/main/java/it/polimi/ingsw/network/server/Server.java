@@ -20,6 +20,8 @@ public class Server {
     private int  id=1;
     private int maxPlayers = 4;
 
+    boolean alreadyRestarted;
+
     public Server(int port){
         serverSocket = null;
         try {
@@ -78,6 +80,7 @@ public class Server {
                 smPongPort ms = new smPongPort(handlerId);
                 handler.sendMessage(gson.toJson(ms, smPongPort.class));
                 if (handlerId == 1) {
+                    alreadyRestarted = false;
                     smAskNickname message = new smAskNickname("\nPlease select nickname");
                     String text = gson.toJson(message, smAskNickname.class);
                     handler.sendMessage(text);
@@ -155,7 +158,7 @@ public class Server {
             if (nicks.length() == 0) {
                 nicks.append(nickname);
             } else
-                nicks.append(nicks + ", " + nickname);
+                nicks.append(nicks).append(", ").append(nickname);
         }
         return nicks.toString();
     }
@@ -169,6 +172,7 @@ public class Server {
     }
 
     public void removeClientHandler(ClientHandler handler) {
+
         for(String nick: clientHandlers.keySet()){
             if(clientHandlers.get(nick).equals(handler)){
                 clientHandlers.remove(nick);
@@ -176,12 +180,15 @@ public class Server {
             }
         }
 
-        if (clientHandlers.keySet().isEmpty()) {
+        if (clientHandlers.keySet().isEmpty()&&!alreadyRestarted) {
+            alreadyRestarted= true;
             System.out.println("Ready for a new game");
             lobby = new HashMap<>();
             clientHandlers = new HashMap<>();
             controller = new Controller(this);
             maxPlayers = 4;
+            id = 1;
+            //waitForPlayers();
         }
     }
 
