@@ -26,14 +26,16 @@ public class Client extends Thread {
     private View view;
     private int timeout = 15000;
 
-
+/*
     public Client(String viewType) {
+        connection();
+
         if(viewType.equals("1"))
             view = new CLI(this);
-        else
-            view = new GUI();
-
-        connection();
+        else {
+            System.out.println("Starting GUI...");
+            view = new GUI(this);
+        }
 
         smgson = new ServerGson();
         try {
@@ -48,7 +50,26 @@ public class Client extends Thread {
 
         receive();
     }
+*/
+    public Client(View view, String ip) {
+        this.view = view;
 
+        connection(ip);
+
+        smgson = new ServerGson();
+        try {
+            dos = new DataOutputStream(socket.getOutputStream());
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        kb = new BufferedReader(new InputStreamReader(System.in));
+        serverUp = true;
+
+        //receive();
+    }
+/*
     public static void main(String[] args) throws Exception {
         Scanner input;
         input = new Scanner(System.in);
@@ -64,14 +85,16 @@ public class Client extends Thread {
                 System.out.println("Please digit 1 or 2");
         } while (!(viewType.equals("1")) & !(viewType.equals("2")));
 
-        new Client(viewType);
+        //new Client(viewType);
     }
-
-    public void connection() {
+*/
+    public void connection(String ip) {
+        /*
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nInsert the server IP address");
         String ip = scanner.nextLine();
+         */
 
         try {
             socket = new Socket(ip, 888);

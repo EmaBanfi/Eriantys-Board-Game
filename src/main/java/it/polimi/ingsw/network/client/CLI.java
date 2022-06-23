@@ -29,7 +29,7 @@ public class CLI implements View, Runnable {
     private final ArrayList<Integer> usableCC;
     private final CharacterCardCreator ccc;
     private boolean usedCharacterCard;
-    private final Client client;
+    private Client client = null;
     private String currentPlayer;
     private String mode;
     private int numOfPlayers;
@@ -38,9 +38,8 @@ public class CLI implements View, Runnable {
     private int availableStudentsMovements;
 
 
-    public CLI(Client client) {
+    public CLI() {
         input = new Scanner(System.in);
-        this.client = client;
         gson = new Gson();
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
@@ -53,6 +52,22 @@ public class CLI implements View, Runnable {
         initAvailableTowers();
         initAvailableIslands();
         usableCC = new ArrayList<>();
+
+        client = new Client(this, setIpAddress());
+        client.receive();
+    }
+
+    private String setIpAddress() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\nInsert the server IP address");
+        String ip = scanner.nextLine();
+
+        return ip;
+    }
+
+    public static void main(String[] args) {
+        CLI cli = new CLI();
     }
 
     /**

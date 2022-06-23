@@ -1,45 +1,83 @@
 package it.polimi.ingsw.network.client.gui;
 
-import it.polimi.ingsw.network.client.*;
+import it.polimi.ingsw.network.client.Client;
+import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.clientModel.IslandView;
 import it.polimi.ingsw.network.client.clientModel.PlayerView;
-import it.polimi.ingsw.network.client.gui.controllers.NicknameController;
-import it.polimi.ingsw.network.server.model.Island;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
-
 import javafx.application.Application;
-import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class GUI extends Application implements View {
 
-    private Parent root;
-    private static Stage guiStage;
+    private final String introOfTheGame = "Intro.fxml";
+    private final String startOfTheGame = "SetNickname.fxml";
+    private final String setGameStatus = "SetGameStatus.fxml";
+    private final HashMap<String, Scene> scenes = new HashMap<>();
+    private final HashMap<String, GenericController> controllers = new HashMap<>();
+    private Scene currentScene;
+    private Stage stage;
+    private Client client;
+
+    public void setClient(Client client) {
+        this.client = client;
+        client.receive();
+    }
 
     public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage stage) {
-        setStage(stage);
+    public void start(Stage stage) throws IOException {
+        setup();
+        this.stage = stage;
+        run();
+    }
 
-        stage.setTitle("Eriantys");
+    public void setup() {
+        ArrayList<String> fxmList = new ArrayList<>(Arrays.asList(introOfTheGame, startOfTheGame, setGameStatus));
+
+        for (String path : fxmList) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
+
+            try {
+                scenes.put(path, new Scene(loader.load()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            GenericController controller = loader.getController();
+            controller.setGui(this);
+            controllers.put(path, controller);
+        }
+
+        currentScene = scenes.get(introOfTheGame);
+    }
+
+    public void changeStage(String newScene) {
+        currentScene = scenes.get(newScene);
+        stage.hide();
+        stage.setScene(currentScene);
         stage.show();
-
-        String message = "Insert nickname:";
-
-        NicknameController nicknameController = new NicknameController(guiStage);
-        nicknameController.initScene(message);
     }
 
-    private void setStage(Stage stage) {
-        guiStage = stage;
+    public void run() {
+        stage.setTitle("Eriantys");
+        stage.setScene(currentScene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/eriantys.jpg")));
+        stage.show();
     }
-
 
     @Override
     public PlayerView getMainPlayer() {
@@ -53,7 +91,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askNickName() {
-
+        changeStage("SetNickname.fxml");
     }
 
     @Override
@@ -68,7 +106,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askSetGameStatus() {
-
+        changeStage("SetGameStatus.fxml");
     }
 
     @Override
@@ -113,7 +151,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void showString(String message) {
-
+        System.out.println("Show String: " + message);
     }
 
     @Override
@@ -201,7 +239,6 @@ public class GUI extends Application implements View {
 
     }
 
-
     @Override
     public void resumeFrom() {
 
@@ -274,7 +311,7 @@ public class GUI extends Application implements View {
 
     @Override
     public Client getClient() {
-        return null;
+        return client;
     }
 
     @Override
@@ -293,12 +330,12 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void addPlayers(ArrayList<String> players){}
+    public void addPlayers(ArrayList<String> players) {
+
+    }
 
     @Override
     public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
 
     }
-
-
 }

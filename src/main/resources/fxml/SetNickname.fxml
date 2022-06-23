@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetUp">
+   <children>
+      <Button layoutX="423.0" layoutY="242.0" mnemonicParsing="false" onAction="#onSendButtonClick" text="Send" />
+      <TextField fx:id="nickname" layoutX="277.0" layoutY="187.0" promptText="nickname" />
+      <Label layoutX="156.0" layoutY="192.0" text="Insert nickname:" />
+   </children>
+</AnchorPane>
