@@ -38,9 +38,8 @@ public class CLI implements View, Runnable {
     private int availableStudentsMovements;
 
 
-    public CLI(Client client) {
+    public CLI() {
         input = new Scanner(System.in);
-        this.client = client;
         gson = new Gson();
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
@@ -53,6 +52,21 @@ public class CLI implements View, Runnable {
         initAvailableTowers();
         initAvailableIslands();
         usableCC = new ArrayList<>();
+
+        client = new Client(this, setIpAddress());
+        client.start();
+    }
+
+    private String setIpAddress() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\nInsert the server IP address");
+
+        return scanner.nextLine();
+    }
+
+    public static void main(String[] args) {
+        CLI cli = new CLI();
     }
 
     /**

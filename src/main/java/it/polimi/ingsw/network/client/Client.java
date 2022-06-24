@@ -22,21 +22,14 @@ public class Client extends Thread {
     private final BufferedReader kb;
     private String str;
     private final ServerGson smgson;
-
-    private String ip;
-
     private final View view;
+    private final String ip;
 
+    public Client(View view, String ip) {
+        this.view = view;
 
-    public Client(String viewType) {
+        this.ip = ip;
         connection();
-
-        if(viewType.equals("1"))
-            view = new CLI(this);
-        else {
-            view = new GUI(this);
-            GUI.main(null);
-        }
 
         smgson = new ServerGson();
         try {
@@ -47,44 +40,19 @@ public class Client extends Thread {
         }
 
         kb = new BufferedReader(new InputStreamReader(System.in));
-
-        receive();
-    }
-
-    public static void main(String[] args) throws Exception {
-        Scanner input;
-        input = new Scanner(System.in);
-
-        System.out.println("\nDo you want to play with CLI or GUI?");
-        System.out.println("CLI: 1");
-        System.out.println("GUI: 2");
-
-        String viewType;
-        do {
-            viewType = input.nextLine();
-            if (!(viewType.equals("1")) & !(viewType.equals("2")))
-                System.out.println("Please digit 1 or 2");
-        } while (!(viewType.equals("1")) & !(viewType.equals("2")));
-
-        new Client(viewType);
     }
 
     public void connection() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nInsert the server IP address");
-        ip = scanner.nextLine();
-
         try {
             socket = new Socket(ip, 888);
         } catch (IOException e) {
             System.out.println("Server not found, the executable will be closed");
             System.exit(-1);
         }
-
     }
 
-    public synchronized void receive() {
+    @Override
+    public void run() {
         while (true) {
             try {
                 str = br.readLine();
@@ -94,7 +62,6 @@ public class Client extends Thread {
                 System.exit(-1);
             }
             if(str != null) {
-                //System.out.println("received from server: "+ str);
                 ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }
