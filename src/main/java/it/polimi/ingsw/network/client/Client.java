@@ -19,12 +19,10 @@ public class Client extends Thread {
     private Socket socket;
     private DataOutputStream dos;
     private BufferedReader br;
-    private BufferedReader kb;
+    private final BufferedReader kb;
     private String str;
-    private boolean serverUp;
-    private ServerGson smgson;
-    private View view;
-    private int timeout = 15000;
+    private final ServerGson smgson;
+    private final View view;
 
     public Client(View view, String ip) {
         this.view = view;
@@ -40,7 +38,6 @@ public class Client extends Thread {
         }
 
         kb = new BufferedReader(new InputStreamReader(System.in));
-        serverUp = true;
     }
 
     public void connection(String ip) {
@@ -54,7 +51,7 @@ public class Client extends Thread {
 
     @Override
     public void run() {
-        while (serverUp) {
+        while (true) {
             try {
                 str = br.readLine();
             } catch (IOException e) {
@@ -103,19 +100,6 @@ public class Client extends Thread {
 
             System.exit(-1);
         }
-    }
-
-    private synchronized void testConnection() {
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        Gson gson = new Gson();
-        cmTestConnection message = new cmTestConnection();
-        String text =  gson.toJson(message, cmTestConnection.class);
-        send(text);
     }
 
     public View getView() {
