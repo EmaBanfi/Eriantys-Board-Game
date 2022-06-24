@@ -54,16 +54,15 @@ public class CLI implements View, Runnable {
         usableCC = new ArrayList<>();
 
         client = new Client(this, setIpAddress());
-        client.receive();
+        client.start();
     }
 
     private String setIpAddress() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nInsert the server IP address");
-        String ip = scanner.nextLine();
 
-        return ip;
+        return scanner.nextLine();
     }
 
     public static void main(String[] args) {

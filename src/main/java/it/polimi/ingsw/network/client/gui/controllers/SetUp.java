@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.messages.clientMessages.cmNickname;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class SetUp implements GenericController {
@@ -15,7 +16,7 @@ public class SetUp implements GenericController {
     @FXML
     private TextField nickname;
     private GUI gui;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @FXML
     public void onSendButtonClick(ActionEvent event) {
@@ -25,8 +26,8 @@ public class SetUp implements GenericController {
     }
 
     @FXML
-    public void onPlayButton(ActionEvent event){
-        gui.setClient(new Client(gui, ipAddress.getText()));
+    public void onPlayButton(ActionEvent event) {
+        gui.setClient(ipAddress.getText());
     }
 
     @Override

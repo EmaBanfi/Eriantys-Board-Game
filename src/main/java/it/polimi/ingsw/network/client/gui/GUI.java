@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.client.clientModel.PlayerView;
 import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -16,12 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class GUI extends Application implements View {
 
-    private final String introOfTheGame = "Intro.fxml";
-    private final String startOfTheGame = "SetNickname.fxml";
+    private final String setIp = "SetIp.fxml";
+    private final String askNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
     private final HashMap<String, Scene> scenes = new HashMap<>();
     private final HashMap<String, GenericController> controllers = new HashMap<>();
@@ -29,9 +29,9 @@ public class GUI extends Application implements View {
     private Stage stage;
     private Client client;
 
-    public void setClient(Client client) {
-        this.client = client;
-        client.receive();
+    public void setClient(String ip) {
+        client = new Client(this, ip);
+        client.start();
     }
 
     public static void main(String[] args) {
@@ -40,42 +40,43 @@ public class GUI extends Application implements View {
 
     @Override
     public void start(Stage stage) throws IOException {
-        setup();
+        setFxmlFiles();
         this.stage = stage;
-        run();
+        startGame();
     }
 
-    public void setup() {
-        ArrayList<String> fxmList = new ArrayList<>(Arrays.asList(introOfTheGame, startOfTheGame, setGameStatus));
+    public void setFxmlFiles() {
+        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus));
 
-        for (String path : fxmList) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
+        for (String file : fxmlFiles) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + file));
 
             try {
-                scenes.put(path, new Scene(loader.load()));
+                scenes.put(file, new Scene(loader.load()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             GenericController controller = loader.getController();
             controller.setGui(this);
-            controllers.put(path, controller);
+            controllers.put(file, controller);
         }
 
-        currentScene = scenes.get(introOfTheGame);
+        currentScene = scenes.get(setIp);
     }
 
-    public void changeStage(String newScene) {
-        currentScene = scenes.get(newScene);
-        stage.hide();
-        stage.setScene(currentScene);
-        stage.show();
+    public void updateSceneOnStage(String scene) {
+        currentScene = scenes.get(scene);
+        Platform.runLater(() -> {
+            stage.setScene(currentScene);
+            stage.show();
+        });
     }
 
-    public void run() {
+    public void startGame() {
         stage.setTitle("Eriantys");
         stage.setScene(currentScene);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/eriantys.jpg")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/eriantys.jpg")));
         stage.show();
     }
 
@@ -91,7 +92,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askNickName() {
-        changeStage("SetNickname.fxml");
+        updateSceneOnStage("SetNickname.fxml");
     }
 
     @Override
@@ -106,7 +107,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askSetGameStatus() {
-        changeStage("SetGameStatus.fxml");
+        updateSceneOnStage("SetGameStatus.fxml");
     }
 
     @Override
@@ -151,7 +152,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void showString(String message) {
-        System.out.println("Show String: " + message);
+        Platform.runLater(() -> AlertBox.display("Message from server", message));
     }
 
     @Override

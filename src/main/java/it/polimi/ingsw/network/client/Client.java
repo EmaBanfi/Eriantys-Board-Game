@@ -26,31 +26,6 @@ public class Client extends Thread {
     private View view;
     private int timeout = 15000;
 
-/*
-    public Client(String viewType) {
-        connection();
-
-        if(viewType.equals("1"))
-            view = new CLI(this);
-        else {
-            System.out.println("Starting GUI...");
-            view = new GUI(this);
-        }
-
-        smgson = new ServerGson();
-        try {
-            dos = new DataOutputStream(socket.getOutputStream());
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        kb = new BufferedReader(new InputStreamReader(System.in));
-        serverUp = true;
-
-        receive();
-    }
-*/
     public Client(View view, String ip) {
         this.view = view;
 
@@ -66,36 +41,9 @@ public class Client extends Thread {
 
         kb = new BufferedReader(new InputStreamReader(System.in));
         serverUp = true;
-
-        //receive();
     }
-/*
-    public static void main(String[] args) throws Exception {
-        Scanner input;
-        input = new Scanner(System.in);
 
-        System.out.println("\nDo you want to play with CLI or GUI?");
-        System.out.println("CLI: 1");
-        System.out.println("GUI: 2");
-
-        String viewType;
-        do {
-            viewType = input.nextLine();
-            if (!(viewType.equals("1")) & !(viewType.equals("2")))
-                System.out.println("Please digit 1 or 2");
-        } while (!(viewType.equals("1")) & !(viewType.equals("2")));
-
-        //new Client(viewType);
-    }
-*/
     public void connection(String ip) {
-        /*
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nInsert the server IP address");
-        String ip = scanner.nextLine();
-         */
-
         try {
             socket = new Socket(ip, 888);
         } catch (IOException e) {
@@ -104,7 +52,8 @@ public class Client extends Thread {
         }
     }
 
-    public synchronized void receive() {
+    @Override
+    public void run() {
         while (serverUp) {
             try {
                 str = br.readLine();
@@ -114,7 +63,6 @@ public class Client extends Thread {
                 System.exit(-1);
             }
             if(str != null) {
-                //System.out.println("received from server: "+ str);
                 ServerMessage message = smgson.deserialize(str);
                 message.processMessage(this);
             }
