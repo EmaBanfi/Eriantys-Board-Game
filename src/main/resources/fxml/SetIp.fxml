@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetUp">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetIpController">
    <children>
       <Button layoutX="360.0" layoutY="187.0" mnemonicParsing="false" onAction="#onPlayButton" text="Play" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="187.0" />
       <TextField fx:id="ipAddress" layoutX="175.0" layoutY="187.0" promptText="ip address" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="187.0" />

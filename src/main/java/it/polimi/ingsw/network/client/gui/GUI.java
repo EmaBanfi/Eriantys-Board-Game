@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client.gui;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.clientModel.IslandView;
@@ -28,11 +29,9 @@ public class GUI extends Application implements View {
     private Scene currentScene;
     private Stage stage;
     private Client client;
-
-    public void setClient(String ip) {
-        client = new Client(this, ip);
-        client.start();
-    }
+    private final Gson gson = new Gson();
+    private int numOfPlayers;
+    private String mode;
 
     public static void main(String[] args) {
         launch();
@@ -78,6 +77,15 @@ public class GUI extends Application implements View {
         stage.setScene(currentScene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/eriantys.jpg")));
         stage.show();
+    }
+
+    public void setClient(String ip) {
+        client = new Client(this, ip);
+        client.start();
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 
     @Override
@@ -232,7 +240,8 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateGameStatus(int numOfPlayers, String mode) {
-
+        this.numOfPlayers = numOfPlayers;
+        this.mode = mode;
     }
 
     @Override
