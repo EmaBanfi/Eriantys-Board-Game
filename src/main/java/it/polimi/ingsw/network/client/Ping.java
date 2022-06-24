@@ -58,7 +58,6 @@ public class Ping extends Thread{
                 System.exit(-1);
             }
             if (pong.equals("pong")) {
-                System.out.println("pong received");
                 pongTimer.resetTimer();
                 try {
                     Thread.sleep(10000);
@@ -71,7 +70,6 @@ public class Ping extends Thread{
                     System.out.println("server is down");
                     System.exit(-1);
                 }
-                System.out.println("ping sent");
             }
         }
 

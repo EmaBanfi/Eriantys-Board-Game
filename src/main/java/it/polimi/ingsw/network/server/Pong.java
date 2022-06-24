@@ -59,10 +59,8 @@ public class Pong extends  Thread{
                 closePong();
             }
             if(ping!=null && ping.equals("ping")){
-                System.out.println("ping received");
                 pingTimer.resetTimer();
                 printStream.println(pong);
-                System.out.println("pong sent");
             }
         }
 
