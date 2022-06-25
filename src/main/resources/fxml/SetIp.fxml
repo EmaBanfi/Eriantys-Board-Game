@@ -5,7 +5,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetIpController">
    <children>
-      <Button layoutX="360.0" layoutY="187.0" mnemonicParsing="false" onAction="#onPlayButton" text="Play" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="187.0" />
-      <TextField fx:id="ipAddress" layoutX="175.0" layoutY="187.0" promptText="ip address" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="187.0" />
+      <VBox alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" spacing="20.0" />
+         </children>
+      </VBox>
+      <Button layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlayButton" prefHeight="30.0" prefWidth="200.0" text="Play" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="590.0" text="Insert the server ip" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <TextField fx:id="ipAddress" layoutX="225.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" promptText="ip address" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="185.0" />
    </children>
 </AnchorPane>

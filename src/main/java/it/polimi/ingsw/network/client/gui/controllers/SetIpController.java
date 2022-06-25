@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
-import it.polimi.ingsw.network.client.gui.GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +14,4 @@ public class SetIpController extends GenericController {
     public void onPlayButton(ActionEvent event) {
         getGui().setClient(ipAddress.getText());
     }
-
-
 }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
-import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.messages.clientMessages.cmNickname;
 
 import javafx.event.ActionEvent;
@@ -9,15 +8,13 @@ import javafx.scene.control.TextField;
 
 public class SetNicknameController extends GenericController {
 
-
     @FXML
     private TextField nickname;
-
-
 
     @FXML
     public void onSendButtonClick(ActionEvent event) {
         getGui().getViewController().setMainPlayer(nickname.getText());
+
         cmNickname message = new cmNickname(nickname.getText());
         String text = getGui().getGson().toJson(message, cmNickname.class);
         getGui().getClient().send(text);

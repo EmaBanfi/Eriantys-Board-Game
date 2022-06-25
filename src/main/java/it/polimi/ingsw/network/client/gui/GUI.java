@@ -1,23 +1,22 @@
 package it.polimi.ingsw.network.client.gui;
 
 import com.google.gson.Gson;
+
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
-import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
+
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class GUI extends Application implements View {
 
@@ -41,6 +40,8 @@ public class GUI extends Application implements View {
         viewController = new ViewController(this);
         scenesDeck = new ScenesDeck(this);
         this.stage = stage;
+        this.stage.setWidth(1200);
+        this.stage.setHeight(800);
         startGame();
     }
 
@@ -54,7 +55,7 @@ public class GUI extends Application implements View {
 
     public void startGame() {
         stage.setTitle("Eriantys");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/eriantys.jpg")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/eriantys.jpg"))));
         updateSceneOnStage(setIp);
         stage.show();
     }

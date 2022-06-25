@@ -1,12 +1,10 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
-import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 
 public class SetGameStatusController extends GenericController {
 
@@ -14,9 +12,6 @@ public class SetGameStatusController extends GenericController {
     private ChoiceBox numOfPlayers;
     @FXML
     private RadioButton normal;
-    @FXML
-    private RadioButton expert;
-
 
     @FXML
     public void onSendButtonClick() {
