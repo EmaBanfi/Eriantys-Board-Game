@@ -29,6 +29,6 @@ public class smMotherPosition extends ServerMessage {
         if(getMessage()!=null)
             super.processMessage(client);
 
-        client.getView().updateMotherPosition(island);
+        client.getView().getViewController().updateMotherPosition(island);
     }
 }

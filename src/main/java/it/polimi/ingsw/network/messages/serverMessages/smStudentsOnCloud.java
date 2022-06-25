@@ -24,6 +24,6 @@ public class smStudentsOnCloud extends ServerMessage{
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().addStudentsOnCloud(cloud, students);
+        client.getView().getViewController().addStudentsOnCloud(cloud, students);
     }
 }

@@ -29,8 +29,8 @@ public class smCurrentPlayer extends ServerMessage{
         if(getMessage()!=null)
             super.processMessage(client);
 
-        client.getView().updateCurrentPlayer(nickname);
-        if (client.getView().getMainPlayer().getNickname().equals(nickname))
-            client.getView().resumeFrom();
+        client.getView().getViewController().updateCurrentPlayer(nickname);
+        if (client.getView().getViewController().getMainPlayer().getNickname().equals(nickname))
+            client.getView().getViewController().resumeFrom();
     }
 }

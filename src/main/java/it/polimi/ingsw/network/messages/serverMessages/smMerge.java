@@ -25,6 +25,6 @@ public class smMerge extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().mergeIslands(islandToMerge, mergeToIsland);
+        client.getView().getViewController().mergeIslands(islandToMerge, mergeToIsland);
     }
 }

@@ -23,6 +23,6 @@ public class smUsedDeck extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().setPlayerDeck(deck);
+        client.getView().getViewController().setPlayerDeck(deck);
     }
 }

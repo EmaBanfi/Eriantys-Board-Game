@@ -23,6 +23,6 @@ public class smCoins extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updatePlayerCoins(coins);
+        client.getView().getViewController().updatePlayerCoins(coins);
     }
 }

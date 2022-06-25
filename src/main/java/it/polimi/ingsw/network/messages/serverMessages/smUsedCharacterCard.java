@@ -33,7 +33,7 @@ public class smUsedCharacterCard extends ServerMessage {
 
         client.getView().showCharacterCard(cardId);
 
-        client.getView().getPlayerByNick(client.getView().getCurrentPlayer()).decreaseCoins(price);
+        client.getView().getViewController().getPlayerByNick(client.getView().getViewController().getCurrentPlayer()).decreaseCoins(price);
 
 
     }

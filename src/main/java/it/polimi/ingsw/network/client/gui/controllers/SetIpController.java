@@ -6,19 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class SetIpController implements GenericController {
+public class SetIpController extends GenericController {
 
-    private GUI gui;
     @FXML
     private TextField ipAddress;
 
     @FXML
     public void onPlayButton(ActionEvent event) {
-        gui.setClient(ipAddress.getText());
+        getGui().setClient(ipAddress.getText());
     }
 
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
+
 }

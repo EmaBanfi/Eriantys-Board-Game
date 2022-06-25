@@ -34,8 +34,9 @@ public class CharacterCardGroup4 extends CharacterCard {
      * @return true if the card has been activated
      */
     public boolean activate(){
+        PlayerView mainPlayer = getCLI().getViewController().getMainPlayer();
         if (getCardId() == 9) {
-            getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(mainPlayer.getUsedSupportCard().getMovement());
             if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
                 System.out.println("Majority has already been calculated");
             if (confirmActivation())
@@ -49,7 +50,7 @@ public class CharacterCardGroup4 extends CharacterCard {
 
         else if (getCardId() == 11) {
             System.out.println("Students on card: " + studentsOnCard);
-            System.out.println("Students in hall: " + getCLI().getMainPlayer().getHall());
+            System.out.println("Students in hall: " + mainPlayer.getHall());
 
             if (confirmActivation())
                 return false;
@@ -62,7 +63,7 @@ public class CharacterCardGroup4 extends CharacterCard {
                     System.out.println("There is no " + color + " student on card");
             } while (!studentsOnCard.contains(color));
 
-            getCLI().getMainPlayer().addToHall(color);
+            mainPlayer.addToHall(color);
 
             cmCCG4 message = new cmCCG4(11, color);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG4.class));
@@ -84,7 +85,7 @@ public class CharacterCardGroup4 extends CharacterCard {
     }
 
     private StudentColor askStudent() {
-        String colorChoice = "";
+        String colorChoice;
         StudentColor color;
         do {
             colorChoice = getInput().nextLine();
@@ -116,7 +117,7 @@ public class CharacterCardGroup4 extends CharacterCard {
 
         String text = "Card "+getCardId()+ " can't be activated because";
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
 
             return  false;

@@ -2,7 +2,19 @@ package it.polimi.ingsw.network.client.gui.controllers;
 
 import it.polimi.ingsw.network.client.gui.GUI;
 
-public interface GenericController {
+public abstract class GenericController {
 
-    void setGui(GUI gui);
+    private GUI gui;
+
+    public void setGui(GUI gui){
+        this.gui = gui;
+    }
+
+    void update(Integer value){}
+
+    void update(String value){}
+
+    public  GUI getGui(){
+        return gui;
+    }
 }

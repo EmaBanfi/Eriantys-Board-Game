@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.client.clientModel;
 
-import it.polimi.ingsw.network.server.model.DiningHall;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import it.polimi.ingsw.network.server.model.SupportCard;
 
@@ -13,14 +12,12 @@ public class PlayerView {
     private final String nickname;
     private SupportCard usedSupportCard;
     private int coins;
-    private int availableSupportCard;
     private String tower;
-    private  String deck;
+    private  String deckColor;
     private ArrayList<SupportCard> supportCards;
 
     public PlayerView(String nickname) {
         this.nickname = nickname;
-        availableSupportCard = 10;
         coins = 1;
         initSupportDeck();
         hall = new ArrayList<>();
@@ -43,24 +40,17 @@ public class PlayerView {
         this.tower = tower;
     }
 
-    public int getAvailableSupportCard(){return availableSupportCard;}
-
-    public void decreaseSupportCards(){
-        availableSupportCard--;
-    }
 
     public String getNickname() {
         return nickname;
     }
 
     public ArrayList<StudentColor> getHall() {
-        ArrayList<StudentColor> studentColor = new ArrayList<>(hall);
-        return studentColor;
+        return new ArrayList<>(hall);
     }
 
     public ArrayList<StudentColor> getDiningHall() {
-        ArrayList<StudentColor> studentColor = new ArrayList<>(diningHall);
-        return studentColor;
+        return new ArrayList<>(diningHall);
     }
 
     public SupportCard getUsedSupportCard() {
@@ -113,8 +103,8 @@ public class PlayerView {
             hall.remove(color);
     }
 
-    public void setDeck(String deck){
-        this.deck = deck;
+    public void setDeckColor(String deckColor){
+        this.deckColor = deckColor;
     }
 
     public ArrayList<SupportCard> getSupportCards() {

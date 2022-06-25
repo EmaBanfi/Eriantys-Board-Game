@@ -23,6 +23,6 @@ public class smGameStatus extends ServerMessage {
     @Override
     public void processMessage(Client client) {
 
-        client.getView().updateGameStatus(numOfPlayers, mode);
+        client.getView().getViewController().updateGameStatus(numOfPlayers, mode);
     }
 }

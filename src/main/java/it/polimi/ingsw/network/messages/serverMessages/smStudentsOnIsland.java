@@ -35,6 +35,6 @@ public class smStudentsOnIsland extends ServerMessage {
         if(getMessage()!=null)
             super.processMessage(client);
 
-        client.getView().addStudentsOnIsland(island, students);
+        client.getView().getViewController().addStudentsOnIsland(island, students);
     }
 }

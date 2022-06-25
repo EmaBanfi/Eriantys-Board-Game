@@ -26,8 +26,8 @@ public class smBlockOnIsland extends ServerMessage{
         super.processMessage(client);
 
         if(blocked)
-            client.getView().blockIsland(island);
+            client.getView().getViewController().blockIsland(island);
         else
-            client.getView().unlockIsland(island);
+            client.getView().getViewController().unlockIsland(island);
     }
 }

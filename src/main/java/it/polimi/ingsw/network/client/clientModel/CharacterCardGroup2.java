@@ -31,7 +31,7 @@ public class CharacterCardGroup2 extends CharacterCard{
             message = new cmCCG2(2);
         }
         else if (getCardId() == 8){
-            getCLI().showIslands(getCLI().getMainPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(getCLI().getViewController().getMainPlayer().getUsedSupportCard().getMovement());
             if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
                 System.out.println("Majority has already been calculated.");
             if (confirmActivation())
@@ -48,7 +48,7 @@ public class CharacterCardGroup2 extends CharacterCard{
     @Override
     public boolean checkCCPrecondition() {
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins\n");
 
             return  false;

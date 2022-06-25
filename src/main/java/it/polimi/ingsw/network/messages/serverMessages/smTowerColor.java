@@ -25,6 +25,6 @@ public class smTowerColor extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updateTowerOnIsland(island, color);
+        client.getView().getViewController().updateTowerOnIsland(island, color);
     }
 }

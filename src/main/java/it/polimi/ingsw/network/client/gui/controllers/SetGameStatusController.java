@@ -8,9 +8,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-public class SetGameStatusController implements GenericController {
+public class SetGameStatusController extends GenericController {
 
-    private GUI gui;
     @FXML
     private ChoiceBox numOfPlayers;
     @FXML
@@ -18,10 +17,6 @@ public class SetGameStatusController implements GenericController {
     @FXML
     private RadioButton expert;
 
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
 
     @FXML
     public void onSendButtonClick() {
@@ -31,7 +26,7 @@ public class SetGameStatusController implements GenericController {
             message =new cmSetGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "normal");
         else
             message = new cmSetGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "expert");
-        String text = gui.getGson().toJson(message, cmSetGameStatus.class);
-        gui.getClient().send(text);
+        String text = getGui().getGson().toJson(message, cmSetGameStatus.class);
+        getGui().getClient().send(text);
     }
 }

@@ -10,16 +10,9 @@ import java.util.HashMap;
 public interface View {
 
     /**
-     * get the player
-     * @return the player
+     * @return the viewController
      */
-    PlayerView getMainPlayer();
-
-    /**
-     * get the player by nickname
-     * @return the player
-     */
-    PlayerView getPlayerByNick(String nick);
+    ViewController getViewController();
 
     /**
      * communicate to the player to insert the nickname. Called by message.
@@ -96,15 +89,6 @@ public interface View {
      */
     void showSupportCard(int id);
 
-    /**
-     * show on the view screen which support card is using during that turn. Called by method.
-     */
-    void updateUsedSupportCard(int id);
-
-    /**
-     * decrease the numbers of the remaining support cards. Called by method.
-     */
-    void updateAvailableSupportCards();
 
     /**
      * show on screen the price of a specific character card. Called by message.
@@ -112,45 +96,6 @@ public interface View {
      */
     void updateCharacterCardPrice(int id);
 
-    /**
-     * show the new position of mother nature (when other players changes it). Called by message.
-     * @param island the island where mother nature is now positioned.
-     */
-    void updateMotherPosition(int island);
-
-    /**
-     * show the new color of the island for a tower. Called by message.
-     * @param tower the color of the tower.
-     */
-    void updateTowerColor(String tower);
-
-    /**
-     * merge two islands. Called by message.
-     * @param toBeMerged the island that is merged.
-     * @param mergeTo the island that remain.
-     */
-    void mergeIslands(int toBeMerged, int mergeTo);
-
-    /**
-     * show the added students on a specific island. Called by message.
-     * @param island chosen island
-     * @param students students to add
-     */
-    void addStudentsOnIsland(int island, ArrayList<StudentColor> students);
-
-    /**
-     * show the added students in the dining hall of the specified player. Called by message
-     * @param students the students to add
-     * @param nick the nickname of the player
-     */
-    void addStudentToPlayerD(String nick, ArrayList<StudentColor> students);
-
-    /**
-     * remove the students from the dining hall of a specified player. Called by message.
-     * @param nick the nickname of the player
-     * @param students the students to remove
-     */
-    void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students);
 
     /**
      * show the winners and the losers. Called by message.
@@ -160,13 +105,6 @@ public interface View {
     void showGameResults(ArrayList<String> winners, ArrayList<String> losers);
 
     /**
-     * set additional turn order for a used support card.
-     * @param id id of the support card
-     * @param additionalTurnOrder additionalTurnOrder of the support card.
-     */
-    void setAdditionalTurnOrder(int id, double additionalTurnOrder);
-
-    /**
      * updates the students on card
      * @param id id of the character card
      * @param students students to manage
@@ -174,30 +112,6 @@ public interface View {
      */
     void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add);
 
-    /**
-     * update the amount of coins that the player has. Called by message.
-     * @param coin the updated coins
-     */
-    void updatePlayerCoins(int coin);
-
-    /**
-     * updates to the other players (not the first one) the status of the game
-     * @param numOfPlayers the number of players for that match
-     * @param mode the mode of the match
-     */
-    void updateGameStatus(int numOfPlayers, String mode);
-
-    /**
-     * update the current player
-     * @param currentPlayer nickname of the current player
-     */
-    void updateCurrentPlayer(String currentPlayer);
-
-
-    /**
-     *  keep track of the status of the turn
-     */
-    void resumeFrom();
 
     /**
      * updates the block cards on the CC 5
@@ -205,80 +119,6 @@ public interface View {
      */
     void updateBlockOnCard(boolean add);
 
-    /**
-     * updates the clouds already chosen
-     * @param cloud the last cloud chosen
-     */
-    void updateEmptyCloud(int cloud);
-
-    /**
-     * updates the tower on a specific island
-     * @param island the specific island
-     * @param tower the new tower color
-     */
-    void updateTowerOnIsland(int island, String tower);
-
-    /**
-     * add students on cloud.
-     * @param cloud cloud to fill
-     * @param students students to add
-     */
-    void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students);
-
-    /**
-     *  updates which player is a teacher
-     * @param roles hashmap of the
-     */
-    void updateTeacher(HashMap<StudentColor, String> roles);
-
-    /**
-     *  show the deck chosen by the current player.
-     * @param deck deck chosen by the current player.
-     */
-    void setPlayerDeck(String deck);
-
-    /**
-     * show the support card used by the current player.
-     * @param id id of the support card.
-     */
-    void setSupportCard(int id);
-
-    /**
-     * block an island
-     * @param island island to block
-     */
-    void blockIsland(int island);
-
-    /**
-     * unblock an island
-     * @param island island to unblock
-     */
-    void unlockIsland(int island);
-
-    /**
-     * add students to the player hall
-     * @param students students to add
-     */
-    void addStudentsToHall(ArrayList<StudentColor> students);
-
-    /**
-     * remove students to the player hall
-     * @param students students to remove
-     */
-    void removeStudentsFromHall(ArrayList<StudentColor> students);
-
-    /**
-     * to get the current player nickname
-     * @return current player nickname
-     */
-    String getCurrentPlayer();
-
-    /**
-     * to get the available Island
-     *
-     * @return ArrayList of Island
-     */
-    ArrayList<IslandView> getAvailableIslands();
 
     /**
      * to get a Client object
@@ -301,16 +141,4 @@ public interface View {
 
     void closeGame();
 
-    /**
-     * this method is used to initialise the players arraylist
-     * @param players nick of all the players in the match
-     */
-    void addPlayers(ArrayList<String> players);
-
-    /**
-     * remove students to a specific player's hall
-     * @param nick nickname of the player
-     * @param students students to remove
-     */
-    void removeFromPlayerHall(String nick, ArrayList<StudentColor> students);
 }

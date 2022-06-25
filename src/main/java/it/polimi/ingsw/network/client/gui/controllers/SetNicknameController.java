@@ -7,21 +7,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class SetNicknameController implements GenericController {
+public class SetNicknameController extends GenericController {
 
-    private GUI gui;
+
     @FXML
     private TextField nickname;
 
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
+
 
     @FXML
     public void onSendButtonClick(ActionEvent event) {
+        getGui().getViewController().setMainPlayer(nickname.getText());
         cmNickname message = new cmNickname(nickname.getText());
-        String text = gui.getGson().toJson(message, cmNickname.class);
-        gui.getClient().send(text);
+        String text = getGui().getGson().toJson(message, cmNickname.class);
+        getGui().getClient().send(text);
     }
 }

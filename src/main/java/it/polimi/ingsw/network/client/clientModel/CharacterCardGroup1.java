@@ -19,7 +19,7 @@ public class CharacterCardGroup1 extends CharacterCard {
         super(id, cli);
         setPrice(1);
         this.studentsOnCard = new ArrayList<>();
-        islands = getCLI().getAvailableIslands();
+        islands = getCLI().getViewController().getAvailableIslands();
         setText("You can take one student from this card and place it on an island at your choice.");
     }
 
@@ -56,7 +56,7 @@ public class CharacterCardGroup1 extends CharacterCard {
         StudentColor color;
 
         System.out.println("Choose the student to move to an island");
-        String studentChoice = "";
+        String studentChoice;
         boolean isPresent;
         do {
             isPresent = false;
@@ -82,7 +82,7 @@ public class CharacterCardGroup1 extends CharacterCard {
         System.out.println("\nChoose an island\n");
 
         Integer islandChoice;
-        String str = "";
+        String str;
         boolean validChoice;
         do {
             validChoice = false;
@@ -119,7 +119,7 @@ public class CharacterCardGroup1 extends CharacterCard {
 
         String text = "Card "+getCardId()+ " can't be activated because";
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
 
             return false;

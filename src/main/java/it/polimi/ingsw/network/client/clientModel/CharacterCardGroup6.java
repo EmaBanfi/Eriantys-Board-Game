@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class CharacterCardGroup6 extends CharacterCard {
     private final ArrayList<StudentColor> studentsOnCard = new ArrayList<>();
-    private final PlayerView player = getCLI().getMainPlayer();
+    private final PlayerView player = getCLI().getViewController().getMainPlayer();
 
     public CharacterCardGroup6(int id, CLI cli) {
         super(id, cli);
@@ -48,7 +48,7 @@ public class CharacterCardGroup6 extends CharacterCard {
                 numberChoice= askNumOfStudents(3);
 
             System.out.println("Choose " + numberChoice + " students to move from the card to the hall");
-            String studentChoice = null;
+            String studentChoice;
             StudentColor color;
             int numOfStudents = 0;
             ArrayList<StudentColor> chosenStudentsFromCard = new ArrayList<>();
@@ -165,7 +165,7 @@ public class CharacterCardGroup6 extends CharacterCard {
 
         String text = "Card "+getCardId()+ " can't be activated because";
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
 
             return  false;
@@ -202,7 +202,7 @@ public class CharacterCardGroup6 extends CharacterCard {
     private int askNumOfStudents(int max) {
         System.out.println("How many students you want to move? (max " + max + ")");
         int numberChoice = 0;
-        String str = "";
+        String str;
         boolean notValidChoice;
         do {
             str = getInput().nextLine();

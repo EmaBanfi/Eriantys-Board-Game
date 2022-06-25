@@ -60,7 +60,7 @@ public class CharacterCardGroup5 extends CharacterCard {
 
             int chosenIsland = getCLI().askIsland(false, null);
 
-            getCLI().blockIsland(chosenIsland - 1);
+            getCLI().getViewController().blockIsland(chosenIsland - 1);
 
             message = new cmCCG5(5, chosenIsland);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
@@ -95,7 +95,7 @@ public class CharacterCardGroup5 extends CharacterCard {
 
         String text = "Card "+getCardId()+ " can't be activated because";
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println(text + " you don't have enough coins\n");
 
             return  false;

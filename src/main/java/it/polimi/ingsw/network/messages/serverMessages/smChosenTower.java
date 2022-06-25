@@ -23,6 +23,6 @@ public class smChosenTower extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updateTowerColor(tower);
+        client.getView().getViewController().updateTowerColor(tower);
     }
 }

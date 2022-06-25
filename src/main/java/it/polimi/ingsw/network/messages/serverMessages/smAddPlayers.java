@@ -18,6 +18,6 @@ public class smAddPlayers extends ServerMessage{
 
     @Override
     public void processMessage(Client client) {
-        client.getView().addPlayers(players);
+        client.getView().getViewController().addPlayers(players);
     }
 }

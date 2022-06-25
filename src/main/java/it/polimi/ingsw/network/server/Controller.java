@@ -452,10 +452,6 @@ public class Controller {
         server.sendAllExceptPlayer(
                 game.getCurrentPlayer().getNickName(),
                 gson.toJson(message, smStudentsInHall.class));
-        /*message = new smResumeTurn();
-        server.sendMessage(
-                game.getCurrentPlayer().getNickName(),
-                gson.toJson(message, smResumeTurn.class));*/
         message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
         server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
@@ -468,7 +464,6 @@ public class Controller {
         ServerMessage message ;
         message = new smNotify(text);
         server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
-        //server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
         message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
         server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
@@ -481,7 +476,6 @@ public class Controller {
         ServerMessage message ;
         message = new smNotify(text);
         server.sendAllExceptPlayer(game.getCurrentPlayer().getNickName(), gson.toJson(message, smNotify.class));
-        //server.sendMessage(game.getCurrentPlayer().getNickName(), gson.toJson(new smResumeTurn(), smResumeTurn.class));
         message = new smCurrentPlayer(game.getCurrentPlayer().getNickName());
         server.sendAll(gson.toJson(message, smCurrentPlayer.class));
     }
@@ -605,7 +599,6 @@ public class Controller {
     private Player getTeacher(StudentColor color){
         for(Player player : game.getPlayers()){
             if(player.getRoles().contains(color)) {
-                //System.out.println(color + " : "+player.getNickName());
                 return player;
             }
         }

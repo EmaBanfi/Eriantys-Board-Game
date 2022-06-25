@@ -18,14 +18,14 @@ public class CharacterCardGroup3 extends CharacterCard{
         if (getCLI().getResumeFrom().equals(Phase.CHOOSE_CLOUDS))
             getCLI().showIslands(2);
         else
-            getCLI().showIslands(2 + getCLI().getMainPlayer().getUsedSupportCard().getMovement());
+            getCLI().showIslands(2 + getCLI().getViewController().getMainPlayer().getUsedSupportCard().getMovement());
 
         if (confirmActivation())
             return false;
 
         System.out.println("Choose how many islands do you want to move Mother Nature (1 or 2)");
         Integer movementChoice;
-        String str = "";
+        String str;
         boolean validChoice;
         do {
             validChoice = false;
@@ -44,7 +44,7 @@ public class CharacterCardGroup3 extends CharacterCard{
                 System.out.println("Not an int");
         } while (!validChoice);
 
-        getCLI().updateMotherPosition((getCLI().getMotherPosition() + 2) % getCLI().getAvailableIslands().size());
+        getCLI().getViewController().updateMotherPosition((getCLI().getViewController().getMotherPosition() + 2) % getCLI().getViewController().getAvailableIslands().size());
 
         cmCCG3 message = new cmCCG3(movementChoice);
         getCLI().getClient().send(new Gson().toJson(message, cmCCG3.class));
@@ -55,7 +55,7 @@ public class CharacterCardGroup3 extends CharacterCard{
     @Override
     public boolean checkCCPrecondition() {
 
-        if (getCLI().getMainPlayer().getCoins() < getPrice()) {
+        if (getCLI().getViewController().getMainPlayer().getCoins() < getPrice()) {
             System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins\n");
 
             return  false;

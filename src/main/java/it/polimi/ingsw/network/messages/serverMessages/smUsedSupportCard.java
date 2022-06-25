@@ -26,7 +26,7 @@ public class smUsedSupportCard extends ServerMessage{
         super.processMessage(client);
 
         if (additionalTurnOrder != 0)
-            client.getView().setAdditionalTurnOrder(supportCardId, additionalTurnOrder);
+            client.getView().getViewController().setAdditionalTurnOrder(supportCardId, additionalTurnOrder);
 
         client.getView().showSupportCard(supportCardId);
     }

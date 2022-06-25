@@ -23,6 +23,6 @@ public class smChosenCloud extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().updateEmptyCloud(cloud);
+        client.getView().getViewController().updateEmptyCloud(cloud);
     }
 }

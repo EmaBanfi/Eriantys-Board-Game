@@ -3,8 +3,8 @@ package it.polimi.ingsw.network.client.gui;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
-import it.polimi.ingsw.network.client.clientModel.IslandView;
-import it.polimi.ingsw.network.client.clientModel.PlayerView;
+import it.polimi.ingsw.network.client.ViewController;
+import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
 import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.application.Application;
@@ -22,16 +22,15 @@ import java.util.HashMap;
 public class GUI extends Application implements View {
 
     private final String setIp = "SetIp.fxml";
-    private final String askNickname = "SetNickname.fxml";
+    private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
-    private final HashMap<String, Scene> scenes = new HashMap<>();
-    private final HashMap<String, GenericController> controllers = new HashMap<>();
+    private final String showIslands = "Islands.fxml";
     private Scene currentScene;
     private Stage stage;
     private Client client;
     private final Gson gson = new Gson();
-    private int numOfPlayers;
-    private String mode;
+    private ViewController viewController;
+    private ScenesDeck scenesDeck;
 
     public static void main(String[] args) {
         launch();
@@ -39,33 +38,14 @@ public class GUI extends Application implements View {
 
     @Override
     public void start(Stage stage) throws IOException {
-        setFxmlFiles();
+        viewController = new ViewController(this);
+        scenesDeck = new ScenesDeck(this);
         this.stage = stage;
         startGame();
     }
 
-    public void setFxmlFiles() {
-        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus));
-
-        for (String file : fxmlFiles) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + file));
-
-            try {
-                scenes.put(file, new Scene(loader.load()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            GenericController controller = loader.getController();
-            controller.setGui(this);
-            controllers.put(file, controller);
-        }
-
-        currentScene = scenes.get(setIp);
-    }
-
     public void updateSceneOnStage(String scene) {
-        currentScene = scenes.get(scene);
+        currentScene = scenesDeck.getSceneManager(scene).getScene();
         Platform.runLater(() -> {
             stage.setScene(currentScene);
             stage.show();
@@ -74,8 +54,8 @@ public class GUI extends Application implements View {
 
     public void startGame() {
         stage.setTitle("Eriantys");
-        stage.setScene(currentScene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/eriantys.jpg")));
+        updateSceneOnStage(setIp);
         stage.show();
     }
 
@@ -88,15 +68,6 @@ public class GUI extends Application implements View {
         return gson;
     }
 
-    @Override
-    public PlayerView getMainPlayer() {
-        return null;
-    }
-
-    @Override
-    public PlayerView getPlayerByNick(String nick) {
-        return null;
-    }
 
     @Override
     public void askNickName() {
@@ -112,6 +83,9 @@ public class GUI extends Application implements View {
     public void askCharacterCard() {
 
     }
+
+    @Override
+    public ViewController getViewController(){return viewController;}
 
     @Override
     public void askSetGameStatus() {
@@ -174,150 +148,28 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void updateUsedSupportCard(int id) {
-
-    }
-
-    @Override
-    public void updateAvailableSupportCards() {
-
-    }
-
-    @Override
     public void updateCharacterCardPrice(int id) {
 
     }
 
-    @Override
-    public void updateMotherPosition(int island) {
-
-    }
-
-    @Override
-    public void updateTowerColor(String tower) {
-
-    }
-
-    @Override
-    public void mergeIslands(int toBeMerged, int mergeTo) {
-
-    }
-
-    @Override
-    public void addStudentsOnIsland(int island, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void addStudentToPlayerD(String nick, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void removeStudentsFromPlayerD(String nick, ArrayList<StudentColor> students) {
-
-    }
 
     @Override
     public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
 
     }
 
-    @Override
-    public void setAdditionalTurnOrder(int id, double additionalTurnOrder) {
-
-    }
 
     @Override
     public void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add) {
 
     }
 
-    @Override
-    public void updatePlayerCoins(int coin) {
-
-    }
-
-    @Override
-    public void updateGameStatus(int numOfPlayers, String mode) {
-        this.numOfPlayers = numOfPlayers;
-        this.mode = mode;
-    }
-
-    @Override
-    public void updateCurrentPlayer(String currentPlayer) {
-
-    }
-
-    @Override
-    public void resumeFrom() {
-
-    }
 
     @Override
     public void updateBlockOnCard(boolean add) {
 
     }
 
-    @Override
-    public void updateEmptyCloud(int cloud) {
-
-    }
-
-    @Override
-    public void updateTowerOnIsland(int island, String tower) {
-
-    }
-
-    @Override
-    public void addStudentsOnCloud(int cloud, ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void updateTeacher(HashMap<StudentColor, String> roles) {
-
-    }
-
-    @Override
-    public void setPlayerDeck(String deck) {
-
-    }
-
-    @Override
-    public void setSupportCard(int id) {
-
-    }
-
-    @Override
-    public void blockIsland(int island) {
-
-    }
-
-    @Override
-    public void unlockIsland(int island) {
-
-    }
-
-    @Override
-    public void addStudentsToHall(ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public void removeStudentsFromHall(ArrayList<StudentColor> students) {
-
-    }
-
-    @Override
-    public String getCurrentPlayer() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<IslandView> getAvailableIslands() {
-        return null;
-    }
 
     @Override
     public Client getClient() {
@@ -339,13 +191,12 @@ public class GUI extends Application implements View {
 
     }
 
-    @Override
-    public void addPlayers(ArrayList<String> players) {
 
+    public MotherNatureView getMotherNature() {
+        return viewController.getMotherNature();
     }
 
-    @Override
-    public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
-
+    public String getTeacherOfColor(StudentColor color) {
+        return viewController.getTeacherOfColor(color);
     }
 }
