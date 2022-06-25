@@ -14,7 +14,7 @@ public class ScenesDeck {
     private final String setIp = "SetIp.fxml";
     private final String askNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
-    private final String showIslands = "Islands.fxml";
+    private final String showIslands = "ShowIslands.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();

@@ -24,7 +24,7 @@ public class GUI extends Application implements View {
     private final String setIp = "SetIp.fxml";
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
-    private final String showIslands = "Islands.fxml";
+    private final String showIslands = "ShowIslands.fxml";
     private Scene currentScene;
     private Stage stage;
     private Client client;

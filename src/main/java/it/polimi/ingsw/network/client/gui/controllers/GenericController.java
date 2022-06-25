@@ -10,9 +10,17 @@ public abstract class GenericController {
         this.gui = gui;
     }
 
-    void update(Integer value){}
+    void setInput(Integer value){}
 
-    void update(String value){}
+    void setInput(String value){}
+
+    Integer getOutputAsInteger(){
+        return  null;
+    };
+
+    String getOutputAsString(){
+        return null;
+    }
 
     public  GUI getGui(){
         return gui;

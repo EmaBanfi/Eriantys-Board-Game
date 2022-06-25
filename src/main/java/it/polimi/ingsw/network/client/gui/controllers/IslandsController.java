@@ -18,7 +18,7 @@ public class IslandsController extends GenericController{
     private Label islands;
 
     @Override
-    public void update(Integer value) {
+    public void setInput(Integer value) {
         showIslands(value);
     }
 
