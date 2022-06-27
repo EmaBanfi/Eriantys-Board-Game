@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SupportCardController">
+   <children>
+      <HBox layoutX="298.0" layoutY="298.0" spacing="60.0" AnchorPane.bottomAnchor="297.0" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="298.0" AnchorPane.topAnchor="298.0">
+         <children>
+            <VBox spacing="30.0">
+               <children>
+                  <RadioButton fx:id="SupportCard1" mnemonicParsing="false" prefHeight="17.0" prefWidth="273.0" text="Support Card 1:  turn order: 1   movements: 1">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="modeGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="SupportCard2" mnemonicParsing="false" text="Support Card 2:  turn order: 2   movements: 1" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard3" mnemonicParsing="false" text="Support Card 3:  turn order: 3  movements: 2" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard4" mnemonicParsing="false" text="Support Card 4:  turn order: 4  movements: 2" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard5" mnemonicParsing="false" text="Support Card 5:  turn order: 5  movements: 3" toggleGroup="$modeGroup" />
+               </children>
+            </VBox>
+            <VBox spacing="30.0">
+               <children>
+                  <RadioButton fx:id="SupportCard6" mnemonicParsing="false" text="Support Card 1:  turn order: 6  movements: 3" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard7" mnemonicParsing="false" text="Support Card 7:  turn order: 7  movements: 4" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard8" mnemonicParsing="false" text="Support Card 8:  turn order: 8  movements: 4" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard9" mnemonicParsing="false" text="Support Card 9:  turn order: 9  movements: 5" toggleGroup="$modeGroup" />
+                  <RadioButton fx:id="SupportCard10" mnemonicParsing="false" text="Support Card 10:  turn order: 10  movements: 5" toggleGroup="$modeGroup" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label layoutX="-89.0" layoutY="-18.0" minHeight="-Infinity" minWidth="-Infinity" text="Label" AnchorPane.leftAnchor="-89.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="-18.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="467.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label alignment="CENTER" layoutX="548.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="590.0" text="Choose your support card to play" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <Button fx:id="chooseSupportCardButton" layoutX="1107.0" layoutY="761.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#chooseSupportCardButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+   </children>
+</AnchorPane>

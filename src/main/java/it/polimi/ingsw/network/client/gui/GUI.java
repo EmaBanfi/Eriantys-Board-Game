@@ -28,6 +28,7 @@ public class GUI extends Application implements View {
     private final String setTower = "SetTower.fxml";
     private final String setDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
+    private final String askSupportCard = "AskSupportCard.fxml";
 
     private Scene currentScene;
     private Stage stage;
@@ -120,6 +121,8 @@ public class GUI extends Application implements View {
     @Override
     public void askSupportCard() {
         viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_ISLAND);
+        scenesDeck.getSceneManager(askSupportCard).getController().update();
+        updateSceneOnStage("AskSupportCard.fxml");
     }
 
     @Override
