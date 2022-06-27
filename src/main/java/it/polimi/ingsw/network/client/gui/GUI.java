@@ -211,6 +211,10 @@ public class GUI extends Application implements View {
 
     }
 
+    public SceneManager getSceneManager(String sceneName){
+        return scenesDeck.getSceneManager(sceneName);
+    }
+
 
     public MotherNatureView getMotherNature() {
         return viewController.getMotherNature();

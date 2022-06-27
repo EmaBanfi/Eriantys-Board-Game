@@ -56,6 +56,10 @@ public class ViewController {
         availableDecks.add("SAGE");
     }
 
+    public void addPlayer(String nick){
+        players.add(new PlayerView(nick));
+    }
+
     /**
      * initialize the available towers
      */
@@ -433,4 +437,10 @@ public class ViewController {
         else
             availableStudentsMovements=3;
     }
+
+    public boolean isTeacherOfColor(String player, StudentColor color){
+        String teacher = getTeacherOfColor(color);
+        return teacher != null && teacher.equals(player);
+    }
+
 }
