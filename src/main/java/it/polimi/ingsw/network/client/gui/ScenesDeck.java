@@ -20,10 +20,11 @@ public class ScenesDeck {
     private final String wantHToI = "hToI/WantHToI.fxml";
     private final String moveHToI = "hToI/MoveHToI.fxml";
     private final String askSupportCard = "AskSupportCard.fxml";
+    private final String moveHToD = "MoveHToD.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();
-        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus, showIslands, askTower, askDeck, wantHToI, moveHToI, askSupportCard));
+        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus, showIslands, askTower, askDeck, wantHToI, moveHToI, askSupportCard, moveHToD));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {

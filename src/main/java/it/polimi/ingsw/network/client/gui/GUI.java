@@ -28,7 +28,9 @@ public class GUI extends Application implements View {
     private final String setTower = "SetTower.fxml";
     private final String setDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
+    private final String moveHToI = "hToI/MoveHToI.fxml";
     private final String askSupportCard = "AskSupportCard.fxml";
+    private final String moveHToD = "MoveHToD.fxml";
 
     private Scene currentScene;
     private Stage stage;
@@ -81,7 +83,7 @@ public class GUI extends Application implements View {
     public void askNickName() {
         viewController.setResumeFrom(Phase.CHOOSE_TOWER);
 
-        updateSceneOnStage("SetNickname.fxml");
+        updateSceneOnStage(setNickname);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askSetGameStatus() {
-        updateSceneOnStage("SetGameStatus.fxml");
+        updateSceneOnStage(setGameStatus);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class GUI extends Application implements View {
         viewController.setResumeFrom(Phase.CHOOSE_DECK);
 
         scenesDeck.getSceneManager(setTower).getController().update();
-        updateSceneOnStage("SetTower.fxml");
+        updateSceneOnStage(setTower);
     }
 
     @Override
@@ -115,7 +117,7 @@ public class GUI extends Application implements View {
         viewController.setResumeFrom(Phase.CHOOSE_SUPPORT_CARD);
 
         scenesDeck.getSceneManager(setDeck).getController().update();
-        updateSceneOnStage("SetDeck.fxml");
+        updateSceneOnStage(setDeck);
     }
 
     @Override
@@ -127,14 +129,21 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMoveStudentsHToD() {
+        viewController.setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
 
+        scenesDeck.getSceneManager(moveHToD).getController().update();
+        updateSceneOnStage(moveHToD);
     }
 
     @Override
     public void askMoveStudentsHToI() {
-        viewController.setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
+        viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_DINING_HALL);
 
         updateSceneOnStage(wantHToI);
+        if (scenesDeck.getSceneManager(moveHToI).getController().getOutputAsString() == "yes") {
+            scenesDeck.getSceneManager(moveHToI).getController().update();
+            updateSceneOnStage(moveHToI);
+        }
     }
 
     @Override
@@ -149,7 +158,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMotherNatureMovements() {
-
+        viewController.setResumeFrom(Phase.CHOOSE_CLOUDS);
     }
 
     @Override

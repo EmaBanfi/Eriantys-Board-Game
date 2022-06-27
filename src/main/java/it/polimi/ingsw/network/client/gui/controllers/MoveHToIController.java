@@ -1,10 +1,9 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import it.polimi.ingsw.network.client.clientModel.Phase;
-import it.polimi.ingsw.network.client.gui.GUI;
-import it.polimi.ingsw.network.messages.clientMessages.cmSetGameStatus;
 import it.polimi.ingsw.network.messages.clientMessages.cmStudentsMovementsHToI;
 import it.polimi.ingsw.network.server.model.StudentColor;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,162 +16,161 @@ import java.util.HashMap;
 public class MoveHToIController extends GenericController {
 
     @FXML
-    private RadioButton yesButton;
+    private HBox hBoxMain;
     @FXML
-    private ChoiceBox numOfStudents;
+    private ChoiceBox<Integer> numOfStudents;
     @FXML
     private HBox hBox0;
     @FXML
-    private ChoiceBox studentsToMove0;
+    private ChoiceBox<String> studentToMove0;
     @FXML
-    private ChoiceBox chosenIsland0;
+    private ChoiceBox<Integer> chosenIsland0;
     @FXML
     private Button selectButton0;
     @FXML
     private HBox hBox1;
     @FXML
-    private ChoiceBox studentsToMove1;
+    private ChoiceBox<String> studentToMove1;
     @FXML
-    private ChoiceBox chosenIsland1;
+    private ChoiceBox<Integer> chosenIsland1;
     @FXML
     private Button selectButton1;
     @FXML
     private HBox hBox2;
     @FXML
-    private ChoiceBox studentsToMove2;
+    private ChoiceBox<String> studentToMove2;
     @FXML
-    private ChoiceBox chosenIsland2;
+    private ChoiceBox<Integer> chosenIsland2;
     @FXML
     private Button selectButton2;
     @FXML
     private HBox hBox3;
     @FXML
-    private ChoiceBox studentsToMove3;
+    private ChoiceBox<String> studentToMove3;
     @FXML
-    private ChoiceBox chosenIsland3;
+    private ChoiceBox<Integer> chosenIsland3;
+    @FXML
+    private Button selectButton3;
     @FXML
     private Button sendButton;
-    private int numOfChoice;
     private HashMap<Integer, ArrayList<StudentColor>> movementsHtoI;
 
+    @Override
+    public void update() {
+        numOfStudents.getItems().add(1);
+        numOfStudents.getItems().add(2);
+        numOfStudents.getItems().add(3);
+        if (getGui().getViewController().getAvailableStudentsMovements() == 3)
+            numOfStudents.getItems().add(4);
+        movementsHtoI = new HashMap<>();
+        updateIslands();
 
-    @FXML
-    public void onAskButton() {
-        if (yesButton.isSelected()) {
-            if (getGui().getViewController().getAvailableStudentsMovements() == 3)
-                numOfStudents.getItems().remove(3);
-            movementsHtoI = new HashMap<>();
-            updateIslands();
-            getGui().updateSceneOnStage("MoveHToI.fxml");
-        }
-        else
-            getGui().getClient().send(getGui().getGson().toJson(new cmStudentsMovementsHToI(null), cmStudentsMovementsHToI.class));
+        getGui().updateSceneOnStage("hToI/MoveHToI.fxml");
     }
 
     @FXML
     public void onSelectButton() {
-        numOfChoice = Integer.parseInt(numOfStudents.getValue().toString());
-
-        if (numOfChoice == getGui().getViewController().getNumOfAvailableIslands())
+        if (numOfStudents.getValue() == getGui().getViewController().getAvailableStudentsMovements())
             getGui().getViewController().setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
 
-        updateColors(studentsToMove0);
+        getGui().getViewController().setAvailableStudentsMovements(getGui().getViewController().getAvailableStudentsMovements() - numOfStudents.getValue());
+
+        updateColors(studentToMove0);
+        studentToMove0.setValue(studentToMove0.getItems().get(0));
+        chosenIsland0.setValue(chosenIsland0.getItems().get(0));
+        hBoxMain.setVisible(false);
         hBox0.setVisible(true);
 
-        if (numOfChoice == 1)
-            sendButton.setVisible(true);
-        else
-            selectButton0.setVisible(true);
+        selectButton0.setVisible(true);
     }
 
     @FXML
     public void onSelectButton0() {
-        applyChanges(Integer.parseInt(chosenIsland0.getItems().toString()), StudentColor.getStudentFromString(studentsToMove0.getItems().toString()), hBox0);
+        applyChanges(chosenIsland0.getValue(), StudentColor.getStudentFromString(studentToMove0.getValue()));
 
-        if (numOfChoice > 1){
-            updateColors(studentsToMove1);
+        hBox0.setVisible(false);
+
+        if (numOfStudents.getValue() > 1) {
+            updateColors(studentToMove1);
+            studentToMove1.setValue(studentToMove1.getItems().get(0));
+            chosenIsland1.setValue(chosenIsland1.getItems().get(0));
             hBox1.setVisible(true);
-        }
 
-        if (numOfChoice == 2)
-            sendButton.setVisible(true);
-        else
             selectButton1.setVisible(true);
+        }
+        else
+            sendButton.setVisible(true);
     }
 
     @FXML
     public void onSelectButton1() {
-        applyChanges(Integer.parseInt(chosenIsland1.getItems().toString()), StudentColor.getStudentFromString(studentsToMove1.getItems().toString()), hBox1);
+        applyChanges(chosenIsland1.getValue(), StudentColor.getStudentFromString(studentToMove1.getValue()));
 
-        if (numOfChoice > 2){
-            updateColors(studentsToMove2);
+        hBox1.setVisible(false);
+
+        if (numOfStudents.getValue() > 2) {
+            updateColors(studentToMove2);
+            studentToMove2.setValue(studentToMove2.getItems().get(0));
+            chosenIsland2.setValue(chosenIsland2.getItems().get(0));
             hBox2.setVisible(true);
-        }
 
-        if (numOfChoice == 2)
-            sendButton.setVisible(true);
-        else
             selectButton2.setVisible(true);
+        }
+        else
+            sendButton.setVisible(true);
     }
 
     @FXML
     public void onSelectButton2() {
-        applyChanges(Integer.parseInt(chosenIsland2.getItems().toString()), StudentColor.getStudentFromString(studentsToMove2.getItems().toString()), hBox2);
+        applyChanges(chosenIsland2.getValue(), StudentColor.getStudentFromString(studentToMove2.getValue()));
 
-        if (numOfChoice > 3){
-            updateColors(studentsToMove3);
+        hBox2.setVisible(false);
+
+        if (numOfStudents.getValue() > 3) {
+            updateColors(studentToMove3);
+            studentToMove3.setValue(studentToMove3.getItems().get(0));
+            chosenIsland3.setValue(chosenIsland3.getItems().get(0));
             hBox3.setVisible(true);
-        }
 
-        applyChanges(Integer.parseInt(chosenIsland3.getItems().toString()), StudentColor.getStudentFromString(studentsToMove3.getItems().toString()), hBox3);
+            selectButton3.setVisible(true);
+        }
+        else
+            sendButton.setVisible(true);
+    }
+
+    @FXML
+    public void onSelectButton3() {
+        hBox3.setVisible(false);
 
         sendButton.setVisible(true);
     }
 
-    private void applyChanges(int island, StudentColor color, HBox hBox) {
-        updateHashMap(island - 1, color);
+    private void applyChanges(int island, StudentColor color) {
+        if (!movementsHtoI.containsKey(island))
+            movementsHtoI.put(island, new ArrayList<>());
+        movementsHtoI.get(island).add(color);
 
         getGui().getViewController().getMainPlayer().removeFromHall(color);
         getGui().getViewController().getIsland(island - 1).addStudent(color);
-
-        hBox.setVisible(false);
     }
 
     @FXML
     public void onSendButton() {
+        if (numOfStudents.getValue() == 4)
+            applyChanges(chosenIsland3.getValue(), StudentColor.getStudentFromString(studentToMove3.getValue()));
+
         cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
         getGui().getClient().send(getGui().getGson().toJson(message, cmStudentsMovementsHToI.class));
     }
 
-    private void updateColors(ChoiceBox box) {
-        if (!getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.BLUE))
-            box.getItems().remove(0);
-
-        if (!getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.PURPLE))
-            box.getItems().remove(1);
-
-        if (!getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.YELLOW))
-            box.getItems().remove(2);
-
-        if (!getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.RED))
-            box.getItems().remove(3);
-
-        if (!getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.GREEN))
-            box.getItems().remove(4);
-    }
-
     private void updateIslands() {
-        int numOfIslands = getGui().getViewController().getAvailableIslands().size();
+        int maxNumIslands = getGui().getViewController().getAvailableIslands().size();
 
-        for (int i = numOfIslands; i < 12; i++) {
-            chosenIsland0.getItems().remove(i);
-            chosenIsland1.getItems().remove(i);
-            chosenIsland2.getItems().remove(i);
-            chosenIsland3.getItems().remove(i);
+        for (int i = 1; i <= maxNumIslands; i++) {
+            chosenIsland0.getItems().add(i);
+            chosenIsland1.getItems().add(i);
+            chosenIsland2.getItems().add(i);
+            chosenIsland3.getItems().add(i);
         }
-    }
-
-    private void updateHashMap(int island, StudentColor color) {
-        movementsHtoI.get(island).add(color);
     }
 }

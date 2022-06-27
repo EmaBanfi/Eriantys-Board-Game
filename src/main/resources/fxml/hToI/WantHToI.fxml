@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.MoveHToIController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.WantHToIController">
    <children>
       <Label alignment="CENTER" layoutX="585.0" layoutY="87.0" prefHeight="80.0" prefWidth="590.0" text="Do you want to move some students from your Hall to an Island?" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <HBox layoutX="563.0" layoutY="391.0" spacing="20.0" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="563.0" AnchorPane.rightAnchor="532.0" AnchorPane.topAnchor="391.0">
