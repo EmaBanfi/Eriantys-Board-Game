@@ -25,8 +25,10 @@ public class GUI extends Application implements View {
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
     private final String showIslands = "ShowIslands.fxml";
-    private final String setTower = "setTower.fxml";
-    private final String setDeck = "setDeck.fxml";
+    private final String setTower = "SetTower.fxml";
+    private final String setDeck = "SetDeck.fxml";
+    private final String wantHToI = "hToI/WantHToI.fxml";
+
     private Scene currentScene;
     private Stage stage;
     private Client client;
@@ -76,6 +78,8 @@ public class GUI extends Application implements View {
 
     @Override
     public void askNickName() {
+        viewController.setResumeFrom(Phase.CHOOSE_TOWER);
+
         updateSceneOnStage("SetNickname.fxml");
     }
 
@@ -94,28 +98,28 @@ public class GUI extends Application implements View {
 
     @Override
     public void askSetGameStatus() {
-        getViewController().setResumeFrom(Phase.CHOOSE_TOWER);
-
         updateSceneOnStage("SetGameStatus.fxml");
     }
 
     @Override
     public void askTower() {
-        getViewController().setResumeFrom(Phase.CHOOSE_DECK);
+        viewController.setResumeFrom(Phase.CHOOSE_DECK);
 
         scenesDeck.getSceneManager(setTower).getController().update();
-        updateSceneOnStage("setTower.fxml");
+        updateSceneOnStage("SetTower.fxml");
     }
 
     @Override
     public void askDeck() {
+        viewController.setResumeFrom(Phase.CHOOSE_SUPPORT_CARD);
+
         scenesDeck.getSceneManager(setDeck).getController().update();
-        updateSceneOnStage("setDeck.fxml");
+        updateSceneOnStage("SetDeck.fxml");
     }
 
     @Override
     public void askSupportCard() {
-
+        viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_ISLAND);
     }
 
     @Override
@@ -125,7 +129,9 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMoveStudentsHToI() {
+        viewController.setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
 
+        updateSceneOnStage(wantHToI);
     }
 
     @Override

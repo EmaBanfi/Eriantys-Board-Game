@@ -15,12 +15,14 @@ public class ScenesDeck {
     private final String askNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
     private final String showIslands = "ShowIslands.fxml";
-    private final String askTower = "setTower.fxml";
-    private final String askDeck = "setDeck.fxml";
+    private final String askTower = "SetTower.fxml";
+    private final String askDeck = "SetDeck.fxml";
+    private final String wantHToI = "hToI/WantHToI.fxml";
+    private final String moveHToI = "hToI/MoveHToI.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();
-        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus, showIslands, askTower, askDeck));
+        ArrayList<String> fxmlFiles = new ArrayList<>(Arrays.asList(setIp, askNickname, setGameStatus, showIslands, askTower, askDeck, wantHToI, moveHToI));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {

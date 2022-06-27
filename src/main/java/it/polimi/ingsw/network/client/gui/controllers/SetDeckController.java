@@ -9,7 +9,8 @@ import javafx.scene.control.ChoiceBox;
 
 public class SetDeckController extends GenericController {
     private GUI gui;
-    private ChoiceBox choiceBox = new ChoiceBox();
+    @FXML
+    private ChoiceBox setDeck;
     @FXML
     private String chosenDeck;
 
@@ -20,7 +21,7 @@ public class SetDeckController extends GenericController {
 
     @FXML
     public void deckButton(ActionEvent event){
-        chosenDeck = choiceBox.getValue().toString();
+        chosenDeck = setDeck.getValue().toString();
         gui.getViewController().getMainPlayer().setDeckColor(chosenDeck);
         Gson gson = new Gson();
         cmDeck message = new cmDeck(chosenDeck);
@@ -31,13 +32,13 @@ public class SetDeckController extends GenericController {
     @Override
     public void update(){
         if(gui.getViewController().getAvailableDecks().contains("KING"))
-            choiceBox.getItems().add("KING");
+            setDeck.getItems().add("KING");
         if(gui.getViewController().getAvailableDecks().contains("MAGE"))
-            choiceBox.getItems().add("MAGE");
+            setDeck.getItems().add("MAGE");
         if(gui.getViewController().getAvailableDecks().contains("WITCH"))
-            choiceBox.getItems().add("WITCH");
+            setDeck.getItems().add("WITCH");
         if(gui.getViewController().getAvailableDecks().contains("SAGE"))
-            choiceBox.getItems().add("SAGE");
+            setDeck.getItems().add("SAGE");
     }
 
     public String getOutputString(){

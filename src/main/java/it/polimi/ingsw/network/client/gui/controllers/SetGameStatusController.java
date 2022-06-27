@@ -17,10 +17,15 @@ public class SetGameStatusController extends GenericController {
     public void onSendButtonClick() {
         cmSetGameStatus message;
 
-        if (normal.isSelected())
-            message =new cmSetGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "normal");
-        else
+        if (normal.isSelected()) {
+            getGui().getViewController().updateGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "normal");
+            message = new cmSetGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "normal");
+        }
+        else {
+            getGui().getViewController().updateGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "expert");
             message = new cmSetGameStatus(Integer.parseInt(numOfPlayers.getValue().toString()), "expert");
+        }
+
         String text = getGui().getGson().toJson(message, cmSetGameStatus.class);
         getGui().getClient().send(text);
     }

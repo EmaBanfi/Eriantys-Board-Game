@@ -16,7 +16,8 @@ import java.util.ArrayList;
 public class TowersController extends GenericController{
 
     private GUI gui;
-    private ChoiceBox choiceBox = new ChoiceBox();
+    @FXML
+    private ChoiceBox setTowerColor;
     @FXML
     private String chosenTower;
 
@@ -27,7 +28,7 @@ public class TowersController extends GenericController{
 
     @FXML
     public void towerColorButton(ActionEvent event){
-        chosenTower = choiceBox.getValue().toString();
+        chosenTower = setTowerColor.getValue().toString();
         gui.getViewController().updateTowerColor(chosenTower);
         Gson gson = new Gson();
         cmTower message = new cmTower(chosenTower);
@@ -37,12 +38,12 @@ public class TowersController extends GenericController{
 
     @Override
     public void update(){
-        if(gui.getViewController().getAvailableTowers().contains("WHITE"))
-            choiceBox.getItems().add("WHITE");
-        if(gui.getViewController().getAvailableTowers().contains("BLACK"))
-            choiceBox.getItems().add("BLACK");
-        if(gui.getViewController().getNumOfPlayers() == 3 && gui.getViewController().getAvailableTowers().contains("GRAY"))
-            choiceBox.getItems().add("GRAY");
+        if(!(gui.getViewController().getNumOfPlayers() == 3 && gui.getViewController().getAvailableTowers().contains("GRAY")))
+            setTowerColor.getItems().remove(2);
+        if (!gui.getViewController().getAvailableTowers().contains("WHITE"))
+            setTowerColor.getItems().remove(1);
+        if (!gui.getViewController().getAvailableTowers().contains("BLACK"))
+            setTowerColor.getItems().remove(1);
     }
 
     public String getOutputString(){

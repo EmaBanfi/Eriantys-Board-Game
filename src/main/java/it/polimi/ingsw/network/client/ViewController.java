@@ -173,7 +173,7 @@ public class ViewController {
      */
     public void updateTowerColor(String tower) {
         getPlayerByNick(currentPlayer).setTower(tower);
-        availableTowers.remove(tower);
+        availableTowers.remove(tower.toUpperCase());
     }
 
     /**
@@ -325,7 +325,7 @@ public class ViewController {
      * @param deck chosen deck
      */
     public void setPlayerDeck(String deck) {
-        getPlayerByNick(currentPlayer).setDeckColor(deck);
+        getPlayerByNick(currentPlayer).setDeckColor(deck.toUpperCase());
         availableDecks.remove(deck.toUpperCase());
     }
 
