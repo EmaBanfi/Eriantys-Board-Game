@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
+import it.polimi.ingsw.network.client.clientModel.Phase;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import javafx.application.Application;
@@ -42,8 +43,9 @@ public class GUI extends Application implements View {
         viewController = new ViewController(this);
         scenesDeck = new ScenesDeck(this);
         this.stage = stage;
-        this.stage.setWidth(1200);
-        this.stage.setHeight(800);
+        this.stage.setMinWidth(1200);
+        this.stage.setMinHeight(800);
+        this.stage.setResizable(false);
         startGame();
     }
 
@@ -92,11 +94,15 @@ public class GUI extends Application implements View {
 
     @Override
     public void askSetGameStatus() {
+        getViewController().setResumeFrom(Phase.CHOOSE_TOWER);
+
         updateSceneOnStage("SetGameStatus.fxml");
     }
 
     @Override
     public void askTower() {
+        getViewController().setResumeFrom(Phase.CHOOSE_DECK);
+
         scenesDeck.getSceneManager(setTower).getController().update();
         updateSceneOnStage("setTower.fxml");
     }
