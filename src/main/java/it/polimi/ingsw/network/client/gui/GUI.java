@@ -24,6 +24,8 @@ public class GUI extends Application implements View {
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
     private final String showIslands = "ShowIslands.fxml";
+    private final String setTower = "setTower.fxml";
+    private final String setDeck = "setDeck.fxml";
     private Scene currentScene;
     private Stage stage;
     private Client client;
@@ -95,12 +97,14 @@ public class GUI extends Application implements View {
 
     @Override
     public void askTower() {
-
+        scenesDeck.getSceneManager(setTower).getController().update();
+        updateSceneOnStage("setTower.fxml");
     }
 
     @Override
     public void askDeck() {
-
+        scenesDeck.getSceneManager(setDeck).getController().update();
+        updateSceneOnStage("setDeck.fxml");
     }
 
     @Override
