@@ -20,6 +20,6 @@ public class cmTower extends ClientMessage {
      */
     @Override
     public void processMessage(ClientHandler handler) {
-        handler.getServer().getController().setTower(tower);
+        handler.getServer().getController().setTower(tower.toUpperCase());
     }
 }

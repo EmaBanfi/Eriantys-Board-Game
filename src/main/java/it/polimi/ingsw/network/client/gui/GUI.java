@@ -31,6 +31,8 @@ public class GUI extends Application implements View {
     private final String moveHToI = "hToI/MoveHToI.fxml";
     private final String askSupportCard = "AskSupportCard.fxml";
     private final String moveHToD = "MoveHToD.fxml";
+    private final String moveMother = "MoveMother.fxml";
+    private final String chooseCloud = "ChooseCloud.fxml";
 
     private Scene currentScene;
     private Stage stage;
@@ -153,12 +155,18 @@ public class GUI extends Application implements View {
 
     @Override
     public void askCloud() {
+        viewController.setResumeFrom(Phase.CHOOSE_SUPPORT_CARD);
 
+        getSceneManager(chooseCloud).getController().update();
+        updateSceneOnStage(chooseCloud);
     }
 
     @Override
     public void askMotherNatureMovements() {
         viewController.setResumeFrom(Phase.CHOOSE_CLOUDS);
+
+        getSceneManager(moveMother).getController().update();
+        updateSceneOnStage(moveMother);
     }
 
     @Override

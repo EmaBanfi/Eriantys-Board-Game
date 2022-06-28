@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.network.client.gui.controllers.MoveMotherController">
+   <Label alignment="CENTER" layoutX="382.0" layoutY="152.0" prefHeight="80.0" prefWidth="590.0"
+          text="Where do you want to move mother nature?" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+          AnchorPane.topAnchor="5.0"/>
+   <Button layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0"
+           text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0"/>
+   <HBox alignment="CENTER" layoutX="461.0" layoutY="385.0" spacing="30.0" AnchorPane.bottomAnchor="385.0"
+         AnchorPane.leftAnchor="461.0" AnchorPane.rightAnchor="460.0" AnchorPane.topAnchor="385.0">
+      <Label alignment="CENTER" layoutX="359.0" layoutY="392.0" text="Select the island"/>
+      <ChoiceBox fx:id="newPosition" layoutX="487.0" layoutY="385.0" prefHeight="30.0" prefWidth="160.0"/>
+   </HBox>
+   <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandButton" prefHeight="30.0"
+           prefWidth="200.0" text="Show islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"/>
+</AnchorPane>

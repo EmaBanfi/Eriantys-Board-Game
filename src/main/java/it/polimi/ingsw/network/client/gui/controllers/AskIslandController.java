@@ -7,15 +7,14 @@ import javafx.stage.Stage;
 public class AskIslandController extends GenericController{
 
     @FXML
-    ChoiceBox islands;
+    private ChoiceBox islands;
 
-    Integer range;
-    int chosenIsland = -1;
+    private Integer range;
+    private int chosenIsland = -1;
 
     @Override
     public void setInput(Integer value) {
         range = value;
-
     }
 
     @FXML

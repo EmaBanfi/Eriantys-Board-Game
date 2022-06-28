@@ -7,8 +7,8 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,8 +69,21 @@ public class MoveHToIController extends GenericController {
     }
 
     @FXML
+    public void onShowIslandsButton() {
+        Stage stage = new Stage();
+
+        stage.setMinWidth(1200);
+        stage.setMinHeight(800);
+
+        getGui().getSceneManager("ShowIslands.fxml").getController().setInput((Integer) null);
+        stage.setScene(getGui().getSceneManager("ShowIslands.fxml").getScene());
+
+        stage.show();
+    }
+
+    @FXML
     public void onSelectButton() {
-        if (numOfStudents.getValue() == getGui().getViewController().getAvailableStudentsMovements())
+        if (getGui().getViewController().getAvailableStudentsMovements() == numOfStudents.getValue())
             getGui().getViewController().setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
 
         getGui().getViewController().setAvailableStudentsMovements(getGui().getViewController().getAvailableStudentsMovements() - numOfStudents.getValue());

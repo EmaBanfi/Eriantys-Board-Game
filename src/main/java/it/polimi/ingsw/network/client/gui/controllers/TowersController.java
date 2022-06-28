@@ -29,5 +29,7 @@ public class TowersController extends GenericController{
             setTowerColor.getItems().add("White");
         if (getGui().getViewController().getAvailableTowers().contains("BLACK"))
             setTowerColor.getItems().add("Black");
+
+        setTowerColor.setValue(setTowerColor.getItems().get(0));
     }
 }

@@ -3,11 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.AskIslandController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.AskIslandController">
    <children>
       <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="590.0" text="Please select an Island. Click on showIslands to see the students on the islands" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-      <ChoiceBox fx:id="islands" layoutX="220.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="185.0" />
+      <ChoiceBox fx:id="islands" layoutX="518.0" layoutY="384.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" AnchorPane.bottomAnchor="385.0" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="385.0" />
       <Button fx:id="confirmIsland" layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmIslandButtonClick" prefHeight="30.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Button fx:id="showIslands" layoutY="370.0" mnemonicParsing="false" onAction="#showIslandButtonClick" prefHeight="30.0" prefWidth="200.0" text="Show Islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
    </children>

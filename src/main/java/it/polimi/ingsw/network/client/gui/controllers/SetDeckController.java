@@ -31,5 +31,7 @@ public class SetDeckController extends GenericController {
             setDeck.getItems().add("Witch");
         if(getGui().getViewController().getAvailableDecks().contains("SAGE"))
             setDeck.getItems().add("Sage");
+
+        setDeck.setValue(setDeck.getItems().get(0));
     }
 }

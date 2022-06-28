@@ -7,9 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 
-public class SupportCardController extends GenericController{
+public class SupportCardController extends GenericController {
 
-    private GUI gui;
     @FXML
     private RadioButton SupportCard1;
     @FXML
@@ -32,11 +31,6 @@ public class SupportCardController extends GenericController{
     private RadioButton SupportCard10;
     private int chosenSupportCard;
 
-    @Override
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
-
     public void chooseSupportCardButton(ActionEvent actionEvent) {
         if(SupportCard1.isSelected())
             chosenSupportCard = 1;
@@ -58,33 +52,36 @@ public class SupportCardController extends GenericController{
             chosenSupportCard = 9;
         else
             chosenSupportCard = 10;
+
+        getGui().getViewController().setSupportCard(chosenSupportCard);
+
         Gson gson = new Gson();
         cmSupportCard message = new cmSupportCard(chosenSupportCard);
         String text = gson.toJson(message, cmSupportCard.class);
-        gui.getClient().send(text);
+        getGui().getClient().send(text);
     }
 
     @Override
     public void update(){
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(1)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(1)))
             SupportCard1.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(2)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(2)))
             SupportCard2.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(3)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(3)))
             SupportCard3.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(4)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(4)))
             SupportCard4.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(5)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(5)))
             SupportCard5.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(6)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(6)))
             SupportCard6.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(7)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(7)))
             SupportCard7.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(8)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(8)))
             SupportCard8.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(9)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(9)))
             SupportCard9.setVisible(false);
-        if(!gui.getViewController().getMainPlayer().getSupportCards().contains(gui.getViewController().getSupportCardByID(10)))
+        if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(10)))
             SupportCard10.setVisible(false);
     }
 }
