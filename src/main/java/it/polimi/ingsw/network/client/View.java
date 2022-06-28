@@ -119,7 +119,7 @@ public interface View {
      */
     void updateBlockOnCard(boolean add);
 
-
+    void updatePlayerCoins(int coins);
     /**
      * to get a Client object
      * @return Client object
@@ -140,5 +140,6 @@ public interface View {
     void disconnectFromServer();
 
     void closeGame();
+
 
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.image.*?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.GameBoardController">
+    <children>
+        <TabPane fx:id="playersPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab text="Player 1">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ImageView fx:id="pl1Card" fitHeight="715.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                <VBox layoutX="30.0" layoutY="222.5" prefWidth="590.0" spacing="45.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+                                    <children>
+                                        <Label fx:id="pl1Name" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="222.5">
+                                            <VBox.margin>
+                                                <Insets top="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="pl1Tower" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="267.5" />
+                                        <Label fx:id="pl1Deck" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="312.5" />
+                                        <Label fx:id="pl1Remaining" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="357.5" />
+                                        <Label fx:id="pl1Teachers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="402.5" />
+                                        <Label fx:id="pl1Hall" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="447.5" />
+                                        <Label fx:id="pl1Dining" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="492.5" />
+                                        <Label fx:id="pl1Coins" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="537.5">
+                                            <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Player 2">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ImageView fx:id="pl2Card" fitHeight="715.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                <VBox layoutX="30.0" layoutY="107.0" spacing="45.0" AnchorPane.leftAnchor="30.0">
+                                    <children>
+                                        <Label fx:id="pl2Name" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="222.5">
+                                            <VBox.margin>
+                                                <Insets top="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="pl2Tower" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="267.5" />
+                                        <Label fx:id="pl2Deck" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="312.5" />
+                                        <Label fx:id="pl2Remaining" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="357.5" />
+                                        <Label fx:id="pl2Teachers" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="402.5" />
+                                        <Label fx:id="pl2Hall" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="447.5" />
+                                        <Label fx:id="pl2Dining" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="502.5" />
+                                        <Label fx:id="pl2Coins" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="537.5">
+                                            <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Player 3">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ImageView fx:id="pl3Card" fitHeight="715.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                                <VBox layoutX="45.0" layoutY="100.0" spacing="45.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+                                    <children>
+                                        <Label fx:id="pl3Name" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="222.5">
+                                            <VBox.margin>
+                                                <Insets top="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="pl3Tower" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="267.5" />
+                                        <Label fx:id="pl3Deck" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="312.5" />
+                                        <Label fx:id="pl3Remaining" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="357.5" />
+                                        <Label fx:id="pl3Teachers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="402.5" />
+                                        <Label fx:id="pl3Hall" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="447.5" />
+                                        <Label fx:id="pl3Dining" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="492.5" />
+                                        <Label fx:id="pl3Coins" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="537.5">
+                                            <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Player 4">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <VBox layoutX="82.0" layoutY="100.0" spacing="45.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+                                    <children>
+                                        <Label fx:id="pl4Name" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="222.5">
+                                            <VBox.margin>
+                                                <Insets top="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Label fx:id="pl4Tower" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="267.5" />
+                                        <Label fx:id="pl4Deck" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="312.5" />
+                                        <Label fx:id="pl4Remaining" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="357.5" />
+                                        <Label fx:id="pl4Teachers" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="402.5" />
+                                        <Label fx:id="pl4Hall" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="447.5" />
+                                        <Label fx:id="pl4Dining" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="492.5" />
+                                        <Label fx:id="pl4Coins" prefHeight="30.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="537.5">
+                                            <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <ImageView fx:id="pl4Card" fitHeight="715.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

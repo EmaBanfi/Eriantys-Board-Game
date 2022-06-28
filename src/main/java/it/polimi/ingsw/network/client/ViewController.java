@@ -443,4 +443,13 @@ public class ViewController {
         return teacher != null && teacher.equals(player);
     }
 
+    public String getNickByIndex(int index){
+        return players.get(index-2).getNickname();
+    }
+
+    public  PlayerView getPlayerByIndex(int index){
+        return players.get(index-2);
+    }
+
+
 }

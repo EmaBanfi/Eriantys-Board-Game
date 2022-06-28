@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
 import it.polimi.ingsw.network.client.clientModel.Phase;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import javafx.application.Application;
@@ -34,6 +35,7 @@ public class GUI extends Application implements View {
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
 
+    private GenericController gameBoardController;
     private Scene currentScene;
     private Stage stage;
     private Client client;
@@ -80,6 +82,9 @@ public class GUI extends Application implements View {
         return gson;
     }
 
+    private  void initialiseGameBoardScene(){
+
+    }
 
     @Override
     public void askNickName() {
@@ -142,7 +147,7 @@ public class GUI extends Application implements View {
         viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_DINING_HALL);
 
         updateSceneOnStage(wantHToI);
-        if (scenesDeck.getSceneManager(moveHToI).getController().getOutputAsString() == "yes") {
+        if (scenesDeck.getSceneManager(moveHToI).getController().getOutputAsString().equals("yes")) {
             scenesDeck.getSceneManager(moveHToI).getController().update();
             updateSceneOnStage(moveHToI);
         }
@@ -204,6 +209,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateBlockOnCard(boolean add) {
+
+    }
+
+    @Override
+    public void updatePlayerCoins(int coins) {
+        viewController.updatePlayerCoins(coins);
 
     }
 

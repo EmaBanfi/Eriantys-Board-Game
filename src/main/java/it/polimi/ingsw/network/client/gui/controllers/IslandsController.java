@@ -81,7 +81,6 @@ public class IslandsController extends GenericController{
         }
         text.append("\n");
         for(StudentColor color: StudentColor.values()) {
-            text=new StringBuilder();
             for (int i = from; i < to; i++) {
                 segment = color.toString().toLowerCase() + " students: " + availableIslands.get(i).getStudentsByColor(color);
                 text.append(segment);

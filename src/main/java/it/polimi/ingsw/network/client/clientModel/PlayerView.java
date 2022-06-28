@@ -120,4 +120,12 @@ public class PlayerView {
     }
 
     public void resetSupportCard(){usedSupportCard=null;}
+
+    public String getDeckColor(){
+        return deckColor;
+    }
+
+    public  int remainingSupportCards(){
+        return supportCards.size();
+    }
 }

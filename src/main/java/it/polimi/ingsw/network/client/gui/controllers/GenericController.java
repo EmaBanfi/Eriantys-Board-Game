@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import it.polimi.ingsw.network.client.gui.GUI;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.scene.control.ChoiceBox;
 
@@ -29,6 +30,10 @@ public abstract class GenericController {
     public  GUI getGui(){
         return gui;
     }
+
+    public void update(int player, ValueToUpdate value){}
+
+    public void initialise(){}
 
     protected void updateColors(ChoiceBox<String> box) {
         if (getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.BLUE))
