@@ -1,5 +1,5 @@
 package it.polimi.ingsw.network.client.gui;
 
 public enum ValueToUpdate {
-    TEACHER, HALL, CARD, DINING, COINS
+    TEACHERS, HALL, CARD, DINING, COINS, DECK
 }

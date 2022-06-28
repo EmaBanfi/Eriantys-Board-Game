@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 
@@ -14,8 +15,9 @@ import java.util.HashMap;
 
 public class GameBoardController extends GenericController{
 
-    @FXML
-    private Label pl1Name;
+
+
+
     @FXML
     private Label pl1Tower;
     @FXML
@@ -33,8 +35,9 @@ public class GameBoardController extends GenericController{
     @FXML
     private ImageView pl1Card;
 
+
     @FXML
-    private Label pl2Name;
+    private Tab player2Tab;
     @FXML
     private Label pl2Tower;
     @FXML
@@ -52,8 +55,9 @@ public class GameBoardController extends GenericController{
     @FXML
     private ImageView pl2Card;
 
+
     @FXML
-    private Label pl3Name;
+    private Tab player3Tab;
     @FXML
     private Label pl3Tower;
     @FXML
@@ -71,8 +75,9 @@ public class GameBoardController extends GenericController{
     @FXML
     private ImageView pl3Card;
 
+
     @FXML
-    private Label pl4Name;
+    private Tab player4Tab;
     @FXML
     private Label pl4Tower;
     @FXML
@@ -114,7 +119,6 @@ public class GameBoardController extends GenericController{
         players.put(
                 viewController.getMainPlayer().getNickname(),
                 new PlayerGui(
-                        pl1Name,
                         pl1Tower,
                         pl1Deck,
                         pl1Remaining,
@@ -127,10 +131,10 @@ public class GameBoardController extends GenericController{
                 )
         );
 
+        player2Tab.setText(viewController.getNickByIndex(2));
         players.put(
                 viewController.getNickByIndex(2),
                 new PlayerGui(
-                        pl2Name,
                         pl2Tower,
                         pl2Deck,
                         pl2Remaining,
@@ -144,10 +148,10 @@ public class GameBoardController extends GenericController{
         );
 
         if(numOfPlayers>=3){
+            player3Tab.setText(viewController.getNickByIndex(3));
             players.put(
                     viewController.getNickByIndex(3),
                     new PlayerGui(
-                            pl3Name,
                             pl3Tower,
                             pl3Deck,
                             pl3Remaining,
@@ -161,10 +165,10 @@ public class GameBoardController extends GenericController{
             );
 
             if(numOfPlayers==4){
+                player3Tab.setText(viewController.getNickByIndex(4));
                 players.put(
                         viewController.getNickByIndex(4),
                         new PlayerGui(
-                                pl4Name,
                                 pl4Tower,
                                 pl4Deck,
                                 pl4Remaining,
@@ -186,17 +190,17 @@ public class GameBoardController extends GenericController{
             playersPane.getTabs().remove(2);
         }
 
-
-
     }
 
+    @Override
     public void update(String nick, ValueToUpdate value){
         switch (value){
             case CARD -> players.get(nick).updateCard();
-            case TEACHER ->  updateTeachers();
+            case TEACHERS ->  updateTeachers();
             case HALL -> players.get(nick).updateHall();
             case DINING -> players.get(nick).updateDiningHall();
             case COINS -> players.get(nick).updateCoins();
+            case DECK -> players.get(nick).initDeck();
         }
     }
 

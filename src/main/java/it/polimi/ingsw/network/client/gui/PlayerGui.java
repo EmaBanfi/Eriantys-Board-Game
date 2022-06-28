@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class PlayerGui {
-    private final Label name;
     private final Label tower;
     private final Label deck;
     private final Label remainingSupportCards;
@@ -21,8 +20,7 @@ public class PlayerGui {
     private PlayerView playerView;
 
 
-    public PlayerGui(Label name, Label tower, Label deck, Label remainingSupportCards, Label teachers,Label hall, Label diningHall, Label coins, ImageView card, PlayerView playerView) {
-        this.name = name;
+    public PlayerGui(Label tower, Label deck, Label remainingSupportCards, Label teachers,Label hall, Label diningHall, Label coins, ImageView card, PlayerView playerView) {
         this.tower = tower;
         this.deck = deck;
         this.remainingSupportCards = remainingSupportCards;
@@ -32,21 +30,18 @@ public class PlayerGui {
         this.coins = coins;
         this.card = card;
         this.playerView = playerView;
-        initName();
         initTower();
         initDeck();
         updateRemaining();
     }
 
-    private void initName(){
-        name.setText("Name:  " + playerView.getNickname());
-    }
+
 
     private void initTower(){
         tower.setText("Tower:  " + playerView.getTower().toLowerCase());
     }
 
-    private void initDeck(){
+    public void initDeck(){
         deck.setText("Deck:  " + playerView.getDeckColor().toLowerCase());
     }
 

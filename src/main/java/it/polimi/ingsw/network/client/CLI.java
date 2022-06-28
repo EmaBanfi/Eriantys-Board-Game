@@ -780,6 +780,41 @@ public class CLI implements View, Runnable {
         System.exit(0);
     }
 
+    @Override
+    public void addStudentToPlayerD(String playerNick, ArrayList<StudentColor> students) {
+        viewController.addStudentToPlayerD(playerNick, students);
+    }
+
+    @Override
+    public void removeStudentsFromPlayerD(String playerNick, ArrayList<StudentColor> students) {
+        viewController.removeStudentsFromPlayerD(playerNick, students);
+    }
+
+    @Override
+    public void addStudentsToHall(ArrayList<StudentColor> students) {
+        viewController.addStudentsToHall(students);
+    }
+
+    @Override
+    public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
+        viewController.removeFromPlayerHall(nick, students);
+    }
+
+    @Override
+    public void removeStudentsFromHall(ArrayList<StudentColor> students) {
+        viewController.removeStudentsFromHall(students);
+    }
+
+    @Override
+    public void updateTeacher(HashMap<StudentColor, String> roles) {
+        viewController.updateTeacher(roles);
+    }
+
+    @Override
+    public void setPlayerDeck(String deck) {
+        viewController.setPlayerDeck(deck);
+    }
+
 
     public CharacterCard getCharacterCardById(int id){
         for (CharacterCard card : availableCC)

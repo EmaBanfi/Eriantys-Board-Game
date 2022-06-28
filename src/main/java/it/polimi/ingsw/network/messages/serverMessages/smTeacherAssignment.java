@@ -25,6 +25,6 @@ public class smTeacherAssignment extends ServerMessage {
     public void processMessage(Client client) {
         super.processMessage(client);
 
-        client.getView().getViewController().updateTeacher(roles);
+        client.getView().updateTeacher(roles);
     }
 }

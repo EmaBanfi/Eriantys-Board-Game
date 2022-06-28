@@ -44,12 +44,12 @@ public class smStudentsInHall extends ServerMessage {
             super.processMessage(client);
 
         if (added)
-            client.getView().getViewController().addStudentsToHall(students);
+            client.getView().addStudentsToHall(students);
         else {
             if (nick != null)
-                client.getView().getViewController().removeFromPlayerHall(nick, students);
+                client.getView().removeFromPlayerHall(nick, students);
             else
-                client.getView().getViewController().removeStudentsFromHall(students);
+                client.getView().removeStudentsFromHall(students);
         }
     }
 }

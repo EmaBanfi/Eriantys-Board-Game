@@ -31,7 +31,7 @@ public abstract class GenericController {
         return gui;
     }
 
-    public void update(int player, ValueToUpdate value){}
+    public void update(String player, ValueToUpdate value){}
 
     public void initialise(){}
 

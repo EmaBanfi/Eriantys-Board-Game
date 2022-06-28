@@ -119,6 +119,10 @@ public interface View {
      */
     void updateBlockOnCard(boolean add);
 
+    /**
+     * update current player's coins in expert mode
+     * @param coins updated num of coins
+     */
     void updatePlayerCoins(int coins);
     /**
      * to get a Client object
@@ -141,5 +145,49 @@ public interface View {
 
     void closeGame();
 
+    /**
+     * adds students to specified player's dining hall
+     * @param playerNick player
+     * @param students students to add
+     */
+    void addStudentToPlayerD(String playerNick, ArrayList<StudentColor> students);
 
+    /**
+     * removes students to specified player's dining hall
+     * @param playerNick player
+     * @param students students to remove
+     */
+    void removeStudentsFromPlayerD(String playerNick, ArrayList<StudentColor> students);
+
+    /**
+     * adds students to current player's hall
+     * @param students
+     */
+    void addStudentsToHall(ArrayList<StudentColor> students);
+
+    /**
+     * removes students from the specified player's hall
+     * @param nick nick of the player
+     * @param students students to remove
+     */
+    void removeFromPlayerHall(String nick, ArrayList<StudentColor> students);
+
+    /**
+     * remove students from the current player's hall
+     * @param students students to remove
+     */
+    void removeStudentsFromHall(ArrayList<StudentColor> students);
+
+    /**
+     * updates which player controls each teacher
+     * @param roles hashmap for each students specify the player
+     */
+    void updateTeacher(HashMap<StudentColor, String> roles);
+
+
+    /**
+     * used to set the deck chosen by the current player
+     * @param deck chosen deck
+     */
+    void setPlayerDeck(String deck);
 }

@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GUI extends Application implements View {
@@ -36,6 +37,7 @@ public class GUI extends Application implements View {
     private final String moveHToD = "MoveHToD.fxml";
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
+    private final String gameBoard = "GameBoard.fxml";
 
     private GenericController gameBoardController;
     private Scene currentScene;
@@ -91,7 +93,14 @@ public class GUI extends Application implements View {
     }
 
     private  void initialiseGameBoardScene(){
-
+        Stage stage1 = new Stage();
+        stage1.setMinWidth(1200);
+        stage1.setMinHeight(800);
+        stage1.setResizable(false);
+        gameBoardController = getSceneManager(gameBoard).getController();
+        gameBoardController.initialise();
+        stage1.setScene(getSceneManager(gameBoard).getScene());
+        stage1.show();
     }
 
     @Override
@@ -133,6 +142,7 @@ public class GUI extends Application implements View {
 
         scenesDeck.getSceneManager(setDeck).getController().update();
         updateSceneOnStage(setDeck);
+        initialiseGameBoardScene();
     }
 
     @Override
@@ -209,7 +219,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void showSupportCard(int id) {
-
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.CARD);
     }
 
     @Override
@@ -238,7 +248,7 @@ public class GUI extends Application implements View {
     @Override
     public void updatePlayerCoins(int coins) {
         viewController.updatePlayerCoins(coins);
-
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.COINS);
     }
 
 
@@ -260,6 +270,48 @@ public class GUI extends Application implements View {
     @Override
     public void closeGame() {
         System.exit(0);
+    }
+
+    @Override
+    public void addStudentToPlayerD(String playerNick, ArrayList<StudentColor> students) {
+        viewController.addStudentToPlayerD(playerNick,students);
+        gameBoardController.update(playerNick, ValueToUpdate.DINING);
+    }
+
+    @Override
+    public void removeStudentsFromPlayerD(String playerNick, ArrayList<StudentColor> students) {
+        viewController.removeStudentsFromPlayerD(playerNick, students);
+        gameBoardController.update(playerNick, ValueToUpdate.DINING);
+    }
+
+    @Override
+    public void addStudentsToHall(ArrayList<StudentColor> students) {
+        viewController.addStudentsToHall(students);
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.HALL);
+    }
+
+    @Override
+    public void removeFromPlayerHall(String nick, ArrayList<StudentColor> students) {
+        viewController.removeFromPlayerHall(nick,students);
+        gameBoardController.update(nick,ValueToUpdate.HALL);
+    }
+
+    @Override
+    public void removeStudentsFromHall(ArrayList<StudentColor> students) {
+        viewController.removeStudentsFromHall(students);
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.HALL);
+    }
+
+    @Override
+    public void updateTeacher(HashMap<StudentColor, String> roles) {
+        viewController.updateTeacher(roles);
+        gameBoardController.update(null, ValueToUpdate.TEACHERS);
+    }
+
+    @Override
+    public void setPlayerDeck(String deck) {
+        viewController.setPlayerDeck(deck);
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.DECK);
     }
 
     public SceneManager getSceneManager(String sceneName){
