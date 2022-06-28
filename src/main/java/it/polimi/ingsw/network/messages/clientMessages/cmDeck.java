@@ -20,6 +20,6 @@ public class cmDeck extends ClientMessage {
      */
     @Override
     public void processMessage(ClientHandler handler) {
-        handler.getServer().getController().setDeck(deck);
+        handler.getServer().getController().setDeck(deck.toUpperCase());
     }
 }

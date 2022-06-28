@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.Objects;
 
 public class GUI extends Application implements View {
 
+    private final String notify = "Notify.fxml";
     private final String setIp = "SetIp.fxml";
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
@@ -42,6 +44,9 @@ public class GUI extends Application implements View {
     private final Gson gson = new Gson();
     private ViewController viewController;
     private ScenesDeck scenesDeck;
+    private ArrayList<String> notifies = new ArrayList<>();
+    private Stage window = new Stage();
+    private GenericController notifyController;
 
     public static void main(String[] args) {
         launch();
@@ -51,6 +56,9 @@ public class GUI extends Application implements View {
     public void start(Stage stage) throws IOException {
         viewController = new ViewController(this);
         scenesDeck = new ScenesDeck(this);
+        window.initModality(Modality.APPLICATION_MODAL);
+        notifyController = getSceneManager(notify).getController();
+        notifyController.initialise();
         this.stage = stage;
         this.stage.setMinWidth(1200);
         this.stage.setMinHeight(800);
@@ -147,10 +155,6 @@ public class GUI extends Application implements View {
         viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_DINING_HALL);
 
         updateSceneOnStage(wantHToI);
-        if (scenesDeck.getSceneManager(moveHToI).getController().getOutputAsString().equals("yes")) {
-            scenesDeck.getSceneManager(moveHToI).getController().update();
-            updateSceneOnStage(moveHToI);
-        }
     }
 
     @Override
@@ -176,7 +180,26 @@ public class GUI extends Application implements View {
 
     @Override
     public void showString(String message) {
-        Platform.runLater(() -> AlertBox.display("Message from server", message));
+        notifies.add(message);
+
+        if (!window.isShowing()) {
+            Platform.runLater(() -> {
+                window.setScene(getSceneManager(notify).getScene());
+                window.showAndWait();
+            });
+        }
+    }
+
+    public ArrayList<String> getNotifies() {
+        return notifies;
+    }
+
+    public void emptyNotifies() {
+        notifies.clear();
+    }
+
+    public void closeNotifyStage() {
+        window.close();
     }
 
     @Override
@@ -236,7 +259,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void closeGame() {
-
+        System.exit(0);
     }
 
     public SceneManager getSceneManager(String sceneName){

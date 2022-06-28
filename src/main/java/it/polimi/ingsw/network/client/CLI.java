@@ -744,6 +744,11 @@ public class CLI implements View, Runnable {
         getCharacterCardById(5).updateAvailableBlockCards(add);
     }
 
+    @Override
+    public void updatePlayerCoins(int coins) {
+        viewController.updatePlayerCoins(coins);
+    }
+
 
     public Client getClient(){
         return client;
@@ -772,7 +777,7 @@ public class CLI implements View, Runnable {
 
     @Override
     public void closeGame() {
-        System.exit(-1);
+        System.exit(0);
     }
 
 
