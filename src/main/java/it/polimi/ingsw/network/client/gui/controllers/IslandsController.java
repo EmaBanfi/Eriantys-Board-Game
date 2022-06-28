@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class IslandsController extends GenericController{
 
-    private GUI gui ;
     @FXML
     private Label islands;
 
@@ -23,7 +22,7 @@ public class IslandsController extends GenericController{
     }
 
     public void showIslands(Integer range){
-        gui = getGui();
+        GUI gui = getGui();
         int numOfIslands = gui.getViewController().getNumOfAvailableIslands();
         StringBuilder text = new StringBuilder();
         ViewController c = gui.getViewController();
@@ -45,15 +44,15 @@ public class IslandsController extends GenericController{
             from = c.getMotherPosition();
             if (from + range< numOfIslands) {
                 to = from + range + 1;
-                setRange(from, to, c.getAvailableIslands(),text);
+                setRange(from, to, c.getAvailableIslands(),text, true);
             }
             else {
-                setRange(from, to, c.getAvailableIslands(),text);
-                setRange(0, (from + range) % numOfIslands+1, c.getAvailableIslands(), text);
+                setRange(from, to, c.getAvailableIslands(),text, false);
+                setRange(0, (from + range) % numOfIslands+1, c.getAvailableIslands(), text, true);
             }
         }
         else {
-            setRange(from,to, c.getAvailableIslands(), text);
+            setRange(from,to, c.getAvailableIslands(), text,true);
         }
     }
 
@@ -62,16 +61,16 @@ public class IslandsController extends GenericController{
      * @param from first island to be shown
      * @param to first island that will not be shown
      */
-    private void setRange(int from, int to, ArrayList<IslandView> availableIslands, StringBuilder text){
+    private void setRange(int from, int to, ArrayList<IslandView> availableIslands, StringBuilder text, boolean show){
         int maxRange=5;
         while(to-from>maxRange){
-            showRange(from,from+maxRange, availableIslands,text);
+            showRange(from,from+maxRange, availableIslands,text, false);
             from=from+maxRange;
         }
-        showRange(from,to, availableIslands,text);
+        showRange(from,to, availableIslands,text,show);
     }
 
-    private void showRange(int from, int to, ArrayList<IslandView> availableIslands,StringBuilder text) {
+    private void showRange(int from, int to, ArrayList<IslandView> availableIslands,StringBuilder text, boolean show) {
         int numOfSpaces=9;
         int maxSegmentLength=23;
         String segment;
@@ -90,7 +89,6 @@ public class IslandsController extends GenericController{
             }
             text.append("\n");
         }
-        text=new StringBuilder();
         for(int i= from; i < to; i++){
             segment="Block on island: " + availableIslands.get(i).getBlockCard();
             text.append(segment);
@@ -115,7 +113,11 @@ public class IslandsController extends GenericController{
             text.append(" ".repeat(Math.max(0, (numOfSpaces + (maxSegmentLength - segment.length())) - 1)));
         }
         text.append("\n");
-        islands.setText(text.toString());
+
+        if(show)
+            islands.setText(text.toString());
     }
+
+
 
 }
