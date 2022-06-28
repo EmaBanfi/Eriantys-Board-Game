@@ -26,6 +26,8 @@ public class MoveMotherController extends GenericController {
         else
             for (int i = motherPosition + 1; i <= (maxMovements + motherPosition); i++)
                 newPosition.getItems().add(i);
+
+        newPosition.setValue(newPosition.getItems().get(0));
     }
 
     @FXML

@@ -75,7 +75,7 @@ public class ChooseCloudController extends GenericController {
     private Button cloudButton11;
 
     private ArrayList<StudentColor> students = new ArrayList<>();
-    private String pathToStudentImage = "/images/student/";
+    private final String pathToStudentImage = "/images/student/";
 
 
     @Override
@@ -109,35 +109,25 @@ public class ChooseCloudController extends GenericController {
     }
 
     private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01) {
-        students.addAll(getGui().getViewController().getAvailableClouds().get(cloud).getStudents());
+        if (!getGui().getViewController().getAvailableClouds().get(cloud).getStudents().isEmpty()) {
+            students.addAll(getGui().getViewController().getAvailableClouds().get(cloud).getStudents());
 
-        image00.setImage(new Image(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png").toExternalForm()));
-        students.remove(0);
+            image00.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
+            students.remove(0);
 
-        image10.setImage(new Image(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png").toExternalForm()));
-        students.remove(0);
+            image10.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
+            students.remove(0);
 
-        image01.setImage(new Image(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png").toExternalForm()));
-        students.remove(0);
+            image01.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
+            students.remove(0);
+        }
     }
 
     private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01, ImageView image11) {
         fillCloud(cloud, image00, image10, image01);
 
-        image11.setImage(new Image(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png").toExternalForm()));
+        image11.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
         students.remove(0);
-    }
-
-    private Image getImage() {
-        InputStream stream = null;
-        try {
-            stream = new FileInputStream(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Image image = new Image(stream);
-
-        return image;
     }
 
     @FXML
