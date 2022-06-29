@@ -57,6 +57,10 @@ public abstract class CharacterCardGUI {
 
     public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){}
 
+    public ArrayList<StudentColor> getStudentsOnCard(){
+        return null;
+    }
+
     public void updateAvailableBlockCards(boolean add){
     }
 
