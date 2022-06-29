@@ -48,7 +48,7 @@
             <ChoiceBox fx:id="studentToMove3" layoutX="392.0" layoutY="467.0" prefWidth="150.0"/>
             <Label text="Choose the island:"/>
             <ChoiceBox fx:id="chosenIsland3" prefWidth="150.0"/>
-            <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton2" text="Select"
+            <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton3" text="Select"
                     visible="false"/>
          </HBox>
       </VBox>

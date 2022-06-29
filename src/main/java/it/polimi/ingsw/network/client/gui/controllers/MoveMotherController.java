@@ -10,6 +10,9 @@ public class MoveMotherController extends GenericController {
     @FXML
     private ChoiceBox<Integer> newPosition;
 
+    /**
+     * Updates the "MoveMother.fxml" file, showing the islands on which Mother Nature can move.
+     */
     @Override
     public void update() {
         int maxMovements = getGui().getViewController().getMainPlayer().getUsedSupportCard().getMovement();
@@ -30,6 +33,9 @@ public class MoveMotherController extends GenericController {
         newPosition.setValue(newPosition.getItems().get(0));
     }
 
+    /**
+     * Activation of "onSHowIslandButton" in the "MoveMother.fxml" scene; shows the available islands on which Mother Nature can move.
+     */
     @FXML
     public void onShowIslandButton() {
         Stage stage = new Stage();
@@ -43,6 +49,9 @@ public class MoveMotherController extends GenericController {
         stage.show();
     }
 
+    /**
+     * Activation of "onSendButton" in the "MoveMother.fxml" scene; sets the new Mother Nature position and sends a "cmMoverMother" message to the server with the new position chosen by the player.
+     */
     @FXML
     public void onSendButton() {
         int position = newPosition.getValue() - 1;
@@ -53,6 +62,11 @@ public class MoveMotherController extends GenericController {
         getGui().getViewController().getMotherNature().setCurrentIsland(position);
     }
 
+    /**
+     * Converts the new chosen island of Mother Nature into the number of movements needed to reach that specific island from the current Mother Nature island.
+     * @param island Island chosen by the player.
+     * @return
+     */
     private int convertIslandToMovements(int island){
         int movements = island - getGui().getViewController().getMotherPosition();
 

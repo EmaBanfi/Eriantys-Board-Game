@@ -11,6 +11,10 @@ public class SetDeckController extends GenericController {
     @FXML
     private ChoiceBox<String> setDeck;
 
+    /**
+     * Activation of the "deckButton" in "SetDeck.fxml" scene; sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck.
+     * @param event
+     */
     @FXML
     public void deckButton(ActionEvent event){
         String chosenDeck = setDeck.getValue();
@@ -21,6 +25,9 @@ public class SetDeckController extends GenericController {
         getGui().getClient().send(text);
     }
 
+    /**
+     * Updates the "SetTower.fxml" scene, adding the available decks to the choice box.
+     */
     @Override
     public void update(){
         if(getGui().getViewController().getAvailableDecks().contains("KING"))

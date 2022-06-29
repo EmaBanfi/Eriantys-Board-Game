@@ -24,6 +24,7 @@ public class ScenesDeck {
     private final String moveHToD = "MoveHToD.fxml";
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
+    private final  String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
 
     public ScenesDeck(GUI gui){
@@ -43,7 +44,8 @@ public class ScenesDeck {
                 moveHToD,
                 moveMother,
                 chooseCloud,
-                gameBoard));
+                gameBoard,
+                endGame));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {

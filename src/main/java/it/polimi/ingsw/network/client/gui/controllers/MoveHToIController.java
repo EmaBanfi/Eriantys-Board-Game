@@ -68,6 +68,9 @@ public class MoveHToIController extends GenericController {
         getGui().updateSceneOnStage("hToI/MoveHToI.fxml");
     }
 
+    /**
+     * Activation of "onSHowIslandButton" in the "MoveHToI.fxml" scene; shows the islands available on the GameBoard.
+     */
     @FXML
     public void onShowIslandsButton() {
         Stage stage = new Stage();
@@ -81,6 +84,9 @@ public class MoveHToIController extends GenericController {
         stage.show();
     }
 
+    /**
+     * Activation of "onSelectButton" in the "MoveHToI.fxml" scene; selects the number of students that the player wants to move and then shows the available students.
+     */
     @FXML
     public void onSelectButton() {
         if (getGui().getViewController().getAvailableStudentsMovements() == numOfStudents.getValue())
@@ -96,6 +102,7 @@ public class MoveHToIController extends GenericController {
 
         selectButton0.setVisible(true);
     }
+
 
     @FXML
     public void onSelectButton0() {

@@ -10,6 +10,10 @@ public class SetIpController extends GenericController {
     @FXML
     private TextField ipAddress;
 
+    /**
+     * Activation of "onPlayButton" in the "SetIp.fxml" scene; sets the server ip to connect to.
+     * @param event
+     */
     @FXML
     public void onPlayButton(ActionEvent event) {
         getGui().setClient(ipAddress.getText());

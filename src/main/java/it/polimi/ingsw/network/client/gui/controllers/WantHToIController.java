@@ -10,6 +10,9 @@ public class WantHToIController extends GenericController {
     @FXML
     private RadioButton yesButton;
 
+    /**
+     * Activation of "OnAskButton" in the "WantHToI.fxml" scene; if the player selects "yes" then open the "MoveHToI.fxml" scene to manage the students movements, else sends a "cmStudentsMovementsHToI" to the server with null parameter.
+     */
     @FXML
     public void onAskButton() {
         if (yesButton.isSelected()) {

@@ -11,6 +11,9 @@ public class TowersController extends GenericController{
     @FXML
     private ChoiceBox<String> setTowerColor;
 
+    /**
+     * Activation of the "towerColorButton" in "SetTower.fxml" scene; sends a "cmTower" message to the server with the chosen tower.
+     */
     @FXML
     public void towerColorButton(ActionEvent event){
         String chosenTower = setTowerColor.getValue();
@@ -21,6 +24,9 @@ public class TowersController extends GenericController{
         getGui().getClient().send(text);
     }
 
+    /**
+     * updates the "SetTower.fxml" scene, adding the available tower colors to the choice box.
+     */
     @Override
     public void update(){
         if(getGui().getViewController().getNumOfPlayers() == 3 && getGui().getViewController().getAvailableTowers().contains("GRAY"))

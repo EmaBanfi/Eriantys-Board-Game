@@ -13,6 +13,9 @@ public class SetGameStatusController extends GenericController {
     @FXML
     private RadioButton normal;
 
+    /**
+     * Activation of "onSendButtonClick" in the "SetGameStatus.fxml" scene; sends a "cmSetGameStatus" message to the server, setting the number of players and game mode chosen by the first connected player.
+     */
     @FXML
     public void onSendButtonClick() {
         cmSetGameStatus message;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.EndGameController">
+   <children>
+      <Button fx:id="quitButton" layoutX="534.0" layoutY="361.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Quit" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" onAction="#quitButton"/>
+      <Label alignment="CENTER" layoutX="286.0" layoutY="14.0" prefHeight="80.0" prefWidth="590.0" text="Game Results" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <Label layoutX="287.0" layoutY="343.0" text="Winners: " />
+      <Label fx:id="winnersLabel" layoutX="386.0" layoutY="343.0" text="Label" />
+      <Label layoutX="682.0" layoutY="343.0" text="Losers:" />
+      <Label fx:id="losersLabel" layoutX="798.0" layoutY="343.0" text="Label" />
+   </children>
+</AnchorPane>

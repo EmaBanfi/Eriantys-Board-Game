@@ -11,6 +11,10 @@ public class SetNicknameController extends GenericController {
     @FXML
     private TextField nickname;
 
+    /**
+     * Activation of the "onSendButtonClick" in "SetNickName.fxml" scene; sets the nickname chosen by a player and sends a "cmNickname" message to the server with the chosen nickname
+     * @param event
+     */
     @FXML
     public void onSendButtonClick(ActionEvent event) {
         getGui().getViewController().setMainPlayer(nickname.getText());

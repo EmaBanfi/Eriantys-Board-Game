@@ -31,6 +31,10 @@ public class SupportCardController extends GenericController {
     private RadioButton SupportCard10;
     private int chosenSupportCard;
 
+    /**
+     * Activation of "chooseSupportCardButton" in the "AskSupportCard.fxml" scene; updates the support card used by a player in this turn and sends a "cmSupportCard" message to the server with the chosen support card.
+     * @param actionEvent
+     */
     public void chooseSupportCardButton(ActionEvent actionEvent) {
         if(SupportCard1.isSelected())
             chosenSupportCard = 1;
@@ -61,6 +65,9 @@ public class SupportCardController extends GenericController {
         getGui().getClient().send(text);
     }
 
+    /**
+     * Updates the "AskSupportCard.fxml" scene, removing the support cards that are not available anymore.
+     */
     @Override
     public void update(){
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(1)))

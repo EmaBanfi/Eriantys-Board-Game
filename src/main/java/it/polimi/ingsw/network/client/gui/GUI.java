@@ -37,6 +37,7 @@ public class GUI extends Application implements View {
     private final String moveHToD = "MoveHToD.fxml";
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
+    private final String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
 
     private GenericController gameBoardController;
@@ -46,6 +47,8 @@ public class GUI extends Application implements View {
     private final Gson gson = new Gson();
     private ViewController viewController;
     private ScenesDeck scenesDeck;
+    private ArrayList<String> winners = new ArrayList<>();
+    private ArrayList<String> losers = new ArrayList<>();
     private ArrayList<String> notifies = new ArrayList<>();
     private Stage window = new Stage();
     private GenericController notifyController;
@@ -53,6 +56,23 @@ public class GUI extends Application implements View {
     public static void main(String[] args) {
         launch();
     }
+
+    public void setWinners(ArrayList<String> winners){
+        this.winners.addAll(winners);
+    }
+
+    public void setLosers(ArrayList<String> losers){
+        this.losers.addAll(losers);
+    }
+
+    public ArrayList<String> getWinners(){
+        return winners;
+    }
+
+    public ArrayList<String> getLosers(){
+        return losers;
+    }
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -230,7 +250,11 @@ public class GUI extends Application implements View {
 
     @Override
     public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
-
+        this.winners.addAll(winners);
+        this.losers.addAll(losers);
+        scenesDeck.getSceneManager(endGame).getController().update();
+        updateSceneOnStage(endGame);
+        closeGame();
     }
 
 
