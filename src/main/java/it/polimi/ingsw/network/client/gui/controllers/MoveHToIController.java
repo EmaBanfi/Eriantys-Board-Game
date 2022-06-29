@@ -94,7 +94,7 @@ public class MoveHToIController extends GenericController {
 
         getGui().getViewController().setAvailableStudentsMovements(getGui().getViewController().getAvailableStudentsMovements() - numOfStudents.getValue());
 
-        updateColors(studentToMove0);
+        updateColorsFromHall(studentToMove0);
         studentToMove0.setValue(studentToMove0.getItems().get(0));
         chosenIsland0.setValue(chosenIsland0.getItems().get(0));
         hBoxMain.setVisible(false);
@@ -111,7 +111,7 @@ public class MoveHToIController extends GenericController {
         hBox0.setVisible(false);
 
         if (numOfStudents.getValue() > 1) {
-            updateColors(studentToMove1);
+            updateColorsFromHall(studentToMove1);
             studentToMove1.setValue(studentToMove1.getItems().get(0));
             chosenIsland1.setValue(chosenIsland1.getItems().get(0));
             hBox1.setVisible(true);
@@ -129,7 +129,7 @@ public class MoveHToIController extends GenericController {
         hBox1.setVisible(false);
 
         if (numOfStudents.getValue() > 2) {
-            updateColors(studentToMove2);
+            updateColorsFromHall(studentToMove2);
             studentToMove2.setValue(studentToMove2.getItems().get(0));
             chosenIsland2.setValue(chosenIsland2.getItems().get(0));
             hBox2.setVisible(true);
@@ -147,7 +147,7 @@ public class MoveHToIController extends GenericController {
         hBox2.setVisible(false);
 
         if (numOfStudents.getValue() > 3) {
-            updateColors(studentToMove3);
+            updateColorsFromHall(studentToMove3);
             studentToMove3.setValue(studentToMove3.getItems().get(0));
             chosenIsland3.setValue(chosenIsland3.getItems().get(0));
             hBox3.setVisible(true);

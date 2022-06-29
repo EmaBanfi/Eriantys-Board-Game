@@ -715,7 +715,6 @@ public class CLI implements View, Runnable {
         getCharacterCardById(id).increasePrice();
     }
 
-
     @Override
     public void showGameResults(ArrayList<String> winners, ArrayList<String> losers) {
         int numOfPlayers = viewController.getNumOfPlayers();
@@ -863,7 +862,6 @@ public class CLI implements View, Runnable {
     private boolean anyUsableCC(){
         updateUsableCC();
         return !usableCC.isEmpty();
-
     }
 
     private void updateUsableCC(){

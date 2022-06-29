@@ -44,7 +44,7 @@ public class CharacterCardGroup3 extends CharacterCard{
                 System.out.println("Not an int");
         } while (!validChoice);
 
-        getCLI().getViewController().updateMotherPosition((getCLI().getViewController().getMotherPosition() + 2) % getCLI().getViewController().getAvailableIslands().size());
+        getCLI().getViewController().updateMotherPosition((getCLI().getViewController().getMotherPosition() + movementChoice) % getCLI().getViewController().getAvailableIslands().size());
 
         cmCCG3 message = new cmCCG3(movementChoice);
         getCLI().getClient().send(new Gson().toJson(message, cmCCG3.class));

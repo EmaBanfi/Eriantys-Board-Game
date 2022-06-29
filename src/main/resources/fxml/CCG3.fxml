@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.CCG3Controller">
+   <children>
+      <Label alignment="CENTER" layoutX="382.0" layoutY="138.0" prefHeight="80.0" prefWidth="590.0" text="How many additional movements you want to do with mother nature?" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <HBox alignment="CENTER" layoutX="473.0" layoutY="391.0" spacing="30.0" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="473.0" AnchorPane.rightAnchor="473.0">
+         <children>
+            <Label text="Addiotional movements:" />
+            <RadioButton fx:id="oneMoreMove" mnemonicParsing="false" selected="true" text="1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="movements" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="2" toggleGroup="$movements" />
+         </children>
+      </HBox>
+      <Button layoutX="983.0" layoutY="760.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+   </children>
+</AnchorPane>

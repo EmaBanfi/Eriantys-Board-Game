@@ -60,6 +60,7 @@ public class GUI extends Application implements View {
     private final ArrayList<Integer> usableCC = new ArrayList<>();
     private final CharacterCardCreatorGUI ccc = new CharacterCardCreatorGUI();
     private boolean usedCharacterCard;
+    private Stage stageCC = new Stage();
 
     public static void main(String[] args) {
         launch();
@@ -92,6 +93,12 @@ public class GUI extends Application implements View {
         this.stage.setMinWidth(1200);
         this.stage.setMinHeight(800);
         this.stage.setResizable(false);
+
+
+        this.stageCC.setMinWidth(1200);
+        this.stageCC.setMinHeight(800);
+        this.stageCC.setResizable(false);
+
         startGame();
     }
 
@@ -101,6 +108,18 @@ public class GUI extends Application implements View {
             stage.setScene(currentScene);
             stage.show();
         });
+    }
+
+    public void updateSceneOnStageOnlyForCC(String scene) {
+        currentScene = scenesDeck.getSceneManager(scene).getScene();
+        Platform.runLater(() -> {
+            stageCC.setScene(currentScene);
+            stageCC.show();
+        });
+    }
+
+    public Stage getStageCC() {
+        return stageCC;
     }
 
     public void startGame() {
@@ -389,12 +408,7 @@ public class GUI extends Application implements View {
         gameBoardController.update(viewController.getMainPlayer().getNickname(), value);
     }
 
-    private boolean anyUsableCC(){
-        updateUsableCC();
-        return !usableCC.isEmpty();
-    }
-
-    private void updateUsableCC(){
+    public void updateUsableCC(){
         usableCC.clear();
         for (CharacterCardGUI card : availableCC) {
             if (card.checkCCPrecondition()) {

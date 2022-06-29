@@ -35,7 +35,7 @@ public abstract class GenericController {
 
     public void initialise(){}
 
-    protected void updateColors(ChoiceBox<String> box) {
+    protected void updateColorsFromHall(ChoiceBox<String> box) {
         if (getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.BLUE))
             box.getItems().add("Blue");
 
@@ -52,7 +52,24 @@ public abstract class GenericController {
             box.getItems().add("Green");
     }
 
-    protected void updateColors(int cardId, ChoiceBox<String> box) {
+    protected void updateColorsFromDiningHall(ChoiceBox<String> box) {
+        if (getGui().getViewController().getMainPlayer().getDiningHall().contains(StudentColor.BLUE))
+            box.getItems().add("Blue");
+
+        if (getGui().getViewController().getMainPlayer().getDiningHall().contains(StudentColor.PURPLE))
+            box.getItems().add("Purple");
+
+        if (getGui().getViewController().getMainPlayer().getDiningHall().contains(StudentColor.YELLOW))
+            box.getItems().add("Yellow");
+
+        if (getGui().getViewController().getMainPlayer().getDiningHall().contains(StudentColor.RED))
+            box.getItems().add("Red");
+
+        if (getGui().getViewController().getMainPlayer().getDiningHall().contains(StudentColor.GREEN))
+            box.getItems().add("Green");
+    }
+
+    protected void updateColorsFromCC(int cardId, ChoiceBox<String> box) {
         if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.BLUE))
             box.getItems().add("Blue");
 

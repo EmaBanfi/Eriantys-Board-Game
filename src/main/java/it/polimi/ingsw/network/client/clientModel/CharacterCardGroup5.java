@@ -62,6 +62,8 @@ public class CharacterCardGroup5 extends CharacterCard {
 
             getCLI().getViewController().blockIsland(chosenIsland - 1);
 
+            updateAvailableBlockCards(false);
+
             message = new cmCCG5(5, chosenIsland);
             getCLI().getClient().send(new Gson().toJson(message, cmCCG5.class));
         }

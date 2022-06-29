@@ -10,9 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -75,7 +72,7 @@ public class ChooseCloudController extends GenericController {
     private Button cloudButton11;
 
     private ArrayList<StudentColor> students = new ArrayList<>();
-    private final String pathToStudentImage = "/images/student/";
+    private final String pathToStudentImage = "/images/students/";
 
 
     @Override

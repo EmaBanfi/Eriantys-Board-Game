@@ -57,7 +57,7 @@ public class CCG4Controller extends GenericController{
         }
         else if(cardId == 11) {
             effectTitle.setText("Effect of the card 11");
-            updateColors(cardId, availableStudents);
+            updateColorsFromCC(cardId, availableStudents);
         }
         else {
             effectTitle.setText("Effect of the card 12");

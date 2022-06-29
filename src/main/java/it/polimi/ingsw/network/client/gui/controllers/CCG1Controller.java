@@ -22,7 +22,7 @@ public class CCG1Controller extends GenericController{
     private int island;
 
     /**
-     * Activation of "onSendButton" in the "CC1.fxml" scene; sends a "cmCCG1" message to the server.
+     * Activation of "onSendButton" in the "CCG1.fxml" scene; sends a "cmCCG1" message to the server.
      */
     @FXML
     public void onSendButton(){
@@ -37,7 +37,7 @@ public class CCG1Controller extends GenericController{
     }
 
     /**
-     * Activation of "onSelectButtonStudent" in the "CC1.fxml" scene; sets the student chosen by the player.
+     * Activation of "onSelectButtonStudent" in the "CCG1.fxml" scene; sets the student chosen by the player.
      */
     @FXML
     public void onSelectButtonStudent(){
@@ -46,7 +46,7 @@ public class CCG1Controller extends GenericController{
     }
 
     /**
-     * Activation of "onSelectButtonIsland" in the "CC1.fxml" scene; sets the island chosen by the player.
+     * Activation of "onSelectButtonIsland" in the "CCG1.fxml" scene; sets the island chosen by the player.
      */
     @FXML
     public void onSelectButtonIsland(){
@@ -70,11 +70,11 @@ public class CCG1Controller extends GenericController{
     }
 
     /**
-     * Updates the "CC1.fxml" scene, adding the students on the card and the available islands to the choice boxes.
+     * Updates the "CCG1.fxml" scene, adding the students on the card and the available islands to the choice boxes.
      */
     @Override
     public void update() {
-        updateColors(1, studentsOnCard);
+        updateColorsFromCC(1, studentsOnCard);
 
         int maxNumIslands = getGui().getViewController().getAvailableIslands().size();
 

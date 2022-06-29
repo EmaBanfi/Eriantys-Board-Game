@@ -26,6 +26,11 @@ public class ScenesDeck {
     private final String chooseCloud = "ChooseCloud.fxml";
     private final  String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
+    private final String cCG1 = "CCG1.fxml";
+    private final String cCG3 = "CCG3.fxml";
+    private final String cCG4 = "CCG4.fxml";
+    private final String cCG5 = "CCG5.fxml";
+    private final String cCG6 = "CCG6.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();
@@ -45,7 +50,12 @@ public class ScenesDeck {
                 moveMother,
                 chooseCloud,
                 gameBoard,
-                endGame));
+                endGame,
+                cCG1,
+                cCG3,
+                cCG4,
+                cCG5,
+                cCG6));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {
@@ -57,7 +67,7 @@ public class ScenesDeck {
             }
             controller = loader.getController();
             controller.setGui(gui);
-            scenes.add(new SceneManager(file, scene,controller));
+            scenes.add(new SceneManager(file, scene, controller));
         }
     }
 

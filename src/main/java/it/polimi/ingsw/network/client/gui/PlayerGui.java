@@ -52,7 +52,7 @@ public class PlayerGui {
     public void updateCard(){
         if(playerView.getUsedSupportCard()!=null) {
             Platform.runLater(() -> {
-                //card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SupportCard" + playerView.getUsedSupportCard().getId() + ".jpg"))));
+                card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/supportCards/sc" + playerView.getUsedSupportCard().getId() + ".png"))));
                 updateRemaining();
             });
         }

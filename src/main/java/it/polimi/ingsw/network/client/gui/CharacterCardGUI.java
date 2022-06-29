@@ -10,7 +10,7 @@ import java.util.Scanner;
 public abstract class CharacterCardGUI {
     private final int cardId;
     private int price;
-    private Label text;
+    private String text;
     private final GUI gui;
 
     private final Scanner input = new Scanner(System.in);
@@ -26,10 +26,10 @@ public abstract class CharacterCardGUI {
     }
 
     public void setText(String text){
-        this.text.setText(text);
+        this.text = text;
     }
 
-    public Label getText(){
+    public String getText(){
         return text;
     }
 
