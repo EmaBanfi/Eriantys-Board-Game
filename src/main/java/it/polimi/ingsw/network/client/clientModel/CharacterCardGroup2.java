@@ -2,9 +2,11 @@ package it.polimi.ingsw.network.client.clientModel;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.CLI;
+import it.polimi.ingsw.network.client.clientModel.CharacterCard;
+import it.polimi.ingsw.network.client.clientModel.Phase;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG2;
 
-public class CharacterCardGroup2 extends CharacterCard{
+public class CharacterCardGroup2 extends CharacterCard {
 
     public CharacterCardGroup2(int id, CLI cli) {
         super(id, cli);

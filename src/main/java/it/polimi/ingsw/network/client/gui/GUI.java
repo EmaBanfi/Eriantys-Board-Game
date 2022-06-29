@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
+import it.polimi.ingsw.network.client.clientModel.CharacterCard;
+import it.polimi.ingsw.network.client.clientModel.CharacterCardCreator;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
 import it.polimi.ingsw.network.client.clientModel.Phase;
 import it.polimi.ingsw.network.client.gui.controllers.GenericController;
@@ -53,6 +55,7 @@ public class GUI extends Application implements View {
     private Stage window = new Stage();
     private GenericController notifyController;
     private boolean gBInitialized = false;
+    private ArrayList<CharacterCardGUI> availableCC;
 
     public static void main(String[] args) {
         launch();
@@ -74,6 +77,7 @@ public class GUI extends Application implements View {
         return losers;
     }
 
+    public ArrayList<CharacterCardGUI> getAvailableCC(){return availableCC;}
 
     @Override
     public void start(Stage stage) throws IOException {
