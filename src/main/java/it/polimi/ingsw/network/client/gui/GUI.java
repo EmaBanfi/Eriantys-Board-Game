@@ -55,7 +55,11 @@ public class GUI extends Application implements View {
     private Stage window = new Stage();
     private GenericController notifyController;
     private boolean gBInitialized = false;
-    private ArrayList<CharacterCardGUI> availableCC;
+
+    private final ArrayList<CharacterCardGUI> availableCC = new ArrayList<>();
+    private final ArrayList<Integer> usableCC = new ArrayList<>();
+    private final CharacterCardCreatorGUI ccc = new CharacterCardCreatorGUI();
+    private boolean usedCharacterCard;
 
     public static void main(String[] args) {
         launch();
@@ -76,8 +80,6 @@ public class GUI extends Application implements View {
     public ArrayList<String> getLosers(){
         return losers;
     }
-
-    public ArrayList<CharacterCardGUI> getAvailableCC(){return availableCC;}
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -257,7 +259,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateCharacterCardPrice(int id) {
-
+        getCharacterCardById(id).increasePrice();
     }
 
 
@@ -279,7 +281,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateBlockOnCard(boolean add) {
-
+        getCharacterCardById(5).updateAvailableBlockCards(add);
     }
 
     @Override
@@ -296,7 +298,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void addAvailableCC(int card) {
-
+        availableCC.add(ccc.createCard(card, this));
     }
 
     @Override
@@ -383,5 +385,33 @@ public class GUI extends Application implements View {
 
     public void updateGameBoard(ValueToUpdate value) {
         gameBoardController.update(viewController.getMainPlayer().getNickname(), value);
+    }
+
+    private boolean anyUsableCC(){
+        updateUsableCC();
+        return !usableCC.isEmpty();
+    }
+
+    private void updateUsableCC(){
+        usableCC.clear();
+        for (CharacterCardGUI card : availableCC) {
+            if (card.checkCCPrecondition()) {
+                usableCC.add(card.getCardId());
+            }
+        }
+    }
+
+    public ArrayList<CharacterCardGUI> getAvailableCC(){return availableCC;}
+
+    public ArrayList<Integer> getUsableCC() {
+        return usableCC;
+    }
+
+    public CharacterCardGUI getCharacterCardById(int id) {
+        for (CharacterCardGUI card : availableCC)
+            if(card.getCardId()==id)
+                return card;
+
+        return null;
     }
 }
