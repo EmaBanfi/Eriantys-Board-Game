@@ -190,4 +190,17 @@ public interface View {
      * @param deck chosen deck
      */
     void setPlayerDeck(String deck);
+
+    /**
+     * set tower chosen by the current player
+     * @param tower chosen tower
+     */
+    void updateTowerColor(String tower);
+
+    /**
+     * update the game status
+     * @param numOfPlayers number of players
+     * @param mode mode of the game
+     */
+    void updateGameStatus(int numOfPlayers, String mode);
 }

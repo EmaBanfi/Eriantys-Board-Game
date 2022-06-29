@@ -52,6 +52,7 @@ public class GUI extends Application implements View {
     private ArrayList<String> notifies = new ArrayList<>();
     private Stage window = new Stage();
     private GenericController notifyController;
+    private boolean gBInitialized = false;
 
     public static void main(String[] args) {
         launch();
@@ -78,9 +79,9 @@ public class GUI extends Application implements View {
     public void start(Stage stage) throws IOException {
         viewController = new ViewController(this);
         scenesDeck = new ScenesDeck(this);
-        window.initModality(Modality.APPLICATION_MODAL);
-        notifyController = getSceneManager(notify).getController();
-        notifyController.initialise();
+        //window.initModality(Modality.APPLICATION_MODAL);
+        //notifyController = getSceneManager(notify).getController();
+        //notifyController.initialise();
         this.stage = stage;
         this.stage.setMinWidth(1200);
         this.stage.setMinHeight(800);
@@ -112,15 +113,18 @@ public class GUI extends Application implements View {
         return gson;
     }
 
-    private  void initialiseGameBoardScene(){
-        Stage stage1 = new Stage();
-        stage1.setMinWidth(1200);
-        stage1.setMinHeight(800);
-        stage1.setResizable(false);
+    private void initialiseGameBoardScene(){
         gameBoardController = getSceneManager(gameBoard).getController();
         gameBoardController.initialise();
-        stage1.setScene(getSceneManager(gameBoard).getScene());
-        stage1.show();
+
+        Platform.runLater(() -> {
+            Stage stage1 = new Stage();
+            stage1.setMinWidth(1200);
+            stage1.setMinHeight(800);
+            stage1.setResizable(false);
+            stage1.setScene(getSceneManager(gameBoard).getScene());
+            stage1.show();
+        });
     }
 
     @Override
@@ -160,16 +164,17 @@ public class GUI extends Application implements View {
     public void askDeck() {
         viewController.setResumeFrom(Phase.CHOOSE_SUPPORT_CARD);
 
+        gameBoardController.update(viewController.getMainPlayer().getNickname(), ValueToUpdate.TOWER);
+
         scenesDeck.getSceneManager(setDeck).getController().update();
         updateSceneOnStage(setDeck);
-        initialiseGameBoardScene();
     }
 
     @Override
     public void askSupportCard() {
         viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_ISLAND);
         scenesDeck.getSceneManager(askSupportCard).getController().update();
-        updateSceneOnStage("AskSupportCard.fxml");
+        updateSceneOnStage(askSupportCard);
     }
 
     @Override
@@ -210,6 +215,8 @@ public class GUI extends Application implements View {
 
     @Override
     public void showString(String message) {
+        Platform.runLater(() -> AlertBox.display("Message from server", message));
+        /*
         notifies.add(message);
 
         if (!window.isShowing()) {
@@ -218,6 +225,8 @@ public class GUI extends Application implements View {
                 window.showAndWait();
             });
         }
+
+         */
     }
 
     public ArrayList<String> getNotifies() {
@@ -310,6 +319,11 @@ public class GUI extends Application implements View {
 
     @Override
     public void addStudentsToHall(ArrayList<StudentColor> students) {
+        if (!gBInitialized) {
+            initialiseGameBoardScene();
+            gBInitialized = true;
+        }
+
         viewController.addStudentsToHall(students);
         gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.HALL);
     }
@@ -338,6 +352,18 @@ public class GUI extends Application implements View {
         gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.DECK);
     }
 
+    @Override
+    public void updateTowerColor(String tower) {
+        viewController.updateTowerColor(tower);
+
+        gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.TOWER);
+    }
+
+    @Override
+    public void updateGameStatus(int numOfPlayers, String mode) {
+        viewController.updateGameStatus(numOfPlayers, mode);
+    }
+
     public SceneManager getSceneManager(String sceneName){
         return scenesDeck.getSceneManager(sceneName);
     }
@@ -349,5 +375,9 @@ public class GUI extends Application implements View {
 
     public String getTeacherOfColor(StudentColor color) {
         return viewController.getTeacherOfColor(color);
+    }
+
+    public void updateGameBoard(ValueToUpdate value) {
+        gameBoardController.update(viewController.getMainPlayer().getNickname(), value);
     }
 }

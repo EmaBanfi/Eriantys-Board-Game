@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmDeck;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,9 @@ public class SetDeckController extends GenericController {
     public void deckButton(ActionEvent event){
         String chosenDeck = setDeck.getValue();
         getGui().getViewController().getMainPlayer().setDeckColor(chosenDeck);
+
+        getGui().updateGameBoard(ValueToUpdate.DECK);
+
         Gson gson = new Gson();
         cmDeck message = new cmDeck(chosenDeck);
         String text = gson.toJson(message, cmDeck.class);

@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.gui.GUI;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmSupportCard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,6 +59,8 @@ public class SupportCardController extends GenericController {
             chosenSupportCard = 10;
 
         getGui().getViewController().setSupportCard(chosenSupportCard);
+
+        getGui().updateGameBoard(ValueToUpdate.CARD);
 
         Gson gson = new Gson();
         cmSupportCard message = new cmSupportCard(chosenSupportCard);

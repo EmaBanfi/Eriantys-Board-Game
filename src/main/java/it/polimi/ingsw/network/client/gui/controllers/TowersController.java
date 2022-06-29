@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmTower;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

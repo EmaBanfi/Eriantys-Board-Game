@@ -815,6 +815,16 @@ public class CLI implements View, Runnable {
         viewController.setPlayerDeck(deck);
     }
 
+    @Override
+    public void updateTowerColor(String tower) {
+        viewController.updateTowerColor(tower);
+    }
+
+    @Override
+    public void updateGameStatus(int numOfPlayers, String mode) {
+        viewController.updateGameStatus(numOfPlayers, mode);
+    }
+
 
     public CharacterCard getCharacterCardById(int id){
         for (CharacterCard card : availableCC)

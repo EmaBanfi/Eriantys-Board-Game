@@ -201,6 +201,7 @@ public class GameBoardController extends GenericController{
             case DINING -> players.get(nick).updateDiningHall();
             case COINS -> players.get(nick).updateCoins();
             case DECK -> players.get(nick).initDeck();
+            case TOWER -> players.get(nick).initTower();
         }
     }
 

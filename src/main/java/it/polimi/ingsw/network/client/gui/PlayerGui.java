@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client.gui;
 
 import it.polimi.ingsw.network.client.clientModel.PlayerView;
 import it.polimi.ingsw.network.server.model.StudentColor;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,14 +31,12 @@ public class PlayerGui {
         this.coins = coins;
         this.card = card;
         this.playerView = playerView;
-        initTower();
-        initDeck();
         updateRemaining();
     }
 
 
 
-    private void initTower(){
+    public void initTower(){
         tower.setText("Tower:  " + playerView.getTower().toLowerCase());
     }
 
@@ -51,8 +50,10 @@ public class PlayerGui {
 
     public void updateCard(){
         if(playerView.getUsedSupportCard()!=null) {
-            card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SupportCard" + playerView.getUsedSupportCard().getId() + ".jpg"))));
-            updateRemaining();
+            Platform.runLater(() -> {
+                card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SupportCard" + playerView.getUsedSupportCard().getId() + ".jpg"))));
+                updateRemaining();
+            });
         }
         else
             card.setVisible(false);
