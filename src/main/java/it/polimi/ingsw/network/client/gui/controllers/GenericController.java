@@ -51,4 +51,21 @@ public abstract class GenericController {
         if (getGui().getViewController().getMainPlayer().getHall().contains(StudentColor.GREEN))
             box.getItems().add("Green");
     }
+
+    protected void updateColors(int cardId, ChoiceBox<String> box) {
+        if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.BLUE))
+            box.getItems().add("Blue");
+
+        if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.PURPLE))
+            box.getItems().add("Purple");
+
+        if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.YELLOW))
+            box.getItems().add("Yellow");
+
+        if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.RED))
+            box.getItems().add("Red");
+
+        if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.GREEN))
+            box.getItems().add("Green");
+    }
 }
