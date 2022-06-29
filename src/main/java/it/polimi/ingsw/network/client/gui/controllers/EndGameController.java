@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class EndGameController extends GenericController{
 
     @FXML
-    private Label winnersLabel = new Label();
+    private Label winnersLabel;
     @FXML
-    private Label losersLabel = new Label();
+    private Label losersLabel;
 
     /**
      * Activation of the "Quit button" in the EndGame.fxml scene; closes the client sending a "cmDisconnect" message to the server.
