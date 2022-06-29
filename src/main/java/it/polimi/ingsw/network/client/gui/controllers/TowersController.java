@@ -18,7 +18,6 @@ public class TowersController extends GenericController{
     @FXML
     public void towerColorButton(ActionEvent event){
         String chosenTower = setTowerColor.getValue();
-        getGui().getViewController().updateTowerColor(chosenTower);
         Gson gson = new Gson();
         cmTower message = new cmTower(chosenTower);
         String text = gson.toJson(message, cmTower.class);

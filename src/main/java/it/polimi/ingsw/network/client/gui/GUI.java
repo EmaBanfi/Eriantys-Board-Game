@@ -161,7 +161,6 @@ public class GUI extends Application implements View {
     @Override
     public void askTower() {
         viewController.setResumeFrom(Phase.CHOOSE_DECK);
-
         scenesDeck.getSceneManager(setTower).getController().update();
         updateSceneOnStage(setTower);
     }
@@ -332,6 +331,9 @@ public class GUI extends Application implements View {
 
         viewController.addStudentsToHall(students);
         gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.HALL);
+
+        if(viewController.getMainPlayer().getTower()!=null)
+            gameBoardController.update(viewController.getMainPlayer().getNickname(), ValueToUpdate.TOWER);
     }
 
     @Override

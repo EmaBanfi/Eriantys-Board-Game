@@ -37,21 +37,22 @@ public class PlayerGui {
 
 
     public void initTower(){
-        tower.setText("Tower:  " + playerView.getTower().toLowerCase());
+        Platform.runLater(() -> tower.setText("Tower:  " + playerView.getTower().toLowerCase()));
     }
 
     public void initDeck(){
-        deck.setText("Deck:  " + playerView.getDeckColor().toLowerCase());
+        Platform.runLater(() -> deck.setText("Deck:  " + playerView.getDeckColor().toLowerCase()));
+
     }
 
     public void updateRemaining(){
-        remainingSupportCards.setText("Remaining support cards:  " + playerView.remainingSupportCards());
+        Platform.runLater(() -> remainingSupportCards.setText("Remaining support cards:  " + playerView.remainingSupportCards()));
     }
 
     public void updateCard(){
         if(playerView.getUsedSupportCard()!=null) {
             Platform.runLater(() -> {
-                card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SupportCard" + playerView.getUsedSupportCard().getId() + ".jpg"))));
+                //card.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/SupportCard" + playerView.getUsedSupportCard().getId() + ".jpg"))));
                 updateRemaining();
             });
         }
@@ -60,26 +61,38 @@ public class PlayerGui {
     }
 
     public void updateTeachers(String teachers){
-        this.teachers.setText(teachers);
+        Platform.runLater(() -> this.teachers.setText(teachers));
     }
 
     public void updateHall(){
         StringBuilder text = new StringBuilder();
-        text.append("Hall:");
+        text.append("Hall: ");
+        boolean first = true;
         for(StudentColor color: playerView.getHall()){
-            text.append("  ").append(color);
+            if(first)
+                first=false;
+            else
+                text.append(",");
+            text.append(" ").append(color);
         }
+        hall.setText(text.toString());
     }
 
     public void updateDiningHall(){
         StringBuilder text = new StringBuilder();
-        text.append("Dining hall:");
+        text.append("Dining hall: ");
+        boolean first = true;
         for(StudentColor color: playerView.getDiningHall()){
-            text.append("  ").append(color);
+            if(first)
+                first=false;
+            else
+                text.append(",");
+            text.append(" ").append(color);
         }
+        diningHall.setText(text.toString());
     }
 
     public void updateCoins(){
-        coins.setText("Coins  " + playerView.getCoins());
+        Platform.runLater(() -> coins.setText("Coins  " + playerView.getCoins()));
     }
 }

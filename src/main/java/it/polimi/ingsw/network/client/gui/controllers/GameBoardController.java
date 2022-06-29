@@ -214,14 +214,19 @@ public class GameBoardController extends GenericController{
         String teacher;
         for (StudentColor color: StudentColor.values()){
             teacher = viewController.getTeacherOfColor(color);
-            if(teacher!=null)
+            if(!teacher.equals("yet to be decided"))
                 roles.get(teacher).add(color);
         }
         for(String nick : players.keySet()){
             text = new StringBuilder();
-            text.append("Teachers controlled:");
+            text.append("Teachers controlled: ");
+            boolean first = true;
             for(StudentColor color: roles.get(nick)){
-                text.append("  ").append(color.toString().toLowerCase());
+                if(first)
+                    first=false;
+                else
+                    text.append(",");
+                text.append(" ").append(color.toString());
             }
             players.get(nick).updateTeachers(text.toString());
         }
