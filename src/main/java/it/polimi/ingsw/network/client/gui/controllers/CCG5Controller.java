@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.client.gui.controllers;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG5;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -15,6 +16,8 @@ public class CCG5Controller extends GenericController{
     private int island;
     @FXML
     private Label effectTitle;
+    @FXML
+    private Button sendButton;
 
     /**
      * Sets the ID of the card used.
@@ -36,6 +39,10 @@ public class CCG5Controller extends GenericController{
         if(cardId == 5){
             getGui().getCharacterCardById(5).updateAvailableBlockCards(false);
         }
+
+        getGui().setUsedCC();
+        Stage stage = (Stage) sendButton.getScene().getWindow();
+        stage.close();
     }
 
     /**

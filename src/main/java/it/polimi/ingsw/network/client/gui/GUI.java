@@ -56,8 +56,8 @@ public class GUI extends Application implements View {
 
     private final ArrayList<CharacterCardGUI> availableCC = new ArrayList<>();
     private final ArrayList<Integer> usableCC = new ArrayList<>();
+    private boolean usedCC = false;
     private final CharacterCardCreatorGUI ccc = new CharacterCardCreatorGUI();
-    private boolean usedCharacterCard;
     private Stage stageCC = new Stage();
 
     public static void main(String[] args) {
@@ -438,5 +438,17 @@ public class GUI extends Application implements View {
                 return card;
 
         return null;
+    }
+
+    public void setUsedCC() {
+        usedCC = true;
+    }
+
+    public void resetUsedCC() {
+        usedCC = false;
+    }
+
+    public boolean getUsedCC() {
+        return usedCC;
     }
 }

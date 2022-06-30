@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -171,5 +172,9 @@ public class CCG6Controller extends GenericController {
 
         cmCCG6 message = new cmCCG6(cardId, array, hall);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCCG6.class));
+
+        getGui().setUsedCC();
+        Stage stage = (Stage) sendButton.getScene().getWindow();
+        stage.close();
     }
 }

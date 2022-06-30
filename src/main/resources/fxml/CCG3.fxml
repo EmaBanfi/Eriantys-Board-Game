@@ -18,6 +18,6 @@
             <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="2" toggleGroup="$movements" />
          </children>
       </HBox>
-      <Button defaultButton="true" layoutX="983.0" layoutY="760.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="sendButton" defaultButton="true" layoutX="983.0" layoutY="760.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
    </children>
 </AnchorPane>

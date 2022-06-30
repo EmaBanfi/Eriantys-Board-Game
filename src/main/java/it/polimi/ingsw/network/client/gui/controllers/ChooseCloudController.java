@@ -147,8 +147,16 @@ public class ChooseCloudController extends GenericController {
         getGui().getViewController().getMainPlayer().addToHall(getGui().getViewController().getCloud(0).getStudents());
         getGui().getViewController().getCloud(0).removeStudents();
 
+        getGui().getViewController().resetSupportCards();
+        for (PlayerView player : getGui().getViewController().getPlayers())
+            getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
+
+        if (getGui().getUsedCC())
+            getGui().resetUsedCC();
+
         cmCloud message = new cmCloud(0);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 
@@ -157,8 +165,16 @@ public class ChooseCloudController extends GenericController {
         getGui().getViewController().getMainPlayer().addToHall(getGui().getViewController().getCloud(1).getStudents());
         getGui().getViewController().getCloud(1).removeStudents();
 
+        getGui().getViewController().resetSupportCards();
+        for (PlayerView player : getGui().getViewController().getPlayers())
+            getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
+
+        if (getGui().getUsedCC())
+            getGui().resetUsedCC();
+
         cmCloud message = new cmCloud(1);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 
@@ -167,8 +183,16 @@ public class ChooseCloudController extends GenericController {
         getGui().getViewController().getMainPlayer().addToHall(getGui().getViewController().getCloud(2).getStudents());
         getGui().getViewController().getCloud(2).removeStudents();
 
+        getGui().getViewController().resetSupportCards();
+        for (PlayerView player : getGui().getViewController().getPlayers())
+            getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
+
+        if (getGui().getUsedCC())
+            getGui().resetUsedCC();
+
         cmCloud message = new cmCloud(2);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 
@@ -181,8 +205,12 @@ public class ChooseCloudController extends GenericController {
         for (PlayerView player : getGui().getViewController().getPlayers())
             getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
 
+        if (getGui().getUsedCC())
+            getGui().resetUsedCC();
+
         cmCloud message = new cmCloud(3);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 }

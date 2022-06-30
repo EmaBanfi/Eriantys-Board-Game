@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,8 @@ public class CCG4Controller extends GenericController{
     private Label effectTitle;
     @FXML
     private ChoiceBox<String> availableStudents;
+    @FXML
+    private Button sendButton;
     private int cardId;
     private StudentColor chosenStudent;
     private ArrayList<StudentColor> studentsOnCard11 = new ArrayList<>();
@@ -40,6 +44,10 @@ public class CCG4Controller extends GenericController{
             getGui().getCharacterCardById(11).getStudentsOnCard().remove(chosenStudent);
             getGui().getViewController().getMainPlayer().addToDiningHall(chosenStudent);
         }
+
+        getGui().setUsedCC();
+        Stage stage = (Stage) sendButton.getScene().getWindow();
+        stage.close();
     }
 
     /**

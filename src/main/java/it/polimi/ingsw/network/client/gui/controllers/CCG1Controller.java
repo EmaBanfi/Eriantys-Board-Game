@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -18,6 +19,8 @@ public class CCG1Controller extends GenericController{
     private ChoiceBox<String> studentsOnCard;
     @FXML
     private ChoiceBox<Integer> availableIslands;
+    @FXML
+    private Button sendButton;
     private StudentColor student;
     private int island;
 
@@ -34,6 +37,10 @@ public class CCG1Controller extends GenericController{
         ArrayList<StudentColor> s = new ArrayList<>();
         s.add(student);
         getGui().getViewController().getAvailableIslands().get(island -1).addStudents(s);
+
+        getGui().setUsedCC();
+        Stage stage = (Stage) sendButton.getScene().getWindow();
+        stage.close();
     }
 
     /**
