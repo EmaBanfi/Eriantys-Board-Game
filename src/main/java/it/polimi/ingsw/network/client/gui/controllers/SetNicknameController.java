@@ -17,11 +17,15 @@ public class SetNicknameController extends GenericController {
      */
     @FXML
     public void onSendButtonClick(ActionEvent event) {
-        getGui().getViewController().setMainPlayer(nickname.getText());
+        if(!nickname.getText().isEmpty()) {
+            getGui().getViewController().setMainPlayer(nickname.getText());
 
-        cmNickname message = new cmNickname(nickname.getText());
-        String text = getGui().getGson().toJson(message, cmNickname.class);
-        getGui().getClient().send(text);
-        getGui().updateSceneOnStage("Wait.fxml");
+            cmNickname message = new cmNickname(nickname.getText());
+            String text = getGui().getGson().toJson(message, cmNickname.class);
+            getGui().getClient().send(text);
+            getGui().updateSceneOnStage("Wait.fxml");
+        }else{
+            nickname.setStyle("-fx-border-color: red");
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -7,7 +8,7 @@
    <children>
       <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="590.0" text="Please select an Island. Click on showIslands to see the students on the islands" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <ChoiceBox fx:id="islands" layoutX="518.0" layoutY="384.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" AnchorPane.bottomAnchor="385.0" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="385.0" />
-      <Button fx:id="confirmIsland" layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmIslandButtonClick" prefHeight="30.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="confirmIsland" defaultButton="true" layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmIslandButtonClick" prefHeight="30.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Button fx:id="showIslands" layoutY="370.0" mnemonicParsing="false" onAction="#showIslandButtonClick" prefHeight="30.0" prefWidth="200.0" text="Show Islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
    </children>
 </AnchorPane>

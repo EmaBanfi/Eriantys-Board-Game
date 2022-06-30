@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -35,6 +36,6 @@
       <Label layoutX="-89.0" layoutY="-18.0" minHeight="-Infinity" minWidth="-Infinity" text="Label" AnchorPane.leftAnchor="-89.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="-18.0" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="467.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <Label alignment="CENTER" layoutX="548.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="590.0" text="Choose your support card to play" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-      <Button fx:id="chooseSupportCardButton" layoutX="1107.0" layoutY="761.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#chooseSupportCardButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="chooseSupportCardButton" defaultButton="true" layoutX="1107.0" layoutY="761.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#chooseSupportCardButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
    </children>
 </AnchorPane>

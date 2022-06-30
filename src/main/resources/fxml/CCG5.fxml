@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.CCG5Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.CCG5Controller">
    <children>
-      <Button fx:id="onSendButton" layoutX="1134.0" layoutY="761.0" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="onSendButton" defaultButton="true" layoutX="1134.0" layoutY="761.0" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Button fx:id="onShowIslandsButton" layoutX="14.0" layoutY="761.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandsButton" prefHeight="30.0" prefWidth="200.0" text="Show Islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
       <Label fx:id="effectTitle" alignment="CENTER" layoutX="586.0" layoutY="6.0" prefHeight="80.0" prefWidth="590.0" text="Label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <Label layoutX="236.0" layoutY="327.0" text="On which island do you want to use the effect?" />
