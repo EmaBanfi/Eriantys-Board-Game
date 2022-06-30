@@ -42,13 +42,15 @@ public class CharacterCardGroup1GUI extends CharacterCardGUI {
         String text = "Card "+getCardId()+ " can't be activated because";
 
         if (getGUI().getViewController().getMainPlayer().getCoins() < getPrice()) {
-            System.out.println(text + " you don't have enough coins\n");
+            text = text + " you don't have enough coins.";
+            setCause(text);
 
             return false;
         }
 
         if (studentsOnCard.isEmpty()) {
-            System.out.println(text + " there are not enough students on card\n");
+            text = text + " there are not enough students on card.";
+            setCause(text);
 
             return false;
         }

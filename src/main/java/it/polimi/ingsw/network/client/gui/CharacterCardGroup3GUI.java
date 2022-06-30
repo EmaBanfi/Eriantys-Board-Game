@@ -11,7 +11,7 @@ public class CharacterCardGroup3GUI extends CharacterCardGUI {
     public boolean checkCCPrecondition() {
 
         if (getGUI().getViewController().getMainPlayer().getCoins() < getPrice()) {
-            System.out.println("Card " + getCardId() + " can't be activated because you don't have enough coins\n");
+            setCause("Card " + getCardId() + " can't be activated because you don't have enough coins.");
 
             return  false;
         }

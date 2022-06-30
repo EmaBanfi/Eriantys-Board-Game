@@ -11,6 +11,7 @@ public abstract class CharacterCardGUI {
     private final int cardId;
     private int price;
     private String text;
+    private String cause = "";
     private final GUI gui;
 
     private final Scanner input = new Scanner(System.in);
@@ -31,6 +32,14 @@ public abstract class CharacterCardGUI {
 
     public String getText(){
         return text;
+    }
+
+    public void setCause(String cause){
+        this.cause = cause;
+    }
+
+    public String getCause(){
+        return cause;
     }
 
     public int getCardId() {

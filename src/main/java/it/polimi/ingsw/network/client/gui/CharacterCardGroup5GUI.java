@@ -30,9 +30,9 @@ public class CharacterCardGroup5GUI extends CharacterCardGUI {
     @Override
     public void updateAvailableBlockCards(boolean add){
         if(add)
-            availableBlockCards++;
+            availableBlockCards ++;
         else
-            availableBlockCards--;
+            availableBlockCards --;
     }
 
     @Override
@@ -41,13 +41,15 @@ public class CharacterCardGroup5GUI extends CharacterCardGUI {
         String text = "Card "+getCardId()+ " can't be activated because";
 
         if (getGUI().getViewController().getMainPlayer().getCoins() < getPrice()) {
-            System.out.println(text + " you don't have enough coins\n");
+            text = text + " you don't have enough coins.";
+            setCause(text);
 
             return  false;
         }
 
         if (getCardId() == 5 && availableBlockCards == 0){
-            System.out.println(text + " there are 0 block tokens on card\n");
+            text = text + " there are 0 block tokens on card.";
+            setCause(text);
 
             return  false;
         }

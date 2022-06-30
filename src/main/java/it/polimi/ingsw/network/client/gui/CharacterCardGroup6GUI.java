@@ -46,27 +46,31 @@ public class CharacterCardGroup6GUI extends CharacterCardGUI {
         String text = "Card "+getCardId()+ " can't be activated because";
 
         if (getGUI().getViewController().getMainPlayer().getCoins() < getPrice()) {
-            System.out.println(text + " you don't have enough coins\n");
+            text = text + " you don't have enough coins";
+            setCause(text);
 
             return  false;
         }
 
         if (getCardId() == 7)
             if (studentsOnCard.isEmpty()) {
-                System.out.println(text + " there are no students on card\n");
+                text = text + " there are no students on card.";
+                setCause(text);
 
                 return  false;
             }
 
         if (getCardId()==10 && player.getDiningHall().isEmpty())
                 if (studentsOnCard.isEmpty()) {
-                    System.out.println(text + " there are no students in your dining hall\n");
+                    text = text + " there are no students in your dining hall.";
+                    setCause(text);
 
                     return  false;
                 }
 
-        if(player.getHall().isEmpty()){
-            System.out.println(text + " there are no students in your hall\n");
+        if (player.getHall().isEmpty()) {
+            text = text + " there are no students in your hall.";
+            setCause(text);
 
             return  false;
         }

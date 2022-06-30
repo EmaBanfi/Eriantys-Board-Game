@@ -11,14 +11,14 @@
          <children>
             <HBox fx:id="studentHBox" alignment="CENTER_LEFT" spacing="30.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="110.0" text="Choose the island:" />
+                  <Label text="Choose the student:" />
                   <ChoiceBox fx:id="students" prefWidth="150.0" />
                   <Button mnemonicParsing="false" onAction="#onStudentButton" text="Select" />
                </children>
             </HBox>
             <HBox fx:id="islandHBox" alignment="CENTER_LEFT" spacing="30.0">
                <children>
-                  <Label text="Choose the student:" />
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Choose the island:" />
                   <ChoiceBox fx:id="islands" prefWidth="150.0" />
                   <Button mnemonicParsing="false" onAction="#onIslandButton" text="Select" />
                </children>

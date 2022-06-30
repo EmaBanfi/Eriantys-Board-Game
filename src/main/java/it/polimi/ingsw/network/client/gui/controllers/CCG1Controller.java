@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
+
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.StudentColor;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -83,7 +85,7 @@ public class CCG1Controller extends GenericController{
     @FXML
     void onSendButton(ActionEvent event) {
         StudentColor student = StudentColor.getStudentFromString(students.getValue());
-        int island = islands.getValue();
+        int island = islands.getValue() - 1;
 
         cmCCG1 message = new cmCCG1(island, student);
         getGui().getClient().send(new Gson().toJson(message, cmCCG1.class));
