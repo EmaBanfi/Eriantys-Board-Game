@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client.gui.controllers;
 
 import it.polimi.ingsw.network.messages.clientMessages.cmMoveMother;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
@@ -9,6 +10,8 @@ public class MoveMotherController extends GenericController {
 
     @FXML
     private ChoiceBox<Integer> newPosition;
+    @FXML
+    private Button activateCC;
 
     /**
      * Updates the "MoveMother.fxml" file, showing the islands on which Mother Nature can move.
@@ -31,6 +34,9 @@ public class MoveMotherController extends GenericController {
                 newPosition.getItems().add(i);
 
         newPosition.setValue(newPosition.getItems().get(0));
+
+        if (getGui().getViewController().getMode().equals("expert"))
+            activateCC.setVisible(true);
     }
 
     /**
@@ -47,6 +53,12 @@ public class MoveMotherController extends GenericController {
         stage.setScene(getGui().getSceneManager("ShowIslands.fxml").getScene());
 
         stage.show();
+    }
+
+    @FXML
+    public void onActivateCCButton() {
+        getGui().getSceneManager("AskActivateCC.fxml").getController().update();
+        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
     }
 
     /**

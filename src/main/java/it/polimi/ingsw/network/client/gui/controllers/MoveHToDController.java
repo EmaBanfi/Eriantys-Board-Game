@@ -41,6 +41,8 @@ public class MoveHToDController extends GenericController {
     @FXML
     private Button selectButton3;
     @FXML
+    private Button activateCC;
+    @FXML
     private Button sendButton;
     private int movements;
     private ArrayList<StudentColor> movementsHToD;
@@ -55,70 +57,79 @@ public class MoveHToDController extends GenericController {
 
         updateColorsFromHall(studentToMove0);
         studentToMove0.setValue(studentToMove0.getItems().get(0));
-        hBox0.setVisible(true);
-
-        if (movements == 1)
-            sendButton.setVisible(true);
-        else
-            selectButton0.setVisible(true);
-    }
-
-    @FXML
-    public void onSelectButton0() {
-        applyChanges(StudentColor.getStudentFromString(studentToMove0.getValue()));
-
-        hBox0.setVisible(false);
 
         if (movements > 1) {
             updateColorsFromHall(studentToMove1);
             studentToMove1.setValue(studentToMove1.getItems().get(0));
             hBox1.setVisible(true);
 
-            selectButton1.setVisible(true);
+            if (movements > 2) {
+                updateColorsFromHall(studentToMove2);
+                studentToMove2.setValue(studentToMove2.getItems().get(0));
+                hBox2.setVisible(true);
+
+                if (movements > 3) {
+                    updateColorsFromHall(studentToMove3);
+                    studentToMove3.setValue(studentToMove3.getItems().get(0));
+                    hBox3.setVisible(true);
+                }
+            }
         }
+
+        if (getGui().getViewController().getMode().equals("expert"))
+            activateCC.setVisible(true);
+    }
+
+    @FXML
+    public void onActivateCCButton() {
+        getGui().getSceneManager("AskActivateCC.fxml").getController().update();
+        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
+    }
+
+    @FXML
+    public void onSelectButton0() {
+        if (getGui().getViewController().getMode().equals("expert"))
+            activateCC.setDisable(true);
+
+        applyChanges(StudentColor.getStudentFromString(studentToMove0.getValue()));
+
+        hBox0.setDisable(true);
+
+        if (movements == 1)
+            sendButton.setDisable(false);
         else
-            sendButton.setVisible(true);
+            hBox1.setDisable(false);
     }
 
     @FXML
     public void onSelectButton1() {
         applyChanges(StudentColor.getStudentFromString(studentToMove1.getValue()));
 
-        hBox1.setVisible(false);
+        hBox1.setDisable(true);
 
-        if (movements > 2) {
-            updateColorsFromHall(studentToMove2);
-            studentToMove2.setValue(studentToMove2.getItems().get(0));
-            hBox2.setVisible(true);
-
-            selectButton2.setVisible(true);
-        }
+        if (movements == 2)
+            sendButton.setDisable(false);
         else
-            sendButton.setVisible(true);
+            hBox2.setDisable(false);
     }
 
     @FXML
     public void onSelectButton2() {
         applyChanges(StudentColor.getStudentFromString(studentToMove2.getValue()));
 
-        hBox2.setVisible(false);
+        hBox2.setDisable(true);
 
-        if (movements > 3) {
-            updateColorsFromHall(studentToMove3);
-            studentToMove3.setValue(studentToMove3.getItems().get(0));
-            hBox3.setVisible(true);
-
-            selectButton3.setVisible(true);
-        }
+        if (movements == 3)
+            sendButton.setDisable(false);
         else
-            sendButton.setVisible(true);
+            hBox3.setDisable(false);
     }
 
     @FXML
     public void onSelectButton3() {
-        hBox3.setVisible(false);
+        hBox3.setDisable(true);
 
-        sendButton.setVisible(true);
+        sendButton.setDisable(false);
     }
 
     @FXML

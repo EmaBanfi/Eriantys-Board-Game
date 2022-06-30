@@ -10,36 +10,37 @@
       <Label fx:id="studentsToMove" layoutX="88.0" layoutY="180.0" text="Label" />
       <VBox layoutX="88.0" layoutY="252.0" spacing="50.0">
          <children>
-            <HBox fx:id="hBox0" layoutX="82.0" layoutY="252.0" spacing="50.0" visible="false">
+            <HBox fx:id="hBox0" layoutX="82.0" layoutY="252.0" spacing="50.0">
                <children>
                   <Label layoutX="82.0" layoutY="257.0" text="Choose the student to move:" />
                   <ChoiceBox fx:id="studentToMove0" layoutX="392.0" layoutY="252.0" prefWidth="150.0" />
-                  <Button fx:id="selectButton0" mnemonicParsing="false" onAction="#onSelectButton0" text="Select" visible="false" />
+                  <Button fx:id="selectButton0" mnemonicParsing="false" onAction="#onSelectButton0" text="Select" />
                </children>
             </HBox>
-            <HBox fx:id="hBox1" layoutX="82.0" layoutY="332.0" spacing="50.0" visible="false">
+            <HBox fx:id="hBox1" disable="true" layoutX="82.0" layoutY="332.0" spacing="50.0" visible="false">
                <children>
                   <Label layoutX="82.0" layoutY="337.0" text="Choose the student to move:" />
                   <ChoiceBox fx:id="studentToMove1" layoutX="392.0" layoutY="332.0" prefWidth="150.0" />
-                  <Button fx:id="selectButton1" mnemonicParsing="false" onAction="#onSelectButton1" text="Select" visible="false" />
+                  <Button fx:id="selectButton1" mnemonicParsing="false" onAction="#onSelectButton1" text="Select" />
                </children>
             </HBox>
-            <HBox fx:id="hBox2" layoutX="82.0" layoutY="407.0" spacing="50.0" visible="false">
+            <HBox fx:id="hBox2" disable="true" layoutX="82.0" layoutY="407.0" spacing="50.0" visible="false">
                <children>
                   <Label layoutX="82.0" layoutY="412.0" text="Choose the student to move:" />
                   <ChoiceBox fx:id="studentToMove2" layoutX="392.0" layoutY="407.0" prefWidth="150.0" />
-                  <Button fx:id="selectButton2" mnemonicParsing="false" onAction="#onSelectButton2" text="Select" visible="false" />
+                  <Button fx:id="selectButton2" mnemonicParsing="false" onAction="#onSelectButton2" text="Select" />
                </children>
             </HBox>
-            <HBox fx:id="hBox3" layoutX="82.0" layoutY="467.0" spacing="50.0" visible="false">
+            <HBox fx:id="hBox3" disable="true" layoutX="82.0" layoutY="467.0" spacing="50.0" visible="false">
                <children>
                   <Label layoutX="82.0" layoutY="472.0" text="Choose the student to move:" />
                   <ChoiceBox fx:id="studentToMove3" layoutX="392.0" layoutY="467.0" prefWidth="150.0" />
-                  <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton3" text="Select" visible="false" />
+                  <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton3" text="Select" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="sendButton" defaultButton="true" layoutX="973.0" layoutY="750.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="sendButton" defaultButton="true" disable="true" layoutX="973.0" layoutY="750.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="activateCC" layoutX="568.0" layoutY="726.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onActivateCCButton" prefHeight="30.0" prefWidth="200.0" text="Activate character card" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" />
    </children>
 </AnchorPane>

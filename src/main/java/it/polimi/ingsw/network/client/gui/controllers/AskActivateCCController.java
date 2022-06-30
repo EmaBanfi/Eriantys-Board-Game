@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -43,6 +44,8 @@ public class AskActivateCCController extends GenericController {
     private Button activate2Button;
     @FXML
     private Label warning;
+    @FXML
+    private Button goBack;
 
     private final String pathToCCImage = "/images/characterCards/cc";
     private ArrayList<CharacterCardGUI> availableCC;
@@ -136,5 +139,11 @@ public class AskActivateCCController extends GenericController {
                 }
             }
         }
+    }
+
+    @FXML
+    public void onGoBackButton() {
+        Stage stage = (Stage) goBack.getScene().getWindow();
+        stage.close();
     }
 }

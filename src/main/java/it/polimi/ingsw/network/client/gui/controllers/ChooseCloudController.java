@@ -72,6 +72,8 @@ public class ChooseCloudController extends GenericController {
     private ImageView image3Pos11;
     @FXML
     private Button cloudButton11;
+    @FXML
+    private Button activateCC;
 
     private final ArrayList<StudentColor> students = new ArrayList<>();
     private final String pathToStudentImage = "/images/students/";
@@ -93,21 +95,30 @@ public class ChooseCloudController extends GenericController {
         }
 
         if (numOfPlayers == 3) {
-            fillCloud(0, image0Pos00, image0Pos10, image0Pos01, image0Pos11);
-            fillCloud(1, image1Pos00, image1Pos10, image1Pos01, image1Pos11);
-            fillCloud(2, image2Pos00, image2Pos10, image2Pos01, image2Pos11);
+            fillCloud(0, image0Pos00, image0Pos10, image0Pos01, image0Pos11, cloudButton00);
+            fillCloud(1, image1Pos00, image1Pos10, image1Pos01, image1Pos11, cloudButton10);
+            fillCloud(2, image2Pos00, image2Pos10, image2Pos01, image2Pos11, cloudButton10);
         }
         else {
-            fillCloud(0, image0Pos00, image0Pos10, image0Pos01);
-            fillCloud(1, image1Pos00, image1Pos10, image1Pos01);
+            fillCloud(0, image0Pos00, image0Pos10, image0Pos01, cloudButton00);
+            fillCloud(1, image1Pos00, image1Pos10, image1Pos01, cloudButton10);
             if (numOfPlayers == 4) {
-                fillCloud(2, image2Pos00, image2Pos10, image2Pos01, image2Pos11);
-                fillCloud(3, image3Pos00, image3Pos10, image3Pos01, image3Pos11);
+                fillCloud(2, image2Pos00, image2Pos10, image2Pos01, cloudButton01);
+                fillCloud(3, image3Pos00, image3Pos10, image3Pos01, cloudButton11);
             }
         }
+
+        if (getGui().getViewController().getMode().equals("expert"))
+            activateCC.setVisible(true);
     }
 
-    private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01) {
+    @FXML
+    public void onActivateCCButton() {
+        getGui().getSceneManager("AskActivateCC.fxml").getController().update();
+        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
+    }
+
+    private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01, Button button) {
         if (!getGui().getViewController().getAvailableClouds().get(cloud).getStudents().isEmpty()) {
             students.addAll(getGui().getViewController().getAvailableClouds().get(cloud).getStudents());
 
@@ -120,10 +131,12 @@ public class ChooseCloudController extends GenericController {
             image01.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
             students.remove(0);
         }
+        else
+            button.setDisable(true);
     }
 
-    private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01, ImageView image11) {
-        fillCloud(cloud, image00, image10, image01);
+    private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01, ImageView image11, Button button) {
+        fillCloud(cloud, image00, image10, image01, button);
 
         image11.setImage(new Image(Objects.requireNonNull(getClass().getResource(pathToStudentImage + students.get(0).toString().toLowerCase() + ".png")).toExternalForm()));
         students.remove(0);

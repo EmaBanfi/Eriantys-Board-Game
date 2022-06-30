@@ -15,5 +15,6 @@
          </children>
       </HBox>
       <Button layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandButton" prefHeight="30.0" prefWidth="200.0" text="Show islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
+      <Button fx:id="activateCC" layoutX="568.0" layoutY="726.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onActivateCCButton" prefHeight="30.0" prefWidth="200.0" text="Activate character card" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" />
    </children>
 </AnchorPane>
