@@ -22,6 +22,7 @@ public class TowersController extends GenericController{
         cmTower message = new cmTower(chosenTower);
         String text = gson.toJson(message, cmTower.class);
         getGui().getClient().send(text);
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 
     /**

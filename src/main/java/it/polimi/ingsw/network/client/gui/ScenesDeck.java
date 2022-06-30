@@ -31,6 +31,7 @@ public class ScenesDeck {
     private final String cCG4 = "CCG4.fxml";
     private final String cCG5 = "CCG5.fxml";
     private final String cCG6 = "CCG6.fxml";
+    private final String wait = "Wait.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();
@@ -55,7 +56,8 @@ public class ScenesDeck {
                 cCG3,
                 cCG4,
                 cCG5,
-                cCG6));
+                cCG6,
+                wait));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {
