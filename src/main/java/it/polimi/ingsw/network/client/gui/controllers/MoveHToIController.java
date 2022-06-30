@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import it.polimi.ingsw.network.client.clientModel.Phase;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmStudentsMovementsHToI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -54,6 +55,8 @@ public class MoveHToIController extends GenericController {
     @FXML
     private Button sendButton;
     private HashMap<Integer, ArrayList<StudentColor>> movementsHtoI;
+    @FXML
+    private Button activateCC;
 
     @Override
     public void update() {
@@ -66,6 +69,9 @@ public class MoveHToIController extends GenericController {
         updateIslands();
 
         getGui().updateSceneOnStage("hToI/MoveHToI.fxml");
+
+        if (getGui().getViewController().getMode().equals("expert"))
+            activateCC.setVisible(true);
     }
 
     /**
@@ -82,6 +88,12 @@ public class MoveHToIController extends GenericController {
         stage.setScene(getGui().getSceneManager("ShowIslands.fxml").getScene());
 
         stage.show();
+    }
+
+    @FXML
+    public void onActivateCCButton() {
+        getGui().getSceneManager("AskActivateCC.fxml").getController().update();
+        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
     }
 
     /**
@@ -172,6 +184,8 @@ public class MoveHToIController extends GenericController {
 
         getGui().getViewController().getMainPlayer().removeFromHall(color);
         getGui().getViewController().getIsland(island - 1).addStudent(color);
+
+        getGui().updateGameBoard(ValueToUpdate.HALL);
     }
 
     @FXML

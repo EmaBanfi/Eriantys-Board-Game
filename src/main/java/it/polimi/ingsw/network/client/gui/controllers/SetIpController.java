@@ -18,6 +18,7 @@ public class SetIpController extends GenericController {
     public void onPlayButton(ActionEvent event) {
         if(!ipAddress.getText().isEmpty()) {
             getGui().setClient(ipAddress.getText());
+
             getGui().updateSceneOnStage("Wait.fxml");
         }else
             ipAddress.setStyle("-fx-border-color: red");

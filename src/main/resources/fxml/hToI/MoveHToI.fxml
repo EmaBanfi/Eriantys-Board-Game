@@ -1,62 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.network.client.gui.controllers.MoveHToIController">
-   <Label alignment="CENTER" layoutX="383.0" layoutY="101.0" prefHeight="80.0" prefWidth="590.0"
-          text="Move students from hall to an island" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-          AnchorPane.topAnchor="5.0"/>
-   <VBox layoutX="88.0" layoutY="208.0" spacing="100.0">
-      <HBox fx:id="hBoxMain" layoutX="82.0" layoutY="171.0" spacing="50.0">
-         <Label layoutX="82.0" layoutY="176.0" text="How many students do you want to move?"/>
-         <ChoiceBox fx:id="numOfStudents" layoutX="392.0" layoutY="171.0" prefWidth="150.0" value="1"/>
-         <Button mnemonicParsing="false" onAction="#onSelectButton" text="Select"/>
-      </HBox>
-      <VBox layoutX="82.0" layoutY="252.0" spacing="50.0">
-         <HBox fx:id="hBox0" alignment="CENTER_LEFT" layoutX="82.0" layoutY="252.0" spacing="50.0"
-               visible="false">
-            <Label layoutX="82.0" layoutY="257.0" text="Choose the student to move:"/>
-            <ChoiceBox fx:id="studentToMove0" layoutX="392.0" layoutY="252.0" prefWidth="150.0"/>
-            <Label text="Choose the island:"/>
-            <ChoiceBox fx:id="chosenIsland0" prefWidth="150.0"/>
-            <Button fx:id="selectButton0" mnemonicParsing="false" onAction="#onSelectButton0" text="Select"
-                    visible="false"/>
-         </HBox>
-         <HBox fx:id="hBox1" alignment="CENTER_LEFT" layoutX="82.0" layoutY="332.0" spacing="50.0"
-               visible="false">
-            <Label layoutX="82.0" layoutY="337.0" text="Choose the student to move:"/>
-            <ChoiceBox fx:id="studentToMove1" layoutX="392.0" layoutY="332.0" prefWidth="150.0"/>
-            <Label text="Choose the island:"/>
-            <ChoiceBox fx:id="chosenIsland1" prefWidth="150.0"/>
-            <Button fx:id="selectButton1" mnemonicParsing="false" onAction="#onSelectButton1" text="Select"
-                    visible="false"/>
-         </HBox>
-         <HBox fx:id="hBox2" alignment="CENTER_LEFT" layoutX="82.0" layoutY="407.0" spacing="50.0"
-               visible="false">
-            <Label layoutX="82.0" layoutY="412.0" text="Choose the student to move:"/>
-            <ChoiceBox fx:id="studentToMove2" layoutX="392.0" layoutY="407.0" prefWidth="150.0"/>
-            <Label text="Choose the island:"/>
-            <ChoiceBox fx:id="chosenIsland2" prefWidth="150.0"/>
-            <Button fx:id="selectButton2" mnemonicParsing="false" onAction="#onSelectButton2" text="Select"
-                    visible="false"/>
-         </HBox>
-         <HBox fx:id="hBox3" alignment="CENTER_LEFT" layoutX="82.0" layoutY="467.0" spacing="50.0"
-               visible="false">
-            <Label layoutX="82.0" layoutY="472.0" text="Choose the student to move:"/>
-            <ChoiceBox fx:id="studentToMove3" layoutX="392.0" layoutY="467.0" prefWidth="150.0"/>
-            <Label text="Choose the island:"/>
-            <ChoiceBox fx:id="chosenIsland3" prefWidth="150.0"/>
-            <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton3" text="Select"
-                    visible="false"/>
-         </HBox>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.MoveHToIController">
+   <children>
+      <Label alignment="CENTER" layoutX="383.0" layoutY="101.0" prefHeight="80.0" prefWidth="590.0" text="Move students from hall to an island" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <VBox layoutX="88.0" layoutY="208.0" spacing="100.0">
+         <children>
+            <HBox fx:id="hBoxMain" layoutX="82.0" layoutY="171.0" spacing="50.0">
+               <children>
+                  <Label layoutX="82.0" layoutY="176.0" text="How many students do you want to move?" />
+                  <ChoiceBox fx:id="numOfStudents" layoutX="392.0" layoutY="171.0" prefWidth="150.0" value="1" />
+                  <Button mnemonicParsing="false" onAction="#onSelectButton" text="Select" />
+               </children>
+            </HBox>
+            <VBox layoutX="82.0" layoutY="252.0" spacing="50.0">
+               <children>
+                  <HBox fx:id="hBox0" alignment="CENTER_LEFT" layoutX="82.0" layoutY="252.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label layoutX="82.0" layoutY="257.0" text="Choose the student to move:" />
+                        <ChoiceBox fx:id="studentToMove0" layoutX="392.0" layoutY="252.0" prefWidth="150.0" />
+                        <Label text="Choose the island:" />
+                        <ChoiceBox fx:id="chosenIsland0" prefWidth="150.0" />
+                        <Button fx:id="selectButton0" mnemonicParsing="false" onAction="#onSelectButton0" text="Select" visible="false" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBox1" alignment="CENTER_LEFT" layoutX="82.0" layoutY="332.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label layoutX="82.0" layoutY="337.0" text="Choose the student to move:" />
+                        <ChoiceBox fx:id="studentToMove1" layoutX="392.0" layoutY="332.0" prefWidth="150.0" />
+                        <Label text="Choose the island:" />
+                        <ChoiceBox fx:id="chosenIsland1" prefWidth="150.0" />
+                        <Button fx:id="selectButton1" mnemonicParsing="false" onAction="#onSelectButton1" text="Select" visible="false" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBox2" alignment="CENTER_LEFT" layoutX="82.0" layoutY="407.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label layoutX="82.0" layoutY="412.0" text="Choose the student to move:" />
+                        <ChoiceBox fx:id="studentToMove2" layoutX="392.0" layoutY="407.0" prefWidth="150.0" />
+                        <Label text="Choose the island:" />
+                        <ChoiceBox fx:id="chosenIsland2" prefWidth="150.0" />
+                        <Button fx:id="selectButton2" mnemonicParsing="false" onAction="#onSelectButton2" text="Select" visible="false" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBox3" alignment="CENTER_LEFT" layoutX="82.0" layoutY="467.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label layoutX="82.0" layoutY="472.0" text="Choose the student to move:" />
+                        <ChoiceBox fx:id="studentToMove3" layoutX="392.0" layoutY="467.0" prefWidth="150.0" />
+                        <Label text="Choose the island:" />
+                        <ChoiceBox fx:id="chosenIsland3" prefWidth="150.0" />
+                        <Button fx:id="selectButton3" mnemonicParsing="false" onAction="#onSelectButton3" text="Select" visible="false" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
       </VBox>
-   </VBox>
-   <Button fx:id="sendButton" layoutX="963.0" layoutY="740.0" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0"
-           prefWidth="200.0" text="Send" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0"/>
-   <Button layoutX="950.0" layoutY="616.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandsButton" prefHeight="30.0"
-           prefWidth="200.0" text="Show islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"/>
+      <Button fx:id="sendButton" layoutX="963.0" layoutY="740.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button layoutX="950.0" layoutY="616.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandsButton" prefHeight="30.0" prefWidth="200.0" text="Show islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
+      <Button fx:id="activateCC" layoutX="558.0" layoutY="716.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onActivateCCButton" prefHeight="30.0" prefWidth="200.0" text="Activate character card" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" />
+   </children>
 </AnchorPane>

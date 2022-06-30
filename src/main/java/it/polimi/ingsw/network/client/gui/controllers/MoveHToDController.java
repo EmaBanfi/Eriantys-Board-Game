@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmStudentsMovementsHToD;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -136,5 +137,8 @@ public class MoveHToDController extends GenericController {
 
         getGui().getViewController().getMainPlayer().removeFromHall(color);
         getGui().getViewController().getMainPlayer().addToDiningHall(color);
+
+        getGui().updateGameBoard(ValueToUpdate.HALL);
+        getGui().updateGameBoard(ValueToUpdate.DINING);
     }
 }

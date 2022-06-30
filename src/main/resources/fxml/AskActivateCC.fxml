@@ -7,11 +7,15 @@
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.AskActivateCCController">
    <children>
       <Label alignment="CENTER" layoutX="560.0" layoutY="136.0" prefHeight="80.0" prefWidth="590.0" text="Which character card do you want to activate" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-      <HBox layoutX="153.0" layoutY="231.0" spacing="30.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="147.0" AnchorPane.rightAnchor="147.0">
+      <HBox layoutX="153.0" layoutY="231.0" spacing="30.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="195.0">
          <children>
             <VBox fx:id="vBox0" alignment="CENTER" layoutX="243.0" layoutY="325.0" spacing="20.0">
                <children>
-                  <ImageView fx:id="image0" fitHeight="364.0" fitWidth="303.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image0" fitHeight="381.0" fitWidth="250.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/characterCards/cc1.jpg" />
+                     </image>
+                  </ImageView>
                   <HBox alignment="CENTER" layoutX="257.0" layoutY="633.0" spacing="15.0">
                      <children>
                         <Button fx:id="info0Button" layoutX="257.0" layoutY="634.0" mnemonicParsing="false" onAction="#onInfo0Button" text="Info" />
@@ -22,7 +26,7 @@
             </VBox>
             <VBox fx:id="vBox1" alignment="CENTER" layoutX="253.0" layoutY="335.0" spacing="20.0">
                <children>
-                  <ImageView fx:id="image1" fitHeight="364.0" fitWidth="303.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image1" fitHeight="381.0" fitWidth="250.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
                   <HBox alignment="CENTER" layoutX="257.0" layoutY="633.0" spacing="15.0">
                      <children>
                         <Button fx:id="info1Button" layoutX="257.0" layoutY="634.0" mnemonicParsing="false" onAction="#onInfo1Button" text="Info" />
@@ -33,7 +37,7 @@
             </VBox>
             <VBox fx:id="vBox2" alignment="CENTER" layoutX="273.0" layoutY="355.0" spacing="20.0">
                <children>
-                  <ImageView fx:id="image2" fitHeight="364.0" fitWidth="303.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image2" fitHeight="381.0" fitWidth="250.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
                   <HBox alignment="CENTER" layoutX="257.0" layoutY="633.0" spacing="15.0">
                      <children>
                         <Button fx:id="info2Button" layoutX="257.0" layoutY="634.0" mnemonicParsing="false" onAction="#onInfo2Button" text="Info" />
@@ -44,6 +48,6 @@
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="warning" alignment="CENTER" layoutX="617.0" layoutY="699.0" AnchorPane.bottomAnchor="80.0" />
+      <Label fx:id="warning" alignment="CENTER" layoutX="617.0" layoutY="699.0" textAlignment="CENTER" AnchorPane.bottomAnchor="80.0" />
    </children>
 </AnchorPane>

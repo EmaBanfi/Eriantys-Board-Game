@@ -31,6 +31,7 @@ public class PlayerGui {
         this.coins = coins;
         this.card = card;
         this.playerView = playerView;
+
         updateRemaining();
     }
 

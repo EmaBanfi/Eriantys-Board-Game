@@ -65,17 +65,16 @@ public class AskActivateCCController extends GenericController {
 
         if (getGui().getViewController().getMainPlayer().getCoins() < minPrice || usableCC.isEmpty())
                warning.setText("You can't activate any character card because you don't have enough money or some conditions are not respected");
-        else {
-            for (int i = 0; i < 3; i++)
-                if (!usableCC.contains(availableCC.get(i).getCardId())) {
-                    if (i == 0)
-                        vBox0.setDisable(true);
-                    else if (i == 1)
-                        vBox1.setDisable(true);
-                    else
-                        vBox2.setDisable(true);
-                }
-        }
+
+        for (int i = 0; i < 3; i++)
+            if (!usableCC.contains(availableCC.get(i).getCardId())) {
+                if (i == 0)
+                    vBox0.setDisable(true);
+                else if (i == 1)
+                    vBox1.setDisable(true);
+                else
+                    vBox2.setDisable(true);
+            }
     }
 
     @FXML
@@ -85,7 +84,7 @@ public class AskActivateCCController extends GenericController {
 
     @FXML
     public void onActivate0Button() {
-        activate(availableCC.get(0).getCardId());
+        activate(0);
     }
 
     @FXML
@@ -95,7 +94,7 @@ public class AskActivateCCController extends GenericController {
 
     @FXML
     public void onActivate1Button() {
-        activate(availableCC.get(1).getCardId());
+        activate(1);
     }
 
     @FXML
@@ -105,33 +104,33 @@ public class AskActivateCCController extends GenericController {
 
     @FXML
     public void onActivate2Button() {
-        activate(availableCC.get(2).getCardId());
+        activate(2);
     }
 
-    private void activate(int id) {
-        if (id == 2 || id == 8) {
-            cmCCG2 message = new cmCCG2(id);
+    private void activate(int pos) {
+        if (availableCC.get(pos).getCardId() == 2 || availableCC.get(pos).getCardId() == 8) {
+            cmCCG2 message = new cmCCG2(availableCC.get(pos).getCardId());
             getGui().getClient().send(getGui().getGson().toJson(message, cmCCG2.class));
         }
         else {
-            switch (availableCC.get(0).getCardId()) {
+            switch (availableCC.get(pos).getCardId()) {
                 case 1 -> {
                     getGui().getSceneManager("CCG1.fxml").getController().update();
                     getGui().updateSceneOnStageOnlyForCC("CCG1.fxml");
                 }
                 case 4 -> getGui().updateSceneOnStageOnlyForCC("CCG3.fxml");
                 case 9, 11, 12 -> {
-                    getGui().getSceneManager("CCG4.fxml").getController().setInput(id);
+                    getGui().getSceneManager("CCG4.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG4.fxml").getController().update();
                     getGui().updateSceneOnStageOnlyForCC("CCG4.fxml");
                 }
                 case 3, 5, 6 -> {
-                    getGui().getSceneManager("CCG5.fxml").getController().setInput(id);
+                    getGui().getSceneManager("CCG5.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG5.fxml").getController().update();
                     getGui().updateSceneOnStageOnlyForCC("CCG5.fxml");
                 }
                 case 7, 10 -> {
-                    getGui().getSceneManager("CCG6.fxml").getController().setInput(id);
+                    getGui().getSceneManager("CCG6.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG6.fxml").getController().update();
                     getGui().updateSceneOnStageOnlyForCC("CCG6.fxml");
                 }

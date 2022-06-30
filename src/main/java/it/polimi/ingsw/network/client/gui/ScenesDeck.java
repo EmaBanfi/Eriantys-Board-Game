@@ -26,6 +26,7 @@ public class ScenesDeck {
     private final String chooseCloud = "ChooseCloud.fxml";
     private final  String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
+    private final String askActivateCC = "AskActivateCC.fxml";
     private final String cCG1 = "CCG1.fxml";
     private final String cCG3 = "CCG3.fxml";
     private final String cCG4 = "CCG4.fxml";
@@ -53,6 +54,7 @@ public class ScenesDeck {
                 chooseCloud,
                 gameBoard,
                 endGame,
+                askActivateCC,
                 cCG1,
                 cCG3,
                 cCG4,

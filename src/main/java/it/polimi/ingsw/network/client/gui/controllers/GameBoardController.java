@@ -115,6 +115,9 @@ public class GameBoardController extends GenericController{
             pl3Coins.setVisible(false);
             pl4Coins.setVisible(false);
         }
+        else
+            for(PlayerGui player : players.values())
+                player.updateCoins();
 
         players.put(
                 viewController.getMainPlayer().getNickname(),

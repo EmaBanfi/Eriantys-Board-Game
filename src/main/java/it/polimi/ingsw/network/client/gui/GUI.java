@@ -92,11 +92,6 @@ public class GUI extends Application implements View {
         this.stage.setMinHeight(800);
         this.stage.setResizable(false);
 
-
-        this.stageCC.setMinWidth(1200);
-        this.stageCC.setMinHeight(800);
-        this.stageCC.setResizable(false);
-
         startGame();
     }
 
@@ -291,7 +286,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void updateStudentsOnCard(int id, ArrayList<StudentColor> students, boolean add) {
-
+        getCharacterCardById(id).updateStudentsOnCard(students, add);
     }
 
 
@@ -393,6 +388,12 @@ public class GUI extends Application implements View {
     @Override
     public void updateGameStatus(int numOfPlayers, String mode) {
         viewController.updateGameStatus(numOfPlayers, mode);
+
+        if (mode.equals("expert")) {
+            this.stageCC.setMinWidth(1200);
+            this.stageCC.setMinHeight(800);
+            this.stageCC.setResizable(false);
+        }
     }
 
     public SceneManager getSceneManager(String sceneName){
