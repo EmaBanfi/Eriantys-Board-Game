@@ -408,6 +408,10 @@ public class GUI extends Application implements View {
         gameBoardController.update(viewController.getMainPlayer().getNickname(), value);
     }
 
+    public void updateGameBoardByNick(String nick, ValueToUpdate value) {
+        gameBoardController.update(nick, value);
+    }
+
     public void updateUsableCC(){
         usableCC.clear();
         for (CharacterCardGUI card : availableCC) {

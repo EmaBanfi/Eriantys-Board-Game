@@ -73,7 +73,7 @@ public class ChooseCloudController extends GenericController {
     @FXML
     private Button cloudButton11;
 
-    private ArrayList<StudentColor> students = new ArrayList<>();
+    private final ArrayList<StudentColor> students = new ArrayList<>();
     private final String pathToStudentImage = "/images/students/";
 
 
@@ -163,7 +163,7 @@ public class ChooseCloudController extends GenericController {
 
         getGui().getViewController().resetSupportCards();
         for (PlayerView player : getGui().getViewController().getPlayers())
-            getGui().updateGameBoard(ValueToUpdate.CARD);
+            getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
 
         cmCloud message = new cmCloud(3);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));

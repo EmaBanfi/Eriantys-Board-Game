@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: rgb(26, 26, 33);" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.WaitController">
-   <children>
-      <ImageView fitHeight="758.0" fitWidth="1077.0" layoutX="72.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="21.0">
-         <image>
-            <Image url="@../images/ghesborowait.png" />
-         </image>
-      </ImageView>
-   </children>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: rgb(26,26,33);"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.network.client.gui.controllers.WaitController">
+   <ImageView fitHeight="753.0" fitWidth="1050.0" layoutX="88.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true"
+              AnchorPane.bottomAnchor="23.5" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="78.0"
+              AnchorPane.topAnchor="23.5">
+      <Image url="@../images/ghesborowait.png"/>
+   </ImageView>
 </AnchorPane>
