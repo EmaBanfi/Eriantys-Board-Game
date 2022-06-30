@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.CCG1Controller">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.CCG1Controller">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+      <Label alignment="CENTER" layoutX="585.0" layoutY="162.0" prefHeight="80.0" prefWidth="590.0" text="Take a student from the character card 1 and the island where you want to put it" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <VBox alignment="CENTER" layoutX="425.0" layoutY="372.0" spacing="50.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="413.5" AnchorPane.rightAnchor="413.5" AnchorPane.topAnchor="348.0">
          <children>
-            <Button fx:id="sendButton" defaultButton="true" layoutX="1134.0" layoutY="752.0" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-            <HBox alignment="CENTER" layoutX="327.0" layoutY="348.0" spacing="35.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="327.0" AnchorPane.topAnchor="348.0">
+            <HBox fx:id="studentHBox" alignment="CENTER_LEFT" spacing="30.0">
                <children>
-                  <VBox alignment="CENTER_LEFT" spacing="50.0">
-                     <children>
-                        <Label text="Which student do you want to move?" />
-                        <Label fx:id="textIsland" disable="true" text="On which island do you want to move the student?" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" spacing="50.0">
-                     <children>
-                        <ChoiceBox fx:id="studentsOnCard" layoutX="888.0" layoutY="42.0" prefWidth="150.0" />
-                        <ChoiceBox fx:id="availableIslands" disable="true" prefWidth="150.0" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" spacing="50.0">
-                     <children>
-                        <Button fx:id="selectButtonStudent" mnemonicParsing="false" onAction="#onSelectButtonStudent" text="Select" />
-                        <Button fx:id="selectButtonIsland" disable="true" mnemonicParsing="false" onAction="#onSelectButtonIsland" text="Select" />
-                     </children>
-                  </VBox>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Choose the island:" />
+                  <ChoiceBox fx:id="students" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#onStudentButton" text="Select" />
                </children>
             </HBox>
-            <Button fx:id="onShowIslandsButton" layoutX="14.0" layoutY="752.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandsButton" prefHeight="30.0" prefWidth="200.0" text="Show Islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
-            <Label alignment="CENTER" layoutX="525.0" layoutY="14.0" prefHeight="80.0" prefWidth="590.0" text="Character Card 1 Effect" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <HBox fx:id="islandHBox" alignment="CENTER_LEFT" spacing="30.0">
+               <children>
+                  <Label text="Choose the student:" />
+                  <ChoiceBox fx:id="islands" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#onIslandButton" text="Select" />
+               </children>
+            </HBox>
          </children>
-      </AnchorPane>
+      </VBox>
+      <Button fx:id="sendButton" defaultButton="true" disable="true" layoutX="983.0" layoutY="760.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button layoutX="1003.0" layoutY="780.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShowIslandsButton" prefHeight="30.0" prefWidth="200.0" text="Show islands" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
    </children>
-</VBox>
+</AnchorPane>

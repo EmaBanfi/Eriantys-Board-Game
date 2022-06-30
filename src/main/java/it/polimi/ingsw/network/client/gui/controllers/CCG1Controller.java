@@ -3,10 +3,10 @@ package it.polimi.ingsw.network.client.gui.controllers;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.StudentColor;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -15,69 +15,32 @@ import java.util.ArrayList;
 public class CCG1Controller extends GenericController{
 
     @FXML
-    private ChoiceBox<String> studentsOnCard;
+    private HBox studentHBox;
+
     @FXML
-    private ChoiceBox<Integer> availableIslands;
+    private ChoiceBox<String> students;
+
     @FXML
-    private Button selectButtonStudent;
+    private HBox islandHBox;
+
     @FXML
-    private Label textStudent;
-    @FXML
-    private Label textIsland;
-    @FXML
-    private Button selectButtonIsland;
+    private ChoiceBox<Integer> islands;
+
     @FXML
     private Button sendButton;
-    private StudentColor student;
-    private int island;
 
     /**
-     * Activation of "onSendButton" in the "CCG1.fxml" scene; sends a "cmCCG1" message to the server.
+     * Updates the "CCG1.fxml" scene, adding the students on the card and the available islands to the choice boxes.
      */
-    @FXML
-    public void onSendButton(){
-        cmCCG1 message = new cmCCG1(island, student);
-        getGui().getClient().send(new Gson().toJson(message, cmCCG1.class));
+    @Override
+    public void update() {
+        updateColorsFromCC(1, students);
 
-        getGui().getCharacterCardById(1).getStudentsOnCard().remove(student);
+        int maxNumIslands = getGui().getViewController().getAvailableIslands().size();
 
-        ArrayList<StudentColor> s = new ArrayList<>();
-        s.add(student);
-        getGui().getViewController().getAvailableIslands().get(island - 1).addStudents(s);
-
-        getGui().setUsedCC();
-        Stage stage = (Stage) sendButton.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Activation of "onSelectButtonStudent" in the "CCG1.fxml" scene; sets the student chosen by the player.
-     */
-    @FXML
-    public void onSelectButtonStudent(){
-        student = StudentColor.getStudentFromString(studentsOnCard.getValue());
-
-        textStudent.setDisable(true);
-        studentsOnCard.setDisable(true);
-        selectButtonStudent.setDisable(true);
-
-        textIsland.setDisable(false);
-        availableIslands.setDisable(false);
-        selectButtonIsland.setDisable(false);
-    }
-
-    /**
-     * Activation of "onSelectButtonIsland" in the "CCG1.fxml" scene; sets the island chosen by the player.
-     */
-    @FXML
-    public void onSelectButtonIsland(){
-        textIsland.setDisable(true);
-        availableIslands.setDisable(true);
-        selectButtonIsland.setDisable(true);
-
-        island = availableIslands.getValue() - 1;
-
-        sendButton.setDisable(false);
+        for (int i = 1; i <= maxNumIslands; i++) {
+            islands.getItems().add(i);
+        }
     }
 
     /**
@@ -97,17 +60,50 @@ public class CCG1Controller extends GenericController{
     }
 
     /**
-     * Updates the "CCG1.fxml" scene, adding the students on the card and the available islands to the choice boxes.
+     * Activation of "onStudentButton" in the "CCG1.fxml" scene; sets the student chosen by the player.
      */
-    @Override
-    public void update() {
-        updateColorsFromCC(1, studentsOnCard);
-
-        int maxNumIslands = getGui().getViewController().getAvailableIslands().size();
-
-        for (int i = 1; i <= maxNumIslands; i++) {
-            availableIslands.getItems().add(i);
-        }
+    @FXML
+    void onStudentButton(ActionEvent event) {
+        studentHBox.setDisable(true);
+        islandHBox.setDisable(false);
     }
 
+    /**
+     * Activation of "onIslandButton" in the "CCG1.fxml" scene; sets the island chosen by the player.
+     */
+    @FXML
+    void onIslandButton(ActionEvent event) {
+        islandHBox.setDisable(true);
+        sendButton.setDisable(false);
+    }
+
+    /**
+     * Activation of "onSendButton" in the "CCG1.fxml" scene; sends a "cmCCG1" message to the server.
+     */
+    @FXML
+    void onSendButton(ActionEvent event) {
+        StudentColor student = StudentColor.getStudentFromString(students.getValue());
+        int island = islands.getValue();
+
+        cmCCG1 message = new cmCCG1(island, student);
+        getGui().getClient().send(new Gson().toJson(message, cmCCG1.class));
+
+        getGui().getCharacterCardById(1).getStudentsOnCard().remove(student);
+
+
+        getGui().getViewController().getAvailableIslands().get(island - 1).addStudent(student);
+
+        reset();
+
+        getGui().setUsedCC();
+        Stage stage = (Stage) sendButton.getScene().getWindow();
+        stage.close();
+    }
+
+    private void reset() {
+        sendButton.setDisable(true);
+
+        students.getItems().clear();
+        islands.getItems().clear();
+    }
 }
