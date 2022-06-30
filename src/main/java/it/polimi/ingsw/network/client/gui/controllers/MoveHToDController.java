@@ -59,20 +59,13 @@ public class MoveHToDController extends GenericController {
         studentToMove0.setValue(studentToMove0.getItems().get(0));
 
         if (movements > 1) {
-            updateColorsFromHall(studentToMove1);
-            studentToMove1.setValue(studentToMove1.getItems().get(0));
             hBox1.setVisible(true);
 
             if (movements > 2) {
-                updateColorsFromHall(studentToMove2);
-                studentToMove2.setValue(studentToMove2.getItems().get(0));
                 hBox2.setVisible(true);
 
-                if (movements > 3) {
-                    updateColorsFromHall(studentToMove3);
-                    studentToMove3.setValue(studentToMove3.getItems().get(0));
+                if (movements > 3)
                     hBox3.setVisible(true);
-                }
             }
         }
 
@@ -95,6 +88,11 @@ public class MoveHToDController extends GenericController {
 
         hBox0.setDisable(true);
 
+        if (movements > 1) {
+            updateColorsFromHall(studentToMove1);
+            studentToMove1.setValue(studentToMove1.getItems().get(0));
+        }
+
         if (movements == 1)
             sendButton.setDisable(false);
         else
@@ -107,6 +105,11 @@ public class MoveHToDController extends GenericController {
 
         hBox1.setDisable(true);
 
+        if (movements > 2) {
+            updateColorsFromHall(studentToMove2);
+            studentToMove2.setValue(studentToMove2.getItems().get(0));
+        }
+
         if (movements == 2)
             sendButton.setDisable(false);
         else
@@ -118,6 +121,11 @@ public class MoveHToDController extends GenericController {
         applyChanges(StudentColor.getStudentFromString(studentToMove2.getValue()));
 
         hBox2.setDisable(true);
+
+        if (movements > 3) {
+            updateColorsFromHall(studentToMove3);
+            studentToMove3.setValue(studentToMove3.getItems().get(0));
+        }
 
         if (movements == 3)
             sendButton.setDisable(false);
@@ -141,6 +149,8 @@ public class MoveHToDController extends GenericController {
 
         cmStudentsMovementsHToD message = new cmStudentsMovementsHToD(movementsHToD);
         getGui().getClient().send(getGui().getGson().toJson(message, cmStudentsMovementsHToD.class));
+
+        reset();
     }
 
     private void applyChanges(StudentColor color) {
@@ -151,5 +161,20 @@ public class MoveHToDController extends GenericController {
 
         getGui().updateGameBoard(ValueToUpdate.HALL);
         getGui().updateGameBoard(ValueToUpdate.DINING);
+    }
+
+    private void reset() {
+        hBox0.setDisable(false);
+
+        sendButton.setDisable(true);
+
+        hBox1.setVisible(false);
+        hBox2.setVisible(false);
+        hBox3.setVisible(false);
+
+        studentToMove0.getItems().clear();
+        studentToMove1.getItems().clear();
+        studentToMove2.getItems().clear();
+        studentToMove3.getItems().clear();
     }
 }

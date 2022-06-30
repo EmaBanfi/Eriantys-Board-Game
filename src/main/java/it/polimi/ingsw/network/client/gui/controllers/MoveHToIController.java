@@ -119,23 +119,13 @@ public class MoveHToIController extends GenericController {
         hBox0.setVisible(true);
 
         if (numOfStudents.getValue() > 1) {
-            updateColorsFromHall(studentToMove1);
-            studentToMove1.setValue(studentToMove1.getItems().get(0));
-            chosenIsland1.setValue(chosenIsland1.getItems().get(0));
             hBox1.setVisible(true);
 
             if (numOfStudents.getValue() > 2) {
-                updateColorsFromHall(studentToMove2);
-                studentToMove2.setValue(studentToMove2.getItems().get(0));
-                chosenIsland2.setValue(chosenIsland2.getItems().get(0));
                 hBox2.setVisible(true);
 
-                if (numOfStudents.getValue() > 3) {
-                    updateColorsFromHall(studentToMove3);
-                    studentToMove3.setValue(studentToMove3.getItems().get(0));
-                    chosenIsland3.setValue(chosenIsland3.getItems().get(0));
+                if (numOfStudents.getValue() > 3)
                     hBox3.setVisible(true);
-                }
             }
         }
 
@@ -149,6 +139,12 @@ public class MoveHToIController extends GenericController {
 
         hBox0.setDisable(true);
 
+        if (numOfStudents.getValue() > 1) {
+            updateColorsFromHall(studentToMove1);
+            studentToMove1.setValue(studentToMove1.getItems().get(0));
+            chosenIsland1.setValue(chosenIsland1.getItems().get(0));
+        }
+
         if (numOfStudents.getValue() == 1)
             sendButton.setDisable(false);
         else
@@ -161,6 +157,12 @@ public class MoveHToIController extends GenericController {
 
         hBox1.setDisable(true);
 
+        if (numOfStudents.getValue() > 2) {
+            updateColorsFromHall(studentToMove2);
+            studentToMove2.setValue(studentToMove2.getItems().get(0));
+            chosenIsland2.setValue(chosenIsland2.getItems().get(0));
+        }
+
         if (numOfStudents.getValue() == 2)
             sendButton.setDisable(false);
         else
@@ -172,6 +174,12 @@ public class MoveHToIController extends GenericController {
         applyChanges(chosenIsland2.getValue(), StudentColor.getStudentFromString(studentToMove2.getValue()));
 
         hBox2.setDisable(true);
+
+        if (numOfStudents.getValue() > 3) {
+            updateColorsFromHall(studentToMove3);
+            studentToMove3.setValue(studentToMove3.getItems().get(0));
+            chosenIsland3.setValue(chosenIsland3.getItems().get(0));
+        }
 
         if (numOfStudents.getValue() == 3)
             sendButton.setDisable(false);
@@ -204,6 +212,8 @@ public class MoveHToIController extends GenericController {
 
         cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
         getGui().getClient().send(getGui().getGson().toJson(message, cmStudentsMovementsHToI.class));
+
+        reset();
     }
 
     private void updateIslands() {
@@ -215,5 +225,28 @@ public class MoveHToIController extends GenericController {
             chosenIsland2.getItems().add(i);
             chosenIsland3.getItems().add(i);
         }
+    }
+
+    private void reset() {
+        numOfStudents.getItems().clear();
+
+        studentToMove0.getItems().clear();
+        studentToMove1.getItems().clear();
+        studentToMove2.getItems().clear();
+        studentToMove3.getItems().clear();
+
+        chosenIsland0.getItems().clear();
+        chosenIsland1.getItems().clear();
+        chosenIsland2.getItems().clear();
+        chosenIsland3.getItems().clear();
+
+        sendButton.setDisable(true);
+
+        hBox0.setVisible(false);
+        hBox1.setVisible(false);
+        hBox2.setVisible(false);
+        hBox3.setVisible(false);
+
+        hBoxMain.setVisible(true);
     }
 }

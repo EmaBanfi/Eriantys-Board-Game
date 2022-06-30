@@ -72,12 +72,13 @@ public class MoveMotherController extends GenericController {
         getGui().getClient().send(getGui().getGson().toJson(message, cmMoveMother.class));
 
         getGui().getViewController().getMotherNature().setCurrentIsland(position);
+
+        reset();
     }
 
     /**
      * Converts the new chosen island of Mother Nature into the number of movements needed to reach that specific island from the current Mother Nature island.
      * @param island Island chosen by the player.
-     * @return
      */
     private int convertIslandToMovements(int island){
         int movements = island - getGui().getViewController().getMotherPosition();
@@ -86,5 +87,9 @@ public class MoveMotherController extends GenericController {
             movements = getGui().getViewController().getAvailableIslands().size() + movements;
 
         return movements;
+    }
+
+    private void reset() {
+        newPosition.getItems().clear();
     }
 }

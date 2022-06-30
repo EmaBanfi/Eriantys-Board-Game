@@ -21,5 +21,11 @@ public class WantHToIController extends GenericController {
         }
         else
             getGui().getClient().send(getGui().getGson().toJson(new cmStudentsMovementsHToI(null), cmStudentsMovementsHToI.class));
+
+        reset();
+    }
+
+    private void reset() {
+        yesButton.setSelected(true);
     }
 }

@@ -157,6 +157,8 @@ public class ChooseCloudController extends GenericController {
         cmCloud message = new cmCloud(0);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
 
+        reset();
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 
@@ -174,6 +176,8 @@ public class ChooseCloudController extends GenericController {
 
         cmCloud message = new cmCloud(1);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
+
+        reset();
 
         getGui().updateSceneOnStage("Wait.fxml");
     }
@@ -193,6 +197,8 @@ public class ChooseCloudController extends GenericController {
         cmCloud message = new cmCloud(2);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
 
+        reset();
+
         getGui().updateSceneOnStage("Wait.fxml");
     }
 
@@ -211,6 +217,13 @@ public class ChooseCloudController extends GenericController {
         cmCloud message = new cmCloud(3);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
 
+        reset();
+
         getGui().updateSceneOnStage("Wait.fxml");
+    }
+
+    private void reset() {
+        cloudButton00.setVisible(true);
+        cloudButton10.setVisible(true);
     }
 }
