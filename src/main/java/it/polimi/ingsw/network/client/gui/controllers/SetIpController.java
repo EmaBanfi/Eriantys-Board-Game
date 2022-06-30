@@ -17,5 +17,6 @@ public class SetIpController extends GenericController {
     @FXML
     public void onPlayButton(ActionEvent event) {
         getGui().setClient(ipAddress.getText());
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 }

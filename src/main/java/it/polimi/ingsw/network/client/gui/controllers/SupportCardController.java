@@ -66,6 +66,7 @@ public class SupportCardController extends GenericController {
         cmSupportCard message = new cmSupportCard(chosenSupportCard);
         String text = gson.toJson(message, cmSupportCard.class);
         getGui().getClient().send(text);
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 
     /**

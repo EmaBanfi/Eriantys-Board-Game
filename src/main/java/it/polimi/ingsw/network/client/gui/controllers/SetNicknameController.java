@@ -22,5 +22,6 @@ public class SetNicknameController extends GenericController {
         cmNickname message = new cmNickname(nickname.getText());
         String text = getGui().getGson().toJson(message, cmNickname.class);
         getGui().getClient().send(text);
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 }

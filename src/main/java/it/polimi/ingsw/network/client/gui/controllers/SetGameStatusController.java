@@ -31,5 +31,6 @@ public class SetGameStatusController extends GenericController {
 
         String text = getGui().getGson().toJson(message, cmSetGameStatus.class);
         getGui().getClient().send(text);
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 }
