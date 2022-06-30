@@ -70,7 +70,7 @@ public class MoveHToIController extends GenericController {
 
         getGui().updateSceneOnStage("hToI/MoveHToI.fxml");
 
-        if (getGui().getViewController().getMode().equals("expert"))
+        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
             activateCC.setVisible(true);
     }
 
@@ -101,7 +101,7 @@ public class MoveHToIController extends GenericController {
      */
     @FXML
     public void onSelectButton() {
-        if (getGui().getViewController().getMode().equals("expert"))
+        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
             activateCC.setDisable(true);
 
         if (getGui().getViewController().getAvailableStudentsMovements() == numOfStudents.getValue())

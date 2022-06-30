@@ -35,7 +35,7 @@ public class MoveMotherController extends GenericController {
 
         newPosition.setValue(newPosition.getItems().get(0));
 
-        if (getGui().getViewController().getMode().equals("expert"))
+        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
             activateCC.setVisible(true);
     }
 
