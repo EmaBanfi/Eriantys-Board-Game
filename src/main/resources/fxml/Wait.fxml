@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: rgb(26,26,33);"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.network.client.gui.controllers.WaitController">
-   <ImageView fitHeight="753.0" fitWidth="1050.0" layoutX="88.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true"
-              AnchorPane.bottomAnchor="23.5" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="78.0"
-              AnchorPane.topAnchor="23.5">
-      <Image url="@../images/ghesborowait.png"/>
+   <ImageView fitHeight="534.0" fitWidth="760.0" layoutX="252.0" layoutY="118.0" pickOnBounds="true"
+              preserveRatio="true" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="250.0"
+              AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="135.0">
+      <Image url="@../images/im-waiting-aki-and-paw-paw.gif"/>
    </ImageView>
+   <Label alignment="CENTER" layoutX="496.0" layoutY="64.0" prefHeight="80.0" prefWidth="159.0"
+          text="Waiting for your turn..." AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+          AnchorPane.topAnchor="5.0"/>
 </AnchorPane>

@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetDeckController">
-   <children>
-      <Button fx:id="deckButton" defaultButton="true" layoutY="326.0" mnemonicParsing="false" onAction="#deckButton" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-      <ChoiceBox fx:id="setDeck" layoutX="522.0" layoutY="383.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" AnchorPane.bottomAnchor="385.0" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="385.0" />
-      <Label alignment="CENTER" layoutX="256.0" layoutY="2.0" prefHeight="80.0" prefWidth="590.0" text="Select your deck:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-   </children>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetDeckController">
+   <Label alignment="CENTER" layoutX="256.0" layoutY="2.0" prefHeight="80.0" prefWidth="590.0" text="Select your deck:"
+          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+   <HBox layoutX="-8.0" layoutY="109.0" spacing="50.0" AnchorPane.bottomAnchor="189.5" AnchorPane.leftAnchor="39.0"
+         AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="189.5">
+      <VBox alignment="CENTER" spacing="25.0">
+         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/decks/king.png"/>
+         </ImageView>
+         <Button fx:id="king" disable="true" mnemonicParsing="false" onAction="#onKingButton" text="King"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" spacing="25.0">
+         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/decks/mage.png"/>
+         </ImageView>
+         <Button fx:id="mage" disable="true" mnemonicParsing="false" onAction="#onMageButton" text="Mage"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="20.0" layoutY="20.0" spacing="25.0">
+         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/decks/sage.png"/>
+         </ImageView>
+         <Button fx:id="sage" disable="true" mnemonicParsing="false" onAction="#onSageButton" text="Sage"/>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="30.0" layoutY="30.0" spacing="25.0">
+         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/decks/witch.png"/>
+         </ImageView>
+         <Button fx:id="witch" disable="true" mnemonicParsing="false" onAction="#onWitchButton" text="Witch"/>
+      </VBox>
+   </HBox>
 </AnchorPane>

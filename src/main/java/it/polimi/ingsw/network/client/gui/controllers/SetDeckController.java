@@ -3,46 +3,98 @@ package it.polimi.ingsw.network.client.gui.controllers;
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmDeck;
+import it.polimi.ingsw.network.messages.clientMessages.cmTower;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 public class SetDeckController extends GenericController {
 
     @FXML
-    private ChoiceBox<String> setDeck;
+    private Button mage;
 
-    /**
-     * Activation of the "deckButton" in "SetDeck.fxml" scene; sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck.
-     * @param event
-     */
     @FXML
-    public void deckButton(ActionEvent event){
-        String chosenDeck = setDeck.getValue();
-        getGui().getViewController().getMainPlayer().setDeckColor(chosenDeck);
+    private Button king;
 
-        getGui().updateGameBoard(ValueToUpdate.DECK);
+    @FXML
+    private Button sage;
 
-        Gson gson = new Gson();
-        cmDeck message = new cmDeck(chosenDeck);
-        String text = gson.toJson(message, cmDeck.class);
-        getGui().getClient().send(text);
-    }
+    @FXML
+    private Button witch;
 
     /**
-     * Updates the "SetTower.fxml" scene, adding the available decks to the choice box.
+     * Updates the "SetTower.fxml" scene, unblocking the available decks.
      */
     @Override
     public void update(){
         if(getGui().getViewController().getAvailableDecks().contains("KING"))
-            setDeck.getItems().add("King");
+            king.setDisable(false);
         if(getGui().getViewController().getAvailableDecks().contains("MAGE"))
-            setDeck.getItems().add("Mage");
+            mage.setDisable(false);
         if(getGui().getViewController().getAvailableDecks().contains("WITCH"))
-            setDeck.getItems().add("Witch");
+            witch.setDisable(false);
         if(getGui().getViewController().getAvailableDecks().contains("SAGE"))
-            setDeck.getItems().add("Sage");
+            sage.setDisable(false);
+    }
 
-        setDeck.setValue(setDeck.getItems().get(0));
+    /**
+     * Sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck (king).
+     */
+    @FXML
+    void onKingButton(ActionEvent event) {
+        getGui().getViewController().getMainPlayer().setDeckColor("KING");
+
+        getGui().updateGameBoard(ValueToUpdate.DECK);
+
+        cmDeck message = new cmDeck("KING");
+        getGui().getClient().send(getGui().getGson().toJson(message, cmDeck.class));
+
+        getGui().updateSceneOnStage("Wait.fxml");
+    }
+
+    /**
+     * Sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck (mage).
+     */
+    @FXML
+    void onMageButton(ActionEvent event) {
+        getGui().getViewController().getMainPlayer().setDeckColor("MAGE");
+
+        getGui().updateGameBoard(ValueToUpdate.DECK);
+
+        cmDeck message = new cmDeck("MAGE");
+        getGui().getClient().send(getGui().getGson().toJson(message, cmDeck.class));
+
+        getGui().updateSceneOnStage("Wait.fxml");
+    }
+
+    /**
+     * Sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck (sage).
+     */
+    @FXML
+    void onSageButton(ActionEvent event) {
+        getGui().getViewController().getMainPlayer().setDeckColor("SAGE");
+
+        getGui().updateGameBoard(ValueToUpdate.DECK);
+
+        cmDeck message = new cmDeck("SAGE");
+        getGui().getClient().send(getGui().getGson().toJson(message, cmDeck.class));
+
+        getGui().updateSceneOnStage("Wait.fxml");
+    }
+
+    /**
+     * Sets the chosen deck of a player and sends a "cmDeck" message to the server with the chosen deck (witch).
+     */
+    @FXML
+    void onWitchButton(ActionEvent event) {
+        getGui().getViewController().getMainPlayer().setDeckColor("WITCH");
+
+        getGui().updateGameBoard(ValueToUpdate.DECK);
+
+        cmDeck message = new cmDeck("WITCH");
+        getGui().getClient().send(getGui().getGson().toJson(message, cmDeck.class));
+
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 }
