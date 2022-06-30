@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
+import it.polimi.ingsw.network.client.clientModel.PlayerView;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmCloud;
 
 import it.polimi.ingsw.network.server.model.StudentColor;
@@ -158,6 +160,10 @@ public class ChooseCloudController extends GenericController {
     public void chooseCloud4() {
         getGui().getViewController().getMainPlayer().addToHall(getGui().getViewController().getCloud(3).getStudents());
         getGui().getViewController().getCloud(3).removeStudents();
+
+        getGui().getViewController().resetSupportCards();
+        for (PlayerView player : getGui().getViewController().getPlayers())
+            getGui().updateGameBoard(ValueToUpdate.CARD);
 
         cmCloud message = new cmCloud(3);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCloud.class));
