@@ -5,8 +5,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
-import it.polimi.ingsw.network.client.clientModel.CharacterCard;
-import it.polimi.ingsw.network.client.clientModel.CharacterCardCreator;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
 import it.polimi.ingsw.network.client.clientModel.Phase;
 import it.polimi.ingsw.network.client.gui.controllers.GenericController;
@@ -16,7 +14,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,6 +38,7 @@ public class GUI extends Application implements View {
     private final String chooseCloud = "ChooseCloud.fxml";
     private final String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
+    private final String closeGame = "CloseGame.fxml";
 
     private GenericController gameBoardController;
     private Scene currentScene;
@@ -287,7 +285,7 @@ public class GUI extends Application implements View {
         this.losers.addAll(losers);
         scenesDeck.getSceneManager(endGame).getController().update();
         updateSceneOnStage(endGame);
-        closeGame();
+        systemExit(0);
     }
 
 
@@ -325,8 +323,14 @@ public class GUI extends Application implements View {
     }
 
     @Override
-    public void closeGame() {
-        System.exit(0);
+    public void closeGame(String message, int exit) {
+        scenesDeck.getSceneManager(closeGame).getController().setInput(message);
+        scenesDeck.getSceneManager(closeGame).getController().setInput(exit);
+        updateSceneOnStage(closeGame);
+    }
+
+    public void systemExit(int exit) {
+        System.exit(exit);
     }
 
     @Override

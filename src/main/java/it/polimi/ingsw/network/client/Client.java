@@ -46,8 +46,7 @@ public class Client extends Thread {
         try {
             socket = new Socket(ip, 888);
         } catch (IOException e) {
-            System.out.println("Server not found, the executable will be closed");
-            System.exit(-1);
+            view.closeGame("Server not found, the executable will be closed", -1);
         }
     }
 
@@ -57,9 +56,7 @@ public class Client extends Thread {
             try {
                 str = br.readLine();
             } catch (IOException e) {
-                System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
-
-                System.exit(-1);
+                view.closeGame("\nThe connection with the server is lost.\nThe game will be closed.", -1);
             }
             if(str != null) {
                 ServerMessage message = smgson.deserialize(str);
@@ -69,14 +66,10 @@ public class Client extends Thread {
             else {
                 try {
                     if (br.read() == -1) {
-                        System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
-
-                        System.exit(-1);
+                        view.closeGame("\nThe connection with the server is lost.\nThe game will be closed.", -1);
                     }
                 } catch (IOException e) {
-                    System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
-
-                    System.exit(-1);
+                    view.closeGame("\nThe connection with the server is lost.\nThe game will be closed.", -1);
                 }
             }
 
@@ -98,15 +91,12 @@ public class Client extends Thread {
         try {
             dos.writeBytes(text + "\n");
         } catch (IOException e) {
-            System.out.println("\nThe connection with the server is lost.\nThe game will be closed.");
-
-            System.exit(-1);
+            view.closeGame("\nThe connection with the server is lost.\nThe game will be closed.", -1);
         }
     }
 
     public  void CloseClient(){
-        System.out.println("Connection is down");
-        System.exit(-1);
+        view.closeGame("Connection is down", -1);
     }
 
     public View getView() {

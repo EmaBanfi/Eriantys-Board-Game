@@ -32,6 +32,7 @@ public class ScenesDeck {
     private final String cCG5 = "CCG5.fxml";
     private final String cCG6 = "CCG6.fxml";
     private final String wait = "Wait.fxml";
+    private final String closeGame = "CloseGame.fxml";
 
     public ScenesDeck(GUI gui){
         scenes = new ArrayList<>();
@@ -57,7 +58,8 @@ public class ScenesDeck {
                 cCG4,
                 cCG5,
                 cCG6,
-                wait));
+                wait,
+                closeGame));
         GenericController controller;
         Scene scene = null;
         for (String file : fxmlFiles) {

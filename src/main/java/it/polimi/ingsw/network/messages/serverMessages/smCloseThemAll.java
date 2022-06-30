@@ -4,18 +4,18 @@ import it.polimi.ingsw.network.client.Client;
 
 public class smCloseThemAll extends ServerMessage {
 
+    private String text;
+
     public smCloseThemAll() {
     }
 
-    public smCloseThemAll(String message) {
-        super(message);
+    public smCloseThemAll(String text) {
+        this.text = text;
         setType("closeAll");
     }
 
     @Override
     public void processMessage(Client client) {
-        super.processMessage(client);
-
-        client.getView().closeGame();
+        client.getView().closeGame(text, 0);
     }
 }

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.network.client.clientModel.IslandView;
-import it.polimi.ingsw.network.client.clientModel.PlayerView;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
@@ -143,7 +141,12 @@ public interface View {
      */
     void disconnectFromServer();
 
-    void closeGame();
+    /**
+     * called when the game have to be closed
+     * @param message the motivation of the close
+     * @param exit exit code
+     */
+    void closeGame(String message, int exit);
 
     /**
      * adds students to specified player's dining hall
@@ -161,7 +164,7 @@ public interface View {
 
     /**
      * adds students to current player's hall
-     * @param students
+     * @param students students to add
      */
     void addStudentsToHall(ArrayList<StudentColor> students);
 
