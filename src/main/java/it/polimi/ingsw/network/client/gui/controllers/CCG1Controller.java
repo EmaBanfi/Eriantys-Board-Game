@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -14,11 +15,17 @@ import java.util.ArrayList;
 public class CCG1Controller extends GenericController{
 
     @FXML
-    private HBox hBoxIsland;
-    @FXML
     private ChoiceBox<String> studentsOnCard;
     @FXML
     private ChoiceBox<Integer> availableIslands;
+    @FXML
+    private Button selectButtonStudent;
+    @FXML
+    private Label textStudent;
+    @FXML
+    private Label textIsland;
+    @FXML
+    private Button selectButtonIsland;
     @FXML
     private Button sendButton;
     private StudentColor student;
@@ -36,7 +43,7 @@ public class CCG1Controller extends GenericController{
 
         ArrayList<StudentColor> s = new ArrayList<>();
         s.add(student);
-        getGui().getViewController().getAvailableIslands().get(island -1).addStudents(s);
+        getGui().getViewController().getAvailableIslands().get(island - 1).addStudents(s);
 
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
@@ -49,7 +56,14 @@ public class CCG1Controller extends GenericController{
     @FXML
     public void onSelectButtonStudent(){
         student = StudentColor.getStudentFromString(studentsOnCard.getValue());
-        hBoxIsland.setVisible(true);
+
+        textStudent.setDisable(true);
+        studentsOnCard.setDisable(true);
+        selectButtonStudent.setDisable(true);
+
+        textIsland.setDisable(false);
+        availableIslands.setDisable(false);
+        selectButtonIsland.setDisable(false);
     }
 
     /**
@@ -57,7 +71,13 @@ public class CCG1Controller extends GenericController{
      */
     @FXML
     public void onSelectButtonIsland(){
-        island = availableIslands.getValue();
+        textIsland.setDisable(true);
+        availableIslands.setDisable(true);
+        selectButtonIsland.setDisable(true);
+
+        island = availableIslands.getValue() - 1;
+
+        sendButton.setDisable(false);
     }
 
     /**

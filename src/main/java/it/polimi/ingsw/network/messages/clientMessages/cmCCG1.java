@@ -25,6 +25,7 @@ public class cmCCG1 extends ClientMessage{
     @Override
     public void processMessage(ClientHandler handler) {
         Controller controller = handler.getServer().getController();
+
         controller.notifyUsedCharacterCard(1);
 
         controller.addStudentToIsland(island, color);

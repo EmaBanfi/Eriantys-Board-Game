@@ -33,7 +33,7 @@ public class CCG5Controller extends GenericController{
      */
     @FXML
     public void onSendButton(){
-        island = availableIslands.getValue();
+        island = availableIslands.getValue() - 1;
         cmCCG5 message = new cmCCG5(cardId, island);
         getGui().getClient().send(new Gson().toJson(message, cmCCG5.class));
         if(cardId == 5){
