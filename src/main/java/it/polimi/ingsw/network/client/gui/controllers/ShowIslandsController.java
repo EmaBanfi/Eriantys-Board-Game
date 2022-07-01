@@ -18,16 +18,16 @@ public class ShowIslandsController extends GenericController{
 
     @FXML private AnchorPane island1;
     @FXML private Label blue1;
-   @FXML private Label purple1;
-   @FXML private Label yellow1;
-   @FXML private Label red1;
-   @FXML private Label green1;
-   @FXML private ImageView tower1;
-   @FXML private ImageView block1;
-   @FXML private ImageView nature1;
+    @FXML private Label purple1;
+    @FXML private Label yellow1;
+    @FXML private Label red1;
+    @FXML private Label green1;
+    @FXML private ImageView tower1;
+    @FXML private ImageView block1;
+    @FXML private ImageView nature1;
 
-    @FXML private AnchorPane island2;
-    @FXML private Label blue2;
+   @FXML private AnchorPane island2;
+   @FXML private Label blue2;
    @FXML private Label purple2;
    @FXML private Label yellow2;
    @FXML private Label red2;
@@ -329,7 +329,7 @@ public class ShowIslandsController extends GenericController{
             islandSize--;
         }
         for(int i=0; i<islands.size(); i++){
-            guiIslands.get(i).setMotherNature(mother.getCurrentIsland()==1);
+            guiIslands.get(i).setMotherNature(mother.getCurrentIsland()==i);
             guiIslands.get(i).updateIsland();
         }
     }
