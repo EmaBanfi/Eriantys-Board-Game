@@ -86,7 +86,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void start(Stage stage) throws IOException {
-        viewController = new ViewController(this, "gui");
+        viewController = new ViewController(this);
         scenesDeck = new ScenesDeck(this);
         //window.initModality(Modality.APPLICATION_MODAL);
         //notifyController = getSceneManager(notify).getController();
@@ -459,13 +459,5 @@ public class GUI extends Application implements View {
 
     public void setNewTurnForSC(boolean newTurnForSC) {
         this.newTurnForSC = newTurnForSC;
-    }
-
-    public void showIslands(){
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i=0; i<viewController.getAvailableIslands().size(); i++){
-            stringBuilder.append("\n").append("isalnd" + (i+1) + " : " + viewController.getAvailableIslands().get(i).studentsOnIsland());
-        }
-        AlertBox.display("Isalnds", stringBuilder.toString());
     }
 }

@@ -139,7 +139,6 @@ public class MoveHToIController extends GenericController {
 
     @FXML
     public void onSelectButton0() {
-        getGui().getViewController().setAlreadyUpdated();
         applyChanges(chosenIsland0.getValue(), StudentColor.getStudentFromString(studentToMove0.getValue()));
 
         hBox0.setDisable(true);
@@ -212,7 +211,6 @@ public class MoveHToIController extends GenericController {
 
     @FXML
     public void onSendButton() {
-
         if (numberOfStudents == 4)
             applyChanges(chosenIsland3.getValue(), StudentColor.getStudentFromString(studentToMove3.getValue()));
 

@@ -23,12 +23,9 @@ public class ViewController {
     private final View view;
     private Phase resumeFrom = null;
     private int availableStudentsMovements;
-    private String viewMode;
-    private boolean alreadyUpdated = false;
 
 
-    public ViewController(View view, String viewMode){
-        this.viewMode = viewMode;
+    public ViewController(View view){
         this.view=view;
         availableClouds = new ArrayList<>();
         availableIslands = new ArrayList<>();
@@ -216,13 +213,7 @@ public class ViewController {
      * @param students students to add
      */
     public void addStudentsOnIsland(int island, ArrayList<StudentColor> students) {
-        if(!alreadyUpdated){
-            if(viewMode.equals("cli"))
-                availableIslands.get(island).addStudents(students);
-            else if(viewMode.equals("gui"))
-                availableIslands.get(island-1).addStudents(students);
-        }
-        alreadyUpdated = false;
+        availableIslands.get(island).addStudents(students);
     }
 
     /**
@@ -460,8 +451,5 @@ public class ViewController {
         return players.get(index-2);
     }
 
-    public void setAlreadyUpdated(){
-        alreadyUpdated=true;
-    }
 
 }
