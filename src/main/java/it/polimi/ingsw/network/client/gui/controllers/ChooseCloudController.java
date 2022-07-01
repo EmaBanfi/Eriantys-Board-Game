@@ -236,5 +236,7 @@ public class ChooseCloudController extends GenericController {
     private void reset() {
         cloudButton00.setVisible(true);
         cloudButton10.setVisible(true);
+
+        getGui().setNewTurnForSC(true);
     }
 }

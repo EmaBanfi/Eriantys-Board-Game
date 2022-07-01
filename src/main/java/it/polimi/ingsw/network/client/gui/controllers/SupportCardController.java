@@ -1,13 +1,13 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.network.client.gui.ValueToUpdate;
-import it.polimi.ingsw.network.messages.clientMessages.cmStudentsMovementsHToI;
 import it.polimi.ingsw.network.messages.clientMessages.cmSupportCard;
 import javafx.fxml.FXML;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
+import java.util.Objects;
 
 public class SupportCardController extends GenericController {
 
@@ -38,6 +38,12 @@ public class SupportCardController extends GenericController {
      */
     @Override
     public void update(){
+        if (getGui().isNewTurnForSC()) {
+            reset();
+            getGui().setNewTurnForSC(false);
+        }
+
+
         monochrome.setSaturation(-1);
 
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(1)))
@@ -145,32 +151,29 @@ public class SupportCardController extends GenericController {
     }
 
     private void reset() {
-        monochrome.setSaturation(0);
-
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(1)))
-            enablePlusGray(sc1);
+            resetImage(sc1);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(2)))
-            enablePlusGray(sc2);
+            resetImage(sc2);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(3)))
-            enablePlusGray(sc3);
+            resetImage(sc3);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(4)))
-            enablePlusGray(sc4);
+            resetImage(sc4);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(5)))
-            enablePlusGray(sc5);
+            resetImage(sc5);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(6)))
-            enablePlusGray(sc6);
+            resetImage(sc6);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(7)))
-            enablePlusGray(sc7);
+            resetImage(sc7);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(8)))
-            enablePlusGray(sc8);
+            resetImage(sc8);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(9)))
-            enablePlusGray(sc9);
+            resetImage(sc9);
         if(getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(10)))
-            enablePlusGray(sc10);
+            resetImage(sc10);
     }
 
-    private void enablePlusGray(ImageView sc) {
-        sc.setDisable(false);
-        sc.setEffect(monochrome);
+    private void resetImage(ImageView sc) {
+        sc.setEffect(null);
     }
 }

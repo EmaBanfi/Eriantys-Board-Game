@@ -19,4 +19,8 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.network.client.gui to com.google.gson, javafx.fxml;
     exports it.polimi.ingsw.network.client.clientModel;
     opens it.polimi.ingsw.network.client.clientModel to com.google.gson, javafx.fxml;
+    exports it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
+    opens it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers to javafx.fxml;
+    exports it.polimi.ingsw.network.client.gui.GUICharacterCards;
+    opens it.polimi.ingsw.network.client.gui.GUICharacterCards to com.google.gson, javafx.fxml;
 }

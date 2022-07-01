@@ -19,7 +19,7 @@ public class MoveHToIController extends GenericController {
     @FXML
     private HBox hBoxMain;
     @FXML
-    private ChoiceBox<Integer> numOfStudents;
+    private ChoiceBox<String> numOfStudents;
     @FXML
     private HBox hBox0;
     @FXML
@@ -61,11 +61,11 @@ public class MoveHToIController extends GenericController {
 
     @Override
     public void update() {
-        numOfStudents.getItems().add(1);
-        numOfStudents.getItems().add(2);
-        numOfStudents.getItems().add(3);
+        numOfStudents.getItems().add("1");
+        numOfStudents.getItems().add("2");
+        numOfStudents.getItems().add("3");
         if (getGui().getViewController().getAvailableStudentsMovements() == 4)
-            numOfStudents.getItems().add(4);
+            numOfStudents.getItems().add("4");
         movementsHtoI = new HashMap<>();
         updateIslands();
 
@@ -106,7 +106,7 @@ public class MoveHToIController extends GenericController {
         if (activateCC.isDisable())
             activateCC.setDisable(true);
         
-        numberOfStudents = numOfStudents.getValue();
+        numberOfStudents = Integer.parseInt(numOfStudents.getValue());
 
         if (getGui().getViewController().getAvailableStudentsMovements() == numberOfStudents)
             getGui().getViewController().setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);

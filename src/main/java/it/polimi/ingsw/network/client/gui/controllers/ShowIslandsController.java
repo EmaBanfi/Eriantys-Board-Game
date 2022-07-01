@@ -318,9 +318,9 @@ public class ShowIslandsController extends GenericController{
                 nature12
             )
         );
-
     }
 
+    @Override
     public void update(){
         int islandSize = islandsPanes.size();
         while (islandSize>islands.size()){
