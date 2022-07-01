@@ -34,7 +34,7 @@ public class SupportCardController extends GenericController {
     private final ColorAdjust monochrome = new ColorAdjust();
 
     /**
-     * Updates the "AskSupportCard.fxml" scene, removing the support cards that are not available anymore.
+     * Updates the "setSupportCard.fxml" scene, removing the support cards that are not available anymore.
      */
     @Override
     public void update(){

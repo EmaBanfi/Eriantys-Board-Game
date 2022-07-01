@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.MoveHToIController">
    <children>
+      <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/background.jpg" />
+         </image>
+      </ImageView>
       <Label alignment="CENTER" layoutX="383.0" layoutY="101.0" prefHeight="80.0" prefWidth="590.0" text="Move students from hall to an island" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <VBox layoutX="88.0" layoutY="208.0" spacing="100.0">
          <children>

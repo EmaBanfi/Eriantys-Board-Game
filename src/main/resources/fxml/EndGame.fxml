@@ -3,9 +3,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.EndGameController">
    <children>
+      <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
       <Button fx:id="quitButton" defaultButton="true" layoutX="534.0" layoutY="361.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quitButton" prefHeight="30.0" prefWidth="200.0" text="Quit" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Label alignment="CENTER" layoutX="286.0" layoutY="14.0" prefHeight="80.0" prefWidth="590.0" text="Game Results" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <Label layoutX="287.0" layoutY="343.0" text="Winners: " />

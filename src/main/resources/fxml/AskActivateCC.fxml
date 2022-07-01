@@ -7,6 +7,11 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.AskActivateCCController">
    <children>
+      <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
       <Label alignment="CENTER" layoutX="560.0" layoutY="136.0" prefHeight="80.0" prefWidth="590.0" text="Which character card do you want to activate" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <HBox layoutX="153.0" layoutY="231.0" spacing="30.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="195.0">
          <children>

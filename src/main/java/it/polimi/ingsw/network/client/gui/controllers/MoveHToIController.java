@@ -57,6 +57,7 @@ public class MoveHToIController extends GenericController {
     private HashMap<Integer, ArrayList<StudentColor>> movementsHtoI;
     @FXML
     private Button activateCC;
+    private int numberOfStudents;
 
     @Override
     public void update() {
@@ -104,11 +105,13 @@ public class MoveHToIController extends GenericController {
     public void onSelectButton() {
         if (activateCC.isDisable())
             activateCC.setDisable(true);
+        
+        numberOfStudents = numOfStudents.getValue();
 
-        if (getGui().getViewController().getAvailableStudentsMovements() == numOfStudents.getValue())
+        if (getGui().getViewController().getAvailableStudentsMovements() == numberOfStudents)
             getGui().getViewController().setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
 
-        getGui().getViewController().setAvailableStudentsMovements(getGui().getViewController().getAvailableStudentsMovements() - numOfStudents.getValue());
+        getGui().getViewController().setAvailableStudentsMovements(getGui().getViewController().getAvailableStudentsMovements() - numberOfStudents);
 
         if (getGui().getViewController().getAvailableStudentsMovements() == 0)
             getGui().getViewController().setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
@@ -119,13 +122,13 @@ public class MoveHToIController extends GenericController {
         hBoxMain.setVisible(false);
         hBox0.setVisible(true);
 
-        if (numOfStudents.getValue() > 1) {
+        if (numberOfStudents > 1) {
             hBox1.setVisible(true);
 
-            if (numOfStudents.getValue() > 2) {
+            if (numberOfStudents > 2) {
                 hBox2.setVisible(true);
 
-                if (numOfStudents.getValue() > 3)
+                if (numberOfStudents > 3)
                     hBox3.setVisible(true);
             }
         }
@@ -140,13 +143,13 @@ public class MoveHToIController extends GenericController {
 
         hBox0.setDisable(true);
 
-        if (numOfStudents.getValue() > 1) {
+        if (numberOfStudents > 1) {
             updateColorsFromHall(studentToMove1);
             studentToMove1.setValue(studentToMove1.getItems().get(0));
             chosenIsland1.setValue(chosenIsland1.getItems().get(0));
         }
 
-        if (numOfStudents.getValue() == 1)
+        if (numberOfStudents == 1)
             sendButton.setDisable(false);
         else
             hBox1.setDisable(false);
@@ -158,13 +161,13 @@ public class MoveHToIController extends GenericController {
 
         hBox1.setDisable(true);
 
-        if (numOfStudents.getValue() > 2) {
+        if (numberOfStudents > 2) {
             updateColorsFromHall(studentToMove2);
             studentToMove2.setValue(studentToMove2.getItems().get(0));
             chosenIsland2.setValue(chosenIsland2.getItems().get(0));
         }
 
-        if (numOfStudents.getValue() == 2)
+        if (numberOfStudents == 2)
             sendButton.setDisable(false);
         else
             hBox2.setDisable(false);
@@ -176,13 +179,13 @@ public class MoveHToIController extends GenericController {
 
         hBox2.setDisable(true);
 
-        if (numOfStudents.getValue() > 3) {
+        if (numberOfStudents > 3) {
             updateColorsFromHall(studentToMove3);
             studentToMove3.setValue(studentToMove3.getItems().get(0));
             chosenIsland3.setValue(chosenIsland3.getItems().get(0));
         }
 
-        if (numOfStudents.getValue() == 3)
+        if (numberOfStudents == 3)
             sendButton.setDisable(false);
         else
             hBox3.setDisable(false);
@@ -208,7 +211,7 @@ public class MoveHToIController extends GenericController {
 
     @FXML
     public void onSendButton() {
-        if (numOfStudents.getValue() == 4)
+        if (numberOfStudents == 4)
             applyChanges(chosenIsland3.getValue(), StudentColor.getStudentFromString(studentToMove3.getValue()));
 
         cmStudentsMovementsHToI message = new cmStudentsMovementsHToI(movementsHtoI);
