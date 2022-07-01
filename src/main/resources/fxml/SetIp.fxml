@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -9,5 +10,10 @@
       <Button defaultButton="true" layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlayButton" prefHeight="30.0" prefWidth="200.0" text="Play" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="590.0" text="Insert the server ip" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <TextField fx:id="ipAddress" layoutX="520.0" layoutY="385.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" promptText="ip address" AnchorPane.bottomAnchor="385.0" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="385.0" />
+      <ImageView fitHeight="255.0" fitWidth="524.0" layoutX="335.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/eriantys_title.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

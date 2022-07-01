@@ -33,12 +33,17 @@ public class CCG5Controller extends GenericController{
      */
     @FXML
     public void onSendButton(){
-        island = availableIslands.getValue() - 1;
+        island = availableIslands.getValue();
+        if(cardId==3)
+            island = island -1;
         cmCCG5 message = new cmCCG5(cardId, island);
         getGui().getClient().send(new Gson().toJson(message, cmCCG5.class));
         if(cardId == 5){
             getGui().getCharacterCardById(5).updateAvailableBlockCards(false);
         }
+
+
+
 
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
