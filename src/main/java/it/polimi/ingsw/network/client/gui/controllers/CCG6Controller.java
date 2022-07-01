@@ -100,20 +100,11 @@ public class CCG6Controller extends GenericController {
     @FXML
     public void onSelectButton() {
         hBox0.setVisible(true);
+
         if (numOfStudents.getValue() > 1) {
-            updateColorsFromHall(choice11);
-            if (cardId == 7)
-                updateColorsFromCC(7, choice10);
-            else
-                updateColorsFromDiningHall(choice10);
-
             hBox1.setVisible(true);
-            if (numOfStudents.getValue() == 3) {
+            if (numOfStudents.getValue() == 3)
                 hBox2.setVisible(true);
-
-                updateColorsFromHall(choice21);
-                updateColorsFromCC(7, choice20);
-            }
         }
     }
 
@@ -121,8 +112,18 @@ public class CCG6Controller extends GenericController {
     public void onSelectButton0() {
         hBox0.setDisable(true);
 
-        if (numOfStudents.getValue() == 2)
+        if (numOfStudents.getValue() > 1) {
+            updateColorsFromHall(choice11);
+            if (cardId == 7)
+                updateColorsFromCC(7, choice10);
+            else
+                updateColorsFromDiningHall(choice10);
+
+            choice00.setValue(choice10.getItems().get(0));
+            choice01.setValue(choice11.getItems().get(0));
+
             sendButton.setDisable(false);
+        }
         else
             hBox1.setVisible(true);
     }
@@ -131,8 +132,17 @@ public class CCG6Controller extends GenericController {
     public void onSelectButton1() {
         hBox1.setDisable(true);
 
-        if (numOfStudents.getValue() == 2)
+        if (numOfStudents.getValue() > 2) {
+            hBox2.setVisible(true);
+
+            updateColorsFromHall(choice21);
+            updateColorsFromCC(7, choice20);
+
+            choice00.setValue(choice20.getItems().get(0));
+            choice01.setValue(choice21.getItems().get(0));
+
             sendButton.setDisable(false);
+        }
         else
             hBox2.setVisible(true);
     }
@@ -189,8 +199,8 @@ public class CCG6Controller extends GenericController {
         hBox2.setVisible(false);
 
         hBox0.setDisable(false);
-        hBox1.setDisable(false);
-        hBox2.setDisable(false);
+        hBox1.setDisable(true);
+        hBox2.setDisable(true);
 
         numOfStudents.getItems().clear();
         choice00.getItems().clear();
