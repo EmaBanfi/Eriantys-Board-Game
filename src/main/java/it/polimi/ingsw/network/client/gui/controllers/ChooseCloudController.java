@@ -108,8 +108,11 @@ public class ChooseCloudController extends GenericController {
             }
         }
 
-        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
+        if (getGui().getViewController().getMode().equals("expert")) {
             activateCC.setVisible(true);
+
+            activateCC.setDisable(getGui().getUsedCC());
+        }
     }
 
     @FXML

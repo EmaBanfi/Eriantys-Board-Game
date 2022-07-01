@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class CharacterCardGUI {
+
     private final int cardId;
     private int price;
     private String text;

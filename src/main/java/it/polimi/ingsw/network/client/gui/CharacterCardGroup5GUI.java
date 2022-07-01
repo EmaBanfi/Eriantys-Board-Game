@@ -47,7 +47,7 @@ public class CharacterCardGroup5GUI extends CharacterCardGUI {
             return  false;
         }
 
-        if (getCardId() == 5 && availableBlockCards == 0){
+        if (getCardId() == 5 && availableBlockCards == 0) {
             text = text + " there are 0 block tokens on card.";
             setCause(text);
 

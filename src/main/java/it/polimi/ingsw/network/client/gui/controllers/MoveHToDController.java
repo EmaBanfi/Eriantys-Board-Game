@@ -69,8 +69,11 @@ public class MoveHToDController extends GenericController {
             }
         }
 
-        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
+        if (getGui().getViewController().getMode().equals("expert")) {
             activateCC.setVisible(true);
+
+            activateCC.setDisable(getGui().getUsedCC());
+        }
     }
 
     @FXML
@@ -81,7 +84,7 @@ public class MoveHToDController extends GenericController {
 
     @FXML
     public void onSelectButton0() {
-        if (getGui().getViewController().getMode().equals("expert") && !getGui().getUsedCC())
+        if (activateCC.isDisable())
             activateCC.setDisable(true);
 
         applyChanges(StudentColor.getStudentFromString(studentToMove0.getValue()));
