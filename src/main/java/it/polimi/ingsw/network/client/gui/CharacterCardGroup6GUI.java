@@ -29,11 +29,18 @@ public class CharacterCardGroup6GUI extends CharacterCardGUI {
      * @param add add the block card if it's true, else remove
      */
     @Override
-    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add) {
         if(add)
             studentsOnCard.addAll(students);
         else
             studentsOnCard.removeAll(students);
+    }
+
+    public void updateStudentsOnCard(StudentColor student, boolean add) {
+        if(add)
+            studentsOnCard.add(student);
+        else
+            studentsOnCard.remove(student);
     }
 
     public ArrayList<StudentColor> getStudentsOnCard(){

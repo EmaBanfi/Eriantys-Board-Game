@@ -9,6 +9,8 @@ module it.polimi.ingsw {
 
     requires com.google.gson;
 
+    exports it.polimi.ingsw.network.server.model;
+
     opens it.polimi.ingsw.network.client to com.google.gson;
     opens it.polimi.ingsw.network.messages to com.google.gson;
     opens it.polimi.ingsw.network.messages.clientMessages to com.google.gson;

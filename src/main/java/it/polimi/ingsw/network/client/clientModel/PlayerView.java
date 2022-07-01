@@ -89,6 +89,10 @@ public class PlayerView {
             diningHall.remove(color);
     }
 
+    public void removeFromDiningHall(StudentColor student){
+        diningHall.remove(student);
+    }
+
     public void addToHall(ArrayList<StudentColor> students){
         for (StudentColor color : students)
             hall.add(color);

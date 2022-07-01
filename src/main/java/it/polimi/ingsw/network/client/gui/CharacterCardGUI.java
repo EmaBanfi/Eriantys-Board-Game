@@ -65,7 +65,9 @@ public abstract class CharacterCardGUI {
 
     }
 
-    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add){}
+    public void updateStudentsOnCard(ArrayList<StudentColor> students, boolean add) {}
+
+    public void updateStudentsOnCard(StudentColor student, boolean add) {}
 
     public ArrayList<StudentColor> getStudentsOnCard(){
         return null;

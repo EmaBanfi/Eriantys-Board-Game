@@ -17,6 +17,8 @@ public class CCG6Controller extends GenericController {
     @FXML
     private Label title;
     @FXML
+    private HBox hBoxMain;
+    @FXML
     private ChoiceBox<Integer> numOfStudents;
     @FXML
     private HBox hBox0;
@@ -75,9 +77,6 @@ public class CCG6Controller extends GenericController {
             text00.setText("Students from card:");
             text10.setText("Students from card:");
             text20.setText("Students from card:");
-            text01.setText("Students from your hall:");
-            text11.setText("Students from your hall:");
-            text21.setText("Students from your hall:");
         }
         else {
             title.setText("Exchange up to 2 students between your dining hall 7 and your hall");
@@ -87,10 +86,10 @@ public class CCG6Controller extends GenericController {
             text00.setText("Students from your dining hall:");
             text10.setText("Students from your dining hall:");
             text20.setText("Students from your dining hall:");
-            text01.setText("Students from your hall:");
-            text11.setText("Students from your hall:");
-            text21.setText("Students from your hall:");
         }
+        text01.setText("Students from your hall:");
+        text11.setText("Students from your hall:");
+        text21.setText("Students from your hall:");
 
         numOfStudents.setValue(numOfStudents.getItems().get(0));
         choice00.setValue(choice00.getItems().get(0));
@@ -99,11 +98,12 @@ public class CCG6Controller extends GenericController {
 
     @FXML
     public void onSelectButton() {
+        hBoxMain.setDisable(true);
         hBox0.setVisible(true);
 
         if (numOfStudents.getValue() > 1) {
             hBox1.setVisible(true);
-            if (numOfStudents.getValue() == 3)
+            if (numOfStudents.getValue() > 2)
                 hBox2.setVisible(true);
         }
     }
@@ -112,25 +112,48 @@ public class CCG6Controller extends GenericController {
     public void onSelectButton0() {
         hBox0.setDisable(true);
 
+        getGui().getViewController().getMainPlayer().addToHall(StudentColor.getStudentFromString(choice00.getValue()));
+        getGui().getViewController().getMainPlayer().removeFromHall(StudentColor.getStudentFromString(choice01.getValue()));
+
         if (numOfStudents.getValue() > 1) {
             updateColorsFromHall(choice11);
-            if (cardId == 7)
+            if (cardId == 7) {
+                getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice00.getValue()), false);
+                getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice01.getValue()), true);
+
                 updateColorsFromCC(7, choice10);
-            else
+            }
+            else {
+                getGui().getViewController().getMainPlayer().removeFromDiningHall(StudentColor.getStudentFromString(choice00.getValue()));
+                getGui().getViewController().getMainPlayer().addToDiningHall(StudentColor.getStudentFromString(choice01.getValue()));
+
                 updateColorsFromDiningHall(choice10);
+            }
 
-            choice00.setValue(choice10.getItems().get(0));
-            choice01.setValue(choice11.getItems().get(0));
+            choice10.setValue(choice10.getItems().get(0));
+            choice11.setValue(choice11.getItems().get(0));
 
-            sendButton.setDisable(false);
+            hBox1.setDisable(false);
         }
         else
-            hBox1.setVisible(true);
+            sendButton.setDisable(false);
     }
 
     @FXML
     public void onSelectButton1() {
         hBox1.setDisable(true);
+
+        getGui().getViewController().getMainPlayer().addToHall(StudentColor.getStudentFromString(choice10.getValue()));
+        getGui().getViewController().getMainPlayer().removeFromHall(StudentColor.getStudentFromString(choice11.getValue()));
+
+        if (cardId == 7) {
+            getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice10.getValue()), false);
+            getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice11.getValue()), true);
+        }
+        else {
+            getGui().getViewController().getMainPlayer().removeFromDiningHall(StudentColor.getStudentFromString(choice10.getValue()));
+            getGui().getViewController().getMainPlayer().addToDiningHall(StudentColor.getStudentFromString(choice11.getValue()));
+        }
 
         if (numOfStudents.getValue() > 2) {
             hBox2.setVisible(true);
@@ -138,18 +161,25 @@ public class CCG6Controller extends GenericController {
             updateColorsFromHall(choice21);
             updateColorsFromCC(7, choice20);
 
-            choice00.setValue(choice20.getItems().get(0));
-            choice01.setValue(choice21.getItems().get(0));
+            choice20.setValue(choice20.getItems().get(0));
+            choice21.setValue(choice21.getItems().get(0));
 
-            sendButton.setDisable(false);
+            hBox2.setDisable(false);
         }
         else
-            hBox2.setVisible(true);
+            sendButton.setDisable(false);
     }
 
     @FXML
     public void onSelectButton2(){
         hBox2.setDisable(true);
+
+        getGui().getViewController().getMainPlayer().addToHall(StudentColor.getStudentFromString(choice20.getValue()));
+        getGui().getViewController().getMainPlayer().removeFromHall(StudentColor.getStudentFromString(choice21.getValue()));
+
+        getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice20.getValue()), false);
+        getGui().getCharacterCardById(7).updateStudentsOnCard(StudentColor.getStudentFromString(choice21.getValue()), true);
+
 
         sendButton.setDisable(false);
     }
@@ -171,17 +201,6 @@ public class CCG6Controller extends GenericController {
             array.add(StudentColor.getStudentFromString(choice10.getValue()));
             if (numOfStudents.getValue() == 3)
                 array.add(StudentColor.getStudentFromString(choice20.getValue()));
-        }
-
-        getGui().getViewController().getMainPlayer().removeFromHall(hall);
-        getGui().getViewController().getMainPlayer().addToHall(array);
-        if (cardId == 7) {
-            getGui().getCharacterCardById(7).updateStudentsOnCard(array, false);
-            getGui().getCharacterCardById(7).updateStudentsOnCard(hall, true);
-        }
-        else {
-            getGui().getViewController().getMainPlayer().removeFromDiningHall(array);
-            getGui().getViewController().getMainPlayer().addToDiningHall(hall);
         }
 
         cmCCG6 message = new cmCCG6(cardId, array, hall);
