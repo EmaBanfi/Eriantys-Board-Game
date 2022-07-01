@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetNicknameController">
    <children>
+      <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="nickname" layoutX="220.0" layoutY="185.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" promptText="nickname" AnchorPane.bottomAnchor="385.0" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="385.0" />
       <Button defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="30.0" prefWidth="200.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="590.0" text="Insert nickname:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />

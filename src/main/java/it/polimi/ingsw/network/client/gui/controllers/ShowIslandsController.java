@@ -229,16 +229,29 @@ public class ShowIslandsController extends GenericController{
                 )
         );
         guiIslands.add(
+                new IslandGui(
+                        islands.get(5),
+                        blue6,
+                        purple6,
+                        yellow6,
+                        red6,
+                        green6,
+                        tower6,
+                        block6,
+                        nature6
+                )
+        );
+        guiIslands.add(
             new IslandGui(
                 islands.get(6),
-                blue5,
-                purple5,
-                yellow5,
-                red5,
-                green5,
-                tower5,
-                block5,
-                nature5
+                blue7,
+                purple7,
+                yellow7,
+                red7,
+                green7,
+                tower7,
+                block7,
+                nature7
             )
         );
         guiIslands.add(
