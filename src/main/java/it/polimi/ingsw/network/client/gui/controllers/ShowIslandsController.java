@@ -322,6 +322,7 @@ public class ShowIslandsController extends GenericController{
 
     @Override
     public void update(){
+        getGui().showIslands();
         int islandSize = islandsPanes.size();
         while (islandSize>islands.size()){
             islandsPanes.remove(islandSize-1);

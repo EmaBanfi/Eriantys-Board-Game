@@ -28,7 +28,7 @@ public class CLI implements View, Runnable {
         availableCC = new ArrayList<>();
         ccc = new CharacterCardCreator();
         usableCC = new ArrayList<>();
-        viewController = new ViewController(this);
+        viewController = new ViewController(this, "cli");
         gson = new Gson();
         client = new Client(this, setIpAddress());
         client.start();
