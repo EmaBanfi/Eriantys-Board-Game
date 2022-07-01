@@ -7,10 +7,15 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetIpController">
    <children>
-      <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="799.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
+
+      <ImageView fitHeight="170.0" fitWidth="613.0" layoutX="322.0" layoutY="129.0" opacity="1" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="501.0" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="302.9267578125" AnchorPane.topAnchor="129.0">
          <image>
             <Image url="@../images/eriantys_title.png" />
-            <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
       <Button defaultButton="true" layoutX="395.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlayButton" prefHeight="30.0" prefWidth="200.0" text="Play" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
