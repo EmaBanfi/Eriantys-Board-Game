@@ -158,6 +158,11 @@
         <version>0.8.7</version>
         <configuration>
           <excludes>
+            <exclude>it.polimi.ingsw.network.server.Pong</exclude>
+            <exclude>it.polimi.ingsw.network.server.PingTimer</exclude>
+            <exclude>it.polimi.ingsw.network.server.Server</exclude>
+            <exclude>it.polimi.ingsw.network.server.ClientHandler</exclude>
+            <exclude>it.polimi.ingsw.network.server.</exclude>
           </excludes>
         </configuration>
         <executions>
