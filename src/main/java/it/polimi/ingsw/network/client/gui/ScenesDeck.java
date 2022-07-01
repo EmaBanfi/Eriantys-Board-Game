@@ -26,12 +26,12 @@ public class ScenesDeck {
     private final String chooseCloud = "ChooseCloud.fxml";
     private final  String endGame = "EndGame.fxml";
     private final String gameBoard = "GameBoard.fxml";
-    private final String askActivateCC = "AskActivateCC.fxml";
-    private final String cCG1 = "CCG1.fxml";
-    private final String cCG3 = "CCG3.fxml";
-    private final String cCG4 = "CCG4.fxml";
-    private final String cCG5 = "CCG5.fxml";
-    private final String cCG6 = "CCG6.fxml";
+    private final String askActivateCC = "characterCards/AskActivateCC.fxml";
+    private final String cCG1 = "characterCards/CCG1.fxml";
+    private final String cCG3 = "characterCards/CCG3.fxml";
+    private final String cCG4 = "characterCards/CCG4.fxml";
+    private final String cCG5 = "characterCards/CCG5.fxml";
+    private final String cCG6 = "characterCards/CCG6.fxml";
     private final String wait = "Wait.fxml";
     private final String closeGame = "CloseGame.fxml";
 

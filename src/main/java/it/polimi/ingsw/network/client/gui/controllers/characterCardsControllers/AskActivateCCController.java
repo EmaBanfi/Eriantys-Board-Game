@@ -1,10 +1,9 @@
-package it.polimi.ingsw.network.client.gui.controllers;
+package it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
 
-import it.polimi.ingsw.network.client.clientModel.*;
 import it.polimi.ingsw.network.client.gui.AlertBox;
-import it.polimi.ingsw.network.client.gui.CharacterCardGUI;
+import it.polimi.ingsw.network.client.gui.GUICharacterCards.CharacterCardGUI;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG2;
-import it.polimi.ingsw.network.messages.clientMessages.cmCCG6;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Objects;

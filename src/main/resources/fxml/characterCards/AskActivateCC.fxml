@@ -5,11 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.AskActivateCCController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers.AskActivateCCController">
    <children>
       <ImageView fitHeight="819.0" fitWidth="1335.0" layoutX="-19.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../images/background.jpg" />
+            <Image url="@../../images/background.jpg" />
          </image>
       </ImageView>
       <Label alignment="CENTER" layoutX="560.0" layoutY="136.0" prefHeight="80.0" prefWidth="590.0" text="Which character card do you want to activate" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
@@ -19,7 +19,7 @@
                <children>
                   <ImageView fx:id="image0" fitHeight="381.0" fitWidth="250.0" layoutX="243.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/characterCards/cc1.jpg" />
+                        <Image url="@../../images/characterCards/cc1.jpg" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" layoutX="257.0" layoutY="633.0" spacing="15.0">

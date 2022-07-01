@@ -1,8 +1,9 @@
-package it.polimi.ingsw.network.client.gui.controllers;
+package it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
 
 import com.google.gson.Gson;
 
 import it.polimi.ingsw.network.client.clientModel.Phase;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
 import it.polimi.ingsw.network.server.model.DiningHall;
 import it.polimi.ingsw.network.server.model.StudentColor;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class CCG1Controller extends GenericController{
+public class CCG1Controller extends GenericController {
 
     @FXML
     private HBox studentHBox;

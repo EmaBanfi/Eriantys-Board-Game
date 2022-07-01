@@ -1,7 +1,8 @@
-package it.polimi.ingsw.network.client.gui.controllers;
+package it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.network.client.gui.ValueToUpdate;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class CCG4Controller extends GenericController{
+public class CCG4Controller extends GenericController {
 
     @FXML
     private Label effectTitle;

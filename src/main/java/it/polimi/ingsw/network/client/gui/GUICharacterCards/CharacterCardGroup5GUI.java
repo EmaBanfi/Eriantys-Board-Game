@@ -1,4 +1,7 @@
-package it.polimi.ingsw.network.client.gui;
+package it.polimi.ingsw.network.client.gui.GUICharacterCards;
+
+import it.polimi.ingsw.network.client.gui.GUI;
+
 public class CharacterCardGroup5GUI extends CharacterCardGUI {
     private int availableBlockCards;
 

@@ -1,6 +1,7 @@
-package it.polimi.ingsw.network.client.gui;
+package it.polimi.ingsw.network.client.gui.GUICharacterCards;
 
 import it.polimi.ingsw.network.client.CLI;
+import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.scene.control.Label;
 

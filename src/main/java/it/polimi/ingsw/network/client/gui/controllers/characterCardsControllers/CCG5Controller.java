@@ -1,6 +1,7 @@
-package it.polimi.ingsw.network.client.gui.controllers;
+package it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG5;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class CCG5Controller extends GenericController{
+public class CCG5Controller extends GenericController {
 
     private int cardId;
     @FXML

@@ -1,5 +1,6 @@
-package it.polimi.ingsw.network.client.gui.controllers;
+package it.polimi.ingsw.network.client.gui.controllers.characterCardsControllers;
 
+import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG3;
 
 import javafx.fxml.FXML;

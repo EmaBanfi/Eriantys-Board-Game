@@ -1,4 +1,7 @@
-package it.polimi.ingsw.network.client.gui;
+package it.polimi.ingsw.network.client.gui.GUICharacterCards;
+
+import it.polimi.ingsw.network.client.gui.GUI;
+
 public class CharacterCardCreatorGUI {
 
     public CharacterCardGUI createCard(int id, GUI gui) {

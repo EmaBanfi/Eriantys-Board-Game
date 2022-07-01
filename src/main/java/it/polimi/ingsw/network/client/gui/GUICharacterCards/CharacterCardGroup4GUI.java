@@ -1,4 +1,5 @@
-package it.polimi.ingsw.network.client.gui;
+package it.polimi.ingsw.network.client.gui.GUICharacterCards;
+import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import java.util.ArrayList;
