@@ -15,7 +15,7 @@ public class ScenesDeck {
     private final String setIp = "SetIp.fxml";
     private final String askNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
-    private final String showIslands = "ShowIslands.fxml";
+    private final String showIslands = "ShowIsland.fxml";
     private final String askTower = "SetTower.fxml";
     private final String askDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
@@ -73,6 +73,8 @@ public class ScenesDeck {
             }
             controller = loader.getController();
             controller.setGui(gui);
+            if (file.equals(showIslands))
+                controller.initialise();
             scenes.add(new SceneManager(file, scene, controller));
         }
     }

@@ -85,8 +85,8 @@ public class MoveHToIController extends GenericController {
         stage.setMinWidth(1200);
         stage.setMinHeight(800);
 
-        getGui().getSceneManager("ShowIslands.fxml").getController().setInput((Integer) null);
-        stage.setScene(getGui().getSceneManager("ShowIslands.fxml").getScene());
+        getGui().getSceneManager("ShowIsland.fxml").getController().update();
+        stage.setScene(getGui().getSceneManager("ShowIsland.fxml").getScene());
 
         stage.show();
     }

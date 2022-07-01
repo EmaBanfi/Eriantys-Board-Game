@@ -29,7 +29,7 @@ public class GUI extends Application implements View {
     private final String setIp = "SetIp.fxml";
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
-    private final String showIslands = "ShowIslands.fxml";
+    private final String showIslands = "ShowIsland.fxml";
     private final String setTower = "SetTower.fxml";
     private final String setDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
