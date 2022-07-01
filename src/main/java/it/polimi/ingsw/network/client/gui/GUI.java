@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.client.View;
 import it.polimi.ingsw.network.client.ViewController;
 import it.polimi.ingsw.network.client.clientModel.MotherNatureView;
 import it.polimi.ingsw.network.client.clientModel.Phase;
+import it.polimi.ingsw.network.client.gui.GUICharacterCards.CharacterCardCreatorGUI;
+import it.polimi.ingsw.network.client.gui.GUICharacterCards.CharacterCardGUI;
 import it.polimi.ingsw.network.client.gui.controllers.GenericController;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
@@ -55,6 +57,7 @@ public class GUI extends Application implements View {
     private Stage window = new Stage();
     private GenericController notifyController;
     private boolean gBInitialized = false;
+    private boolean newTurnForSC = false;
 
     private final ArrayList<CharacterCardGUI> availableCC = new ArrayList<>();
     private final ArrayList<Integer> usableCC = new ArrayList<>();
@@ -448,5 +451,13 @@ public class GUI extends Application implements View {
 
         scenesDeck.getSceneManager(goToScene).getController().update();
         updateSceneOnStage(goToScene);
+    }
+
+    public boolean isNewTurnForSC() {
+        return newTurnForSC;
+    }
+
+    public void setNewTurnForSC(boolean newTurnForSC) {
+        this.newTurnForSC = newTurnForSC;
     }
 }
