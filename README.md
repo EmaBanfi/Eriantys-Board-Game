@@ -35,7 +35,7 @@
 
 The screenshot show the coverage of our code. For the coverage they were considered all the model classes and the controller class.
 
-![](../../Desktop/Screenshot 2022-07-01 at 23.35.03.png)
+![](src/main/resources/images/coverageTest.png)
 
 ---
 
