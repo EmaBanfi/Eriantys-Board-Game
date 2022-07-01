@@ -29,8 +29,16 @@ public class CCG3Controller extends GenericController {
 
         getGui().getClient().send(getGui().getGson().toJson(message, cmCCG3.class));
 
+        reset();
+
+        updateControllerAfterCC();
+
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
         stage.close();
+    }
+
+    private void reset() {
+        oneMoreMove.setSelected(true);
     }
 }

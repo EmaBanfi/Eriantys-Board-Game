@@ -85,4 +85,13 @@ public abstract class GenericController {
         if (getGui().getCharacterCardById(cardId).getStudentsOnCard().contains(StudentColor.GREEN))
             box.getItems().add("Green");
     }
+
+    protected void updateControllerAfterCC() {
+        switch (getGui().getViewController().getResumeFrom()) {
+            case CHOOSE_STUDENTS_TO_DINING_HALL -> getGui().getSceneManager("MoveHToI.fxml").getController().update();
+            case CHOOSE_MOTHER_MOVEMENTS -> getGui().getSceneManager("MoveHToD.fxml").getController().update();
+            case CHOOSE_CLOUDS -> getGui().getSceneManager("MoveMother.fxml").getController().update();
+            case CHOOSE_SUPPORT_CARD -> getGui().getSceneManager("ChooseCloud.fxml").getController().update();
+        }
+    }
 }

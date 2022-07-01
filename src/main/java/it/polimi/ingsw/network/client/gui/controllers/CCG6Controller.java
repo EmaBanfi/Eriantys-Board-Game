@@ -137,7 +137,7 @@ public class CCG6Controller extends GenericController {
     public void onSelectButton2(){
         hBox2.setDisable(true);
 
-        sendButton.setVisible(true);
+        sendButton.setDisable(false);
     }
 
     @FXML
@@ -173,8 +173,28 @@ public class CCG6Controller extends GenericController {
         cmCCG6 message = new cmCCG6(cardId, array, hall);
         getGui().getClient().send(getGui().getGson().toJson(message, cmCCG6.class));
 
+        reset();
+
+        updateControllerAfterCC();
+
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
         stage.close();
+    }
+
+    private void reset() {
+        hBox0.setVisible(false);
+        hBox1.setVisible(false);
+        hBox2.setVisible(false);
+
+        numOfStudents.getItems().clear();
+        choice00.getItems().clear();
+        choice01.getItems().clear();
+        choice10.getItems().clear();
+        choice11.getItems().clear();
+        choice20.getItems().clear();
+        choice21.getItems().clear();
+
+        sendButton.setDisable(true);
     }
 }

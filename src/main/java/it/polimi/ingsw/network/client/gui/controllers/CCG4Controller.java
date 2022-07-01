@@ -20,8 +20,7 @@ public class CCG4Controller extends GenericController{
     @FXML
     private Button sendButton;
     private int cardId;
-    private StudentColor chosenStudent;
-    private ArrayList<StudentColor> studentsOnCard11 = new ArrayList<>();
+    private final ArrayList<StudentColor> studentsOnCard11 = new ArrayList<>();
 
     /**
      * Sets the ID of the card used.
@@ -37,6 +36,8 @@ public class CCG4Controller extends GenericController{
      */
     @FXML
     public void onSendButton(){
+        StudentColor chosenStudent;
+
         chosenStudent = StudentColor.getStudentFromString(availableStudents.getValue());
         cmCCG4 message = new cmCCG4(cardId, chosenStudent);
         getGui().getClient().send(new Gson().toJson(message, cmCCG4.class));
@@ -44,6 +45,10 @@ public class CCG4Controller extends GenericController{
             getGui().getCharacterCardById(11).getStudentsOnCard().remove(chosenStudent);
             getGui().getViewController().getMainPlayer().addToDiningHall(chosenStudent);
         }
+
+        reset();
+
+        updateControllerAfterCC();
 
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
@@ -57,11 +62,7 @@ public class CCG4Controller extends GenericController{
     public void update(){
         if(cardId == 9) {
             effectTitle.setText("Effect of the card 9");
-            availableStudents.getItems().add("BLUE");
-            availableStudents.getItems().add("RED");
-            availableStudents.getItems().add("YELLOW");
-            availableStudents.getItems().add("PURPLE");
-            availableStudents.getItems().add("GREEN");
+            insertAllColors();
         }
         else if(cardId == 11) {
             effectTitle.setText("Effect of the card 11");
@@ -69,11 +70,21 @@ public class CCG4Controller extends GenericController{
         }
         else {
             effectTitle.setText("Effect of the card 12");
-            availableStudents.getItems().add("BLUE");
-            availableStudents.getItems().add("RED");
-            availableStudents.getItems().add("YELLOW");
-            availableStudents.getItems().add("PURPLE");
-            availableStudents.getItems().add("GREEN");
+            insertAllColors();
         }
+
+        availableStudents.setValue(availableStudents.getItems().get(0));
+    }
+
+    private void insertAllColors() {
+        availableStudents.getItems().add("Blue");
+        availableStudents.getItems().add("Red");
+        availableStudents.getItems().add("Yellow");
+        availableStudents.getItems().add("Purple");
+        availableStudents.getItems().add("Green");
+    }
+
+    private void reset() {
+        availableStudents.getItems().clear();
     }
 }

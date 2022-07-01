@@ -128,6 +128,8 @@ public class AskActivateCCController extends GenericController {
         if (availableCC.get(pos).getCardId() == 2 || availableCC.get(pos).getCardId() == 8) {
             cmCCG2 message = new cmCCG2(availableCC.get(pos).getCardId());
             getGui().getClient().send(getGui().getGson().toJson(message, cmCCG2.class));
+
+            updateControllerAfterCC();
         }
         else {
             switch (availableCC.get(pos).getCardId()) {

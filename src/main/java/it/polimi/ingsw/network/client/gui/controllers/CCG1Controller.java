@@ -2,7 +2,9 @@ package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
 
+import it.polimi.ingsw.network.client.clientModel.Phase;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG1;
+import it.polimi.ingsw.network.server.model.DiningHall;
 import it.polimi.ingsw.network.server.model.StudentColor;
 
 import javafx.event.ActionEvent;
@@ -43,6 +45,8 @@ public class CCG1Controller extends GenericController{
         for (int i = 1; i <= maxNumIslands; i++) {
             islands.getItems().add(i);
         }
+
+        islands.setValue(islands.getItems().get(0));
     }
 
     /**
@@ -96,6 +100,8 @@ public class CCG1Controller extends GenericController{
         getGui().getViewController().getAvailableIslands().get(island - 1).addStudent(student);
 
         reset();
+
+        updateControllerAfterCC();
 
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();

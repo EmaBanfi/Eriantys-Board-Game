@@ -13,7 +13,6 @@ public class CCG5Controller extends GenericController{
     private int cardId;
     @FXML
     private ChoiceBox<Integer> availableIslands;
-    private int island;
     @FXML
     private Label effectTitle;
     @FXML
@@ -33,17 +32,20 @@ public class CCG5Controller extends GenericController{
      */
     @FXML
     public void onSendButton(){
-        island = availableIslands.getValue();
+        int island = availableIslands.getValue();
+
         if(cardId==3)
             island = island -1;
+
         cmCCG5 message = new cmCCG5(cardId, island);
         getGui().getClient().send(new Gson().toJson(message, cmCCG5.class));
-        if(cardId == 5){
+
+        if(cardId == 5)
             getGui().getCharacterCardById(5).updateAvailableBlockCards(false);
-        }
 
+        reset();
 
-
+        updateControllerAfterCC();
 
         getGui().setUsedCC();
         Stage stage = (Stage) sendButton.getScene().getWindow();
@@ -70,7 +72,7 @@ public class CCG5Controller extends GenericController{
      * Updates the "CCG5.fxml" scene, adding the available islands to the choice box.
      */
     @Override
-    public void update(){
+    public void update() {
         int maxNumIslands = getGui().getViewController().getAvailableIslands().size();
 
         for (int i = 1; i <= maxNumIslands; i++) {
@@ -84,5 +86,10 @@ public class CCG5Controller extends GenericController{
         else
             effectTitle.setText("Effect of the card 6");
 
+        availableIslands.setValue(availableIslands.getItems().get(0));
+    }
+
+    private void reset() {
+        availableIslands.getItems().clear();
     }
 }
