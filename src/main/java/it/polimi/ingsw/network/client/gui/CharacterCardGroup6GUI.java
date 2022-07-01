@@ -36,6 +36,10 @@ public class CharacterCardGroup6GUI extends CharacterCardGUI {
             studentsOnCard.removeAll(students);
     }
 
+    public ArrayList<StudentColor> getStudentsOnCard(){
+        return studentsOnCard;
+    }
+
     /**
      * used to check if a card can be activated
      * @return true if the card can be activated

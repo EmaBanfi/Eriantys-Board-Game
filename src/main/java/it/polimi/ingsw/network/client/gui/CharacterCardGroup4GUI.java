@@ -23,6 +23,10 @@ public class CharacterCardGroup4GUI extends CharacterCardGUI {
         }
     }
 
+    public ArrayList<StudentColor> getStudentsOnCard(){
+        return studentsOnCard;
+    }
+
     /**
      * updates the students on card
      * @param students students to manage
