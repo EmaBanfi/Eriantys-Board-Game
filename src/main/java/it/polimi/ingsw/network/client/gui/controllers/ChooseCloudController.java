@@ -118,7 +118,7 @@ public class ChooseCloudController extends GenericController {
     @FXML
     public void onActivateCCButton() {
         getGui().getSceneManager("AskActivateCC.fxml").getController().update();
-        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
+        getGui().updateSceneOnStage("AskActivateCC.fxml");
     }
 
     private void fillCloud(int cloud, ImageView image00, ImageView image10, ImageView image01, Button button) {

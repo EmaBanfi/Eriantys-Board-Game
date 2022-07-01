@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static it.polimi.ingsw.network.client.clientModel.Phase.*;
+
 public class GUI extends Application implements View {
 
     private final String notify = "Notify.fxml";
@@ -58,7 +60,6 @@ public class GUI extends Application implements View {
     private final ArrayList<Integer> usableCC = new ArrayList<>();
     private boolean usedCC = false;
     private final CharacterCardCreatorGUI ccc = new CharacterCardCreatorGUI();
-    private Stage stageCC = new Stage();
 
     public static void main(String[] args) {
         launch();
@@ -101,18 +102,6 @@ public class GUI extends Application implements View {
             stage.setScene(currentScene);
             stage.show();
         });
-    }
-
-    public void updateSceneOnStageOnlyForCC(String scene) {
-        currentScene = scenesDeck.getSceneManager(scene).getScene();
-        Platform.runLater(() -> {
-            stageCC.setScene(currentScene);
-            stageCC.show();
-        });
-    }
-
-    public Stage getStageCC() {
-        return stageCC;
     }
 
     public void startGame() {
@@ -196,7 +185,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMoveStudentsHToD() {
-        viewController.setResumeFrom(Phase.CHOOSE_MOTHER_MOVEMENTS);
+        viewController.setResumeFrom(CHOOSE_MOTHER_MOVEMENTS);
 
         scenesDeck.getSceneManager(moveHToD).getController().update();
         updateSceneOnStage(moveHToD);
@@ -204,7 +193,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMoveStudentsHToI() {
-        viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_DINING_HALL);
+        viewController.setResumeFrom(CHOOSE_STUDENTS_TO_DINING_HALL);
 
         updateSceneOnStage(wantHToI);
     }
@@ -224,7 +213,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void askMotherNatureMovements() {
-        viewController.setResumeFrom(Phase.CHOOSE_CLOUDS);
+        viewController.setResumeFrom(CHOOSE_CLOUDS);
 
         getSceneManager(moveMother).getController().update();
         updateSceneOnStage(moveMother);
@@ -388,12 +377,6 @@ public class GUI extends Application implements View {
     @Override
     public void updateGameStatus(int numOfPlayers, String mode) {
         viewController.updateGameStatus(numOfPlayers, mode);
-
-        if (mode.equals("expert")) {
-            this.stageCC.setMinWidth(1200);
-            this.stageCC.setMinHeight(800);
-            this.stageCC.setResizable(false);
-        }
     }
 
     public SceneManager getSceneManager(String sceneName){
@@ -450,5 +433,19 @@ public class GUI extends Application implements View {
 
     public boolean getUsedCC() {
         return usedCC;
+    }
+
+    public void backToScene() {
+        String goToScene = null;
+
+        switch (getViewController().getResumeFrom()) {
+            case CHOOSE_STUDENTS_TO_DINING_HALL -> goToScene = moveHToI;
+            case CHOOSE_MOTHER_MOVEMENTS -> goToScene = moveHToD;
+            case CHOOSE_CLOUDS -> goToScene = moveMother;
+            case CHOOSE_SUPPORT_CARD -> goToScene = chooseCloud;
+        }
+
+        scenesDeck.getSceneManager(goToScene).getController().update();
+        updateSceneOnStage(goToScene);
     }
 }

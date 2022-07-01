@@ -68,8 +68,6 @@ public class MoveHToIController extends GenericController {
         movementsHtoI = new HashMap<>();
         updateIslands();
 
-        getGui().updateSceneOnStage("hToI/MoveHToI.fxml");
-
         if (getGui().getViewController().getMode().equals("expert")) {
             activateCC.setVisible(true);
 
@@ -96,7 +94,7 @@ public class MoveHToIController extends GenericController {
     @FXML
     public void onActivateCCButton() {
         getGui().getSceneManager("AskActivateCC.fxml").getController().update();
-        getGui().updateSceneOnStageOnlyForCC("AskActivateCC.fxml");
+        getGui().updateSceneOnStage("AskActivateCC.fxml");
     }
 
     /**

@@ -31,11 +31,8 @@ public class CCG3Controller extends GenericController {
 
         reset();
 
-        updateControllerAfterCC();
-
         getGui().setUsedCC();
-        Stage stage = (Stage) sendButton.getScene().getWindow();
-        stage.close();
+        getGui().backToScene();
     }
 
     private void reset() {

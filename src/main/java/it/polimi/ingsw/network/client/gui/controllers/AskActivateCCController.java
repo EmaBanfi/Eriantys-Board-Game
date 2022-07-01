@@ -129,29 +129,30 @@ public class AskActivateCCController extends GenericController {
             cmCCG2 message = new cmCCG2(availableCC.get(pos).getCardId());
             getGui().getClient().send(getGui().getGson().toJson(message, cmCCG2.class));
 
-            updateControllerAfterCC();
+            getGui().setUsedCC();
+            getGui().backToScene();
         }
         else {
             switch (availableCC.get(pos).getCardId()) {
                 case 1 -> {
                     getGui().getSceneManager("CCG1.fxml").getController().update();
-                    getGui().updateSceneOnStageOnlyForCC("CCG1.fxml");
+                    getGui().updateSceneOnStage("CCG1.fxml");
                 }
-                case 4 -> getGui().updateSceneOnStageOnlyForCC("CCG3.fxml");
+                case 4 -> getGui().updateSceneOnStage("CCG3.fxml");
                 case 9, 11, 12 -> {
                     getGui().getSceneManager("CCG4.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG4.fxml").getController().update();
-                    getGui().updateSceneOnStageOnlyForCC("CCG4.fxml");
+                    getGui().updateSceneOnStage("CCG4.fxml");
                 }
                 case 3, 5, 6 -> {
                     getGui().getSceneManager("CCG5.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG5.fxml").getController().update();
-                    getGui().updateSceneOnStageOnlyForCC("CCG5.fxml");
+                    getGui().updateSceneOnStage("CCG5.fxml");
                 }
                 case 7, 10 -> {
                     getGui().getSceneManager("CCG6.fxml").getController().setInput(availableCC.get(pos).getCardId());
                     getGui().getSceneManager("CCG6.fxml").getController().update();
-                    getGui().updateSceneOnStageOnlyForCC("CCG6.fxml");
+                    getGui().updateSceneOnStage("CCG6.fxml");
                 }
             }
         }
@@ -159,7 +160,6 @@ public class AskActivateCCController extends GenericController {
 
     @FXML
     public void onGoBackButton() {
-        Stage stage = (Stage) goBack.getScene().getWindow();
-        stage.close();
+        getGui().backToScene();
     }
 }

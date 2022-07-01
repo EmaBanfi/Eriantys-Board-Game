@@ -100,7 +100,7 @@ public class CCG6Controller extends GenericController {
     @FXML
     public void onSelectButton() {
         hBox0.setVisible(true);
-        if (numOfStudents.getValue() >= 2) {
+        if (numOfStudents.getValue() > 1) {
             updateColorsFromHall(choice11);
             if (cardId == 7)
                 updateColorsFromCC(7, choice10);
@@ -120,7 +120,11 @@ public class CCG6Controller extends GenericController {
     @FXML
     public void onSelectButton0() {
         hBox0.setDisable(true);
-        hBox1.setDisable(false);
+
+        if (numOfStudents.getValue() == 2)
+            sendButton.setDisable(false);
+        else
+            hBox1.setVisible(true);
     }
 
     @FXML
@@ -128,9 +132,9 @@ public class CCG6Controller extends GenericController {
         hBox1.setDisable(true);
 
         if (numOfStudents.getValue() == 2)
-            sendButton.setVisible(true);
+            sendButton.setDisable(false);
         else
-            hBox2.setDisable(false);
+            hBox2.setVisible(true);
     }
 
     @FXML
@@ -175,17 +179,18 @@ public class CCG6Controller extends GenericController {
 
         reset();
 
-        updateControllerAfterCC();
-
         getGui().setUsedCC();
-        Stage stage = (Stage) sendButton.getScene().getWindow();
-        stage.close();
+        getGui().backToScene();
     }
 
     private void reset() {
         hBox0.setVisible(false);
         hBox1.setVisible(false);
         hBox2.setVisible(false);
+
+        hBox0.setDisable(false);
+        hBox1.setDisable(false);
+        hBox2.setDisable(false);
 
         numOfStudents.getItems().clear();
         choice00.getItems().clear();

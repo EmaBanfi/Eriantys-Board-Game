@@ -46,6 +46,7 @@ public class CCG1Controller extends GenericController{
             islands.getItems().add(i);
         }
 
+        students.setValue(students.getItems().get(0));
         islands.setValue(islands.getItems().get(0));
     }
 
@@ -101,11 +102,8 @@ public class CCG1Controller extends GenericController{
 
         reset();
 
-        updateControllerAfterCC();
-
         getGui().setUsedCC();
-        Stage stage = (Stage) sendButton.getScene().getWindow();
-        stage.close();
+        getGui().backToScene();
     }
 
     private void reset() {

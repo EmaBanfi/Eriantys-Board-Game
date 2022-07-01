@@ -48,11 +48,8 @@ public class CCG4Controller extends GenericController{
 
         reset();
 
-        updateControllerAfterCC();
-
         getGui().setUsedCC();
-        Stage stage = (Stage) sendButton.getScene().getWindow();
-        stage.close();
+        getGui().backToScene();
     }
 
     /**
