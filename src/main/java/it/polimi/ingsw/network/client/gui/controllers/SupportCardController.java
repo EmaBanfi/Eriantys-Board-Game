@@ -1,98 +1,130 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.network.client.gui.GUI;
 import it.polimi.ingsw.network.client.gui.ValueToUpdate;
+import it.polimi.ingsw.network.messages.clientMessages.cmStudentsMovementsHToI;
 import it.polimi.ingsw.network.messages.clientMessages.cmSupportCard;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 public class SupportCardController extends GenericController {
 
     @FXML
-    private RadioButton SupportCard1;
+    private ImageView sc1;
     @FXML
-    private RadioButton SupportCard2;
+    private ImageView sc3;
     @FXML
-    private RadioButton SupportCard3;
+    private ImageView sc2;
     @FXML
-    private RadioButton SupportCard4;
+    private ImageView sc5;
     @FXML
-    private RadioButton SupportCard5;
+    private ImageView sc4;
     @FXML
-    private RadioButton SupportCard6;
+    private ImageView sc7;
     @FXML
-    private RadioButton SupportCard7;
+    private ImageView sc6;
     @FXML
-    private RadioButton SupportCard8;
+    private ImageView sc9;
     @FXML
-    private RadioButton SupportCard9;
+    private ImageView sc8;
     @FXML
-    private RadioButton SupportCard10;
-    private int chosenSupportCard;
-
-    /**
-     * Activation of "chooseSupportCardButton" in the "AskSupportCard.fxml" scene; updates the support card used by a player in this turn and sends a "cmSupportCard" message to the server with the chosen support card.
-     * @param actionEvent
-     */
-    public void chooseSupportCardButton(ActionEvent actionEvent) {
-        if(SupportCard1.isSelected())
-            chosenSupportCard = 1;
-        else if(SupportCard2.isSelected())
-            chosenSupportCard = 2;
-        else if(SupportCard3.isSelected())
-            chosenSupportCard = 3;
-        else if(SupportCard4.isSelected())
-            chosenSupportCard = 4;
-        else if(SupportCard5.isSelected())
-            chosenSupportCard = 5;
-        else if(SupportCard6.isSelected())
-            chosenSupportCard = 6;
-        else if(SupportCard7.isSelected())
-            chosenSupportCard = 7;
-        else if(SupportCard8.isSelected())
-            chosenSupportCard = 8;
-        else if(SupportCard9.isSelected())
-            chosenSupportCard = 9;
-        else
-            chosenSupportCard = 10;
-
-        getGui().getViewController().setSupportCard(chosenSupportCard);
-
-        getGui().updateGameBoard(ValueToUpdate.CARD);
-
-        Gson gson = new Gson();
-        cmSupportCard message = new cmSupportCard(chosenSupportCard);
-        String text = gson.toJson(message, cmSupportCard.class);
-        getGui().getClient().send(text);
-        getGui().updateSceneOnStage("Wait.fxml");
-    }
+    private ImageView sc10;
+    private final ColorAdjust monochrome = new ColorAdjust();
 
     /**
      * Updates the "AskSupportCard.fxml" scene, removing the support cards that are not available anymore.
      */
     @Override
     public void update(){
+        monochrome.setSaturation(-1);
+
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(1)))
-            SupportCard1.setVisible(false);
+            disablePlusGray(sc1);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(2)))
-            SupportCard2.setVisible(false);
+            disablePlusGray(sc2);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(3)))
-            SupportCard3.setVisible(false);
+            disablePlusGray(sc3);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(4)))
-            SupportCard4.setVisible(false);
+            disablePlusGray(sc4);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(5)))
-            SupportCard5.setVisible(false);
+            disablePlusGray(sc5);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(6)))
-            SupportCard6.setVisible(false);
+            disablePlusGray(sc6);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(7)))
-            SupportCard7.setVisible(false);
+            disablePlusGray(sc7);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(8)))
-            SupportCard8.setVisible(false);
+            disablePlusGray(sc8);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(9)))
-            SupportCard9.setVisible(false);
+            disablePlusGray(sc9);
         if(!getGui().getViewController().getMainPlayer().getSupportCards().contains(getGui().getViewController().getSupportCardByID(10)))
-            SupportCard10.setVisible(false);
+            disablePlusGray(sc10);
+    }
+
+    private void disablePlusGray(ImageView sc) {
+        sc.setDisable(true);
+        sc.setEffect(monochrome);
+    }
+
+    @FXML
+    void onSC1(MouseEvent event) {
+        sendSC(1);
+    }
+
+    @FXML
+    void onSC2(MouseEvent event) {
+        sendSC(2);
+    }
+
+    @FXML
+    void onSC3(MouseEvent event) {
+        sendSC(3);
+    }
+
+    @FXML
+    void onSC4(MouseEvent event) {
+        sendSC(4);
+    }
+
+    @FXML
+    void onSC5(MouseEvent event) {
+        sendSC(5);
+    }
+
+    @FXML
+    void onSC6(MouseEvent event) {
+        sendSC(6);
+    }
+
+    @FXML
+    void onSC7(MouseEvent event) {
+        sendSC(7);
+    }
+
+    @FXML
+    void onSC8(MouseEvent event) {
+        sendSC(8);
+    }
+
+    @FXML
+    void onSC9(MouseEvent event) {
+        sendSC(9);
+    }
+
+    @FXML
+    void onSC10(MouseEvent event) {
+        sendSC(10);
+    }
+
+    private void sendSC(int id) {
+        getGui().getViewController().setSupportCard(id);
+
+        getGui().updateGameBoard(ValueToUpdate.CARD);
+
+        cmSupportCard message = new cmSupportCard(id);
+        getGui().getClient().send(getGui().getGson().toJson(message, cmSupportCard.class));
+
+        getGui().updateSceneOnStage("Wait.fxml");
     }
 }

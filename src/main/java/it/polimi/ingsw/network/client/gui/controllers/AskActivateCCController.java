@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -57,6 +58,7 @@ public class AskActivateCCController extends GenericController {
 
     private final String pathToCCImage = "/images/characterCards/cc";
     private ArrayList<CharacterCardGUI> availableCC;
+    private final ColorAdjust monochrome = new ColorAdjust();
 
     @Override
     public void update() {
@@ -83,15 +85,25 @@ public class AskActivateCCController extends GenericController {
             if (card.getPrice() < minPrice)
                 minPrice = card.getPrice();
 
+        monochrome.setSaturation(-1);
+
         for (int i = 0; i < 3; i++)
             if (!usableCC.contains(availableCC.get(i).getCardId())) {
-                if (i == 0)
+                if (i == 0) {
                     vBox0.setDisable(true);
-                else if (i == 1)
+                }
+                else if (i == 1) {
                     vBox1.setDisable(true);
-                else
+                }
+                else {
                     vBox2.setDisable(true);
+                }
             }
+    }
+
+    private void disablePlusGray(ImageView deck) {
+        deck.setDisable(true);
+        deck.setEffect(monochrome);
     }
 
     @FXML

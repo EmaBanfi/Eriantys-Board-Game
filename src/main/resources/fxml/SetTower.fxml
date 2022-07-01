@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.network.client.gui.controllers.TowersController">
-   <Label alignment="CENTER" layoutX="235.0" prefHeight="80.0" prefWidth="590.0" text="Select your tower color "
-          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-   <HBox alignment="CENTER" layoutX="376.0" layoutY="302.0" spacing="100.0" AnchorPane.bottomAnchor="282.0"
-         AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="363.0">
-      <VBox fx:id="vBoxBlack" alignment="CENTER" disable="true" layoutX="273.0" layoutY="405.0" prefHeight="128.0"
-            prefWidth="0.0" spacing="25.0">
-         <ImageView fitHeight="184.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/towers/black.png"/>
-         </ImageView>
-         <Button fx:id="black" mnemonicParsing="false" onAction="#onBlackButton" text="Black"/>
-      </VBox>
-      <VBox fx:id="vBoxWhite" alignment="CENTER" disable="true" layoutX="283.0" layoutY="415.0" prefHeight="128.0"
-            prefWidth="0.0" spacing="25.0">
-         <ImageView fitHeight="184.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/towers/white.png"/>
-         </ImageView>
-         <Button fx:id="white" mnemonicParsing="false" onAction="#onWhiteButton" text="White"/>
-      </VBox>
-      <VBox fx:id="vBoxGray" alignment="CENTER" disable="true" layoutX="293.0" layoutY="425.0" prefHeight="128.0"
-            prefWidth="0.0" spacing="25.0">
-         <ImageView fitHeight="184.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/towers/gray.png"/>
-         </ImageView>
-         <Button fx:id="gray" mnemonicParsing="false" onAction="#onGrayButton" text="Gray"/>
-      </VBox>
-   </HBox>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.TowersController">
+   <children>
+      <Label alignment="CENTER" layoutX="235.0" prefHeight="80.0" prefWidth="590.0" text="Select your tower color " AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <HBox alignment="CENTER" layoutX="376.0" layoutY="302.0" spacing="100.0" AnchorPane.bottomAnchor="282.0" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="363.0">
+         <children>
+            <ImageView fx:id="black" fitHeight="184.0" fitWidth="100.0" onMouseClicked="#onBlackImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/towers/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="white" fitHeight="184.0" fitWidth="100.0" onMouseClicked="#onWhiteImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/towers/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="gray" fitHeight="184.0" fitWidth="100.0" onMouseClicked="#onGrayImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/towers/gray.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

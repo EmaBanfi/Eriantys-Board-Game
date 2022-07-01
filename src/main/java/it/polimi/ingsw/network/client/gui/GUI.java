@@ -29,12 +29,12 @@ public class GUI extends Application implements View {
     private final String setIp = "SetIp.fxml";
     private final String setNickname = "SetNickname.fxml";
     private final String setGameStatus = "SetGameStatus.fxml";
+    private final String setSupportCard = "SetSupportCard.fxml";
     private final String showIslands = "ShowIsland.fxml";
     private final String setTower = "SetTower.fxml";
     private final String setDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
     private final String moveHToI = "hToI/MoveHToI.fxml";
-    private final String askSupportCard = "AskSupportCard.fxml";
     private final String moveHToD = "MoveHToD.fxml";
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
@@ -179,8 +179,8 @@ public class GUI extends Application implements View {
     @Override
     public void askSupportCard() {
         viewController.setResumeFrom(Phase.CHOOSE_STUDENTS_TO_ISLAND);
-        scenesDeck.getSceneManager(askSupportCard).getController().update();
-        updateSceneOnStage(askSupportCard);
+        scenesDeck.getSceneManager(setSupportCard).getController().update();
+        updateSceneOnStage(setSupportCard);
     }
 
     @Override

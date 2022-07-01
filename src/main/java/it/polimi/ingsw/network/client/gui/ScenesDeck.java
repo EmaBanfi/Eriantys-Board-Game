@@ -20,7 +20,7 @@ public class ScenesDeck {
     private final String askDeck = "SetDeck.fxml";
     private final String wantHToI = "hToI/WantHToI.fxml";
     private final String moveHToI = "hToI/MoveHToI.fxml";
-    private final String askSupportCard = "AskSupportCard.fxml";
+    private final String setSupportCard = "SetSupportCard.fxml";
     private final String moveHToD = "MoveHToD.fxml";
     private final String moveMother = "MoveMother.fxml";
     private final String chooseCloud = "ChooseCloud.fxml";
@@ -48,7 +48,7 @@ public class ScenesDeck {
                 askDeck,
                 wantHToI,
                 moveHToI,
-                askSupportCard,
+                setSupportCard,
                 moveHToD,
                 moveMother,
                 chooseCloud,

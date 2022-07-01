@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetDeckController">
-   <Label alignment="CENTER" layoutX="256.0" layoutY="2.0" prefHeight="80.0" prefWidth="590.0" text="Select your deck:"
-          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-   <HBox layoutX="-8.0" layoutY="109.0" spacing="50.0" AnchorPane.bottomAnchor="189.5" AnchorPane.leftAnchor="39.0"
-         AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="189.5">
-      <VBox alignment="CENTER" spacing="25.0">
-         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/decks/king.png"/>
-         </ImageView>
-         <Button fx:id="king" disable="true" mnemonicParsing="false" onAction="#onKingButton" text="King"/>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" spacing="25.0">
-         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/decks/mage.png"/>
-         </ImageView>
-         <Button fx:id="mage" disable="true" mnemonicParsing="false" onAction="#onMageButton" text="Mage"/>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="20.0" layoutY="20.0" spacing="25.0">
-         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/decks/sage.png"/>
-         </ImageView>
-         <Button fx:id="sage" disable="true" mnemonicParsing="false" onAction="#onSageButton" text="Sage"/>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="30.0" layoutY="30.0" spacing="25.0">
-         <ImageView fitHeight="437.0" fitWidth="243.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../images/decks/witch.png"/>
-         </ImageView>
-         <Button fx:id="witch" disable="true" mnemonicParsing="false" onAction="#onWitchButton" text="Witch"/>
-      </VBox>
-   </HBox>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SetDeckController">
+   <children>
+      <Label alignment="CENTER" layoutX="256.0" layoutY="2.0" prefHeight="80.0" prefWidth="590.0" text="Select your deck:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <HBox layoutX="-68.0" layoutY="177.0" spacing="50.0" AnchorPane.bottomAnchor="215.5" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="215.5">
+         <children>
+            <ImageView fx:id="king" fitHeight="437.0" fitWidth="243.0" onMouseClicked="#onKingImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/decks/king.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="mage" fitHeight="437.0" fitWidth="243.0" onMouseClicked="#onMageImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/decks/mage.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="sage" fitHeight="437.0" fitWidth="243.0" onMouseClicked="#onSageImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/decks/sage.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="witch" fitHeight="437.0" fitWidth="243.0" onMouseClicked="#onWitchImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/decks/witch.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.network.client.gui.controllers.SupportCardController">
+   <children>
+      <VBox layoutX="145.0" layoutY="171.0" spacing="50.0" AnchorPane.bottomAnchor="153.0" AnchorPane.leftAnchor="122.5" AnchorPane.rightAnchor="122.5" AnchorPane.topAnchor="153.0">
+         <children>
+            <HBox layoutX="145.0" layoutY="171.0" spacing="50.0">
+               <children>
+                  <ImageView fx:id="sc1" fitHeight="226.0" fitWidth="151.0" layoutX="145.0" layoutY="171.0" onMouseClicked="#onSC1" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc2" fitHeight="226.0" fitWidth="151.0" layoutX="155.0" layoutY="181.0" onMouseClicked="#onSC2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc3" fitHeight="226.0" fitWidth="151.0" layoutX="165.0" layoutY="191.0" onMouseClicked="#onSC3" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc4" fitHeight="226.0" fitWidth="151.0" layoutX="175.0" layoutY="201.0" onMouseClicked="#onSC4" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc4.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc5" fitHeight="226.0" fitWidth="151.0" layoutX="185.0" layoutY="211.0" onMouseClicked="#onSC5" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc5.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox layoutX="155.0" layoutY="181.0" spacing="50.0">
+               <children>
+                  <ImageView fx:id="sc6" fitHeight="226.0" fitWidth="151.0" layoutX="145.0" layoutY="171.0" onMouseClicked="#onSC6" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc6.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc7" fitHeight="226.0" fitWidth="151.0" layoutX="155.0" layoutY="181.0" onMouseClicked="#onSC7" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc7.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc8" fitHeight="226.0" fitWidth="151.0" layoutX="165.0" layoutY="191.0" onMouseClicked="#onSC8" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc8.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc9" fitHeight="226.0" fitWidth="151.0" layoutX="175.0" layoutY="201.0" onMouseClicked="#onSC9" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc9.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sc10" fitHeight="226.0" fitWidth="151.0" layoutX="185.0" layoutY="211.0" onMouseClicked="#onSC10" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/supportCards/sc10.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" prefHeight="80.0" prefWidth="590.0" text="Choose your support card:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+   </children>
+</AnchorPane>
