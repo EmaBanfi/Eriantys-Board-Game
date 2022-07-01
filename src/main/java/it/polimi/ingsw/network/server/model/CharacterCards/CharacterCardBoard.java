@@ -23,23 +23,12 @@ public class CharacterCardBoard {
 
     public void initializeAvailableCC(){
         CharacterCard card;
-/*
         for(int i=1;i<4;i++){
             Random random= new Random();
             card = deck.get( random.nextInt(deck.size()));
             availableCards.add(card);
             deck.remove(card);
         }
-
- */
-        card = deck.get(6);
-        availableCards.add(card);
-
-        card = deck.get(7);
-        availableCards.add(card);
-
-        card = deck.get(8);
-        availableCards.add(card);
     }
 
     public ArrayList<CharacterCard> getAvailableCards(){

@@ -154,6 +154,8 @@ public class ChooseCloudController extends GenericController {
         for (PlayerView player : getGui().getViewController().getPlayers())
             getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
 
+        getGui().updateGameBoard(ValueToUpdate.HALL);
+
         if (getGui().getUsedCC())
             getGui().resetUsedCC();
 
@@ -173,6 +175,8 @@ public class ChooseCloudController extends GenericController {
         getGui().getViewController().resetSupportCards();
         for (PlayerView player : getGui().getViewController().getPlayers())
             getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
+
+        getGui().updateGameBoard(ValueToUpdate.HALL);
 
         if (getGui().getUsedCC())
             getGui().resetUsedCC();
@@ -194,6 +198,8 @@ public class ChooseCloudController extends GenericController {
         for (PlayerView player : getGui().getViewController().getPlayers())
             getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
 
+        getGui().updateGameBoard(ValueToUpdate.HALL);
+
         if (getGui().getUsedCC())
             getGui().resetUsedCC();
 
@@ -213,6 +219,8 @@ public class ChooseCloudController extends GenericController {
         getGui().getViewController().resetSupportCards();
         for (PlayerView player : getGui().getViewController().getPlayers())
             getGui().updateGameBoardByNick(player.getNickname(), ValueToUpdate.CARD);
+
+        getGui().updateGameBoard(ValueToUpdate.HALL);
 
         if (getGui().getUsedCC())
             getGui().resetUsedCC();

@@ -222,7 +222,7 @@ public class GameBoardController extends GenericController{
         }
         for(String nick : players.keySet()){
             text = new StringBuilder();
-            text.append("Teachers controlled: ");
+            //text.append("Teachers controlled: ");
             boolean first = true;
             for(StudentColor color: roles.get(nick)){
                 if(first)

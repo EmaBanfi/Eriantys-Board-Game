@@ -254,6 +254,7 @@ public class GUI extends Application implements View {
 
     @Override
     public void showSupportCard(int id) {
+        viewController.getPlayerByNick(viewController.getCurrentPlayer()).setUsedSupportCard(id);
         gameBoardController.update(viewController.getCurrentPlayer(), ValueToUpdate.CARD);
     }
 

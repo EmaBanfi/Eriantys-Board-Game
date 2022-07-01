@@ -38,16 +38,16 @@ public class PlayerGui {
 
 
     public void initTower(){
-        Platform.runLater(() -> tower.setText("Tower:  " + playerView.getTower().toLowerCase()));
+        Platform.runLater(() -> tower.setText("" + playerView.getTower().toLowerCase()));
     }
 
     public void initDeck(){
-        Platform.runLater(() -> deck.setText("Deck:  " + playerView.getDeckColor().toLowerCase()));
+        Platform.runLater(() -> deck.setText("" + playerView.getDeckColor().toLowerCase()));
 
     }
 
     public void updateRemaining(){
-        Platform.runLater(() -> remainingSupportCards.setText("Remaining support cards:  " + playerView.remainingSupportCards()));
+        Platform.runLater(() -> remainingSupportCards.setText("" + playerView.remainingSupportCards()));
     }
 
     public void updateCard(){
@@ -67,7 +67,7 @@ public class PlayerGui {
 
     public void updateHall(){
         StringBuilder text = new StringBuilder();
-        text.append("Hall: ");
+        //text.append("Hall: ");
         boolean first = true;
         for(StudentColor color: playerView.getHall()){
             if(first)
@@ -76,12 +76,12 @@ public class PlayerGui {
                 text.append(",");
             text.append(" ").append(color);
         }
-        hall.setText(text.toString());
+        Platform.runLater(() -> hall.setText(text.toString()));
     }
 
     public void updateDiningHall(){
         StringBuilder text = new StringBuilder();
-        text.append("Dining hall: ");
+        //text.append("Dining hall: ");
         boolean first = true;
         for(StudentColor color: playerView.getDiningHall()){
             if(first)
@@ -90,10 +90,10 @@ public class PlayerGui {
                 text.append(",");
             text.append(" ").append(color);
         }
-        diningHall.setText(text.toString());
+        Platform.runLater(() -> diningHall.setText(text.toString()));
     }
 
     public void updateCoins(){
-        Platform.runLater(() -> coins.setText("Coins  " + playerView.getCoins()));
+        Platform.runLater(() -> coins.setText("" + playerView.getCoins()));
     }
 }

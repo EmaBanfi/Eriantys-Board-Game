@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.network.client.gui.ValueToUpdate;
 import it.polimi.ingsw.network.messages.clientMessages.cmCCG4;
 import it.polimi.ingsw.network.server.model.StudentColor;
 import javafx.fxml.FXML;
@@ -50,6 +51,8 @@ public class CCG4Controller extends GenericController{
 
         getGui().setUsedCC();
         getGui().backToScene();
+        getGui().updateGameBoard(ValueToUpdate.HALL);
+        getGui().updateGameBoard(ValueToUpdate.DINING);
     }
 
     /**
