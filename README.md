@@ -1,4 +1,6 @@
-# PROGETTO INGEGNERIA DEL SOFTWARE 2022
+# Eriantys board game (Software Engineering Project 2022)
+
+The code implements the full board game, including multiplayer gameplay.
 
 ---
 
